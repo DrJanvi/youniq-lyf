@@ -1,0 +1,48 @@
+/*
+ * Admin dashboard theme. Storefront pages do not import this file.
+ */
+:root {
+  /* Brand */
+  --admin-primary: #7d6154;
+  --admin-primary-foreground: #ffffff;
+  --admin-accent-2: #b49084;
+  --admin-accent-2-foreground: #3c2a21;
+  --admin-highlight: #b49084;
+  --admin-secondary: #f6e8e3;
+  --admin-secondary-foreground: #3c2a21;
+  --admin-accent: #f6e8e3;
+  --admin-accent-foreground: #7d6154;
+
+  /* Status */
+  --admin-destructive: #a7362a;
+  --admin-success: #15803d;
+  --admin-warning: #b45309;
+
+  /* Surfaces */
+  --admin-backdrop: #f6f6f6;
+  --admin-canvas: #faf8f7;
+  --admin-card: #ffffff;
+  --admin-foreground: #3c2a21;
+  --admin-muted: #f6f1ee;
+  --admin-muted-foreground: #75645d;
+  --admin-border: #ece5e2;
+  --admin-tint: #f6e8e3;
+  --admin-tint-warm: #fbf7f5;
+
+  /* Sidebar */
+  --admin-sidebar: #3c2a21;
+  --admin-sidebar-foreground: #f6e8e3;
+  --admin-sidebar-accent: #7d6154;
+
+  --admin-radius: 0.25rem;
+  --font-admin-heading: var(--font-plus-jakarta-sans);
+}
+
+.admin-root [class*="rounded"] {
+  border-radius: var(--admin-radius);
+}
+
+.admin-root [data-slot="switch"],
+.admin-root [data-slot="switch-thumb"] {
+  border-radius: 9999px;
+}

@@ -1,0 +1,319 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-taupe: #B49084;
+  --color-brand-taupe-dark: #7D6154;
+  --color-brand-espresso: #3C2A21;
+  --color-badge-sale: #F6E8E3;
+  --color-badge-sale-text: #A7362A;
+  --color-rating-gold: #D9822B;
+  --color-surface-main: #FFFFFF;
+  --color-surface-card: #F6F6F6;
+  --color-surface-border: #ECECEC;
+  --color-announcement-bg: #1C1C1C;
+  --color-announcement-text: #FFFFFF;
+  --color-text-primary: #1E1E1E;
+  --color-text-muted: #848484;
+  --color-text-strike: #A3A3A3;
+}
+
+:root {
+  color-scheme: light;
+  --background: var(--color-surface-main);
+  --foreground: var(--color-text-primary);
+}
+
+/* Admin dashboard tokens: values live in app/admin/admin-theme.css (the only file to edit to rebrand). */
+@theme inline {
+  --color-card: var(--admin-card);
+  --color-card-foreground: var(--admin-foreground);
+  --color-popover: var(--admin-card);
+  --color-popover-foreground: var(--admin-foreground);
+  --color-primary: var(--admin-primary);
+  --color-primary-foreground: var(--admin-primary-foreground);
+  --color-secondary: var(--admin-secondary);
+  --color-secondary-foreground: var(--admin-secondary-foreground);
+  --color-muted: var(--admin-muted);
+  --color-muted-foreground: var(--admin-muted-foreground);
+  --color-accent: var(--admin-accent);
+  --color-accent-foreground: var(--admin-accent-foreground);
+  --color-destructive: var(--admin-destructive);
+  --color-border: var(--admin-border);
+  --color-input: var(--admin-border);
+  --color-ring: var(--admin-primary);
+  --color-canvas: var(--admin-canvas);
+  --color-sidebar: var(--admin-sidebar);
+  --color-sidebar-foreground: var(--admin-sidebar-foreground);
+  --color-sidebar-accent: var(--admin-sidebar-accent);
+  --color-success: var(--admin-success);
+  --color-accent-2: var(--admin-accent-2);
+  --color-accent-2-foreground: var(--admin-accent-2-foreground);
+  --color-highlight: var(--admin-highlight);
+  --color-backdrop: var(--admin-backdrop);
+  --color-tint: var(--admin-tint);
+  --color-tint-warm: var(--admin-tint-warm);
+  --font-heading: var(--font-admin-heading);
+  --color-warning: var(--admin-warning);
+  --radius-admin: var(--admin-radius);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-plus-jakarta-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-cormorant: var(--font-cormorant-garamond);
+}
+
+body {
+  background-color: var(--color-surface-main);
+  color: var(--color-text-primary);
+}
+
+.blog-editor-content {
+  min-height: 22rem;
+  padding: 1rem;
+}
+
+.blog-editor-content > * + *,
+.blog-article-content > * + * {
+  margin-top: 1rem;
+}
+
+.blog-editor-content :is(h2, h3, h4),
+.blog-article-content :is(h2, h3, h4) {
+  color: #241d19;
+  font-family: var(--font-cormorant-garamond);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.blog-editor-content h2,
+.blog-article-content h2 {
+  font-size: 1.75rem;
+}
+
+.blog-editor-content h3,
+.blog-article-content h3 {
+  font-size: 1.5rem;
+}
+
+.blog-editor-content h4,
+.blog-article-content h4 {
+  font-size: 1.25rem;
+}
+
+.blog-editor-content :is(ul, ol),
+.blog-article-content :is(ul, ol) {
+  padding-left: 1.5rem;
+}
+
+.storefront-rich-content > * + * {
+  margin-top: 1rem;
+}
+
+.storefront-rich-content :is(h2, h3, h4) {
+  color: #241d19;
+  font-family: var(--font-cormorant-garamond);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.storefront-rich-content h2 {
+  font-size: 1.75rem;
+}
+
+.storefront-rich-content h3 {
+  font-size: 1.5rem;
+}
+
+.storefront-rich-content h4 {
+  font-size: 1.25rem;
+}
+
+.storefront-rich-content :is(ul, ol) {
+  padding-left: 1.5rem;
+}
+
+.storefront-rich-content ul {
+  list-style-type: disc;
+}
+
+.storefront-rich-content ol {
+  list-style-type: decimal;
+}
+
+.storefront-rich-content a {
+  color: #7d6154;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.storefront-rich-content blockquote {
+  border-left: 2px solid #b49084;
+  padding-left: 1rem;
+}
+
+.storefront-rich-content table {
+  border-collapse: collapse;
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.storefront-rich-content :is(th, td) {
+  border: 1px solid #ece5e2;
+  padding: 0.5rem 0.75rem;
+}
+
+.blog-editor-content ul,
+.blog-article-content ul {
+  list-style: disc;
+}
+
+.blog-editor-content ol,
+.blog-article-content ol {
+  list-style: decimal;
+}
+
+.blog-editor-content blockquote,
+.blog-article-content blockquote {
+  border-left: 3px solid #b99586;
+  color: #77716d;
+  padding-left: 1rem;
+}
+
+.blog-editor-content hr,
+.blog-article-content hr {
+  border-color: #e7ded8;
+}
+
+.blog-editor-content a,
+.blog-article-content a {
+  color: #9b7567;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.blog-editor-content table,
+.blog-article-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.blog-editor-content :is(th, td),
+.blog-article-content :is(th, td) {
+  border: 1px solid #e7ded8;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.blog-editor-content th,
+.blog-article-content th {
+  background: #f7f3f0;
+  font-weight: 600;
+}
+
+.blog-article-content {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.price-range-thumb {
+  position: absolute;
+  top: 0;
+  left: -11px;
+  width: calc(100% + 22px);
+  height: 100%;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+}
+
+.price-range-thumb:focus-visible {
+  outline: none;
+}
+
+.price-range-thumb:focus {
+  z-index: 4;
+}
+
+.price-range-thumb::-webkit-slider-runnable-track {
+  height: 4px;
+  background: transparent;
+}
+
+.price-range-thumb::-moz-range-track {
+  height: 4px;
+  background: transparent;
+}
+
+.price-range-thumb::-webkit-slider-thumb {
+  width: 22px;
+  height: 22px;
+  margin-top: -9px;
+  appearance: none;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-brand-taupe);
+  cursor: grab;
+  pointer-events: auto;
+}
+
+.price-range-thumb:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--color-brand-espresso);
+  outline-offset: 2px;
+}
+
+.price-range-thumb::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-brand-taupe);
+  cursor: grab;
+  pointer-events: auto;
+}
+
+.price-range-thumb:focus-visible::-moz-range-thumb {
+  outline: 2px solid var(--color-brand-espresso);
+  outline-offset: 2px;
+}
+
+input:autofill,
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:autofill,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+textarea:-webkit-autofill:active,
+select:autofill,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus,
+select:-webkit-autofill:active {
+  background-color: transparent !important;
+  -webkit-text-fill-color: var(
+    --autofill-text-color,
+    var(--color-text-primary)
+  ) !important;
+  transition: background-color 9999s ease-out 0s;
+}
+
+/* Zoom an element when any ancestor with the `group` class is hovered */
+.hover-zoom {
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group:hover .hover-zoom {
+  transform: scale(1.06);
+}
+
+button:hover {
+  cursor: pointer !important; 
+}

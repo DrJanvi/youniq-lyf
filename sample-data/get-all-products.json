@@ -1,0 +1,3319 @@
+{
+  "data": [
+    {
+      "category": "Fragrances",
+      "description": "Immerse yourself in the warm, mystical embrace of SAHRA Eau de Parfum. This enchanting fragrance opens with vibrant citrus and aromatic spices that evoke the spirit of the desert. At its heart, soft floral notes blend seamlessly with hints of amber and musk, creating a rich and captivating aroma. Perfectly balanced and long-lasting, SAHRA is designed for those who seek an elegant yet bold scent. Presented in a sleek 50 ml bottle, it’s the perfect companion for your everyday adventures or special evenings.",
+      "id": "a6ebeffa-188e-4841-89fe-77776cf169c9",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752995055/product_images/Sahra%20Spray%20Around%20100ml%20-%201-1752995053608.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752995054/product_images/Sahra%20Spray%20Around%20100ml%20-%202-1752995053609.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752995054/product_images/Sahra%20Spray%20Around%20100ml%20-%203-1752995053609.jpg"
+      ],
+      "name": "Banafa SAHRA Eau de Parfum 50ml ",
+      "price": {
+        "amount": 26,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏26.00 د.إ.‏",
+          "withoutCurrency": "26.00"
+        },
+        "parts": {
+          "whole": 26,
+          "subUnit": 0,
+          "smallestUnit": 2600
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-20T07:04:13.602Z",
+      "updatedAt": "2026-08-22T12:34:44.232Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": {
+        "amount": 24.7,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏24.70 د.إ.‏",
+          "withoutCurrency": "24.70"
+        },
+        "parts": {
+          "whole": 24,
+          "subUnit": 70,
+          "smallestUnit": 2470
+        }
+      }
+    },
+    {
+      "category": "Fragrances",
+      "description": "Transform your living space into a fragrant sanctuary with our Home Fragrance Set, featuring an exquisite collection of scent essentials. This set includes traditional Bakhoor to infuse your home with rich, smoky aromas; a refreshing Air Freshener for instant uplift; a stylish Diffuser that gently disperses calming fragrances; and more carefully selected accessories to create a harmonious and inviting atmosphere. Perfect for gifting or personal use, this set brings warmth, elegance, and a touch of luxury to every corner of your home.",
+      "id": "95c02c5d-e156-4021-9341-8aa9027f0d81",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752925213/product_images/IMG_8945s%20copy-1752925212304.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752925213/product_images/IMG_8952s%20copy-1752925212309.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752925213/product_images/IMG_8953s%20copy-1752925212310.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752925213/product_images/WHITE%201%20-%20Copy-1752925212312.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752925213/product_images/WHITE%201-1752925212312.jpg"
+      ],
+      "name": "Banafa WHITE BOX Fragrance Set",
+      "price": {
+        "amount": 125,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏125.00 د.إ.‏",
+          "withoutCurrency": "125.00"
+        },
+        "parts": {
+          "whole": 125,
+          "subUnit": 0,
+          "smallestUnit": 12500
+        }
+      },
+      "quantity": 9,
+      "rating": 0,
+      "createdAt": "2025-07-19T11:40:12.285Z",
+      "updatedAt": "2026-08-23T09:03:09.442Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": {
+        "amount": 118.75,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏118.75 د.إ.‏",
+          "withoutCurrency": "118.75"
+        },
+        "parts": {
+          "whole": 118,
+          "subUnit": 75,
+          "smallestUnit": 11875
+        }
+      }
+    },
+    {
+      "category": "Fragrances",
+      "description": "Refresh your day with the invigorating scent of ELEGANT BLUE Body Splash. This light and uplifting spray blends crisp aquatic and citrus notes with subtle floral undertones, creating a cool and breezy fragrance that energises your senses. Perfect for a quick refresh after a workout or anytime you want to feel revitalised, its gentle formula leaves your skin lightly scented without overpowering. Packaged in a generous 250 ml bottle, ELEGANT BLUE is your go-to companion for everyday freshness and confidence.",
+      "id": "9214e3b9-921e-4b27-9a27-85f7892342be",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752923752/product_images/ELEGANT%20BLUE%20-%20250ML%20BODY%20SPLASH-1752923751698.jpg"
+      ],
+      "name": "Banafa ELEGANT BLUE body splash 250 ml",
+      "price": {
+        "amount": 25,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏25.00 د.إ.‏",
+          "withoutCurrency": "25.00"
+        },
+        "parts": {
+          "whole": 25,
+          "subUnit": 0,
+          "smallestUnit": 2500
+        }
+      },
+      "quantity": 12,
+      "rating": 0,
+      "createdAt": "2025-07-19T11:15:51.683Z",
+      "updatedAt": "2026-08-27T07:10:59.146Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": {
+        "amount": 23.75,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏23.75 د.إ.‏",
+          "withoutCurrency": "23.75"
+        },
+        "parts": {
+          "whole": 23,
+          "subUnit": 75,
+          "smallestUnit": 2375
+        }
+      }
+    },
+    {
+      "category": "Soap",
+      "description": "Reveal radiant and healthy skin with Turmeric Soap, expertly formulated to harness the natural benefits of turmeric. This 100 g soap gently cleanses and exfoliates while delivering powerful anti-inflammatory and antioxidant properties. Known to brighten the complexion and soothe irritated skin, turmeric helps reduce redness and promote an even skin tone. It's rich, creamy lather nourishes deeply, leaving your skin soft, refreshed, and glowing. Perfect for daily use, Turmeric Soap offers a natural and effective skincare ritual rooted in tradition.",
+      "id": "79f4daba-65a5-48cb-bda7-ad3004373f47",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752652085/product_images/TURMERIC%20-%20SOAP%20100%20GRAM%20-%201-1752652084745.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752652085/product_images/TURMERIC%20-%20SOAP%20100%20GRAM%20-%202-1752652084746.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752652085/product_images/TURMERIC%20-%20SOAP%20100%20GRAM%20-%203-1752652084747.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752652085/product_images/TURMERIC%20-%20SOAP%20100%20GRAM%20-%204-1752652084747.jpg"
+      ],
+      "name": "Banafa TURMERIC Soap 100G",
+      "price": {
+        "amount": 11,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏11.00 د.إ.‏",
+          "withoutCurrency": "11.00"
+        },
+        "parts": {
+          "whole": 11,
+          "subUnit": 0,
+          "smallestUnit": 1100
+        }
+      },
+      "quantity": 12,
+      "rating": 0,
+      "createdAt": "2025-07-16T07:48:04.718Z",
+      "updatedAt": "2025-07-16T07:48:04.718Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Soap",
+      "description": "Elevate your skincare ritual with Frankincense Soap, a 100 g bar infused with the timeless essence of frankincense resin. Known for its calming and rejuvenating properties, this soap gently cleanses while promoting a sense of relaxation and well-being. It's rich, creamy lather nourishes your skin, leaving it soft, smooth, and delicately scented with the warm, resinous aroma of frankincense. Perfect for daily use, this soap offers a spa-like experience in the comfort of your home.",
+      "id": "2cf4984f-0ec9-4ade-a970-210c182d5002",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752651866/product_images/FRANKINCENSE-%20SOAP%20100%20GRAM%20-%201-1752651865248.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752651866/product_images/FRANKINCENSE-%20SOAP%20100%20GRAM%20-%202-1752651865249.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752651866/product_images/FRANKINCENSE-%20SOAP%20100%20GRAM%20-%203-1752651865249.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752651866/product_images/FRANKINCENSE-%20SOAP%20100%20GRAM%20-%204-1752651865249.jpg"
+      ],
+      "name": "Banafa FRANKINCENSE Soap 100G",
+      "price": {
+        "amount": 11,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏11.00 د.إ.‏",
+          "withoutCurrency": "11.00"
+        },
+        "parts": {
+          "whole": 11,
+          "subUnit": 0,
+          "smallestUnit": 1100
+        }
+      },
+      "quantity": 12,
+      "rating": 0,
+      "createdAt": "2025-07-16T07:44:25.231Z",
+      "updatedAt": "2025-07-16T07:49:02.114Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Soap",
+      "description": "Refresh your skin with the invigorating scent of Valance Soap. This 80 g bar gently cleanses while leaving behind a crisp, uplifting fragrance of citrus and subtle floral notes. Its creamy lather nourishes and softens, making it perfect for daily use. Experience the perfect balance of freshness and care with Valance Soap.\r\n",
+      "id": "48465518-78ff-4425-98c2-7e55cc0f746e",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752651677/product_images/VALANCE-1752651676485.png"
+      ],
+      "name": "Banafa VALANCE Soap 80G",
+      "price": {
+        "amount": 10.5,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏10.50 د.إ.‏",
+          "withoutCurrency": "10.50"
+        },
+        "parts": {
+          "whole": 10,
+          "subUnit": 50,
+          "smallestUnit": 1050
+        }
+      },
+      "quantity": 12,
+      "rating": 0,
+      "createdAt": "2025-07-16T07:41:16.470Z",
+      "updatedAt": "2025-07-16T07:41:16.470Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Soap",
+      "description": "Harness the natural brightening and anti-inflammatory power of Turmeric Soap. Known for its ability to enhance skin’s radiance and soothe irritation, turmeric is a prized ingredient in skincare. This 80 g soap gently cleanses while promoting a healthy, glowing complexion. Perfect for daily use, it revitalises your skin with the purity and healing benefits of turmeric.",
+      "id": "9fa48679-e427-4176-bbbf-dc2aad694d86",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752651580/product_images/TURMERIC-1752651580314.jpg"
+      ],
+      "name": "Banafa TURMERIC Soap 80G",
+      "price": {
+        "amount": 10.5,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏10.50 د.إ.‏",
+          "withoutCurrency": "10.50"
+        },
+        "parts": {
+          "whole": 10,
+          "subUnit": 50,
+          "smallestUnit": 1050
+        }
+      },
+      "quantity": 12,
+      "rating": 0,
+      "createdAt": "2025-07-16T07:39:40.286Z",
+      "updatedAt": "2025-07-16T07:39:40.286Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Soap",
+      "description": "Harness the natural power of Turmeric & Myrrh Soap, crafted to gently exfoliate and nourish your skin. Enriched with turmeric’s brightening and anti-inflammatory properties and the calming essence of myrrh, this 80 g soap revitalizes your complexion while soothing irritation. Its creamy lather cleanses deeply, leaving your skin soft, radiant, and refreshed. Perfect for daily care, this soap blends tradition and skincare science for a healthy, glowing glow.",
+      "id": "06406d89-e0f6-4cd4-90cd-ba49d8f61914",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752651451/product_images/TURMERIC%20AND%20MRHH-1752651450609.jpg"
+      ],
+      "name": "Banafa TURMERIC AND MYRRH Soap 80G",
+      "price": {
+        "amount": 10.5,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏10.50 د.إ.‏",
+          "withoutCurrency": "10.50"
+        },
+        "parts": {
+          "whole": 10,
+          "subUnit": 50,
+          "smallestUnit": 1050
+        }
+      },
+      "quantity": 12,
+      "rating": 0,
+      "createdAt": "2025-07-16T07:37:30.593Z",
+      "updatedAt": "2025-07-16T07:37:30.593Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Soap",
+      "description": "Immerse yourself in the luxurious aroma of SMO Al Oud Soap, a premium 80 g bar infused with the deep, woody essence of precious oud. This soap gently cleanses while enveloping your skin in a warm, smoky fragrance that lingers long after use. Its creamy lather nourishes and softens, making every wash a rich, indulgent experience. Perfect for daily use, SMO Al Oud Soap brings timeless elegance to your skincare routine.",
+      "id": "458504d0-2d79-44ae-9f03-d282df01d293",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752646098/product_images/smo%20al%20oud-1752646097779.jpg"
+      ],
+      "name": "Banafa SMO AL OUD Soap 80G",
+      "price": {
+        "amount": 10.5,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏10.50 د.إ.‏",
+          "withoutCurrency": "10.50"
+        },
+        "parts": {
+          "whole": 10,
+          "subUnit": 50,
+          "smallestUnit": 1050
+        }
+      },
+      "quantity": 12,
+      "rating": 0,
+      "createdAt": "2025-07-16T06:08:17.763Z",
+      "updatedAt": "2025-07-16T07:36:10.015Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Soap",
+      "description": "Elevate your daily cleansing routine with Sheek Soap, an 80 g bar crafted to deliver a smooth and refreshing cleanse. Featuring a refined fragrance and a rich, creamy lather, this soap gently purifies your skin while leaving it soft, hydrated, and subtly scented. Perfect for those who appreciate sophistication and simplicity in their skincare essentials.",
+      "id": "5953adcf-5afd-4c35-9bda-e7f70b65d76f",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752645878/product_images/SHEEK-1752645878458.jpg"
+      ],
+      "name": "Banafa SHEEK Sopa 80G",
+      "price": {
+        "amount": 10.5,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏10.50 د.إ.‏",
+          "withoutCurrency": "10.50"
+        },
+        "parts": {
+          "whole": 10,
+          "subUnit": 50,
+          "smallestUnit": 1050
+        }
+      },
+      "quantity": 12,
+      "rating": 0,
+      "createdAt": "2025-07-16T06:04:38.445Z",
+      "updatedAt": "2025-07-16T07:35:58.910Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Soap",
+      "description": "Experience everyday freshness with Sama Soap, an 80 g bar designed to cleanse and nourish your skin gently. With its light, soothing fragrance and creamy lather, this soap leaves your skin feeling soft, refreshed, and delicately scented. Perfect for daily use, Sama Soap offers a simple yet effective way to maintain clean and healthy skin with a touch of subtle elegance.",
+      "id": "8fd1317a-5266-443e-ba18-95b0f9cda7c4",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752645784/product_images/SAMA-1752645782439.jpg"
+      ],
+      "name": "Banafa SAMA Soap 80G",
+      "price": {
+        "amount": 10.5,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏10.50 د.إ.‏",
+          "withoutCurrency": "10.50"
+        },
+        "parts": {
+          "whole": 10,
+          "subUnit": 50,
+          "smallestUnit": 1050
+        }
+      },
+      "quantity": 12,
+      "rating": 0,
+      "createdAt": "2025-07-16T06:03:02.422Z",
+      "updatedAt": "2025-07-16T07:35:39.938Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Soap",
+      "description": "Embrace the essence of oriental tradition with Sahalabath Al Sebo Soap, a luxurious 80 g bar crafted to cleanse, soften, and scent your skin. Infused with deep, musky tones and warm spice accents, this soap creates a rich lather that gently purifies while leaving a long-lasting, traditional fragrance. Perfect for daily use or special moments of indulgence, Sahalabath Al Sebo brings timeless Arabian charm to your skincare ritual.",
+      "id": "9a156772-bc5a-4a6c-9cea-38b3e03fc283",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752641566/product_images/SAHELABATH%20AL%20SEBO-1752641565905.jpg"
+      ],
+      "name": "Banafa SAHALABATH AL SEBO Soap 80G",
+      "price": {
+        "amount": 10.5,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏10.50 د.إ.‏",
+          "withoutCurrency": "10.50"
+        },
+        "parts": {
+          "whole": 10,
+          "subUnit": 50,
+          "smallestUnit": 1050
+        }
+      },
+      "quantity": 12,
+      "rating": 0,
+      "createdAt": "2025-07-16T04:52:45.893Z",
+      "updatedAt": "2025-07-16T07:35:28.610Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Soap",
+      "description": "Wrap your skin in the delicate beauty of Rosemoon Soap, a luxurious 80 g bar infused with the gentle essence of blooming roses. Its rich, creamy lather cleanses and nourishes while leaving behind a soft floral fragrance that soothes the senses. Perfect for daily use, Rosemoon Soap transforms your bathing routine into a calming, fragrant escape — leaving your skin smooth, fresh, and lightly perfumed with timeless elegance.",
+      "id": "405a9f5f-6031-4130-9340-94455a8dbc08",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752587762/product_images/rose%20moon-1752587761886.jpg"
+      ],
+      "name": "Banafa ROSE MOON Soap 80G",
+      "price": {
+        "amount": 10.5,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏10.50 د.إ.‏",
+          "withoutCurrency": "10.50"
+        },
+        "parts": {
+          "whole": 10,
+          "subUnit": 50,
+          "smallestUnit": 1050
+        }
+      },
+      "quantity": 12,
+      "rating": 0,
+      "createdAt": "2025-07-15T13:56:01.870Z",
+      "updatedAt": "2025-07-16T07:35:18.435Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Soap",
+      "description": "Command attention with the confident and invigorating scent of Ramsey Soap. This 80 g bar is designed for a deep, refreshing cleanse, leaving your skin feeling revitalised and energised. Infused with masculine aromatic notes and a touch of woody spice, it creates a rich lather that gently purifies without drying. Perfect for daily use, Ramsey Soap delivers a clean, powerful fragrance and a fresh start to every day.",
+      "id": "f2d3225f-db9e-456d-8539-540187cc2f1a",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752587339/product_images/RAMSEY-1752587339560.jpg"
+      ],
+      "name": "Banafa RAMSEY Soap 80G",
+      "price": {
+        "amount": 10.5,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏10.50 د.إ.‏",
+          "withoutCurrency": "10.50"
+        },
+        "parts": {
+          "whole": 10,
+          "subUnit": 50,
+          "smallestUnit": 1050
+        }
+      },
+      "quantity": 12,
+      "rating": 0,
+      "createdAt": "2025-07-15T13:48:59.542Z",
+      "updatedAt": "2025-07-16T07:35:06.038Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Soap",
+      "description": "Add a touch of elegance to your skincare routine with Nanci Soap, a gentle 80 g bar that cleanses and pampers your skin. Infused with a soft, feminine fragrance combining light florals and a hint of sweetness, it creates a rich lather that leaves your skin feeling smooth, refreshed, and beautifully scented. Perfect for everyday use, Nanci Soap offers a graceful blend of freshness and charm in every wash.",
+      "id": "fbf080c4-c703-494b-941e-15128e7f9ab8",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752586775/product_images/NANCI-1752586774989.jpg"
+      ],
+      "name": "Banafa NANCI Soap 80G",
+      "price": {
+        "amount": 10.5,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏10.50 د.إ.‏",
+          "withoutCurrency": "10.50"
+        },
+        "parts": {
+          "whole": 10,
+          "subUnit": 50,
+          "smallestUnit": 1050
+        }
+      },
+      "quantity": 12,
+      "rating": 0,
+      "createdAt": "2025-07-15T13:39:34.970Z",
+      "updatedAt": "2025-07-16T07:34:54.027Z",
+      "gender": "FEMALE",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Soap",
+      "description": "Indulge in the rich elegance of M.Oud Soap, an 80 g bar infused with the deep, captivating essence of oud. Known for its warm, woody, and slightly smoky aroma, this soap gently cleanses while enveloping your skin in a luxurious lather. The long-lasting fragrance leaves a bold, sophisticated trail, making every wash a moment of indulgence. Perfect for daily use, M.Oud Soap blends tradition and refinement for a truly premium bathing experience.",
+      "id": "baac9c09-0ec9-4ba7-be6d-f049c428e001",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752586017/product_images/M-1752586016540.jpg"
+      ],
+      "name": "Banafa M.OUD Soap 80G",
+      "price": {
+        "amount": 10.5,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏10.50 د.إ.‏",
+          "withoutCurrency": "10.50"
+        },
+        "parts": {
+          "whole": 10,
+          "subUnit": 50,
+          "smallestUnit": 1050
+        }
+      },
+      "quantity": 12,
+      "rating": 0,
+      "createdAt": "2025-07-15T13:26:56.523Z",
+      "updatedAt": "2025-07-16T07:34:42.914Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Soap",
+      "description": "Elevate your cleansing routine with the rich, masculine essence of Leathery Soap. Crafted with care, this 80 g bar soap delivers a deep, refreshing cleanse while leaving a bold, lingering scent of warm leather, subtle spices, and woody undertones. It's smooth lather gently purifies the skin without drying, making it ideal for everyday use. Leathery Soap is the perfect blend of rugged sophistication and skin-loving care.",
+      "id": "93d8feac-d152-44c0-85d9-314a5bb2b2e4",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752585915/product_images/LEATHERY-1752585915630.jpg"
+      ],
+      "name": "Banafa LEATHERY Soap 80G",
+      "price": {
+        "amount": 10.5,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏10.50 د.إ.‏",
+          "withoutCurrency": "10.50"
+        },
+        "parts": {
+          "whole": 10,
+          "subUnit": 50,
+          "smallestUnit": 1050
+        }
+      },
+      "quantity": 12,
+      "rating": 0,
+      "createdAt": "2025-07-15T13:25:15.613Z",
+      "updatedAt": "2025-07-16T07:34:30.840Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Soap",
+      "description": "Brighten your skincare routine with the refreshing charm of Helo Lita Soap. This 80 g bar gently cleanses the skin, leaving it soft, smooth, and lightly scented with a playful, fruity-floral fragrance. Perfect for daily use, its creamy lather and skin-friendly formula provide a refreshing cleanse while adding a touch of joy to every bath. With Helo Lita, every wash feels like a fresh, uplifting moment.",
+      "id": "01ca2a2f-8da2-43be-a8d1-dd3e325fb42c",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752585763/product_images/HELO%20LITA-1752585762845.jpg"
+      ],
+      "name": "Banafa HELO LITA Soap 80 G",
+      "price": {
+        "amount": 10.5,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏10.50 د.إ.‏",
+          "withoutCurrency": "10.50"
+        },
+        "parts": {
+          "whole": 10,
+          "subUnit": 50,
+          "smallestUnit": 1050
+        }
+      },
+      "quantity": 12,
+      "rating": 0,
+      "createdAt": "2025-07-15T13:22:42.830Z",
+      "updatedAt": "2025-07-16T07:24:51.688Z",
+      "gender": "FEMALE",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Soap",
+      "description": "Transport yourself to the heart of nature with Amazon Soap, an 80 g bar crafted to cleanse, nourish, and revive your skin. Infused with natural botanical extracts inspired by the lush Amazon rainforest, this soap gently removes impurities while providing deep hydration. It creates a rich, creamy lather and leaves behind a fresh, invigorating scent that evokes green foliage, soft florals, and a hint of earthy warmth. Delicate enough for daily use, Amazon Soap is your natural escape to exotic freshness and radiant skin.",
+      "id": "e4ad3292-c002-4b44-939e-064c2eeb8046",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752583296/product_images/AMAZON-1752583295669.jpg"
+      ],
+      "name": "Banafa AMAZON Soap 80 G",
+      "price": {
+        "amount": 10.5,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏10.50 د.إ.‏",
+          "withoutCurrency": "10.50"
+        },
+        "parts": {
+          "whole": 10,
+          "subUnit": 50,
+          "smallestUnit": 1050
+        }
+      },
+      "quantity": 12,
+      "rating": 0,
+      "createdAt": "2025-07-15T12:41:35.650Z",
+      "updatedAt": "2025-07-16T07:24:29.125Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Soap",
+      "description": "Indulge your skin with the soft, luxurious lather of Al Amora Soap, delicately crafted to cleanse and nourish. Enriched with soothing ingredients and a subtle, elegant fragrance, this 80 g soap leaves your skin feeling refreshed, smooth, and beautifully scented. Gentle enough for daily use, Al Amora offers a moment of self-care wrapped in timeless elegance.",
+      "id": "d0826409-fe16-416e-867a-3065f203e52b",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752582413/product_images/AL%20AMORA-1752582412616.jpg"
+      ],
+      "name": "Banafa AL AMORA Soap 80G",
+      "price": {
+        "amount": 10.5,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏10.50 د.إ.‏",
+          "withoutCurrency": "10.50"
+        },
+        "parts": {
+          "whole": 10,
+          "subUnit": 50,
+          "smallestUnit": 1050
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-15T12:26:52.602Z",
+      "updatedAt": "2025-07-16T07:23:30.500Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Home Care",
+      "description": "Transform your living space into a fragrant sanctuary with our Home Fragrance Set, featuring an exquisite collection of scent essentials. This set includes traditional Bakhoor to infuse your home with rich, smoky aromas; a refreshing Air Freshener for instant uplift; a stylish Diffuser that gently disperses calming fragrances; and more carefully selected accessories to create a harmonious and inviting atmosphere. Perfect for gifting or personal use, this set brings warmth, elegance, and a touch of luxury to every corner of your home.",
+      "id": "f931f65b-cde8-4b6b-b832-ef0ee23c35ac",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752582013/product_images/WHITE%201%20-%20Copy-1752582012508.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752582013/product_images/WHITE%201-1752582012510.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752582013/product_images/IMG_8953s%20copy-1752582012510.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752582013/product_images/IMG_8945s%20copy-1752582012516.jpg"
+      ],
+      "name": "Banafa WHITE BOX Fragrance Set",
+      "price": {
+        "amount": 125,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏125.00 د.إ.‏",
+          "withoutCurrency": "125.00"
+        },
+        "parts": {
+          "whole": 125,
+          "subUnit": 0,
+          "smallestUnit": 12500
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T12:20:12.476Z",
+      "updatedAt": "2025-07-16T07:21:44.592Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Home Care",
+      "description": "Transform your living space into a fragrant sanctuary with our Home Fragrance Set, featuring an exquisite collection of scent essentials. This set includes traditional Bakhoor to infuse your home with rich, smoky aromas; a refreshing Air Freshener for instant uplift; a stylish Diffuser that gently disperses calming fragrances; and more carefully selected accessories to create a harmonious and inviting atmosphere. Perfect for gifting or personal use, this set brings warmth, elegance, and a touch of luxury to every corner of your home.",
+      "id": "6b029906-1bef-4f96-afde-d66523bdce54",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752581326/product_images/BLUE%201%20-%20Copy-1752581325853.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752581327/product_images/BLUE%201-1752581325854.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752581326/product_images/BLUE%202-1752581325854.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752581326/product_images/IMG_8908s%20copy-1752581325856.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752581326/product_images/IMG_8915s%20copy-1752581325856.jpg"
+      ],
+      "name": "Banafa BLUE BOX Fragrance Set",
+      "price": {
+        "amount": 125,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏125.00 د.إ.‏",
+          "withoutCurrency": "125.00"
+        },
+        "parts": {
+          "whole": 125,
+          "subUnit": 0,
+          "smallestUnit": 12500
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T12:08:45.838Z",
+      "updatedAt": "2025-07-16T07:21:32.790Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Experience the ultimate indulgence with the White Silk Beauty Box, a curated collection designed to envelop your senses in softness and sophistication. Inspired by the smooth and delicate texture of white silk, this beauty box features fragranced products that gently nourish your skin while leaving a subtle, elegant scent. Perfect for gifting or treating yourself, the White Silk Beauty Box adds a touch of refined luxury to your skincare routine.",
+      "id": "51bfc19e-f8da-4e51-976f-2ae7962c179e",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752580815/product_images/WHITE%20SILK%202-1752580814647.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752580815/product_images/WHITE%20SILK%203-1752580814648.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752580816/product_images/WHITE%20SILK-1752580814648.jpg"
+      ],
+      "name": "Banafa White Silk Beauty Box",
+      "price": {
+        "amount": 125,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏125.00 د.إ.‏",
+          "withoutCurrency": "125.00"
+        },
+        "parts": {
+          "whole": 125,
+          "subUnit": 0,
+          "smallestUnit": 12500
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T12:00:14.620Z",
+      "updatedAt": "2025-07-16T07:19:59.584Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Indulge in the sweet and floral delight of the Beauty Box – Vanilla Rose, a carefully curated collection inspired by the warm, creamy notes of vanilla blended with the soft elegance of fresh roses. This beautifully packaged set offers a selection of fragrant products designed to pamper your skin and uplift your senses. Perfect as a gift or a personal treat, the Vanilla Rose Beauty Box brings a touch of romance and luxury to your daily routine.",
+      "id": "a6409cc1-ed69-4f09-a31f-10aa1b102cd0",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752580620/product_images/VANILLA%20ROSE%202-1752580619394.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752580620/product_images/VANILLA%20ROSE%203-1752580619394.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752580620/product_images/VANILLA%20ROSE-1752580619394.jpg"
+      ],
+      "name": "Banafa VANILLA ROSE Beauty box",
+      "price": {
+        "amount": 125,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏125.00 د.إ.‏",
+          "withoutCurrency": "125.00"
+        },
+        "parts": {
+          "whole": 125,
+          "subUnit": 0,
+          "smallestUnit": 12500
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T11:56:59.382Z",
+      "updatedAt": "2025-07-16T07:19:32.242Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Indulge in the luxurious fusion of warm oud and creamy chocolate with the Beauty Box – Oud Chocolate. This curated collection features beautifully crafted products that combine the deep, smoky richness of precious oud with the sweet, velvety notes of chocolate. Perfect for pampering yourself or gifting to someone special, the Oud Chocolate Beauty Box offers a sensuous and unforgettable experience for your skin and senses.",
+      "id": "ff962d67-12dd-4187-8884-eb28d1b806e9",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752580007/product_images/OUD%20CHOCOLATE%202-1752580005619.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752580006/product_images/OUD%20CHOCOLATE%203-1752580005620.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752580007/product_images/OUD%20CHOCOLATE-1752580005620.jpg"
+      ],
+      "name": "Banafa OUD CHOCOLATE Beauty Box",
+      "price": {
+        "amount": 125,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏125.00 د.إ.‏",
+          "withoutCurrency": "125.00"
+        },
+        "parts": {
+          "whole": 125,
+          "subUnit": 0,
+          "smallestUnit": 12500
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T11:46:45.605Z",
+      "updatedAt": "2025-07-16T07:19:21.040Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Delight in the essence of elegance with the Beauty Box – Bierut Flower, a curated collection inspired by the fresh and floral notes of Beirut’s blooming gardens. This beautifully packaged box includes a selection of fragranced products designed to pamper your skin and uplift your senses. Perfect as a thoughtful gift or a personal treat, the Bierut Flower Beauty Box offers a harmonious blend of freshness, charm, and sophistication.",
+      "id": "e63acb8b-4faa-48ca-abe3-4795dc449141",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752579400/product_images/BEIRUT%20FLOWER%202-1752579398720.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752579399/product_images/BEIRUT%20FLOWER%203-1752579398722.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752579400/product_images/BEIRUT%20FLOWER-1752579398723.jpg"
+      ],
+      "name": "Banafa BIERUT FLOWER Beauty Box",
+      "price": {
+        "amount": 125,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏125.00 د.إ.‏",
+          "withoutCurrency": "125.00"
+        },
+        "parts": {
+          "whole": 125,
+          "subUnit": 0,
+          "smallestUnit": 12500
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T11:36:38.704Z",
+      "updatedAt": "2025-07-16T07:19:09.183Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Home Care",
+      "description": "Let serenity fill your space with the calming essence of the Thalia Candle. This beautifully balanced fragrance combines fresh florals, a hint of citrus, and warm musk to create a soft, elegant ambience. Ideal for quiet evenings, self-care rituals, or simply elevating your everyday environment, Thalia Candle brings a sense of harmony, beauty, and refined tranquillity to any room.",
+      "id": "a721aa1e-ff72-4827-8c17-0fe99ee51a37",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752578880/product_images/IMG_7468a01%20copy-1752578879271.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752578880/product_images/IMG_7468aaaaaa%20copy-1752578879272.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752578880/product_images/THALIA-1752578879272.jpg"
+      ],
+      "name": "Banafa TALIA Candle ",
+      "price": {
+        "amount": 78,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏78.00 د.إ.‏",
+          "withoutCurrency": "78.00"
+        },
+        "parts": {
+          "whole": 78,
+          "subUnit": 0,
+          "smallestUnit": 7800
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T11:27:59.255Z",
+      "updatedAt": "2025-07-16T07:17:51.118Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Home Care",
+      "description": "Celebrate the beauty of spring with the gentle fragrance of Sakura Bloom Candle. Inspired by the fleeting charm of cherry blossoms, this candle fills your space with soft floral notes and subtle hints of fresh greenery. Perfect for creating a serene and uplifting atmosphere, Sakura Bloom Candle brings a touch of nature’s grace and tranquility to your home",
+      "id": "1db8bbd8-e257-4658-88a0-1771c4fab0eb",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752577525/product_images/IMG_7468a01%20copy-1752577524132.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752577525/product_images/IMG_7468aaaaaa%20copy-1752577524132.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752577525/product_images/SAKURA%20BLOOM-1752577524132.jpg"
+      ],
+      "name": "Banafa SAKURA BLOOM Candle",
+      "price": {
+        "amount": 78,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏78.00 د.إ.‏",
+          "withoutCurrency": "78.00"
+        },
+        "parts": {
+          "whole": 78,
+          "subUnit": 0,
+          "smallestUnit": 7800
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T11:05:24.120Z",
+      "updatedAt": "2025-07-16T07:14:49.932Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Home Care",
+      "description": "Treat yourself to the delightful scent of Frozen Cupcake Candle, a playful blend of sweet vanilla frosting, creamy butter, and a hint of fresh berries. This candle fills your space with a mouthwatering aroma that’s perfect for adding a cozy and cheerful vibe to any room. Whether for a special occasion or everyday indulgence, Frozen Cupcake Candle brings warmth and sweetness to your home.",
+      "id": "24ca780d-69f0-49ec-8cb8-0e1ed50e1b9f",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752575806/product_images/FROZEN%20CUPCAKE-1752575805951.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752575806/product_images/IMG_7468a01%20copy-1752575805951.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752575806/product_images/IMG_7468aaaaaa%20copy-1752575805951.jpg"
+      ],
+      "name": "Banafa FROZEN CUPCAKE Candle",
+      "price": {
+        "amount": 78,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏78.00 د.إ.‏",
+          "withoutCurrency": "78.00"
+        },
+        "parts": {
+          "whole": 78,
+          "subUnit": 0,
+          "smallestUnit": 7800
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T10:36:45.937Z",
+      "updatedAt": "2025-07-16T07:14:38.527Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Home Care",
+      "description": "Illuminate your space with the elegant glow of the FABI Candle, a beautifully crafted scent designed to create a calming and inviting atmosphere. With soft floral and subtle woody notes, this candle soothes your senses while adding a touch of sophistication to any room. Perfect for relaxation or setting a serene mood, FABI Candle fills your home with gentle warmth and lasting fragrance.",
+      "id": "c93e29ce-13a7-4fd6-9f84-495860259eb5",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752570336/product_images/FABI%202-1752570335468.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752570336/product_images/FABI-1752570335469.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752570336/product_images/IMG_7468aaaaaa%20copy-1752570335469.jpg"
+      ],
+      "name": "Banafa FABI Candles ",
+      "price": {
+        "amount": 78,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏78.00 د.إ.‏",
+          "withoutCurrency": "78.00"
+        },
+        "parts": {
+          "whole": 78,
+          "subUnit": 0,
+          "smallestUnit": 7800
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T09:05:35.450Z",
+      "updatedAt": "2025-07-16T07:14:25.691Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Home Care",
+      "description": "Fill your space with the warm and sweet aroma of CHERRY VANILLA Candle, where luscious cherries meet creamy vanilla in perfect harmony. This delightful candle creates a cosy atmosphere, evoking feelings of comfort and relaxation. Ideal for unwinding after a long day or adding a touch of sweetness to any room, it burns cleanly to fill your home with an inviting, long-lasting fragrance.",
+      "id": "bbea1832-70c1-4d3b-b49d-e50f18215553",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752570082/product_images/CHERRY%20VANILLA-1752570081686.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752570082/product_images/IMG_7468a01%20copy-1752570081686.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752570083/product_images/IMG_7468aaaaaa%20copy-1752570081686.jpg"
+      ],
+      "name": "Banafa CHERRY VANILLA Candle ",
+      "price": {
+        "amount": 78,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏78.00 د.إ.‏",
+          "withoutCurrency": "78.00"
+        },
+        "parts": {
+          "whole": 78,
+          "subUnit": 0,
+          "smallestUnit": 7800
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T09:01:21.643Z",
+      "updatedAt": "2025-07-16T07:15:40.949Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Home Care",
+      "description": "A tribute to timeless Arabian tradition, Taiba Bakhoor blends rich oud, soft musk, and sweet floral notes to create a deeply comforting fragrance. Its luxurious scent gently lingers in the air, bringing warmth, elegance, and a sense of spiritual calm. Perfect for home gatherings, special occasions, or daily rituals, Taiba Bakhoor leaves a lasting impression of refined beauty and serenity.",
+      "id": "86cc7462-e791-44e7-ad9c-17a15e5d9ba5",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752569835/product_images/Taiba%20-%20Bakhoor%20-%201-1752569834336.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752569835/product_images/Taiba%20-%20Bakhoor%20-%203-1752569834337.jpg"
+      ],
+      "name": "Banafa TAIBA Bakhoor 45G",
+      "price": {
+        "amount": 26,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏26.00 د.إ.‏",
+          "withoutCurrency": "26.00"
+        },
+        "parts": {
+          "whole": 26,
+          "subUnit": 0,
+          "smallestUnit": 2600
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T08:57:14.322Z",
+      "updatedAt": "2025-07-16T07:10:19.081Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Home Care",
+      "description": "Inspired by the rich heritage of Salalah, this bakhoor carries the essence of nature’s finest aromatic resins, soft woods, and sweet oriental spices. Salalah Bakhoor fills the air with a warm, earthy, and slightly sweet fragrance that reflects the spirit of tradition and hospitality. Perfect for creating a serene and inviting ambiance at home or during special gatherings.",
+      "id": "b50ac9b1-6da4-4ff1-963d-a65b5cdd2494",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752569673/product_images/Salalaha%20-%20Bakhoor%20-%201-1752569671799.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752569672/product_images/Salalaha%20-%20Bakhoor%20-%202-1752569671799.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752569673/product_images/Salalaha%20-%20Bakhoor%20-%203-1752569671799.jpg"
+      ],
+      "name": "Banafa SALALAH Bakhoor 45G",
+      "price": {
+        "amount": 26,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏26.00 د.إ.‏",
+          "withoutCurrency": "26.00"
+        },
+        "parts": {
+          "whole": 26,
+          "subUnit": 0,
+          "smallestUnit": 2600
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T08:54:31.786Z",
+      "updatedAt": "2025-07-16T07:10:02.787Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Home Care",
+      "description": "Experience the soft charm of Sahla Bakhoor, a delicate fusion of sweet florals, soft musk, and warm oriental notes. Designed to gently perfume your space, Sahla Bakhoor offers a soothing, elegant aroma perfect for daily use or special gatherings. Its refined fragrance creates a calm, welcoming atmosphere, making every moment feel special.",
+      "id": "40a36202-7cef-462e-a926-1da6474ff150",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752568991/product_images/Shahla%20-%20Bakhoor%20-%201-1752568989974.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752568991/product_images/Shahla%20-%20Bakhoor%20-%202-1752568989974.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752568991/product_images/Shahla%20-%20Bakhoor%20-%203-1752568989974.jpg"
+      ],
+      "name": "Banafa SHAHLA Bakhoor 45G",
+      "price": {
+        "amount": 26,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏26.00 د.إ.‏",
+          "withoutCurrency": "26.00"
+        },
+        "parts": {
+          "whole": 26,
+          "subUnit": 0,
+          "smallestUnit": 2600
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T08:43:09.950Z",
+      "updatedAt": "2025-07-16T07:09:49.299Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Home Care",
+      "description": "Immerse your senses in the rich, captivating aroma of Jaziel Bakhoor. Crafted with a luxurious blend of aromatic woods, natural resins, fine oud, and oriental spices, this bakhoor releases a warm, long-lasting fragrance that fills your space with a sense of elegance and tranquillity. Ideal for special occasions or daily home rituals, Jaziel Bakhoor creates an inviting ambience, leaving a signature scent that lingers beautifully.",
+      "id": "dac435c7-5b30-45d5-b41f-946be4ed7505",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752568304/product_images/Jaziel%20-%20Bakhoor%20-%201-1752568303547.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752568304/product_images/Jaziel%20-%20Bakhoor%20-%202-1752568303547.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752568304/product_images/Jaziel%20-%20Bakhoor%20-%203-1752568303548.jpg"
+      ],
+      "name": "Banafa JAZIEL Bakhoor 45G",
+      "price": {
+        "amount": 26,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏26.00 د.إ.‏",
+          "withoutCurrency": "26.00"
+        },
+        "parts": {
+          "whole": 26,
+          "subUnit": 0,
+          "smallestUnit": 2600
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T08:31:43.531Z",
+      "updatedAt": "2025-07-16T07:09:21.250Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Immerse your surroundings in the captivating aroma of Rajwa Bakhoor, a premium blend of rich oud, sweet amber, and delicate floral notes. This 42 g bakhoor releases a warm, inviting fragrance that transforms any space into a serene and luxurious haven. Perfect for special occasions or everyday indulgence, Rajwa infuses your home with timeless elegance and a touch of mystique.\r\n",
+      "id": "4b5a0c33-9dd1-4bd6-9caa-43ff9adb7589",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752566929/product_images/Rajwa%20-%20Bakhoor%20-%201-1752566928181.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752566929/product_images/Rajwa%20-%20Bakhoor%20-%202-1752566928181.jpg"
+      ],
+      "name": "Banafa RAJWA Bakhoor 42 g",
+      "price": {
+        "amount": 16,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏16.00 د.إ.‏",
+          "withoutCurrency": "16.00"
+        },
+        "parts": {
+          "whole": 16,
+          "subUnit": 0,
+          "smallestUnit": 1600
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T08:08:48.169Z",
+      "updatedAt": "2025-07-16T07:08:24.177Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Home Care",
+      "description": "Experience the deep, exotic allure of HAWA SHARKI Bakhoor, a luxurious blend that transports you to the heart of the East. This premium bakhoor releases warm, smoky notes intertwined with rich spices, sweet amber, and hints of precious woods. Perfect for creating a cosy and inviting ambience, HAWA SHARKI fills your space with timeless elegance and mystery. Packaged in a 42 g pack, it’s ideal for elevating your home or special gatherings with captivating fragrance",
+      "id": "aa2f4e92-7b2f-4887-96c8-0a82251dbc13",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752566600/product_images/Hawa%20Sharki%20%20-%20Bakhoor%20-%201-1752566599483.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752566600/product_images/Hawa%20Sharki%20%20-%20Bakhoor%20-%202-1752566599483.jpg"
+      ],
+      "name": "Banafa HAWA SHARKI Bakhoor 42G",
+      "price": {
+        "amount": 16,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏16.00 د.إ.‏",
+          "withoutCurrency": "16.00"
+        },
+        "parts": {
+          "whole": 16,
+          "subUnit": 0,
+          "smallestUnit": 1600
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T08:03:19.455Z",
+      "updatedAt": "2025-07-16T07:07:46.718Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Home Care",
+      "description": "Immerse your space in the enchanting aroma of BAKHOOR HAWA BAHRI, a luxurious blend inspired by the fresh sea breeze. This premium bakhoor releases captivating notes of salty air, aromatic woods, and subtle floral hints, creating a serene and uplifting atmosphere in any room. Perfect for special occasions or daily relaxation, HAWA BAHRI fills your home with warmth and elegance. Presented in a 42 g pack, it’s your gateway to a soothing sensory experience.",
+      "id": "184fc8b2-fdb4-43a4-9e82-16ed04d042c7",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752566275/product_images/Hawa%20Bahri%20-%20Bakhoor%20-%201-1752566274495.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752566275/product_images/Hawa%20Bahri%20-%20Bakhoor%20-%202-1752566274495.jpg"
+      ],
+      "name": "Banafa HAWA BAHRI Bakhoor 42G",
+      "price": {
+        "amount": 16,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏16.00 د.إ.‏",
+          "withoutCurrency": "16.00"
+        },
+        "parts": {
+          "whole": 16,
+          "subUnit": 0,
+          "smallestUnit": 1600
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-15T07:57:54.475Z",
+      "updatedAt": "2025-07-16T07:07:32.882Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Pamper your skin with the luxurious softness of WHITE SILK Scrub Soap, specially formulated to gently exfoliate and nourish. This 100 g soap combines fine scrubbing particles with moisturizing ingredients to remove dead skin cells and reveal a silky-smooth, radiant complexion. Its delicate, clean fragrance leaves your skin feeling refreshed and beautifully scented. Ideal for daily use, WHITE SILK Scrub Soap transforms your skincare routine into a silky indulgence.",
+      "id": "b119daf3-b1f0-4873-acab-f65489712419",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752565127/product_images/WHITE%20SILK-%20100%20GRAM%20BODY%20SCRUB%20-%201-1752565126394.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752565127/product_images/WHITE%20SILK-%20100%20GRAM%20BODY%20SCRUB%20-%202-1752565126395.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752565127/product_images/WHITE%20SILK-%20100%20GRAM%20BODY%20SCRUB%20-%203-1752565126396.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752565127/product_images/WHITE%20SILK-%20100%20GRAM%20BODY%20SCRUB%20-%204-1752565126398.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752565127/product_images/WHITE%20SILK-%20100%20GRAM%20BODY%20SCRUB%20-%205-1752565126398.jpg"
+      ],
+      "name": "Banafa WHITE SILK Body Scrub",
+      "price": {
+        "amount": 16,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏16.00 د.إ.‏",
+          "withoutCurrency": "16.00"
+        },
+        "parts": {
+          "whole": 16,
+          "subUnit": 0,
+          "smallestUnit": 1600
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-15T07:38:46.379Z",
+      "updatedAt": "2026-08-27T07:27:07.391Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Indulge your skin with the comforting blend of VANILLA ROSE Scrub Soap, where sweet vanilla meets delicate rose petals in a gentle exfoliating formula. This 100 g soap effectively removes dead skin cells while nourishing and hydrating, leaving your complexion soft, smooth, and beautifully fragrant. The warm, floral aroma creates a soothing and luxurious skincare experience, perfect for daily pampering. Treat yourself to radiant skin with every use of VANILLA ROSE Scrub Soap.",
+      "id": "eda6b2e9-d5e6-4fb4-9b9f-26931cf6f3ec",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752564515/product_images/VANILLA%20ROSE%20-%20100%20GRAM%20BODY%20SCRUB%20-%201-1752564514838.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752564515/product_images/VANILLA%20ROSE%20-%20100%20GRAM%20BODY%20SCRUB%20-%202-1752564514838.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752564516/product_images/VANILLA%20ROSE%20-%20100%20GRAM%20BODY%20SCRUB%20-%203-1752564514838.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752564515/product_images/VANILLA%20ROSE%20-%20100%20GRAM%20BODY%20SCRUB%20-%204-1752564514839.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752564515/product_images/VANILLA%20ROSE%20-%20100%20GRAM%20BODY%20SCRUB%20-%205-1752564514840.jpg"
+      ],
+      "name": "Banafa VANILLA ROSE Body Scrub And Cleanser 100G",
+      "price": {
+        "amount": 16,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏16.00 د.إ.‏",
+          "withoutCurrency": "16.00"
+        },
+        "parts": {
+          "whole": 16,
+          "subUnit": 0,
+          "smallestUnit": 1600
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-15T07:28:34.823Z",
+      "updatedAt": "2025-07-16T07:05:15.905Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Experience the powerful blend of nature with TURMERIC & MYRRH Scrub Soap, crafted to gently exfoliate and rejuvenate your skin. Enriched with turmeric’s brightening properties and the soothing essence of myrrh, this 100 g soap removes dead skin cells while nourishing and calming your complexion. Its natural ingredients help reduce inflammation and promote a healthy glow, leaving your skin soft, refreshed, and radiant. Ideal for daily use, TURMERIC & MYRRH Scrub Soap is your perfect partner for revitalised and glowing skin.",
+      "id": "30a61971-87e1-48ce-9a92-d3501d78fed1",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752563645/product_images/OUD%20CHOCOLATE-%20100%20GRAM%20BODY%20SCRUB%20-2-1752563644721.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752563645/product_images/OUD%20CHOCOLATE-%20100%20GRAM%20BODY%20SCRUB%20-4-1752563644721.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752563645/product_images/OUD%20CHOCOLATE-%20100%20GRAM%20BODY%20SCRUB%20-5-1752563644721.jpg"
+      ],
+      "name": "Banafa TURMERIC AND MYRRH Body Scrub And Cleanser 100g",
+      "price": {
+        "amount": 16,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏16.00 د.إ.‏",
+          "withoutCurrency": "16.00"
+        },
+        "parts": {
+          "whole": 16,
+          "subUnit": 0,
+          "smallestUnit": 1600
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-15T07:14:04.714Z",
+      "updatedAt": "2025-07-16T07:05:03.519Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Reveal glowing skin with ROSE MOON Scrub Soap, a gentle exfoliating cleanser infused with the soft essence of fresh roses. This 100 g soap delicately buffs away dead skin cells while nourishing and hydrating, leaving your complexion smooth, radiant, and beautifully scented. The subtle floral aroma provides a calming and luxurious experience, making it perfect for daily skincare rituals. Embrace softness and freshness with every use of ROSE MOON Scrub Soap",
+      "id": "ffbaf3fb-f0cb-49d2-9bef-3d1b8bc317ff",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752563216/product_images/ROSE%20MOON%20%20-%20100%20GRAM%20BODY%20SCRUB%20-%201-1752563215109.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752563216/product_images/ROSE%20MOON%20%20-%20100%20GRAM%20BODY%20SCRUB%20-%202-1752563215111.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752563216/product_images/ROSE%20MOON%20%20-%20100%20GRAM%20BODY%20SCRUB%20-%203-1752563215111.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752563216/product_images/ROSE%20MOON%20%20-%20100%20GRAM%20BODY%20SCRUB%20-%204-1752563215111.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752563216/product_images/ROSE%20MOON%20%20-%20100%20GRAM%20BODY%20SCRUB%20-%205-1752563215111.jpg"
+      ],
+      "name": "Banafa ROSE MOON Body Scrub And Cleanser 100 G",
+      "price": {
+        "amount": 16,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏16.00 د.إ.‏",
+          "withoutCurrency": "16.00"
+        },
+        "parts": {
+          "whole": 16,
+          "subUnit": 0,
+          "smallestUnit": 1600
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-15T07:06:55.088Z",
+      "updatedAt": "2025-07-16T07:04:52.375Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Indulge your skin with the luxurious blend of OUD CHOCOLATE Scrub Soap, where the deep, warm notes of precious oud meet the rich, creamy essence of chocolate. This exfoliating soap gently removes dead skin cells, revealing smoother, softer skin while moisturising and nourishing with natural ingredients. The intoxicating aroma creates a sensuous, spa-like experience every time you use it. Perfect for daily pampering, OUD CHOCOLATE Scrub Soap leaves your skin radiant, refreshed, and irresistibly fragrant.",
+      "id": "63227ad3-1a9e-4b41-ac23-f3568ae6cf8a",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752562483/product_images/OUD%20CHOCOLATE-%20100%20GRAM%20BODY%20SCRUB%20-2-1752562482930.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752562484/product_images/OUD%20CHOCOLATE-%20100%20GRAM%20BODY%20SCRUB%20-3-1752562482932.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752562484/product_images/OUD%20CHOCOLATE-%20100%20GRAM%20BODY%20SCRUB%20-4-1752562482932.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752562484/product_images/OUD%20CHOCOLATE-%20100%20GRAM%20BODY%20SCRUB%20-5-1752562482932.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752562483/product_images/OUD%20CHOCOLATE-%20100%20GRAM%20BODY%20SCRUB%20-6-1752562482932.jpg"
+      ],
+      "name": "Banafa OUD CHOCOLATE Body Scrub And Cleanser 100G",
+      "price": {
+        "amount": 16,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏16.00 د.إ.‏",
+          "withoutCurrency": "16.00"
+        },
+        "parts": {
+          "whole": 16,
+          "subUnit": 0,
+          "smallestUnit": 1600
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-15T06:54:42.898Z",
+      "updatedAt": "2025-07-16T07:04:39.716Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Indulge your skin with the calming touch of MOON TEARS Scrub Soap, designed to gently exfoliate and nourish. This 100 g soap combines fine natural scrubbing particles with moisturising ingredients to remove dead skin cells while soothing and hydrating your skin. Its delicate fragrance evokes a sense of serenity, leaving your complexion soft, radiant, and refreshed. Perfect for daily use, MOON TEARS Scrub Soap is the ideal choice for gentle yet effective skincare.",
+      "id": "71cacf57-a279-4306-971e-4354aff530ae",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752562190/product_images/MOON%20TEARS%20-%20100%20GRAM%20BODY%20SCRUB%20-%201-1752562189099.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752562190/product_images/MOON%20TEARS%20-%20100%20GRAM%20BODY%20SCRUB%20-%202-1752562189100.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752562190/product_images/MOON%20TEARS%20-%20100%20GRAM%20BODY%20SCRUB%20-%203-1752562189100.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752562190/product_images/MOON%20TEARS%20-%20100%20GRAM%20BODY%20SCRUB%20-%204-1752562189100.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752562190/product_images/MOON%20TEARS%20-%20100%20GRAM%20BODY%20SCRUB%20-%205-1752562189100.jpg"
+      ],
+      "name": "Banafa MOON TEARS Body Scrub And Cleanser 100 G",
+      "price": {
+        "amount": 16,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏16.00 د.إ.‏",
+          "withoutCurrency": "16.00"
+        },
+        "parts": {
+          "whole": 16,
+          "subUnit": 0,
+          "smallestUnit": 1600
+        }
+      },
+      "quantity": 7,
+      "rating": 0,
+      "createdAt": "2025-07-15T06:49:49.085Z",
+      "updatedAt": "2025-07-16T07:04:24.886Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Experience deep cleansing and revitalization with BLACK ALOE VERA Scrub Soap, expertly crafted to exfoliate and purify your skin. Infused with the healing power of aloe vera and activated charcoal, this 100 g soap gently removes impurities and dead skin cells, promoting a clearer, smoother complexion. Its natural ingredients help soothe and hydrate while detoxifying, leaving your skin refreshed, soft, and radiant. Ideal for daily use, BLACK ALOE VERA Scrub Soap is your go-to solution for healthy, glowing skin.",
+      "id": "8d2861c3-d0cb-436f-9406-ffb340904baf",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752561710/product_images/BLACK%20ALOE%20VERA%20-%20100%20GRAM%20BODY%20SCRUB%20-%201-1752561709302.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752561710/product_images/BLACK%20ALOE%20VERA%20-%20100%20GRAM%20BODY%20SCRUB%20-%202-1752561709302.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752561710/product_images/BLACK%20ALOE%20VERA%20-%20100%20GRAM%20BODY%20SCRUB%20-%203-1752561709302.jpg"
+      ],
+      "name": "Banafa BLACK ALOE VERA Body Scrub And Cleanser 100G",
+      "price": {
+        "amount": 16,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏16.00 د.إ.‏",
+          "withoutCurrency": "16.00"
+        },
+        "parts": {
+          "whole": 16,
+          "subUnit": 0,
+          "smallestUnit": 1600
+        }
+      },
+      "quantity": 2,
+      "rating": 0,
+      "createdAt": "2025-07-15T06:41:49.278Z",
+      "updatedAt": "2025-07-16T07:04:11.713Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Revitalise your skin with BIERUT FLOWER Scrub Soap, a gentle exfoliating soap infused with natural floral extracts. This 100 g soap helps remove dead skin cells, revealing a smoother, softer, and more radiant complexion. Enriched with moisturising ingredients, it cleanses deeply while nourishing your skin, leaving a refreshing floral fragrance that uplifts your senses. Perfect for daily use, BIERUT FLOWER Scrub Soap is your beauty secret for glowing, healthy skin.",
+      "id": "c4548b7e-e267-4935-99ab-f0b478c0cd78",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752500940/product_images/BEIRUT%20FLOWER%20-%20100%20GRAM%20BODY%20SCRUB%20-%201-1752500939200.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752500940/product_images/BEIRUT%20FLOWER%20-%20100%20GRAM%20BODY%20SCRUB%20-%202-1752500939201.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752500940/product_images/BEIRUT%20FLOWER%20-%20100%20GRAM%20BODY%20SCRUB%20-%203-1752500939203.jpg"
+      ],
+      "name": "Banafa BIERUT FLOWER Body Scrub And Cleanser 100 g",
+      "price": {
+        "amount": 16,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏16.00 د.إ.‏",
+          "withoutCurrency": "16.00"
+        },
+        "parts": {
+          "whole": 16,
+          "subUnit": 0,
+          "smallestUnit": 1600
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T13:48:59.185Z",
+      "updatedAt": "2025-07-16T07:03:58.483Z",
+      "gender": "FEMALE",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Energize your day with VALANCE Lames Al Harir, a vibrant fragrance that combines crisp citrus and refreshing floral notes with a subtle musky base. Opening with lively bursts of zesty bergamot and bright greens, it unfolds into a heart of delicate blossoms and soft spices. The scent finishes with smooth musk and warm woods, delivering a clean and confident aroma. Perfectly sized in a 35 ml bottle, VALANCE is your ideal companion for everyday freshness and sophistication.",
+      "id": "08eb5440-a6f0-4117-afcb-8e5aa251ebeb",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752499760/product_images/VALANCE%20-%2035ML%20LAMES%20AL%20HARIR-1752499758898.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752499759/product_images/VALANCE%20-%2035ML%20LAMES%20AL%20HARIR2-1752499758898.jpg"
+      ],
+      "name": "Banafa VALANCE Lames Al Harir 35 ML",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T13:29:18.885Z",
+      "updatedAt": "2025-07-16T07:03:00.132Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Delight in the charming sweetness of SWEET SARA Lames Al Harir, a fragrance that blends luscious fruity notes with soft floral undertones. Opening with vibrant hints of ripe berries and juicy citrus, it gently unfolds into a heart of delicate blossoms and warm vanilla. The scent settles on a smooth base of musk and caramel, leaving a cozy, irresistible trail. Packaged in a sleek 35 ml bottle, SWEET SARA is perfect for those who adore a playful yet elegant scent in a compact size.",
+      "id": "90fa35db-1e21-409e-b67e-fe0a7dc71dc4",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752497987/product_images/SWEET%20SARA---%20-%2035ML%20LAMES%20AL%20HARIR-1752497985797.jpg"
+      ],
+      "name": "Banafa SWEET SARA Lames Al Harir",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T12:59:45.781Z",
+      "updatedAt": "2025-07-16T07:01:43.650Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Embrace the enchanting beauty of ROSE MOON Lames Al Harir, a delicate fragrance that captures the essence of blooming roses under a moonlit sky. Opening with soft, fresh rose petals and gentle citrus notes, it unfolds into a heart of romantic florals and subtle spices. The scent settles on a warm base of musk and amber, creating a captivating and lasting impression. Presented in a sleek 35 ml bottle, ROSE MOON is perfect for those who cherish elegance and romance in a compact form.",
+      "id": "07c7f498-99fc-423a-8396-407c338f39c9",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752495205/product_images/ROSE%20MOON%20-%2035ML%20LAMES%20AL%20HARIR-1752495204310.jpg"
+      ],
+      "name": "Banafa ROSEMOON Lames Al Harir",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T12:13:24.290Z",
+      "updatedAt": "2025-07-16T07:01:33.589Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Experience the delicate allure of NANCI Lames Al Harir, a fragrance that blends soft floral notes with subtle fruity undertones. Opening with fresh, sparkling citrus and gentle blossoms, it gracefully unfolds into a heart of tender florals and warm spices. The scent settles on a smooth base of musk and vanilla, creating a warm and inviting aroma that lingers beautifully. Packaged in a sleek 35 ml bottle, NANCI is perfect for those who desire a sweet yet sophisticated fragrance in a compact size.",
+      "id": "bc95bb1e-c672-4969-8288-2500ecd89f71",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752494919/product_images/NANCI%20-%2035ML%20LAMES%20AL%20HARIR%202-1752494918602.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752494919/product_images/NANCI%20-%2035ML%20LAMES%20AL%20HARIR-1752494918602.jpg"
+      ],
+      "name": "Banafa NANCI Lames Al Harir 35 ML",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T12:08:38.587Z",
+      "updatedAt": "2025-07-16T07:01:22.835Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Discover the refined beauty of M.WANASA Lames Al Harir, a delicate fragrance that harmoniously blends fresh floral notes with subtle hints of citrus and soft musk. Opening with uplifting top notes of bright citrus and gentle blossoms, it flows into a heart of elegant florals and warm spices. The scent finishes on a smooth, comforting base of musk and amber, offering a balanced and lasting impression of grace and sophistication. Presented in a sleek 35 ml bottle, M.WANASA is perfect for those seeking a timeless and elegant signature scent.\r\n",
+      "id": "61a09026-753d-4a94-b04f-0f51c87a417b",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752494561/product_images/M%20WANASA%20-%2035ML%20LAMES%20AL%20HARIR-1752494560864.jpg"
+      ],
+      "name": "Banafa M.WANASA Lames Al Harir 35 ML",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T12:02:40.840Z",
+      "updatedAt": "2025-07-16T07:01:11.404Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Immerse yourself in the deep, captivating essence of M.OUD Lames Al Harir, a fragrance that celebrates the timeless allure of precious oud. Opening with rich, resinous notes, it gracefully reveals a heart of smoky incense and warm spices. The scent settles into a sensual base of agarwood, musk, and amber, creating an unforgettable aura of mystery and sophistication. Encased in a sleek 35 ml bottle, M.OUD is perfect for those who appreciate bold, luxurious scents in a compact form.\r\n",
+      "id": "e3ba9a13-99e4-43a9-9a16-5308ea4c4c8a",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752494412/product_images/M%20OUD%20%20-%2035ML%20LAMES%20AL%20HARIR-1752494411674.jpg"
+      ],
+      "name": "Banafa M.OUD Lames Al Harir",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T12:00:11.652Z",
+      "updatedAt": "2025-07-16T07:00:45.581Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Embrace strength and sophistication with LEATHERY Lames Al Harir, a distinctive fragrance that captures the essence of rich leather and warm spices. Opening with bold, smoky accords, it unfolds into a heart of deep woody notes balanced by subtle hints of aromatic herbs. The scent settles on a smooth base of musk and amber, creating a lasting impression of confidence and refinement. Presented in a sleek 35 ml bottle, LEATHERY is perfect for those who seek a powerful and elegant signature scent.",
+      "id": "6bf6f95a-883f-4920-9337-699051a9b683",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752494156/product_images/LEATHERY%20%20-%2035ML%20LAMES%20AL%20HARIR-1752494155470.jpg"
+      ],
+      "name": "Banafa LEATHERY Lames Al Harir 35 ML",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T11:55:55.457Z",
+      "updatedAt": "2025-07-16T07:00:34.538Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Discover the refined elegance of DREISER Lames Al Harir, a fragrance that effortlessly blends fresh citrus and aromatic herbs with warm, woody undertones. Opening with vibrant top notes of zesty bergamot and crisp green accords, it evolves into a heart of delicate florals and soft spices. The scent settles into a smooth base of musk and rich woods, creating a lasting impression of sophistication and charm. Housed in a sleek 35 ml bottle, DREISER is the perfect choice for those seeking a versatile and timeless fragrance.",
+      "id": "8a80a97a-7ba8-4cbd-85d5-12022dd88c44",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752492530/product_images/DREISER%20-%20%20-%2035ML%20LAMES%20AL%20HARIR--1752492528738.jpg"
+      ],
+      "name": "Banafa DREISER Lames Al Harir 35 ML",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T11:28:48.720Z",
+      "updatedAt": "2025-07-16T07:00:21.921Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Indulge in the luxurious charm of COCOMISS Lames Al Harir, a fragrance that blends sweet, creamy notes with delicate floral undertones. Opening with luscious coconut and soft vanilla, it gracefully unfolds into a heart of gentle blossoms and subtle spices. The warm base of musk and amber creates a comforting, long-lasting aroma that lingers throughout the day. Presented in a sleek 35 ml bottle, COCOMISS is perfect for those who love a rich, inviting scent in a compact size.",
+      "id": "9026fe5d-b4ba-4300-8664-db66f6cce4b8",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752487747/product_images/COCO%20MISS%20%20-%2035ML%20LAMES%20AL%20HARIR-1752487746347.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752487748/product_images/COCO%20MISS%20%20-%2035ML%20LAMES%20AL%20HARIR%202-1752487746347.jpg"
+      ],
+      "name": "Banafa COCO MISS Lames Al Harir 35 ML",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T10:09:06.329Z",
+      "updatedAt": "2025-07-16T06:59:57.829Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Step into sophistication with ANA 717 Lames Al Harir, a fragrance that harmonizes vibrant freshness with deep, warm undertones. Opening with crisp citrus and subtle floral notes, it gracefully transitions into a heart enriched with soft spices and delicate blossoms. The scent settles on a smooth base of musk and rich woods, creating a lasting impression of elegance and confidence. Packaged in a stylish bottle, ANA 717 is perfect for those who seek timeless charm with a modern twist.",
+      "id": "2eb4d964-25d9-4a6b-807f-0d1f8fafd1bb",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752487332/product_images/ANA%20717%20%20-%2035ML%20LAMES%20AL%20HARIR2-1752487331728.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752487332/product_images/ANA%20717%20%20-%2035ML%20LAMES%20AL%20HARIR-1752487331728.jpg"
+      ],
+      "name": "Banafa ANA 717 Lames Al Harir 35 ML",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 5,
+      "rating": 0,
+      "createdAt": "2025-07-14T10:02:11.712Z",
+      "updatedAt": "2025-07-16T06:59:43.444Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Experience the refined elegance of AL SUMO Lames Al Harir, a fragrance that blends vibrant freshness with subtle warmth. Opening with crisp citrus and sparkling floral notes, it unfolds into a heart of soft petals and gentle spices. The base notes of musk and smooth woods provide a lasting, graceful finish. Encased in a stylish 35 ml bottle, AL SUMO Lames Al Harir is perfect for those who appreciate a balanced and sophisticated scent in a compact size.",
+      "id": "e2ba1eb7-5587-47a9-8a83-0ccc669b7cc2",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752486869/product_images/AL%20SUMO%20%20-%2035ML%20LAMES%20AL%20HARIR2-1752486868662.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752486869/product_images/AL%20SUMO%20%20-%2035ML%20LAMES%20AL%20HARIR-1752486868663.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752486869/product_images/AL%20SUMO%20%20-%2035ML%20LAMES%20AL%20HARIR3-1752486868665.jpg"
+      ],
+      "name": "Banafa AL SUMO Lames Al Harir 35 ML",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-14T09:54:28.633Z",
+      "updatedAt": "2025-07-16T06:59:17.920Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Discover the delicate elegance of AL AMORAH Lames Al Harir, a fragrance that weaves softness and sophistication into every drop. This exquisite scent opens with gentle floral and fresh citrus notes, gracefully flowing into a heart of silky white blossoms and subtle aromatic hints. The smooth base of musk and warm woods creates a timeless aura of refinement and charm. Packaged in a sleek 35 ml bottle, AL AMORAH Lames Al Harir is the perfect choice for those seeking understated luxury in a compact form.",
+      "id": "fe12465c-7ef6-4837-93ac-486fda4f02d7",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752486454/product_images/AL%20AMORAH%20-%2035ML%20LAMES%20AL%20HARIR%204-1752486453563.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752486454/product_images/AL%20AMORAH%20-%2035ML%20LAMES%20AL%20HARIR-1752486453563.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752486454/product_images/AL%20AMORAH%20-%2035ML%20LAMES%20AL%20HARIR3-1752486453563.jpg"
+      ],
+      "name": "Banafa AL AMORA Lames Al Harir 35 ML",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T09:47:33.550Z",
+      "updatedAt": "2025-07-16T06:57:38.005Z",
+      "gender": "FEMALE",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Invigorate your day with RAZI Icy Eau de Parfum, a refreshing fragrance that blends cool icy notes with vibrant citrus and aromatic spices. Opening with sharp mint and zesty bergamot, it unfolds into a heart of fresh herbs and subtle florals, settling on a smooth base of musk and cool woods. Designed for those who seek a bold, energizing scent, RAZI Icy offers a lasting freshness that keeps you confident and revitalized. Presented in a sleek 75 ml bottle, it’s the perfect companion for modern freshness.",
+      "id": "9fe6c9ef-bb36-4108-93ad-e65d81a5f5df",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752486063/product_images/RAZI-1752486063057.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752486063/product_images/RAZI%201-1752486063062.jpg"
+      ],
+      "name": "Banafa RAZI Icy Perfumes 75 ML",
+      "price": {
+        "amount": 31,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏31.00 د.إ.‏",
+          "withoutCurrency": "31.00"
+        },
+        "parts": {
+          "whole": 31,
+          "subUnit": 0,
+          "smallestUnit": 3100
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-14T09:41:03.032Z",
+      "updatedAt": "2025-07-16T06:56:29.108Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Awaken your senses with MALI Icy Eau de Parfum, a cool and refreshing fragrance that blends sharp icy notes with subtle floral and woody undertones. Opening with crisp mint and citrus, it evolves into a heart of soft blossoms and aromatic herbs, finishing with a clean base of musk and fresh woods. Perfect for those who crave a modern, energising scent that lasts all day, MALI Icy is housed in a sleek 75 ml bottle — your perfect companion for a burst of cool freshness anytime.",
+      "id": "530e1438-71b6-4b52-90ea-65971d4b18f7",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752485830/product_images/Maali-1752485829661.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752485830/product_images/Maali%201-1752485829662.jpg"
+      ],
+      "name": "Banafa MALI Icy Perfumes 75 ML",
+      "price": {
+        "amount": 31,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏31.00 د.إ.‏",
+          "withoutCurrency": "31.00"
+        },
+        "parts": {
+          "whole": 31,
+          "subUnit": 0,
+          "smallestUnit": 3100
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T09:37:09.649Z",
+      "updatedAt": "2025-07-16T06:56:17.376Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Feel the cool rush of freshness with LOURA Icy Eau de Parfum, a vibrant fragrance crafted to awaken your senses. With invigorating top notes of icy mint and zesty citrus, it seamlessly flows into a heart of delicate florals and aromatic herbs. The scent finishes with a smooth, cool base of musk and fresh woods, delivering a modern and energising aroma. Perfect for those who love a clean, crisp scent with lasting impact, LOURA Icy comes in a sleek 75 ml bottle — ideal for daily wear.",
+      "id": "b218ce72-0f26-46a2-acb1-af57995178c4",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752485425/product_images/Loura-1752485424511.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752485425/product_images/Loura%202-1752485424511.jpg"
+      ],
+      "name": "Banafa LOURA Icy Perfume 75 ML",
+      "price": {
+        "amount": 31,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏31.00 د.إ.‏",
+          "withoutCurrency": "31.00"
+        },
+        "parts": {
+          "whole": 31,
+          "subUnit": 0,
+          "smallestUnit": 3100
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T09:30:24.494Z",
+      "updatedAt": "2025-07-16T06:56:02.990Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Feel the crisp freshness of winter with LA MANSHA ICY Eau de Parfum, a vibrant fragrance that invigorates the senses. Opening with sharp, icy citrus and minty notes, it melts into a heart of cool florals and aromatic herbs. The scent settles on a clean, smooth base of musk and fresh woods, leaving a refreshing and energising trail. Perfect for those who love a cool, modern fragrance that refreshes and revitalises throughout the day. Presented in a sleek 75 ml bottle, LA MANSHA ICY is your ultimate cool companion.",
+      "id": "1ba6ec22-3206-45d3-b789-5e37c7966ea2",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752485257/product_images/La%20Mansha-1752485257411.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752485257/product_images/La%20Mansha%201-1752485257412.jpg"
+      ],
+      "name": "Banafa LA MANSHA Icy Perfume 75 ML",
+      "price": {
+        "amount": 31,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏31.00 د.إ.‏",
+          "withoutCurrency": "31.00"
+        },
+        "parts": {
+          "whole": 31,
+          "subUnit": 0,
+          "smallestUnit": 3100
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-14T09:27:37.391Z",
+      "updatedAt": "2025-07-16T06:55:48.352Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Experience the invigorating chill of BRANDO Icy Eau de Parfum, a fresh and dynamic fragrance crafted for the modern individual. Opening with sharp icy citrus and cool mint notes, it evolves into a heart of aromatic spices balanced by subtle woody undertones. The scent settles into a smooth base of musk and amber, leaving a lasting impression of confidence and energy. Perfect for those who seek a refreshing yet bold signature scent, BRANDO Icy is presented in a sleek 75 ml bottle, ready to energize your day.",
+      "id": "1d328479-f3a6-48ba-905b-5b94163d643c",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752485030/product_images/Brando%201-1752485029741.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752485030/product_images/Brando-1752485029741.jpg"
+      ],
+      "name": "Banafa BRANDO Icy Perfume 75 ML",
+      "price": {
+        "amount": 31,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏31.00 د.إ.‏",
+          "withoutCurrency": "31.00"
+        },
+        "parts": {
+          "whole": 31,
+          "subUnit": 0,
+          "smallestUnit": 3100
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-14T09:23:49.727Z",
+      "updatedAt": "2025-07-16T06:55:26.779Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Refresh your senses with the crisp and energizing scent of VALANCE Body Splash. Blending cool citrus, light florals, and a touch of musk, this invigorating body mist keeps you feeling fresh and confident all day. Its lightweight formula is perfect for everyday use — whether after a workout, a long day, or anytime you need a quick burst of fragrance. Housed in a sleek 250 ml bottle, VALANCE is the perfect companion for modern, on-the-go freshness.",
+      "id": "c4f1a2d9-9dad-4de9-b738-38dfab0db93b",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752484664/product_images/VANILLA%20ROSE%20-%20250ML%20BODY%20SPLASH-1752484663151.jpg"
+      ],
+      "name": "Banafa VANILLA ROSE Body Splash 250 ML",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T09:17:43.133Z",
+      "updatedAt": "2025-07-16T06:48:58.049Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Confident, fresh, and full of energy — VALANCE Body Splash is designed to awaken your senses and elevate your day. Bursting with crisp citrus, cool florals, and a hint of musk, this invigorating spray delivers a clean and modern scent that lasts. Light enough for frequent use yet bold enough to leave an impression, VALANCE is your go-to choice for all-day freshness. Packaged in a sleek 250 ml bottle, it’s the perfect blend of strength and style.",
+      "id": "cf0ad5ad-9f23-4ac1-9aae-4125d01caa15",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752484500/product_images/VALANCE%20-%20250ML%20BODY%20SPLASH-1752484499552.jpg"
+      ],
+      "name": "Banafa VALANCE Body Splash 250 ML",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 7,
+      "rating": 0,
+      "createdAt": "2025-07-14T09:14:59.535Z",
+      "updatedAt": "2025-07-16T06:48:40.613Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Light, refreshing, and effortlessly elegant — SAMA Body Splash is your perfect everyday fragrance companion. Infused with a harmonious blend of soft florals and delicate musky notes, this gentle mist leaves your skin feeling cool, clean, and beautifully scented. Ideal for quick touch-ups throughout the day, SAMA adds a subtle layer of freshness without being overpowering. Housed in a generous 250 ml bottle, it’s the perfect balance of comfort and sophistication.",
+      "id": "367ed1e1-c49c-4934-8db4-9adeb4ddeca7",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752483882/product_images/SAMA%20-%20250ML%20BODY%20SPLASH%202-1752483881089.jpg"
+      ],
+      "name": "Banafa SAMA Body Splash 250 ML ",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T09:04:41.074Z",
+      "updatedAt": "2025-07-16T06:48:20.112Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Embrace the gentle beauty of spring with SAKURA Body Splash, inspired by the delicate charm of cherry blossoms in bloom. This refreshing mist opens with light floral notes blended with a touch of sweetness, creating a soft, graceful scent that lingers beautifully on the skin. Perfect for everyday wear, it leaves you feeling fresh, feminine, and radiant. Packaged in a 250 ml bottle, SAKURA is your daily dose of floral elegance and serenity.",
+      "id": "af894fd1-ae3d-4d38-9e09-167d89812d55",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752483678/product_images/SAKURA%20-%20250ML%20BODY%20SPLASH-1752483677249.jpg"
+      ],
+      "name": "Banafa SAKURA Body Splash 250 ML",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T09:01:17.235Z",
+      "updatedAt": "2025-07-16T06:48:03.887Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Step into the season of freshness with PURPLE SPRING Body Splash, a vibrant blend of blooming florals and soft fruity notes that awaken the senses. Light and breezy, this body splash delivers a refreshing mist that keeps you feeling clean, energized, and beautifully scented all day long. Perfect for daily use, it offers a delicate, long-lasting aroma without being overpowering. Packaged in a 250 ml bottle, PURPLE SPRING is your go-to pick for everyday freshness with a floral twist.",
+      "id": "7af75499-b6a6-48a4-a3d6-b26089267298",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752483564/product_images/PURPLE%20SPRING%20-%20250ML%20BODY%20SPLASH-1752483563693.jpg"
+      ],
+      "name": "Banafa PURPLE SPRING Body Splash 250 ML",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 7,
+      "rating": 0,
+      "createdAt": "2025-07-14T08:59:23.682Z",
+      "updatedAt": "2025-07-16T06:47:20.845Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Feel the gentle embrace of PINK ROMANCE Body Splash, a playful and delicate fragrance bursting with soft floral and fruity notes. This lightweight mist refreshes your skin with a subtle, sweet aroma that’s perfect for everyday wear or special moments. Ideal for quick spritzes throughout the day, PINK ROMANCE leaves you feeling fresh, confident, and radiant. Presented in a generous 250 ml bottle, it’s your perfect companion for a touch of sweetness wherever you go.",
+      "id": "25398aa4-e93f-46f7-ba7d-ac26926713bf",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752482457/product_images/PINK%20ROMANCE%20-%20250ML%20BODY%20SPLASH-1752482456330.jpg"
+      ],
+      "name": "Banafa PINK ROMANCE Body Splash 250 ML",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-14T08:40:56.318Z",
+      "updatedAt": "2025-07-16T06:47:03.799Z",
+      "gender": "FEMALE",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Body Care",
+      "description": "Surround yourself with subtle elegance using MUSK Body Splash, a delicate blend designed to refresh and uplift your senses. Featuring soft musk notes balanced with gentle floral and woody undertones, this lightweight spray offers a soothing and long-lasting scent perfect for daily wear. Ideal for a quick refresh anytime, MUSK Body Splash leaves your skin lightly scented and beautifully fresh. Packaged in a handy 250 ml bottle, it’s perfect for everyday use at home or on the go.",
+      "id": "af3eeba9-26bf-4cb9-893e-dd0522ca6a50",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752482147/product_images/MUSK%20%20-%20250ML%20BODY%20SPLASH%202-1752482146512.jpg"
+      ],
+      "name": "Banafa MUSK Body Splash 250 ML",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-14T08:35:46.490Z",
+      "updatedAt": "2025-07-16T06:46:32.179Z",
+      "gender": "FEMALE",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Experience a burst of freshness with HELO LITA Body Splash, a lively fragrance that combines juicy fruity notes with soft floral hints. This lightweight spray revitalizes your skin and senses, leaving a delicate, pleasant scent that’s perfect for everyday use. Ideal for quick refreshment after a workout or during warm days, HELO LITA comes in a convenient 250 ml bottle, making it easy to carry and use anytime you need an energizing boost.",
+      "id": "06d34799-3198-402c-959e-0dc7074a7140",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752481767/product_images/HELOLITA%20%20-%20250ML%20BODY%20SPLASH-1752481766694.jpg"
+      ],
+      "name": "Banafa HELO LITA Body Splash 250 ml",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T08:29:26.679Z",
+      "updatedAt": "2025-07-16T06:46:18.009Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Refresh your day with the invigorating scent of ELEGANT BLUE Body Splash. This light and uplifting spray blends crisp aquatic and citrus notes with subtle floral undertones, creating a cool and breezy fragrance that energizes your senses. Perfect for a quick refresh after a workout or anytime you want to feel revitalized, its gentle formula leaves your skin lightly scented without overpowering. Packaged in a generous 250 ml bottle, ELEGANT BLUE is your go-to companion for everyday freshness and confidence.",
+      "id": "2d5a1ac2-b79c-4276-ae1c-4f1d6530eee7",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752481621/product_images/ELEGANT%20BLUE%20-%20250ML%20BODY%20SPLASH-1752481620719.jpg"
+      ],
+      "name": "Banafa ELEGANT BLUE body splash 250 ml",
+      "price": {
+        "amount": 21,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏21.00 د.إ.‏",
+          "withoutCurrency": "21.00"
+        },
+        "parts": {
+          "whole": 21,
+          "subUnit": 0,
+          "smallestUnit": 2100
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-14T08:27:00.701Z",
+      "updatedAt": "2025-07-16T06:45:32.854Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Discover the enchanting allure of SIDRA Eau de Parfum, a fragrance that beautifully blends freshness with warmth. Opening with crisp citrus and delicate floral notes, it unfolds into a heart of soft spices and rich woods. The scent settles on a smooth base of amber and musk, leaving a lasting impression of sophistication and grace. Perfect for everyday elegance or special occasions, SIDRA is presented in a stylish 75 ml bottle, making it a timeless addition to your fragrance collection.",
+      "id": "4d8db606-3168-4337-a172-cced5bd13176",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752481347/product_images/SIDRA%202-1752481346258.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752481347/product_images/SIDRA-1752481346258.jpg"
+      ],
+      "name": "Banafa SIDRA Eau de Parfum 75ml ",
+      "price": {
+        "amount": 123,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏123.00 د.إ.‏",
+          "withoutCurrency": "123.00"
+        },
+        "parts": {
+          "whole": 123,
+          "subUnit": 0,
+          "smallestUnit": 12300
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-14T08:22:26.243Z",
+      "updatedAt": "2025-07-16T06:40:48.706Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "This exquisite fragrance opens with fresh citrus and subtle spices, leading to a heart of rich florals and warm woody notes. The base reveals smooth amber and musk accords that linger gently, creating a balanced and inviting scent. Ideal for both day and evening wear, RAFA embodies timeless elegance in a beautifully designed 75 ml bottle.",
+      "id": "da1cd35d-fd51-4e2b-aa7b-1cd7e3283282",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752481249/product_images/rafa%20bottle2-1752481248797.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752481249/product_images/rafa%20bottle-1752481248798.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752481249/product_images/rafa%20bottle2%20-1752481248798.jpg"
+      ],
+      "name": "Banafa RAFA Eau de Parfum 75ml",
+      "price": {
+        "amount": 123,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏123.00 د.إ.‏",
+          "withoutCurrency": "123.00"
+        },
+        "parts": {
+          "whole": 123,
+          "subUnit": 0,
+          "smallestUnit": 12300
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-14T08:20:48.782Z",
+      "updatedAt": "2025-07-16T06:40:33.968Z",
+      "gender": "UNISEX",
+      "isFavorite": true,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Bold and distinctive, GLASGOW OUD Eau de Parfum captures the spirit of urban elegance with a modern twist. Opening with fresh, invigorating citrus and aromatic spices, this fragrance unfolds into a heart of woody and leathery notes that evoke confidence and sophistication. The base lingers with warm amber and musk, creating a lasting impression that is both powerful and alluring. Perfect for those who want a signature scent that stands out, GLASSGOW is presented in a sleek 75 ml bottle, ideal for day or night wear.",
+      "id": "6f811004-8cac-434d-ab64-9d7e88260a10",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752480953/product_images/glassglow-1752480952214.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752480953/product_images/glassglow2-1752480952215.jpg"
+      ],
+      "name": "Banafa GLASGOW OUD Eau de Parfum 75ml ",
+      "price": {
+        "amount": 123,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏123.00 د.إ.‏",
+          "withoutCurrency": "123.00"
+        },
+        "parts": {
+          "whole": 123,
+          "subUnit": 0,
+          "smallestUnit": 12300
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-14T08:15:52.191Z",
+      "updatedAt": "2025-07-16T06:40:20.838Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Step into a world of refined luxury with GALARI Eau de Parfum, a captivating fragrance that balances freshness and sensuality. Opening with crisp citrus and aromatic herbs, GALARI unfolds into a heart of delicate florals and warm spices. The scent settles into a smooth base of musk, sandalwood, and amber, leaving a lasting impression of sophistication and charm. Perfect for everyday wear or special occasions, GALARI is presented in a sleek 75 ml bottle—an exquisite addition to your fragrance collection.",
+      "id": "d9f703d4-58d6-4722-b5d9-2a84fa6118cb",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752480780/product_images/galari2-1752480778868.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752480779/product_images/galari3-1752480778869.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752480779/product_images/galari-1752480778870.jpg"
+      ],
+      "name": "Banafa GALARI Eau de Parfum 75 ml ",
+      "price": {
+        "amount": 123,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏123.00 د.إ.‏",
+          "withoutCurrency": "123.00"
+        },
+        "parts": {
+          "whole": 123,
+          "subUnit": 0,
+          "smallestUnit": 12300
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-14T08:12:58.852Z",
+      "updatedAt": "2025-07-16T06:40:02.718Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Discover the timeless elegance of ETERNAL OUD, a luxurious fragrance that embodies the mystique and depth of precious oud. This exquisite scent opens with warm, resinous notes that gently give way to a heart of smoky incense and rich spices. The base lingers with deep, sensual accords of agarwood, musk, and amber, creating an unforgettable aura of sophistication and strength. Perfect for those who appreciate bold and enduring fragrances, ETERNAL OUD is housed in a sleek 75 ml bottle, making it an essential addition to any collection.",
+      "id": "a47a8a80-799e-4a85-a4e6-7b4dae6e7b2f",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752480634/product_images/eternal_oud-1752480633412.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752480634/product_images/eternal_oud2-1752480633416.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752480634/product_images/eternal_oud3-1752480633417.jpg"
+      ],
+      "name": "Banafa ETERNAL OUD Eau de Parfum 75ml ",
+      "price": {
+        "amount": 123,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏123.00 د.إ.‏",
+          "withoutCurrency": "123.00"
+        },
+        "parts": {
+          "whole": 123,
+          "subUnit": 0,
+          "smallestUnit": 12300
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-14T08:10:33.397Z",
+      "updatedAt": "2025-07-16T06:39:45.701Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Elegance meets allure in SOPHIA Eau de Parfum, a captivating fragrance crafted for the modern woman. Opening with fresh floral and fruity top notes, SOPHIA gracefully unfolds into a heart of delicate jasmine and rose, balanced by warm amber and musk at the base. This harmonious blend creates a timeless scent that exudes confidence and sophistication. Perfectly sized in a sleek 50 ml bottle, SOPHIA is your ideal companion for both daytime elegance and evening charm.",
+      "id": "b3546b53-96f2-463e-b8ca-7fa4a00d5e33",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752480293/product_images/Sophia%20-%2050ml%20Eau%20De%20Parfum%20-%201-1752480291870.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752480293/product_images/Sophia%20-%2050ml%20Eau%20De%20Parfum%20-%202-1752480291870.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752480292/product_images/Sophia%20-%2050ml%20Eau%20De%20Parfum%20-%203-1752480291873.jpg"
+      ],
+      "name": "Banafa SOPHIA  Eau de Parfum 50ml",
+      "price": {
+        "amount": 26,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏26.00 د.إ.‏",
+          "withoutCurrency": "26.00"
+        },
+        "parts": {
+          "whole": 26,
+          "subUnit": 0,
+          "smallestUnit": 2600
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-14T08:04:51.845Z",
+      "updatedAt": "2025-07-16T06:34:56.681Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Immerse yourself in the warm, mystical embrace of SAHRA Eau de Parfum. This enchanting fragrance opens with vibrant citrus and aromatic spices that evoke the spirit of the desert. At its heart, soft floral notes blend seamlessly with hints of amber and musk, creating a rich and captivating aroma. Perfectly balanced and long-lasting, SAHRA is designed for those who seek an elegant yet bold scent. Presented in a sleek 50 ml bottle, it’s the perfect companion for your everyday adventures or special evenings.",
+      "id": "4e5c0c72-db51-4c4b-97b9-29202b795922",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479988/product_images/Sahra%20-%2050ml%20Eau%20De%20Parfum%20-%201-1752479987774.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479989/product_images/Sahra%20-%2050ml%20Eau%20De%20Parfum%20-%202%20-%20Copy-1752479987775.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479988/product_images/Sahra%20-%2050ml%20Eau%20De%20Parfum%20-%203-1752479987775.jpg"
+      ],
+      "name": "Banafa SAHRA Eau de Parfum 50ml ",
+      "price": {
+        "amount": 26,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏26.00 د.إ.‏",
+          "withoutCurrency": "26.00"
+        },
+        "parts": {
+          "whole": 26,
+          "subUnit": 0,
+          "smallestUnit": 2600
+        }
+      },
+      "quantity": 1,
+      "rating": 0,
+      "createdAt": "2025-07-14T07:59:47.753Z",
+      "updatedAt": "2025-07-16T06:34:42.012Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Embrace the spirit of the desert with ALL AROUND SPRAY SAHRA, a refreshing mist that captures the warm, enchanting essence of Sahra. Perfect for use on your body, clothes, or linens, this spray delivers a subtle, soothing fragrance that revitalizes your senses throughout the day. Light and airy, it leaves behind a gentle trail of warmth and elegance without overpowering. Compact and convenient, ALL AROUND SPRAY SAHRA is ideal for a quick freshness boost anytime, anywhere.",
+      "id": "719f92f7-1af6-4b33-92bc-0a33fba8f1b3",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479741/product_images/Sahra%20Spray%20Around%20100ml%20-%201-1752479740222.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479741/product_images/Sahra%20Spray%20Around%20100ml%20-%202-1752479740223.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479741/product_images/Sahra%20Spray%20Around%20100ml%20-%203-1752479740224.jpg"
+      ],
+      "name": "Banafa SAHRA All Round Spray - 100 ML",
+      "price": {
+        "amount": 51,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏51.00 د.إ.‏",
+          "withoutCurrency": "51.00"
+        },
+        "parts": {
+          "whole": 51,
+          "subUnit": 0,
+          "smallestUnit": 5100
+        }
+      },
+      "quantity": 7,
+      "rating": 0,
+      "createdAt": "2025-07-14T07:55:40.206Z",
+      "updatedAt": "2025-07-16T06:30:59.340Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Refresh your senses anytime, anywhere with ALL AROUND SPRAY GHYM. This versatile spray offers a light, uplifting fragrance that can be used on your body, clothes, or linens to instantly revive and energize your surroundings. Perfect for daily use, it leaves a subtle, pleasant scent that’s neither overpowering nor lingering. Convenient and easy to carry, ALL AROUND SPRAY GHYM is your perfect companion for freshness on the go",
+      "id": "59c65550-bc97-46c1-9843-399d7e59963c",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479467/product_images/Ghym%20Spray%20Around%20100ml%20-%201-1752479465976.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479466/product_images/Ghym%20Spray%20Around%20100ml%20-%202-1752479465976.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479467/product_images/Ghym%20Spray%20Around%20100ml%20-%203-1752479465978.jpg"
+      ],
+      "name": "Banafa GHYM All Around Spray 100ml ",
+      "price": {
+        "amount": 51,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏51.00 د.إ.‏",
+          "withoutCurrency": "51.00"
+        },
+        "parts": {
+          "whole": 51,
+          "subUnit": 0,
+          "smallestUnit": 5100
+        }
+      },
+      "quantity": 5,
+      "rating": 0,
+      "createdAt": "2025-07-14T07:51:05.962Z",
+      "updatedAt": "2025-07-16T06:30:40.720Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Step into a world of opulence with THE GOLDEN Eau de Parfum, a radiant fragrance designed to captivate and enchant. This exquisite scent opens with bright, sparkling citrus and floral top notes that instantly uplift the spirit. At its heart, rich accords of jasmine, saffron, and warm spices create an aura of elegance and mystery. The fragrance settles into a luxurious base of amber, musk, and precious woods, leaving a lasting impression of sophistication and allure. Perfect for those who seek a timeless yet bold signature scent, THE GOLDEN is presented in a stunning 100 ml bottle — a treasure for your fragrance collection.",
+      "id": "3fd2cd3e-0e2d-4a74-b1a9-6f9d9e6a0fce",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479322/product_images/The%20Golden%20%20Eau%20De%20Parfum%20100ml%20-%201-1752479320890.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479322/product_images/The%20Golden%20%20Eau%20De%20Parfum%20100ml%20-%202-1752479320890.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479322/product_images/The%20Golden%20%20Eau%20De%20Parfum%20100ml%20-%203-1752479320890.jpg"
+      ],
+      "name": "Banafa THE GOLDEN Eau de Parfum 100ml ",
+      "price": {
+        "amount": 37,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏37.00 د.إ.‏",
+          "withoutCurrency": "37.00"
+        },
+        "parts": {
+          "whole": 37,
+          "subUnit": 0,
+          "smallestUnit": 3700
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T07:48:40.875Z",
+      "updatedAt": "2025-07-16T06:30:14.217Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Bold, earthy, and irresistibly refined — TERRINOVA Eau de Parfum is a fragrance that captures the essence of grounded luxury. Opening with crisp notes of bergamot and herbal freshness, it evolves into a heart of aromatic spices and deep florals. The base reveals a rich blend of vetiver, amber, and smoky woods, leaving behind a powerful, long-lasting trail. Designed for those who appreciate strength in subtlety, TERRINOVA is an ideal signature scent for confident individuals. Encased in a stylish 100 ml bottle, it's a true expression of modern sophistication.",
+      "id": "152bfa49-6055-4521-85d1-7a7bb3a3a308",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479200/product_images/Terri%20Nova%20Eau%20De%20Parfum%20100ml%20-%201-1752479197946.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479199/product_images/Terri%20Nova%20Eau%20De%20Parfum%20100ml%20-%202-1752479197946.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479199/product_images/Terri%20Nova%20Eau%20De%20Parfum%20100ml%20-%203-1752479197947.jpg"
+      ],
+      "name": "Banafa TERRINOVE Eau de Parfum 100ml - Warm Spicy Citrus Fragrance with Bergamot, Orange, Cinnamon, Tobacco & Amber - Long-Lasting Luxurious Perfume for Day or Night, Unisex",
+      "price": {
+        "amount": 37,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏37.00 د.إ.‏",
+          "withoutCurrency": "37.00"
+        },
+        "parts": {
+          "whole": 37,
+          "subUnit": 0,
+          "smallestUnit": 3700
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T07:46:37.924Z",
+      "updatedAt": "2025-07-16T06:29:31.230Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Delicate yet captivating, NAIA Eau de Parfum is a celebration of femininity and elegance. The fragrance opens with soft, refreshing citrus and fruity notes that awaken the senses, gracefully blending into a floral heart of jasmine and rose. As it settles, the scent reveals a sensual base of creamy musk and smooth woods, creating a lasting impression of warmth and charm. Perfect for the modern woman who radiates grace and confidence, NAIA is presented in a beautifully designed 100 ml bottle, ideal for everyday wear or special moments.",
+      "id": "72244249-3974-4ca7-b160-0dd306819489",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479105/product_images/Naia%20Eau%20De%20Parfum%20100ml%20-%201-1752479104639.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479105/product_images/Naia%20Eau%20De%20Parfum%20100ml%20-%202-1752479104640.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752479105/product_images/Naia%20Eau%20De%20Parfum%20100ml%20-%203-1752479104640.jpg"
+      ],
+      "name": "Banafa NAIA Eau de Parfum 100ml",
+      "price": {
+        "amount": 47,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏47.00 د.إ.‏",
+          "withoutCurrency": "47.00"
+        },
+        "parts": {
+          "whole": 47,
+          "subUnit": 0,
+          "smallestUnit": 4700
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T07:45:04.624Z",
+      "updatedAt": "2025-07-16T06:28:55.885Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "A fragrance that speaks of depth, elegance, and timeless tradition — MITHAQ Eau de Parfum is a bold expression of refined taste. This luxurious scent opens with rich oriental spices, delicately unfolding into a heart of warm amber and floral notes. The composition settles on a powerful base of oud, musk, and sandalwood, leaving a trail of sophistication and warmth. Crafted for those who appreciate intensity and presence, MITHAQ is an unforgettable olfactory journey in every spray. Housed in a stunning 100 ml bottle, it is ideal for both special occasions and everyday elegance.",
+      "id": "8e5c9c50-a465-4010-97d4-d7f5e94303b8",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752478991/product_images/Mithaq%20%20Eau%20De%20Parfum%20100ml%20-%201-1752478989768.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752478990/product_images/Mithaq%20%20Eau%20De%20Parfum%20100ml%20-2-1752478989770.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752478990/product_images/Mithaq%20%20Eau%20De%20Parfum%20100ml%20-3-1752478989771.jpg"
+      ],
+      "name": "Banafa MITAQ Eau de Parfum 100ml ",
+      "price": {
+        "amount": 68,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏68.00 د.إ.‏",
+          "withoutCurrency": "68.00"
+        },
+        "parts": {
+          "whole": 68,
+          "subUnit": 0,
+          "smallestUnit": 6800
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-14T07:43:09.752Z",
+      "updatedAt": "2025-07-16T06:25:22.361Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Experience the allure of the East with MIRAJ Eau de Parfum, a captivating fragrance that blends timeless elegance with modern sophistication. Opening with fresh, uplifting top notes, MIRAJ gracefully transitions into a heart of warm spices and floral accords, leaving a sensual trail of deep woody and musky base notes. Perfect for those who appreciate rich, long-lasting scents that command attention and leave a lasting impression. MIRAJ is your go-to signature scent for both day and evening wear.",
+      "id": "5e4622f8-e4d8-43d9-8823-f8d5db3857e2",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752476356/product_images/Miraj%20Eau%20De%20Parfum%20100ml%20-%201-1752476355535.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752476356/product_images/Miraj%20Eau%20De%20Parfum%20100ml%20-%202-1752476355537.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752476356/product_images/Miraj%20Eau%20De%20Parfum%20100ml%20-%203-1752476355537.jpg"
+      ],
+      "name": "Banafa MIRAJ Eau de Parfum 100ml ",
+      "price": {
+        "amount": 37,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏37.00 د.إ.‏",
+          "withoutCurrency": "37.00"
+        },
+        "parts": {
+          "whole": 37,
+          "subUnit": 0,
+          "smallestUnit": 3700
+        }
+      },
+      "quantity": 9,
+      "rating": 0,
+      "createdAt": "2025-07-14T06:59:15.519Z",
+      "updatedAt": "2025-07-16T06:24:10.861Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Khayal 100 ml Eau de Parfum is a captivating unisex fragrance that elegantly balances fresh citrus, crisp woods, and a sensually warm base. It greets you with a lively blend of bergamot and orange, then mellows into a heart lush with white grapefruit and soft woody accords. As it settles, the fragrance reveals a smooth and lingering base of musk and white amber, creating a radiant and enduring trail that’s neither overpowering nor fleeting .",
+      "id": "f9c4a507-a37c-4ba0-bb8b-0dbad1d887ef",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752466580/product_images/Khayal%20%20Eau%20De%20Parfum%20100ml%20-%202-1752466578858.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752466580/product_images/Khayal%20%20Eau%20De%20Parfum%20100ml%20-%203-1752466578860.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752466580/product_images/KHAYAL-1752466578860.jpg"
+      ],
+      "name": "Banafa KHAYAL Eau de Parfum 100ml",
+      "price": {
+        "amount": 68,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏68.00 د.إ.‏",
+          "withoutCurrency": "68.00"
+        },
+        "parts": {
+          "whole": 68,
+          "subUnit": 0,
+          "smallestUnit": 6800
+        }
+      },
+      "quantity": 6,
+      "rating": 0,
+      "createdAt": "2025-07-14T04:16:18.845Z",
+      "updatedAt": "2025-07-16T06:23:27.954Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Beirut Flower Perfume 100 ml Eau de Parfum is a beautifully crafted fragrance designed for women who appreciate a soft, elegant floral scent. Made with natural flower extracts, this perfume offers a fresh and captivating aroma that is perfect for daily wear. Its long-lasting formula ensures you stay refreshed throughout the day, making it ideal for both personal use and gifting. Packaged in a sleek 100 ml bottle, it’s also convenient for travel. Beirut Flower combines femininity and freshness, making it a perfect choice for those who prefer a gentle yet noticeable fragrance.",
+      "id": "928ff66d-977f-4663-8c2c-629276de407d",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752448890/product_images/Beirut%20Flower%20%20Eau%20De%20Parfum%20100ml%20-%201-1752448889462.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752448890/product_images/Beirut%20Flower%20%20Eau%20De%20Parfum%20100ml%20-%202-1752448889465.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1752448890/product_images/Beirut%20Flower%20%20Eau%20De%20Parfum%20100ml%20-%203-1752448889465.jpg"
+      ],
+      "name": "Banafa Bierut Flower Eau De Perfume 100 ML",
+      "price": {
+        "amount": 47,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏47.00 د.إ.‏",
+          "withoutCurrency": "47.00"
+        },
+        "parts": {
+          "whole": 47,
+          "subUnit": 0,
+          "smallestUnit": 4700
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-07-13T23:21:29.448Z",
+      "updatedAt": "2025-07-16T06:17:52.254Z",
+      "gender": "FEMALE",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Eau de Parfum 100 ML\r\nTop Notes: Saffron, Orange, Rosemary\r\nHeart Notes: Jasmine, Orange Flower, Rose\r\nBase Notes: Amber Gris, Cedarwood, Fir Balsam, Amyris, Praline\r\n\r\nRich & Spicy Opening – The fragrance begins with an exquisite blend of saffron, orange, and rosemary, delivering a bold, warm, and slightly citrusy freshness.\r\nFloral Heart with a Touch of Sweetness – A sophisticated combination of jasmine, orange flower, and rose creates a luxurious floral bouquet, adding depth and elegance.\r\nDeep & Woody Base – The scent settles into an indulgent blend of amber gris, cedarwood, fir balsam, amyris, and praline, offering a rich, warm, and long-lasting trail.\r\nPremium & Long-Lasting Formula – Made with high-quality ingredients, this luxury Eau de Parfum ensures a captivating aroma that lingers throughout the day.\r\nPerfect for Any Occasion – Whether for a special event or everyday wear, Banafa MARRAKECH Eau de Parfum exudes confidence and sophistication, making it an ideal signature scent.",
+      "id": "7c2753b0-9439-445d-ba3a-c2556a1312c2",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1747759147/product_images/MK_1-1747759146516.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1747759146/product_images/MK_2-1747759146517.jpg"
+      ],
+      "name": "Banafa MARRAKECH Eau de Parfum 100ml - Exotic Spicy Floral Fragrance with Saffron, Orange, Jasmine, Cedarwood & Amber Gris - Long-Lasting Luxurious Perfume for Day or Night, Unisex",
+      "price": {
+        "amount": 47,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏47.00 د.إ.‏",
+          "withoutCurrency": "47.00"
+        },
+        "parts": {
+          "whole": 47,
+          "subUnit": 0,
+          "smallestUnit": 4700
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-05-20T16:39:06.498Z",
+      "updatedAt": "2025-07-16T06:20:02.661Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Energizing Citrus & Spicy Opening – A dynamic blend of bergamot, orange, and cinnamon creates a refreshing yet warm introduction, offering a perfect balance of citrus brightness and spicy depth.\r\nAromatic & Herbal Heart – The fragrance evolves into a sophisticated fusion of lavandin, cardamom, and cary sage, adding a fresh, slightly spicy, and herbaceous dimension.\r\nRich & Smoky Base – A deep and long-lasting finish with tobacco, amber, and labdanum, providing a warm, resinous, and slightly smoky character for an unforgettable scent.\r\nLong-Lasting & High-Quality Formula – Crafted with premium ingredients, this luxury Eau de Parfum ensures a powerful and evolving scent that lingers beautifully throughout the day.\r\nVersatile for Every Occasion – Whether for daily wear or special events, Banafa LA NAVY Eau de Parfum exudes confidence and elegance, making it an ideal signature fragrance for men and women.",
+      "id": "67f539c7-59f7-4761-bba8-9f5c3526b3dc",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1747758719/product_images/Navy_1-1747758719095.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1747758719/product_images/Navy_2-1747758719095.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1747758719/product_images/Navy_3-1747758719096.jpg"
+      ],
+      "name": "Banafa LA NAVY Eau de Parfum 100ml - Warm Spicy Citrus Fragrance with Bergamot, Orange, Cinnamon, Tobacco & Amber - Long-Lasting Luxurious Perfume for Day or Night, Unisex",
+      "price": {
+        "amount": 47,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏47.00 د.إ.‏",
+          "withoutCurrency": "47.00"
+        },
+        "parts": {
+          "whole": 47,
+          "subUnit": 0,
+          "smallestUnit": 4700
+        }
+      },
+      "quantity": 7,
+      "rating": 0,
+      "createdAt": "2025-05-20T16:31:59.066Z",
+      "updatedAt": "2025-07-16T06:19:18.614Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Eau De Parfum 100 ML\r\nTop Notes : Peach, Lemon, Praline,\r\nHeart Notes : Violet, Muguet, Lily Flower\r\nBase Notes : Patchouli, Leather, Amber\"\r\n",
+      "id": "9eac366b-9fc1-4c1a-9c98-633513846a86",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1747758055/product_images/Kiwan%201-1747758054837.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1747758055/product_images/Kiwan%202-1747758054840.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1747758055/product_images/Kiwan%203-1747758054840.jpg"
+      ],
+      "name": "Banafa KIWAN Eau de Parfum 100ml for Men & Women - Luxurious Fruity Floral Fragrance with Peach, Lemon, Violet, Lily Flower, Patchouli, and Amber Notes - Long-Lasting Elegant Perfume for Day or Night",
+      "price": {
+        "amount": 68,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏68.00 د.إ.‏",
+          "withoutCurrency": "68.00"
+        },
+        "parts": {
+          "whole": 68,
+          "subUnit": 0,
+          "smallestUnit": 6800
+        }
+      },
+      "quantity": 10,
+      "rating": 0,
+      "createdAt": "2025-05-20T16:20:54.823Z",
+      "updatedAt": "2025-07-16T06:15:57.556Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    },
+    {
+      "category": "Fragrances",
+      "description": "Dai Eau de Parfum 100 ML\r\nTop Notes : Bergamot, Cinnamon, Nutmeg\r\nHeart Notes : Dates Accord, Lily of the Valley, Praline, Tuberose   \r\nBase Notes : Roasted Tonka, Benzoin Laos, Myrrh, Akigala wood, Vanilla, Amber Wood\"\r\n",
+      "id": "fb95af40-4a3e-4d0e-a53c-51b92f9da001",
+      "images": [
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1747757152/product_images/61t%2B0Z-H12L-1747757151455.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1747757152/product_images/61nbZS2IswL-1747757151461.jpg",
+        "https://res.cloudinary.com/di4xqmmns/image/upload/v1747757151/product_images/61PXaLfdtBL-1747757151461.jpg"
+      ],
+      "name": "Dai Eau De Parfum - Unisex - 100ml",
+      "price": {
+        "amount": 68,
+        "currency": {
+          "code": "AED",
+          "symbol": "د.إ",
+          "name": "United Arab Emirates Dirham",
+          "locale": "ar-AE"
+        },
+        "formatted": {
+          "withCurrency": "‏68.00 د.إ.‏",
+          "withoutCurrency": "68.00"
+        },
+        "parts": {
+          "whole": 68,
+          "subUnit": 0,
+          "smallestUnit": 6800
+        }
+      },
+      "quantity": 7,
+      "rating": 0,
+      "createdAt": "2025-05-20T16:05:51.439Z",
+      "updatedAt": "2025-07-16T06:15:43.920Z",
+      "gender": "UNISEX",
+      "isFavorite": false,
+      "discount": null
+    }
+  ],
+  "meta": {
+    "nextLink": null,
+    "previousLink": null,
+    "presentLink": "https://api.buabedbanafa.com/products?page=1&limit=500"
+  },
+  "pagination": {
+    "presentPage": 1,
+    "total": 92,
+    "limit": 500,
+    "previousPage": null,
+    "nextPage": null,
+    "totalPage": 1
+  }
+}
