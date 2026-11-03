@@ -1,0 +1,81 @@
+import Image from "next/image";
+import { Section } from "../ui/Section";
+
+export function WhyChooseUsSection() {
+  const title = "Why Choose Banafa?";
+
+  const features = [
+    {
+      title: "Authentic Products",
+      description: "Authentic fragrances, verified for purity.",
+      image: "/assets/leaf.svg",
+    },
+    {
+      title: "Quality Fragrances",
+      description: "Crafted with premium global ingredients.",
+      image: "/assets/perfume.svg",
+    },
+    {
+      title: "Fast Delivery",
+      description: "Fast GCC delivery in 24-48 hours.",
+      image: "/assets/delivery.svg",
+    },
+    {
+      title: "Easy Returns",
+      description: "Easy 14-day returns, guaranteed satisfaction.",
+      image: "/assets/return.svg",
+    },
+  ];
+
+  return (
+    <Section
+      className="relative my-22 gap-8 bg-[#FAF9F7]"
+      contentClassName="flex flex-col items-center justify-center gap-6 md:gap-14 lg:flex-row py-10"
+    >
+      <div className="absolute top-0 h-22 w-full -translate-y-full bg-[url('/images/wave.webp')]" />
+      <div className="absolute bottom-0 h-22 w-full translate-y-full transform-[scaleY(-1)] bg-[url('/images/wave.webp')]" />
+
+      <Image
+        src="/images/why_choose_us_3.webp"
+        alt="Why Choose Us"
+        width={292}
+        height={369}
+        aria-hidden="true"
+      />
+      <div className="flex flex-col items-center justify-center">
+        <h2 className="font-cormorant mb-16 text-center text-4xl font-medium uppercase">
+          {title}
+        </h2>
+        <div className="grid grid-cols-1 gap-12 gap-y-8 lg:grid-cols-2">
+          {features.map((feature) => (
+            <div key={feature.title} className="mb-4 flex gap-3">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#EFEBEA]">
+                <Image
+                  src={feature.image}
+                  alt={feature.title}
+                  width={20}
+                  height={15}
+                  aria-hidden="true"
+                  className="h-8 w-8"
+                />
+              </div>
+              <div>
+                <h3 className="font-cormorant text-2xl font-bold">
+                  {feature.title}
+                </h3>
+                <p className="text-text-muted text-sm">{feature.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <Image
+        src="/images/why_choose_us_2.webp"
+        alt="Why Choose Us 2"
+        width={267}
+        height={311}
+        aria-hidden="true"
+      />
+    </Section>
+  );
+}

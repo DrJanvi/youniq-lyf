@@ -1,0 +1,53 @@
+{
+  "category": "Fragrances",
+  "description": "Immerse yourself in the warm, mystical embrace of SAHRA Eau de Parfum. This enchanting fragrance opens with vibrant citrus and aromatic spices that evoke the spirit of the desert. At its heart, soft floral notes blend seamlessly with hints of amber and musk, creating a rich and captivating aroma. Perfectly balanced and long-lasting, SAHRA is designed for those who seek an elegant yet bold scent. Presented in a sleek 50 ml bottle, it’s the perfect companion for your everyday adventures or special evenings.",
+  "id": "a6ebeffa-188e-4841-89fe-77776cf169c9",
+  "images": [
+    "https://res.cloudinary.com/di4xqmmns/image/upload/v1752995055/product_images/Sahra%20Spray%20Around%20100ml%20-%201-1752995053608.jpg",
+    "https://res.cloudinary.com/di4xqmmns/image/upload/v1752995054/product_images/Sahra%20Spray%20Around%20100ml%20-%202-1752995053609.jpg",
+    "https://res.cloudinary.com/di4xqmmns/image/upload/v1752995054/product_images/Sahra%20Spray%20Around%20100ml%20-%203-1752995053609.jpg"
+  ],
+  "name": "Banafa SAHRA Eau de Parfum 50ml ",
+  "price": {
+    "amount": 26,
+    "currency": {
+      "code": "AED",
+      "symbol": "د.إ",
+      "name": "United Arab Emirates Dirham",
+      "locale": "ar-AE"
+    },
+    "formatted": {
+      "withCurrency": "‏26.00 د.إ.‏",
+      "withoutCurrency": "26.00"
+    },
+    "parts": {
+      "whole": 26,
+      "subUnit": 0,
+      "smallestUnit": 2600
+    }
+  },
+  "quantity": 10,
+  "rating": 0,
+  "createdAt": "2025-07-20T07:04:13.602Z",
+  "updatedAt": "2026-08-22T12:34:44.232Z",
+  "gender": "UNISEX",
+  "isFavorite": false,
+  "discount": {
+    "amount": 24.7,
+    "currency": {
+      "code": "AED",
+      "symbol": "د.إ",
+      "name": "United Arab Emirates Dirham",
+      "locale": "ar-AE"
+    },
+    "formatted": {
+      "withCurrency": "‏24.70 د.إ.‏",
+      "withoutCurrency": "24.70"
+    },
+    "parts": {
+      "whole": 24,
+      "subUnit": 70,
+      "smallestUnit": 2470
+    }
+  }
+}

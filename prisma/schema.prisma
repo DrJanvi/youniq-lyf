@@ -1,0 +1,544 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  UNISEX
+}
+
+enum DiscountType {
+  PERCENT
+  FIXED
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  HIDDEN
+}
+
+enum OrderStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  DISPATCHED
+  OUT_FOR_DELIVERY
+  DELIVERED
+  DELIVERY_ATTEMPT_FAILED
+}
+
+enum PaymentMethod {
+  CASH_ON_DELIVERY
+  RAZORPAY
+  PAYU
+}
+
+enum ContactFaqPage {
+  CONTACT
+  FAQ_PAGE
+}
+
+enum PartnerInterest {
+  DISTRIBUTOR
+  INFLUENCER_CREATOR
+  OTHER
+}
+
+enum OrderDeliveryOutcome {
+  DELIVERED
+  DELIVERY_ATTEMPT_FAILED
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String?  @unique
+  username     String?  @unique
+  passwordHash String?
+  name         String?
+  role         Role     @default(CUSTOMER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  cart           Cart?
+  wishlist       WishlistItem[]
+  orders         Order[]
+  reviews        Review[]
+  savedAddresses SavedAddress[]
+}
+
+model LoginCode {
+  id        String    @id @default(uuid())
+  email     String
+  codeHash  String
+  attempts  Int       @default(0)
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([email, createdAt])
+}
+
+model Category {
+  id             String     @id @default(uuid())
+  name           String
+  slug           String     @unique
+  image          String
+  description    String?    @db.Text
+  seoTitle       String?
+  seoDescription String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  products       Product[]
+  discounts      Discount[]
+}
+
+model Brand {
+  id        String    @id @default(uuid())
+  name      String
+  slug      String    @unique
+  createdAt DateTime  @default(now())
+  products  Product[]
+}
+
+model ProductType {
+  id        String    @id @default(uuid())
+  name      String
+  slug      String    @unique
+  createdAt DateTime  @default(now())
+  products  Product[]
+}
+
+model Tag {
+  id       String       @id @default(uuid())
+  name     String
+  slug     String       @unique
+  products ProductTag[]
+}
+
+model Product {
+  id             String   @id @default(uuid())
+  slug           String   @unique @db.VarChar(255)
+  title          String   @db.VarChar(255)
+  description    String   @db.Text
+  images         Json
+  aboutPoints    Json?
+  aboutIntro     String?  @db.Text
+  rawImages      Json?    @map("raw_images")
+  price          Decimal  @db.Decimal(10, 2)
+  currency       String   @default("AED")
+  stock          Int      @default(0)
+  gender         Gender   @default(UNISEX)
+  rating         Decimal  @default(0) @db.Decimal(3, 2)
+  reviewCount    Int      @default(0)
+  soldCount      Int      @default(0)
+  isActive       Boolean  @default(true)
+  seoTitle       String?
+  seoDescription String?
+  categoryId     String
+  brandId        String?
+  productTypeId  String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  category    Category       @relation(fields: [categoryId], references: [id])
+  brand       Brand?         @relation(fields: [brandId], references: [id])
+  productType ProductType?   @relation(fields: [productTypeId], references: [id])
+  tags        ProductTag[]
+  discounts   Discount[]
+  reviews     Review[]
+  cartItems   CartItem[]
+  wishlist    WishlistItem[]
+  orderItems  OrderItem[]
+
+  @@index([categoryId])
+  @@index([brandId])
+  @@index([productTypeId])
+  @@index([price])
+  @@index([createdAt])
+  @@index([soldCount])
+  @@index([title])
+}
+
+model ProductTag {
+  productId String
+  tagId     String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([productId, tagId])
+  @@index([tagId])
+}
+
+// A discount targets a product, a category, or (both null) the whole store.
+model Discount {
+  id         String       @id @default(uuid())
+  name       String
+  type       DiscountType
+  value      Decimal      @db.Decimal(10, 2)
+  startsAt   DateTime?
+  endsAt     DateTime?
+  isActive   Boolean      @default(true)
+  productId  String?
+  categoryId String?
+  createdAt  DateTime     @default(now())
+  product    Product?     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  category   Category?    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([categoryId])
+}
+
+model Coupon {
+  id              String       @id @default(uuid())
+  code            String       @unique @db.VarChar(64)
+  type            DiscountType
+  value           Decimal      @db.Decimal(10, 2)
+  minimumSubtotal Decimal?     @db.Decimal(10, 2)
+  maxDiscount     Decimal?     @db.Decimal(10, 2)
+  startsAt        DateTime?
+  endsAt          DateTime?
+  isActive        Boolean      @default(true)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  orders          Order[]
+
+  @@index([isActive, startsAt, endsAt])
+}
+
+model Review {
+  id          String       @id @default(uuid())
+  productId   String
+  userId      String?
+  authorName  String
+  authorEmail String?
+  rating      Int
+  title       String?
+  body        String       @db.Text
+  status      ReviewStatus @default(PENDING)
+  createdAt   DateTime     @default(now())
+  product     Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user        User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([productId, status])
+}
+
+model Cart {
+  id        String     @id @default(uuid())
+  userId    String     @unique
+  updatedAt DateTime   @updatedAt
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+}
+
+model CartItem {
+  id        String  @id @default(uuid())
+  cartId    String
+  productId String
+  quantity  Int     @default(1)
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([cartId, productId])
+}
+
+model WishlistItem {
+  id        String   @id @default(uuid())
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+}
+
+model SavedAddress {
+  id          String   @id @default(uuid())
+  userId      String
+  firstName   String
+  lastName    String
+  phone       String
+  addressLine String   @db.Text
+  city        String
+  state       String
+  country     String
+  postalCode  String
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isDefault])
+}
+
+model Order {
+  id                  String                 @id @default(uuid())
+  userId              String
+  status              OrderStatus            @default(PENDING)
+  paymentMethod       PaymentMethod          @default(CASH_ON_DELIVERY)
+  subtotal            Decimal                @db.Decimal(10, 2)
+  discountTotal       Decimal                @default(0) @db.Decimal(10, 2)
+  couponId            String?
+  couponCode          String?                @db.VarChar(64)
+  couponDiscount      Decimal                @default(0) @db.Decimal(10, 2)
+  total               Decimal                @db.Decimal(10, 2)
+  currency            String                 @default("AED")
+  shippingName        String?
+  shippingPhone       String?
+  shippingAddress     String?                @db.Text
+  adminNote           String?                @db.Text
+  deliveryPartner     String?                @db.VarChar(120)
+  deliveryReferenceId String?                @db.VarChar(120)
+  deliveryTrackingUrl String?                @db.VarChar(1000)
+  createdAt           DateTime               @default(now())
+  updatedAt           DateTime               @updatedAt
+  user                User                   @relation(fields: [userId], references: [id])
+  coupon              Coupon?                @relation(fields: [couponId], references: [id], onDelete: SetNull)
+  items               OrderItem[]
+  deliveryAttempts    OrderDeliveryAttempt[]
+
+  @@index([status, createdAt])
+  @@index([userId])
+  @@index([couponId])
+}
+
+model OrderDeliveryAttempt {
+  id        String               @id @default(uuid())
+  orderId   String
+  outcome   OrderDeliveryOutcome
+  notes     String?              @db.Text
+  createdAt DateTime             @default(now())
+  order     Order                @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId, createdAt])
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  productId String
+  title     String
+  unitPrice Decimal @db.Decimal(10, 2)
+  quantity  Int
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model HighlightedPost {
+  id        String   @id @default(uuid())
+  image     String   @db.VarChar(1000)
+  link      String   @db.VarChar(1000)
+  alt       String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model HeroBanner {
+  id           String   @id @default(uuid())
+  desktopImage String   @db.VarChar(1000)
+  mobileImage  String?  @db.VarChar(1000)
+  link         String   @db.VarChar(1000)
+  alt          String?
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+}
+
+model BlogArticle {
+  id          String   @id @default(uuid()) @db.VarChar(36)
+  slug        String   @unique @db.VarChar(160)
+  title       String   @db.VarChar(255)
+  category    String   @db.VarChar(60)
+  publishedAt DateTime @db.Date
+  readTime    Int
+  excerpt     String   @db.VarChar(320)
+  image       String   @db.VarChar(1000)
+  content     String   @db.LongText
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category, publishedAt])
+  @@index([publishedAt])
+}
+
+model HighlightedCategorySetting {
+  id              String    @id
+  image           String    @db.VarChar(1000)
+  title           String    @db.VarChar(255)
+  description     String    @db.Text
+  buttonLink      String    @default("/category/fragrances") @db.VarChar(1000)
+  durationSeconds Int       @default(259200)
+  isEnabled       Boolean   @default(true)
+  autoRestart     Boolean   @default(false)
+  timerEndsAt     DateTime?
+  updatedAt       DateTime  @updatedAt
+}
+
+model ContactPageSetting {
+  id                 String   @id @default("contact-us") @db.VarChar(40)
+  heading            String   @default("GET IN TOUCH") @db.VarChar(120)
+  tagline            String   @default("Have a question about our products or your order? We'd love to hear from you.") @db.VarChar(500)
+  contactHeading     String   @default("We're always close by.") @db.VarChar(200)
+  contactIntro       String   @db.Text
+  email              String   @default("info@buabedbanafa.com") @db.VarChar(190)
+  alternateEmail     String?  @db.VarChar(190)
+  phone              String   @default("+966 12 627 4600") @db.VarChar(40)
+  whatsapp           String?  @db.VarChar(40)
+  supportTitle       String   @default("Customer Support") @db.VarChar(120)
+  supportDescription String   @default("For product advice, order updates, returns, and wholesale enquiries.") @db.VarChar(500)
+  image              String?  @db.VarChar(1000)
+  imageAlt           String   @default("Banafa Perfumes location") @db.VarChar(255)
+  updatedAt          DateTime @updatedAt
+}
+
+model ContactLocation {
+  id        String   @id @default(uuid())
+  slug      String   @unique @db.VarChar(160)
+  city      String   @db.VarChar(120)
+  country   String   @db.VarChar(120)
+  company   String?  @db.VarChar(190)
+  address   String   @db.Text
+  phone     String?  @db.VarChar(40)
+  whatsapp  String?  @db.VarChar(40)
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isActive, sortOrder])
+}
+
+model ContactFaq {
+  id        String         @id @default(uuid())
+  question  String         @db.VarChar(500)
+  answer    String         @db.Text
+  page      ContactFaqPage @default(FAQ_PAGE)
+  sortOrder Int            @default(0)
+  isActive  Boolean        @default(true)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@index([isActive, sortOrder])
+  @@index([page, isActive, sortOrder])
+}
+
+model PolicyPageContent {
+  slug      String   @id @db.VarChar(100)
+  content   String   @db.LongText
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ContactSubmission {
+  id        String    @id @default(uuid())
+  fullName  String    @db.VarChar(100)
+  phone     String    @db.VarChar(30)
+  email     String    @db.VarChar(190)
+  subject   String    @db.VarChar(80)
+  message   String    @db.Text
+  consent   Boolean   @default(true)
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([readAt, createdAt])
+  @@index([createdAt])
+}
+
+model PartnerRequest {
+  id          String          @id @default(uuid())
+  fullName    String          @db.VarChar(100)
+  countryCode String          @db.VarChar(4)
+  phoneNumber String          @db.VarChar(15)
+  interest    PartnerInterest
+  createdAt   DateTime        @default(now())
+
+  @@index([createdAt])
+  @@index([fullName])
+}
+
+model AboutUsPageSetting {
+  id                    String                 @id @default("about-us") @db.VarChar(40)
+  heroHeading           String                 @db.VarChar(255)
+  heroDescription       String                 @db.VarChar(1000)
+  desktopImage          String?                @db.VarChar(1000)
+  mobileImage           String?                @db.VarChar(1000)
+  journeyHeading        String                 @db.VarChar(200)
+  journeyDescription    String                 @db.VarChar(1000)
+  principlesHeading     String                 @default("The principles behind every creation.") @db.VarChar(255)
+  whoImage              String?                @db.VarChar(1000)
+  whoHeading            String                 @default("WHO WE ARE") @db.VarChar(200)
+  whoSubheading         String                 @default("Quality, Consistency, Creativity Beyond Expectations") @db.VarChar(255)
+  whoParagraph1         String?                @db.Text
+  whoParagraph2         String?                @db.Text
+  whoParagraph3         String?                @db.Text
+  whoParagraph4         String?                @db.Text
+  whoBadge              String                 @default("TRADITION REIMAGINED") @db.VarChar(120)
+  legacyImage           String?                @db.VarChar(1000)
+  legacyHeading         String                 @default("A LEGACY OF FRAGRANCE SINCE 1995") @db.VarChar(255)
+  legacyIntro           String?                @db.Text
+  legacyParagraph1      String?                @db.Text
+  legacyParagraph2      String?                @db.Text
+  whyChooseImage        String?                @db.VarChar(1000)
+  whyChooseHeading      String                 @default("WHY CHOOSE BUABED BANAFA?") @db.VarChar(255)
+  whyChooseDescription  String?                @db.Text
+  milestone1Year        String                 @db.VarChar(40)
+  milestone1Title       String                 @db.VarChar(160)
+  milestone1Description String                 @db.VarChar(500)
+  milestone2Year        String                 @db.VarChar(40)
+  milestone2Title       String                 @db.VarChar(160)
+  milestone2Description String                 @db.VarChar(500)
+  milestone3Year        String                 @db.VarChar(40)
+  milestone3Title       String                 @db.VarChar(160)
+  milestone3Description String                 @db.VarChar(500)
+  milestone4Year        String                 @db.VarChar(40)
+  milestone4Title       String                 @db.VarChar(160)
+  milestone4Description String                 @db.VarChar(500)
+  updatedAt             DateTime               @updatedAt
+  principles            AboutUsPrinciple[]
+  legacyStats           AboutUsLegacyStat[]
+  whyChooseCards        AboutUsWhyChooseCard[]
+}
+
+model AboutUsPrinciple {
+  id            String             @id @default(uuid()) @db.VarChar(36)
+  pageSettingId String             @db.VarChar(40)
+  icon          String             @db.VarChar(1000)
+  title         String             @db.VarChar(160)
+  description   String             @db.VarChar(1000)
+  sortOrder     Int                @default(0)
+  pageSetting   AboutUsPageSetting @relation(fields: [pageSettingId], references: [id], onDelete: Cascade)
+
+  @@index([pageSettingId, sortOrder])
+}
+
+model AboutUsLegacyStat {
+  id            String             @id @default(uuid()) @db.VarChar(36)
+  pageSettingId String             @db.VarChar(40)
+  icon          String             @db.VarChar(1000)
+  title         String             @db.VarChar(160)
+  sortOrder     Int                @default(0)
+  pageSetting   AboutUsPageSetting @relation(fields: [pageSettingId], references: [id], onDelete: Cascade)
+
+  @@index([pageSettingId, sortOrder])
+}
+
+model AboutUsWhyChooseCard {
+  id            String             @id @default(uuid()) @db.VarChar(36)
+  pageSettingId String             @db.VarChar(40)
+  title         String             @db.VarChar(160)
+  description   String             @db.VarChar(1000)
+  sortOrder     Int                @default(0)
+  pageSetting   AboutUsPageSetting @relation(fields: [pageSettingId], references: [id], onDelete: Cascade)
+
+  @@index([pageSettingId, sortOrder])
+}
