@@ -5,7 +5,7 @@ export const instant = false;
 
 export const metadata = buildMetadata({
   title: "Return & Exchange Policy",
-  description: "Review Banafa's return and exchange policy.",
+  description: "Review Youniqlyf's return and exchange policy.",
   path: "/return-exchange-policy",
 });
 

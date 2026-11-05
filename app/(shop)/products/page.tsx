@@ -1,5 +1,5 @@
-import { ProductListing } from "@/components/shop/ProductListing";
 import { PageHeader } from "@/components/shop/PageHeader";
+import { ProductListing } from "@/components/shop/ProductListing";
 import { Section } from "@/components/ui/Section";
 import { buildMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
@@ -19,7 +19,7 @@ export async function generateMetadata({
   return buildMetadata({
     title: q ? `Search results for "${q}"` : "All products",
     description:
-      "Browse all Banafa products: perfumes, body care, hair care and more.",
+      "Browse all Youniqlyf products: perfumes, body care, hair care and more.",
     // Filtered/search URLs canonicalise to the plain listing and are kept out of the index.
     path: "/products",
     noindex: filtered,

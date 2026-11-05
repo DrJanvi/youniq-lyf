@@ -6,15 +6,18 @@ import { Section } from "./Section";
 
 export function Breadcrumbs({
   crumbs,
+  className,
   contentClassName,
 }: {
   crumbs: Crumb[];
+  className?: string;
   contentClassName?: string;
 }) {
   return (
     <Section
       as="nav"
       aria-label="Breadcrumb"
+      className={className}
       contentClassName={contentClassName}
     >
       <JsonLd data={breadcrumbJsonLd(crumbs)} />

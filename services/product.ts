@@ -20,6 +20,16 @@ const include = {
 
 type ProductRow = Prisma.ProductGetPayload<{ include: typeof include }>;
 
+export const STOREFRONT_PRODUCT_WHERE = {
+  isActive: true,
+  deletedAt: null,
+  category: { is: { deletedAt: null } },
+  AND: [
+    { OR: [{ brandId: null }, { brand: { is: { deletedAt: null } } }] },
+    { OR: [{ productTypeId: null }, { productType: { is: { deletedAt: null } } }] },
+  ],
+} satisfies Prisma.ProductWhereInput;
+
 type CachedProductRow = {
   id: string;
   slug: string;
@@ -35,6 +45,8 @@ type CachedProductRow = {
   reviewCount: number;
   soldCount: number;
   isActive: boolean;
+  deletedAt: string | null;
+  deletedByTaxonomy: boolean;
   seoTitle: string | null;
   seoDescription: string | null;
   createdAt: string;
@@ -62,6 +74,8 @@ export type ProductDTO = {
   reviewCount: number;
   soldCount: number;
   isActive: boolean;
+  deletedAt: string | null;
+  deletedByTaxonomy: boolean;
   seoTitle: string | null;
   seoDescription: string | null;
   createdAt: string;
@@ -77,9 +91,12 @@ export async function getActiveRules(): Promise<DiscountRule[]> {
   const rows = await prisma.discount.findMany({
     where: {
       isActive: true,
+      deletedAt: null,
       AND: [
         { OR: [{ startsAt: null }, { startsAt: { lte: now } }] },
         { OR: [{ endsAt: null }, { endsAt: { gte: now } }] },
+        { OR: [{ productId: null }, { product: { is: { deletedAt: null } } }] },
+        { OR: [{ categoryId: null }, { category: { is: { deletedAt: null } } }] },
       ],
     },
   });
@@ -109,6 +126,8 @@ function toCachedProduct(p: ProductRow): CachedProductRow {
     reviewCount: p.reviewCount,
     soldCount: p.soldCount,
     isActive: p.isActive,
+    deletedAt: p.deletedAt?.toISOString() ?? null,
+    deletedByTaxonomy: p.deletedByTaxonomy,
     seoTitle: p.seoTitle,
     seoDescription: p.seoDescription,
     createdAt: p.createdAt.toISOString(),
@@ -158,6 +177,8 @@ export function toDTO(
     reviewCount: p.reviewCount,
     soldCount: p.soldCount,
     isActive: p.isActive,
+    deletedAt: p.deletedAt,
+    deletedByTaxonomy: p.deletedByTaxonomy,
     seoTitle: p.seoTitle,
     seoDescription: p.seoDescription,
     createdAt: p.createdAt,
@@ -186,6 +207,8 @@ export type ProductFilters = {
   adminSort?: { field: "title" | "price" | "stock" | "soldCount" | "createdAt" | "isActive"; dir: "asc" | "desc" };
   /** Admin-only: filter by visibility. */
   status?: "active" | "hidden";
+  /** Admin-only: filter soft-deleted products. */
+  deleted?: "active" | "deleted";
 };
 
 const list = (v?: string) => (v ? v.split(",").map((s) => s.trim()).filter(Boolean) : []);
@@ -208,6 +231,7 @@ export function parseFilters(sp: URLSearchParams | Record<string, string | strin
     .map(Number)
     .filter((rating) => Number.isFinite(rating));
   const sort = get("sort");
+  const deleted = get("deleted");
   return {
     q: get("q")?.trim() || undefined,
     category: getList("category").filter((value) => value !== "all").join(",") || undefined,
@@ -216,6 +240,7 @@ export function parseFilters(sp: URLSearchParams | Record<string, string | strin
     gender: get("gender") || undefined,
     tag: get("tag") || undefined,
     inStock: get("inStock") === "true" ? true : undefined,
+    deleted: deleted === "active" || deleted === "deleted" ? deleted : undefined,
     minRating: ratings.length ? Math.min(...ratings) : undefined,
     minPrice: num("minPrice"),
     maxPrice: num("maxPrice"),
@@ -225,15 +250,27 @@ export function parseFilters(sp: URLSearchParams | Record<string, string | strin
 
 function buildWhere(f: ProductFilters): Prisma.ProductWhereInput {
   const where: Prisma.ProductWhereInput = {};
-  if (!f.includeInactive) where.isActive = true;
-  else if (f.status) where.isActive = f.status === "active";
+  const and: Prisma.ProductWhereInput[] = [];
+  if (!f.includeInactive) {
+    where.isActive = true;
+    where.deletedAt = null;
+    and.push(
+      { category: { is: { deletedAt: null } } },
+      { OR: [{ brandId: null }, { brand: { is: { deletedAt: null } } }] },
+      { OR: [{ productTypeId: null }, { productType: { is: { deletedAt: null } } }] },
+    );
+  } else {
+    if (f.status) where.isActive = f.status === "active";
+    if (f.deleted === "active") where.deletedAt = null;
+    if (f.deleted === "deleted") where.deletedAt = { not: null };
+  }
   if (f.q) where.title = { contains: f.q };
   const cats = list(f.category).filter((c) => c !== "all");
-  if (cats.length) where.category = { slug: { in: cats } };
+  if (cats.length) and.push({ category: { is: { slug: { in: cats } } } });
   const types = list(f.type);
-  if (types.length) where.productType = { slug: { in: types } };
+  if (types.length) and.push({ productType: { is: { slug: { in: types } } } });
   const brands = list(f.brand);
-  if (brands.length) where.brand = { slug: { in: brands } };
+  if (brands.length) and.push({ brand: { is: { slug: { in: brands } } } });
   if (f.gender && ["MALE", "FEMALE", "UNISEX"].includes(f.gender.toUpperCase())) {
     where.gender = f.gender.toUpperCase() as "MALE" | "FEMALE" | "UNISEX";
   }
@@ -246,6 +283,7 @@ function buildWhere(f: ProductFilters): Prisma.ProductWhereInput {
       ...(f.maxPrice !== undefined ? { lte: f.maxPrice } : {}),
     };
   }
+  if (and.length) where.AND = and;
   return where;
 }
 
@@ -314,7 +352,10 @@ async function applyLivePricingAndStock(rows: CachedProductRow[]) {
   const [rules, stocks] = await Promise.all([
     getActiveRules(),
     prisma.product.findMany({
-      where: { id: { in: rows.map(({ id }) => id) } },
+      where: {
+        ...STOREFRONT_PRODUCT_WHERE,
+        id: { in: rows.map(({ id }) => id) },
+      },
       select: { id: true, stock: true },
     }),
   ]);
@@ -338,7 +379,7 @@ async function getCachedProductsByTag(tag: string, take: number) {
   cacheTag(PUBLIC_CACHE_TAGS.products, PUBLIC_CACHE_TAGS.taxonomy);
   const rows = await prisma.product.findMany({
     where: {
-      isActive: true,
+      ...STOREFRONT_PRODUCT_WHERE,
       tags: { some: { tag: { slug: tag } } },
     },
     include,
@@ -368,7 +409,11 @@ async function getCachedRelatedProducts(
   cacheLife("minutes");
   cacheTag(PUBLIC_CACHE_TAGS.products, PUBLIC_CACHE_TAGS.taxonomy);
   const rows = await prisma.product.findMany({
-    where: { isActive: true, categoryId, id: { not: excludedProductId } },
+    where: {
+      ...STOREFRONT_PRODUCT_WHERE,
+      categoryId,
+      id: { not: excludedProductId },
+    },
     include,
     orderBy: [{ soldCount: "desc" }, { createdAt: "desc" }, { id: "asc" }],
     take,
@@ -391,7 +436,7 @@ export async function getProductBySlug(slug: string, opts: { includeInactive?: b
   const [rules, current] = await Promise.all([
     getActiveRules(),
     prisma.product.findUnique({
-      where: { id: row.id },
+      where: { id: row.id, ...STOREFRONT_PRODUCT_WHERE },
       select: { stock: true },
     }),
   ]);
@@ -402,16 +447,19 @@ async function getCachedPublicProductBySlug(slug: string) {
   "use cache";
   cacheLife("minutes");
   cacheTag(PUBLIC_CACHE_TAGS.products, PUBLIC_CACHE_TAGS.taxonomy);
-  const row = await prisma.product.findUnique({ where: { slug }, include });
-  return row?.isActive ? toCachedProduct(row) : null;
+  const row = await prisma.product.findFirst({
+    where: { slug, ...STOREFRONT_PRODUCT_WHERE },
+    include,
+  });
+  return row ? toCachedProduct(row) : null;
 }
 
 export async function getProductSeoBySlug(slug: string) {
   "use cache";
   cacheLife("minutes");
   cacheTag(PUBLIC_CACHE_TAGS.products);
-  const product = await prisma.product.findUnique({
-    where: { slug },
+  const product = await prisma.product.findFirst({
+    where: { slug, ...STOREFRONT_PRODUCT_WHERE },
     select: {
       slug: true,
       title: true,
@@ -419,10 +467,9 @@ export async function getProductSeoBySlug(slug: string) {
       images: true,
       seoTitle: true,
       seoDescription: true,
-      isActive: true,
     },
   });
-  if (!product?.isActive) return null;
+  if (!product) return null;
   return {
     ...product,
     image: Array.isArray(product.images)
@@ -443,7 +490,10 @@ export async function getProductById(id: string) {
 export async function getProductsByIds(ids: string[]) {
   if (!ids.length) return [];
   const rules = await getActiveRules();
-  const rows = await prisma.product.findMany({ where: { id: { in: ids } }, include });
+  const rows = await prisma.product.findMany({
+    where: { ...STOREFRONT_PRODUCT_WHERE, id: { in: ids } },
+    include,
+  });
   return rows.map((r) => toDTO(toCachedProduct(r), rules));
 }
 
@@ -452,7 +502,7 @@ export async function listAllSlugs() {
   cacheLife("minutes");
   cacheTag(PUBLIC_CACHE_TAGS.products);
   return prisma.product.findMany({
-    where: { isActive: true },
+    where: STOREFRONT_PRODUCT_WHERE,
     select: { slug: true, updatedAt: true },
   });
 }
@@ -475,6 +525,7 @@ async function syncTags(productId: string, tags: string[]) {
 }
 
 export async function createProduct(input: z.infer<typeof productInputSchema>) {
+  await assertLiveTaxonomyReferences(input);
   const slug = await uniqueSlug(input.slug || input.title, async (s) =>
     Boolean(await prisma.product.findUnique({ where: { slug: s }, select: { id: true } })),
   );
@@ -492,6 +543,11 @@ export async function updateProduct(id: string, input: z.infer<typeof productUpd
   const existing = await prisma.product.findUnique({ where: { id } });
   if (!existing) throw new ApiError(404, "Product not found");
   const { tags, slug, ...rest } = input;
+  await assertLiveTaxonomyReferences({
+    categoryId: rest.categoryId ?? existing.categoryId,
+    brandId: rest.brandId === undefined ? existing.brandId : rest.brandId,
+    productTypeId: rest.productTypeId === undefined ? existing.productTypeId : rest.productTypeId,
+  });
   let nextSlug: string | undefined;
   if (slug && slug !== existing.slug) {
     nextSlug = await uniqueSlug(slug, async (s) =>
@@ -513,15 +569,77 @@ export async function updateProduct(id: string, input: z.infer<typeof productUpd
   return product;
 }
 
-export async function deleteProduct(id: string) {
-  const used = await prisma.orderItem.count({ where: { productId: id } });
-  if (used) {
-    // Preserve order history: deactivate instead of deleting.
-    await prisma.product.update({ where: { id }, data: { isActive: false } });
-    invalidatePublicCache(PUBLIC_CACHE_TAGS.products, PUBLIC_CACHE_TAGS.taxonomy);
-    return { deleted: false, deactivated: true };
+async function assertLiveTaxonomyReferences(input: {
+  categoryId: string;
+  brandId?: string | null;
+  productTypeId?: string | null;
+}) {
+  const [category, brand, productType] = await Promise.all([
+    prisma.category.findFirst({
+      where: { id: input.categoryId, deletedAt: null },
+      select: { id: true },
+    }),
+    input.brandId
+      ? prisma.brand.findFirst({
+          where: { id: input.brandId, deletedAt: null },
+          select: { id: true },
+        })
+      : null,
+    input.productTypeId
+      ? prisma.productType.findFirst({
+          where: { id: input.productTypeId, deletedAt: null },
+          select: { id: true },
+        })
+      : null,
+  ]);
+  if (!category) throw new ApiError(400, "Choose an active category");
+  if (input.brandId && !brand) throw new ApiError(400, "Choose an active brand");
+  if (input.productTypeId && !productType) {
+    throw new ApiError(400, "Choose an active product type");
   }
-  await prisma.product.delete({ where: { id } });
-  invalidatePublicCache(PUBLIC_CACHE_TAGS.products, PUBLIC_CACHE_TAGS.taxonomy);
-  return { deleted: true, deactivated: false };
+}
+
+export async function deleteProduct(id: string) {
+  await prisma.$transaction(async (tx) => {
+    const result = await tx.product.updateMany({
+      where: { id, deletedAt: null },
+      data: { deletedAt: new Date(), deletedByTaxonomy: false },
+    });
+    if (!result.count) throw new ApiError(404, "Product not found");
+    await tx.cartItem.deleteMany({ where: { productId: id } });
+    await tx.wishlistItem.deleteMany({ where: { productId: id } });
+  });
+  invalidatePublicCache(
+    PUBLIC_CACHE_TAGS.products,
+    PUBLIC_CACHE_TAGS.taxonomy,
+    PUBLIC_CACHE_TAGS.reviews,
+  );
+  return { deleted: true };
+}
+
+export async function restoreProduct(id: string) {
+  const row = await prisma.product.findUnique({
+    where: { id },
+    select: {
+      deletedAt: true,
+      category: { select: { deletedAt: true } },
+      brand: { select: { deletedAt: true } },
+      productType: { select: { deletedAt: true } },
+    },
+  });
+  if (!row?.deletedAt) throw new ApiError(404, "Deleted product not found");
+  if (row.category.deletedAt || row.brand?.deletedAt || row.productType?.deletedAt) {
+    throw new ApiError(409, "Restore the deleted category, brand, or product type first");
+  }
+  const restored = await prisma.product.updateMany({
+    where: { id, deletedAt: { not: null } },
+    data: { deletedAt: null, deletedByTaxonomy: false },
+  });
+  if (!restored.count) throw new ApiError(404, "Deleted product not found");
+  invalidatePublicCache(
+    PUBLIC_CACHE_TAGS.products,
+    PUBLIC_CACHE_TAGS.taxonomy,
+    PUBLIC_CACHE_TAGS.reviews,
+  );
+  return { restored: true };
 }

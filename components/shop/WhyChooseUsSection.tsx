@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Section } from "../ui/Section";
 
 export function WhyChooseUsSection() {
-  const title = "Why Choose Banafa?";
+  const title = "Why Choose Youniqlyf?";
 
   const features = [
     {

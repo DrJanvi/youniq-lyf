@@ -9,7 +9,7 @@ import Link from "next/link";
 export const metadata = buildMetadata({
   title: "FAQs",
   description:
-    "Find answers to common questions about Banafa products and orders.",
+    "Find answers to common questions about Youniqlyf products and orders.",
   path: "/faqs",
 });
 

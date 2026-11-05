@@ -1,7 +1,7 @@
 import { api, readJson, type IdCtx } from "@/lib/http";
 import { requireAdminApi } from "@/lib/auth/session";
 import { adminReviewInputSchema, reviewStatusSchema } from "@/lib/validation";
-import { deleteReview, setReviewStatus, updateReview } from "@/services/review";
+import { deleteReview, restoreReview, setReviewStatus, updateReview } from "@/services/review";
 
 export const PATCH = api<IdCtx>(async (req, { params }) => {
   await requireAdminApi();
@@ -15,4 +15,9 @@ export const PATCH = api<IdCtx>(async (req, { params }) => {
 export const DELETE = api<IdCtx>(async (_req, { params }) => {
   await requireAdminApi();
   await deleteReview((await params).id);
+});
+
+export const POST = api<IdCtx>(async (_req, { params }) => {
+  await requireAdminApi();
+  return restoreReview((await params).id);
 });

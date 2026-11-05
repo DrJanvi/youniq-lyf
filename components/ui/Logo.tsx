@@ -12,7 +12,7 @@ export function Logo({ className, height = 40, priority }: LogoProps) {
   return (
     <Image
       src="/logo-with-name.svg"
-      alt="Banafa"
+      alt="Youniqlyf"
       width={Math.round(height * RATIO)}
       height={height}
       priority={priority}

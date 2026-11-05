@@ -39,6 +39,7 @@ export function CloudinaryImageUploader({
   description,
   multiple = false,
   maxFiles = 1,
+  showPreview = true,
 }: {
   value: unknown;
   onChange: (value: string) => void;
@@ -46,6 +47,7 @@ export function CloudinaryImageUploader({
   description?: string;
   multiple?: boolean;
   maxFiles?: number;
+  showPreview?: boolean;
 }) {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState("");
@@ -143,7 +145,7 @@ export function CloudinaryImageUploader({
       </p>
       {progress ? <p className="text-sm text-muted-foreground" role="status">{progress}</p> : null}
       {error ? <p className="text-sm text-destructive" role="alert">{error}</p> : null}
-      {urls.some(isPreviewableImageUrl) ? (
+      {showPreview && urls.some(isPreviewableImageUrl) ? (
         <div className="flex flex-wrap gap-3">
           {urls.filter(isPreviewableImageUrl).map((url, index) => (
             <div key={`${url}-${index}`} className="size-24 overflow-hidden rounded-lg border border-border">

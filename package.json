@@ -1,10 +1,10 @@
 {
-  "name": "banafa",
+  "name": "youniqlyf",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "predev": "prisma generate",
-    "dev": "next dev",
+    "dev": "next dev -p 4000",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -15,16 +15,19 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@fontsource/noto-sans-arabic": "^5.3.0",
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^6.0.0",
     "@prisma/adapter-mariadb": "^7.10.1",
     "@prisma/client": "^7.10.1",
+    "@react-pdf/renderer": "^4.9.0",
     "@tiptap/extension-link": "^3.32.1",
     "@tiptap/extension-table": "^3.32.1",
     "@tiptap/extension-underline": "^3.32.1",
     "@tiptap/react": "^3.32.1",
     "@tiptap/starter-kit": "^3.32.1",
     "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.11.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "^18.0.8",

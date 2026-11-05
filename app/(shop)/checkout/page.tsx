@@ -7,6 +7,7 @@ import { requireUserPage } from "@/lib/auth/session";
 import { buildMetadata } from "@/lib/seo";
 import { listSavedAddresses } from "@/services/address";
 import { getCart } from "@/services/cart";
+import { getCustomerProfile } from "@/services/customer-profile";
 
 export const instant = false;
 
@@ -24,9 +25,10 @@ export default async function CheckoutPage({
   const user = await requireUserPage("/checkout");
   const params = await searchParams;
   const initialCouponCode = Array.isArray(params.coupon) ? params.coupon[0] : params.coupon;
-  const [cart, addresses] = await Promise.all([
+  const [cart, addresses, profile] = await Promise.all([
     getCart(user.id),
     listSavedAddresses(user.id),
+    getCustomerProfile(user.id),
   ]);
   if (!cart.items.length) redirect("/cart");
 
@@ -47,6 +49,7 @@ export default async function CheckoutPage({
           cart={cart}
           customerEmail={user.email}
           customerName={user.name}
+          customerPhone={profile.phone}
           initialCouponCode={initialCouponCode}
         />
       </Section>

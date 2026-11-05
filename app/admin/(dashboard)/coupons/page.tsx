@@ -10,7 +10,7 @@ export default async function AdminCouponsPage({ searchParams }: { searchParams:
   const params = parseListParams(await searchParams, {
     sortable: ["code", "value", "startsAt", "endsAt", "isActive", "createdAt"],
     defaultSort: "createdAt",
-    filters: { status: ["active", "inactive", "expired"], type: ["PERCENT", "FIXED"] },
+    filters: { status: ["active", "inactive", "expired"], type: ["PERCENT", "FIXED"], deleted: ["active", "deleted"] },
   });
   const result = await listCoupons(params.page, params);
 
@@ -21,6 +21,7 @@ export default async function AdminCouponsPage({ searchParams }: { searchParams:
         meta={{ total: result.pagination.total, page: result.pagination.page, totalPages: result.pagination.totalPages, sort: params.sort, dir: params.dir, q: params.q }}
         filters={[
           { param: "status", label: "Status", value: params.filters.status, options: [{ value: "active", label: "Active" }, { value: "inactive", label: "Inactive" }, { value: "expired", label: "Expired" }] },
+          { param: "deleted", label: "Record", value: params.filters.deleted, options: [{ value: "active", label: "Not deleted" }, { value: "deleted", label: "Deleted" }] },
           { param: "type", label: "Type", value: params.filters.type, options: [{ value: "PERCENT", label: "Percentage" }, { value: "FIXED", label: "Fixed" }] },
         ]}
         rows={result.data.map((coupon) => ({
@@ -33,6 +34,7 @@ export default async function AdminCouponsPage({ searchParams }: { searchParams:
           startsAt: coupon.startsAt?.toISOString() ?? null,
           endsAt: coupon.endsAt?.toISOString() ?? null,
           isActive: coupon.isActive,
+          deletedAt: coupon.deletedAt?.toISOString() ?? null,
         }))}
       />
     </>

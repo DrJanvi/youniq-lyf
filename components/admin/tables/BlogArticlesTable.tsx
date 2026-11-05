@@ -6,6 +6,7 @@ import { Button } from "@/components/admin/ui/button";
 import { AdminTableImage } from "@/components/admin/common/AdminTableImage";
 import { DataTable, type Column } from "@/components/admin/common/DataTable";
 import { RowActions } from "@/components/admin/common/RowActions";
+import { StatusBadge } from "@/components/admin/common/StatusBadge";
 import type { TableMeta } from "./types";
 
 export type BlogArticleRow = {
@@ -15,6 +16,7 @@ export type BlogArticleRow = {
   publishedAt: Date;
   readTime: number;
   image: string;
+  deletedAt: string | null;
 };
 
 function formatDate(date: Date) {
@@ -29,10 +31,12 @@ export function BlogArticlesTable({
   rows,
   meta,
   category,
+  deleted,
 }: {
   rows: BlogArticleRow[];
   meta: TableMeta;
   category?: string;
+  deleted?: string;
 }) {
   const columns: Column<BlogArticleRow>[] = [
     {
@@ -67,13 +71,21 @@ export function BlogArticlesTable({
       cell: (article) => `${article.readTime} min`,
     },
     {
+      id: "deletedAt",
+      header: "Record",
+      cell: (article) => article.deletedAt
+        ? <StatusBadge status="DELETED" label="Deleted" />
+        : <StatusBadge status="ACTIVE" label="Active" />,
+    },
+    {
       id: "actions",
       header: "",
       className: "text-right",
       cell: (article) => (
         <RowActions
           editHref={`/admin/blogs/${article.id}`}
-          deleteUrl={`/api/admin/blogs/${article.id}`}
+          deleteUrl={article.deletedAt ? undefined : `/api/admin/blogs/${article.id}`}
+          restoreUrl={article.deletedAt ? `/api/admin/blogs/${article.id}` : undefined}
           itemName="article"
         />
       ),
@@ -99,6 +111,15 @@ export function BlogArticlesTable({
             { value: "Lifestyle", label: "Lifestyle" },
             { value: "Tips & Guides", label: "Tips & Guides" },
             { value: "Brand Stories", label: "Brand Stories" },
+          ],
+        },
+        {
+          param: "deleted",
+          label: "Record",
+          value: deleted,
+          options: [
+            { value: "active", label: "Not deleted" },
+            { value: "deleted", label: "Deleted" },
           ],
         },
       ]}

@@ -2,7 +2,7 @@ import "server-only";
 import { prisma } from "@/lib/prisma";
 import { ApiError } from "@/lib/http";
 import { paginated, type PageParams } from "@/lib/pagination";
-import { getProductsByIds } from "./product";
+import { getProductsByIds, STOREFRONT_PRODUCT_WHERE } from "./product";
 
 export type WishlistEntryDTO = {
   product: Awaited<ReturnType<typeof getProductsByIds>>[number];
@@ -10,11 +10,13 @@ export type WishlistEntryDTO = {
 };
 
 export async function getWishlistCount(userId: string): Promise<number> {
-  return prisma.wishlistItem.count({ where: { userId } });
+  return prisma.wishlistItem.count({
+    where: { userId, product: { is: STOREFRONT_PRODUCT_WHERE } },
+  });
 }
 
 export async function listWishlist(userId: string, page: PageParams) {
-  const where = { userId, product: { isActive: true } };
+  const where = { userId, product: { is: STOREFRONT_PRODUCT_WHERE } };
   const [rows, total] = await Promise.all([
     prisma.wishlistItem.findMany({ where, orderBy: { createdAt: "desc" }, skip: page.skip, take: page.limit }),
     prisma.wishlistItem.count({ where }),
@@ -32,11 +34,11 @@ export async function listWishlistEntries(
 ) {
   const [rows, wishlistCount] = await Promise.all([
     prisma.wishlistItem.findMany({
-      where: { userId, product: { isActive: true } },
+      where: { userId, product: { is: STOREFRONT_PRODUCT_WHERE } },
       orderBy: [{ createdAt: "desc" }, { id: "asc" }],
       select: { productId: true, createdAt: true },
     }),
-    prisma.wishlistItem.count({ where: { userId } }),
+    prisma.wishlistItem.count({ where: { userId, product: { is: STOREFRONT_PRODUCT_WHERE } } }),
   ]);
   const products = await getProductsByIds(rows.map((row) => row.productId));
   const productsById = new Map(products.map((product) => [product.id, product]));
@@ -83,12 +85,18 @@ export async function listWishlistEntries(
 }
 
 export async function wishlistIds(userId: string) {
-  const rows = await prisma.wishlistItem.findMany({ where: { userId }, select: { productId: true } });
+  const rows = await prisma.wishlistItem.findMany({
+    where: { userId, product: { is: STOREFRONT_PRODUCT_WHERE } },
+    select: { productId: true },
+  });
   return rows.map((r) => r.productId);
 }
 
 export async function addToWishlist(userId: string, productId: string) {
-  const p = await prisma.product.findUnique({ where: { id: productId }, select: { id: true } });
+  const p = await prisma.product.findFirst({
+    where: { id: productId, ...STOREFRONT_PRODUCT_WHERE },
+    select: { id: true },
+  });
   if (!p) throw new ApiError(404, "Product not found");
   await prisma.wishlistItem.upsert({
     where: { userId_productId: { userId, productId } },
@@ -107,14 +115,11 @@ export async function clearWishlist(userId: string) {
 
 export async function moveWishlistItemToCart(userId: string, productId: string) {
   return prisma.$transaction(async (transaction) => {
-    const wishlistItem = await transaction.wishlistItem.findUnique({
-      where: { userId_productId: { userId, productId } },
+    const wishlistItem = await transaction.wishlistItem.findFirst({
+      where: { userId, productId, product: { is: STOREFRONT_PRODUCT_WHERE } },
       select: { product: { select: { isActive: true, stock: true } } },
     });
     if (!wishlistItem) return { moved: 0 };
-    if (!wishlistItem.product.isActive) {
-      throw new ApiError(404, "Product not found");
-    }
 
     const cart = await transaction.cart.upsert({
       where: { userId },
@@ -145,7 +150,7 @@ export async function moveWishlistItemToCart(userId: string, productId: string) 
 export async function moveWishlistToCart(userId: string) {
   return prisma.$transaction(async (transaction) => {
     const items = await transaction.wishlistItem.findMany({
-      where: { userId, product: { isActive: true } },
+      where: { userId, product: { is: STOREFRONT_PRODUCT_WHERE } },
       select: { productId: true },
     });
     const productIds = items.map((item) => item.productId);
@@ -158,7 +163,7 @@ export async function moveWishlistToCart(userId: string) {
     });
     const [products, cartItems] = await Promise.all([
       transaction.product.findMany({
-        where: { id: { in: productIds }, isActive: true },
+        where: { id: { in: productIds }, ...STOREFRONT_PRODUCT_WHERE },
         select: { id: true, stock: true },
       }),
       transaction.cartItem.findMany({

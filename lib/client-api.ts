@@ -8,11 +8,20 @@ export class ClientApiError extends Error {
   }
 }
 
-export async function apiFetch<T = unknown>(url: string, init?: Omit<RequestInit, "body"> & { json?: unknown }): Promise<T> {
+export async function apiFetch<T = unknown>(
+  url: string,
+  init?: Omit<RequestInit, "body"> & { body?: BodyInit; json?: unknown },
+): Promise<T> {
+  const { json, body, ...requestInit } = init ?? {};
+  const headers = new Headers(requestInit.headers);
+  const isFormData = typeof FormData !== "undefined" && body instanceof FormData;
+  if (!isFormData && !headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json");
+  }
   const res = await fetch(url, {
-    ...init,
-    headers: { "Content-Type": "application/json", ...init?.headers },
-    body: init?.json === undefined ? undefined : JSON.stringify(init.json),
+    ...requestInit,
+    headers,
+    body: json === undefined ? body : JSON.stringify(json),
   });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new ClientApiError(res.status, data?.error ?? "Request failed", data?.fieldErrors);

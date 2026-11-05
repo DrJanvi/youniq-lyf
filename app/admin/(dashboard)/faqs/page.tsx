@@ -8,13 +8,14 @@ export default async function AdminFaqsPage() {
 
   return (
     <FaqsPage
-      faqs={faqs.map(({ id, question, answer, page, sortOrder, isActive }) => ({
+      faqs={faqs.map(({ id, question, answer, page, sortOrder, isActive, deletedAt }) => ({
         id,
         question,
         answer,
         page,
         sortOrder,
         isActive,
+        deletedAt: deletedAt?.toISOString() ?? null,
       }))}
     />
   );

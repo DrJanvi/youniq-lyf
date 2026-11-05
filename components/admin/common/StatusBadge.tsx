@@ -10,7 +10,7 @@ const tones = {
 } as const;
 
 const map: Record<string, keyof typeof tones> = {
-  ACTIVE: "success", APPROVED: "success", PERCENT: "neutral", FIXED: "neutral",
+  ACTIVE: "success", APPROVED: "success", DELETED: "danger", PERCENT: "neutral", FIXED: "neutral",
   DELIVERED: "success", DISPATCHED: "warning", OUT_FOR_DELIVERY: "warning",
   DELIVERY_ATTEMPT_FAILED: "danger", PENDING: "warning", HIDDEN: "neutral", INACTIVE: "neutral", REJECTED: "danger",
 };

@@ -1,9 +1,10 @@
-import "server-only";
-import { cacheLife, cacheTag } from "next/cache";
-import type { z } from "zod";
-import { aboutUsPageSettingSchema } from "@/lib/validation";
+import { ApiError } from "@/lib/http";
 import { prisma } from "@/lib/prisma";
 import { invalidatePublicCache, PUBLIC_CACHE_TAGS } from "@/lib/public-cache";
+import { aboutUsPageSettingSchema } from "@/lib/validation";
+import { cacheLife, cacheTag } from "next/cache";
+import "server-only";
+import type { z } from "zod";
 
 export const defaultAboutUsSettings = {
   heroHeading: "THE ART OF\nFRAGRANCE, CRAFTED\nWITH PASSION",
@@ -42,7 +43,7 @@ export const defaultAboutUsSettings = {
   whoHeading: "WHO WE ARE",
   whoSubheading: "Quality, Consistency, Creativity Beyond Expectations",
   whoParagraphs: [
-    "Established in 1995 in Jebel Ali Free Zone, Buabed Banafa Perfumes brings decades of fragrance expertise, combining the richness of Arabian, African, and European scents with modern innovation.",
+    "Established in 1995 in Jebel Ali Free Zone, Buabed Youniqlyf Perfumes brings decades of fragrance expertise, combining the richness of Arabian, African, and European scents with modern innovation.",
     "With manufacturing facilities in the UAE and Saudi Arabia, we specialize in perfumes, cosmetics, skincare, haircare, and personal care products, crafted to meet international quality standards.",
     "From signature fragrances to customized blends, every product is developed in-house with a commitment to quality, originality, and customer satisfaction.",
     "Our strategic marketing is based on our hard work and persistence, making our production compete with international brands on originality, clean compositions, and affordable prices.",
@@ -51,19 +52,35 @@ export const defaultAboutUsSettings = {
   legacyImage: null,
   legacyHeading: "A LEGACY OF FRAGRANCE SINCE 1995",
   legacyIntro:
-    "Established in 1995 in Jebel Ali Free Zone, Buabed Banafa Perfumes was founded with a vision to create exceptional fragrances inspired by the richness of Arabian heritage and crafted to meet international quality standards.",
+    "Established in 1995 in Jebel Ali Free Zone, Buabed Youniqlyf Perfumes was founded with a vision to create exceptional fragrances inspired by the richness of Arabian heritage and crafted to meet international quality standards.",
   legacyParagraph1:
     "With years of expertise in fragrance manufacturing, we have expanded our capabilities to include perfumes, cosmetics, skincare, haircare, personal care, and home fragrances. Our commitment to quality, innovation, and craftsmanship continues to shape every product we create.",
   legacyParagraph2:
     "Today, we continue to bring together traditional Arabian perfumery and modern manufacturing techniques to create distinctive fragrance experiences. From concept and development to production, our focus remains on quality, consistency, and delivering products that reflect our passion for perfumery.",
   legacyStats: [
-    { id: "established", icon: "/assets/about-us/stat-established.svg", title: "Established" },
-    { id: "manufacturing", icon: "/assets/about-us/stat-manufacturing.svg", title: "Manufacturing Expansion" },
-    { id: "workforce", icon: "/assets/about-us/stat-workforce.svg", title: "Specialized Workforce" },
-    { id: "varieties", icon: "/assets/about-us/stat-varieties.svg", title: "Fragrance Varieties" },
+    {
+      id: "established",
+      icon: "/assets/about-us/stat-established.svg",
+      title: "Established",
+    },
+    {
+      id: "manufacturing",
+      icon: "/assets/about-us/stat-manufacturing.svg",
+      title: "Manufacturing Expansion",
+    },
+    {
+      id: "workforce",
+      icon: "/assets/about-us/stat-workforce.svg",
+      title: "Specialized Workforce",
+    },
+    {
+      id: "varieties",
+      icon: "/assets/about-us/stat-varieties.svg",
+      title: "Fragrance Varieties",
+    },
   ],
   whyChooseImage: null,
-  whyChooseHeading: "WHY CHOOSE BUABED BANAFA?",
+  whyChooseHeading: "WHY CHOOSE BUABED YOUNIQLYF?",
   whyChooseDescription:
     "Discover a world where fragrance heritage meets everyday luxury. From captivating perfumes to thoughtfully crafted personal care essentials, every creation brings a distinctive touch to your daily rituals.",
   whyChooseCards: [
@@ -77,7 +94,7 @@ export const defaultAboutUsSettings = {
       id: "quality-excellence",
       title: "Quality Excellence",
       description:
-        "At Buabed Banafa, quality is at the heart of everything we do. From selecting ingredients to developing our products, we focus on delivering excellence, consistency, and attention to detail at every stage.",
+        "At Buabed Youniqlyf, quality is at the heart of everything we do. From selecting ingredients to developing our products, we focus on delivering excellence, consistency, and attention to detail at every stage.",
     },
     {
       id: "crafted-in-house",
@@ -152,6 +169,14 @@ export type AboutUsPageSettings = {
 };
 
 export type AboutUsPageInput = z.infer<typeof aboutUsPageSettingSchema>;
+
+export type DeletedAboutUsItem = {
+  id: string;
+  kind: "principle" | "legacy-stat" | "why-choose-card";
+  title: string;
+  description: string | null;
+  deletedAt: string;
+};
 
 function toSettings(record: {
   heroHeading: string;
@@ -239,13 +264,14 @@ function toSettings(record: {
     whyChooseDescription:
       record.whyChooseDescription ??
       defaultAboutUsSettings.whyChooseDescription,
-    whyChooseCards: record.whyChooseCards.length === 4
-      ? record.whyChooseCards.map(({ id, title, description }) => ({
-          id,
-          title,
-          description,
-        })) as AboutUsPageSettings["whyChooseCards"]
-      : defaultAboutUsSettings.whyChooseCards,
+    whyChooseCards:
+      record.whyChooseCards.length === 4
+        ? (record.whyChooseCards.map(({ id, title, description }) => ({
+            id,
+            title,
+            description,
+          })) as AboutUsPageSettings["whyChooseCards"])
+        : defaultAboutUsSettings.whyChooseCards,
     milestones: [
       {
         year: record.milestone1Year,
@@ -318,12 +344,100 @@ export async function getAboutUsPageSettings(): Promise<AboutUsPageSettings> {
   const settings = await prisma.aboutUsPageSetting.findUnique({
     where: { id: "about-us" },
     include: {
-      principles: { orderBy: { sortOrder: "asc" } },
-      legacyStats: { orderBy: { sortOrder: "asc" } },
-      whyChooseCards: { orderBy: { sortOrder: "asc" } },
+      principles: { where: { deletedAt: null }, orderBy: { sortOrder: "asc" } },
+      legacyStats: {
+        where: { deletedAt: null },
+        orderBy: { sortOrder: "asc" },
+      },
+      whyChooseCards: {
+        where: { deletedAt: null },
+        orderBy: { sortOrder: "asc" },
+      },
     },
   });
   return settings ? toSettings(settings) : defaultAboutUsSettings;
+}
+
+export async function listDeletedAboutUsItems(): Promise<DeletedAboutUsItem[]> {
+  const [principles, legacyStats, whyChooseCards] = await Promise.all([
+    prisma.aboutUsPrinciple.findMany({
+      where: { pageSettingId: "about-us", deletedAt: { not: null } },
+      select: { id: true, title: true, description: true, deletedAt: true },
+    }),
+    prisma.aboutUsLegacyStat.findMany({
+      where: { pageSettingId: "about-us", deletedAt: { not: null } },
+      select: { id: true, title: true, deletedAt: true },
+    }),
+    prisma.aboutUsWhyChooseCard.findMany({
+      where: { pageSettingId: "about-us", deletedAt: { not: null } },
+      select: { id: true, title: true, description: true, deletedAt: true },
+    }),
+  ]);
+  return [
+    ...principles.flatMap((item) =>
+      item.deletedAt
+        ? [
+            {
+              id: item.id,
+              kind: "principle" as const,
+              title: item.title,
+              description: item.description,
+              deletedAt: item.deletedAt.toISOString(),
+            },
+          ]
+        : [],
+    ),
+    ...legacyStats.flatMap((item) =>
+      item.deletedAt
+        ? [
+            {
+              id: item.id,
+              kind: "legacy-stat" as const,
+              title: item.title,
+              description: null,
+              deletedAt: item.deletedAt.toISOString(),
+            },
+          ]
+        : [],
+    ),
+    ...whyChooseCards.flatMap((item) =>
+      item.deletedAt
+        ? [
+            {
+              id: item.id,
+              kind: "why-choose-card" as const,
+              title: item.title,
+              description: item.description,
+              deletedAt: item.deletedAt.toISOString(),
+            },
+          ]
+        : [],
+    ),
+  ].sort((a, b) => b.deletedAt.localeCompare(a.deletedAt));
+}
+
+export async function restoreAboutUsItem(
+  kind: DeletedAboutUsItem["kind"],
+  id: string,
+) {
+  const result =
+    kind === "principle"
+      ? await prisma.aboutUsPrinciple.updateMany({
+          where: { id, pageSettingId: "about-us", deletedAt: { not: null } },
+          data: { deletedAt: null },
+        })
+      : kind === "legacy-stat"
+        ? await prisma.aboutUsLegacyStat.updateMany({
+            where: { id, pageSettingId: "about-us", deletedAt: { not: null } },
+            data: { deletedAt: null },
+          })
+        : await prisma.aboutUsWhyChooseCard.updateMany({
+            where: { id, pageSettingId: "about-us", deletedAt: { not: null } },
+            data: { deletedAt: null },
+          });
+  if (!result.count) throw new ApiError(404, "Deleted About Us item not found");
+  invalidatePublicCache(PUBLIC_CACHE_TAGS.aboutUs);
+  return { restored: true };
 }
 
 export async function saveAboutUsPageSettings(input: AboutUsPageInput) {
@@ -334,42 +448,157 @@ export async function saveAboutUsPageSettings(input: AboutUsPageInput) {
       create: { id: "about-us", ...fields },
       update: fields,
     });
-    await transaction.aboutUsPrinciple.deleteMany({
-      where: { pageSettingId: "about-us" },
-    });
-    await transaction.aboutUsPrinciple.createMany({
-      data: input.principles.map((principle, sortOrder) => ({
-        ...principle,
-        pageSettingId: "about-us",
+    const [existingPrinciples, existingStats, existingCards] =
+      await Promise.all([
+        transaction.aboutUsPrinciple.findMany({
+          where: { pageSettingId: "about-us" },
+        }),
+        transaction.aboutUsLegacyStat.findMany({
+          where: { pageSettingId: "about-us" },
+        }),
+        transaction.aboutUsWhyChooseCard.findMany({
+          where: { pageSettingId: "about-us" },
+        }),
+      ]);
+
+    const principleIds = new Set(
+      input.principles.flatMap(({ id }) => (id ? [id] : [])),
+    );
+    const removedPrinciples = existingPrinciples
+      .filter((item) => !item.deletedAt && !principleIds.has(item.id))
+      .map(({ id }) => id);
+    if (removedPrinciples.length) {
+      await transaction.aboutUsPrinciple.updateMany({
+        where: { id: { in: removedPrinciples }, deletedAt: null },
+        data: { deletedAt: new Date() },
+      });
+    }
+    for (const [sortOrder, principle] of input.principles.entries()) {
+      const current = principle.id
+        ? existingPrinciples.find((item) => item.id === principle.id)
+        : undefined;
+      if (current?.deletedAt)
+        throw new ApiError(
+          409,
+          "Restore the deleted principle before editing it",
+        );
+      const data = {
+        icon: principle.icon,
+        title: principle.title,
+        description: principle.description,
         sortOrder,
-      })),
-    });
-    await transaction.aboutUsLegacyStat.deleteMany({
-      where: { pageSettingId: "about-us" },
-    });
-    await transaction.aboutUsLegacyStat.createMany({
-      data: input.legacyStats.map((stat, sortOrder) => ({
-        ...stat,
-        pageSettingId: "about-us",
+      };
+      if (current) {
+        await transaction.aboutUsPrinciple.update({
+          where: { id: current.id },
+          data,
+        });
+      } else {
+        await transaction.aboutUsPrinciple.create({
+          data: {
+            ...data,
+            ...(principle.id ? { id: principle.id } : {}),
+            pageSettingId: "about-us",
+          },
+        });
+      }
+    }
+
+    const statIds = new Set(
+      input.legacyStats.flatMap(({ id }) => (id ? [id] : [])),
+    );
+    const removedStats = existingStats
+      .filter((item) => !item.deletedAt && !statIds.has(item.id))
+      .map(({ id }) => id);
+    if (removedStats.length) {
+      await transaction.aboutUsLegacyStat.updateMany({
+        where: { id: { in: removedStats }, deletedAt: null },
+        data: { deletedAt: new Date() },
+      });
+    }
+    for (const [sortOrder, stat] of input.legacyStats.entries()) {
+      const current = stat.id
+        ? existingStats.find((item) => item.id === stat.id)
+        : undefined;
+      if (current?.deletedAt)
+        throw new ApiError(
+          409,
+          "Restore the deleted legacy stat before editing it",
+        );
+      const data = { icon: stat.icon, title: stat.title, sortOrder };
+      if (current) {
+        await transaction.aboutUsLegacyStat.update({
+          where: { id: current.id },
+          data,
+        });
+      } else {
+        await transaction.aboutUsLegacyStat.create({
+          data: {
+            ...data,
+            ...(stat.id ? { id: stat.id } : {}),
+            pageSettingId: "about-us",
+          },
+        });
+      }
+    }
+
+    const cardIds = new Set(
+      input.whyChooseCards.flatMap(({ id }) => (id ? [id] : [])),
+    );
+    const removedCards = existingCards
+      .filter((item) => !item.deletedAt && !cardIds.has(item.id))
+      .map(({ id }) => id);
+    if (removedCards.length) {
+      await transaction.aboutUsWhyChooseCard.updateMany({
+        where: { id: { in: removedCards }, deletedAt: null },
+        data: { deletedAt: new Date() },
+      });
+    }
+    for (const [sortOrder, card] of input.whyChooseCards.entries()) {
+      const current = card.id
+        ? existingCards.find((item) => item.id === card.id)
+        : undefined;
+      if (current?.deletedAt)
+        throw new ApiError(
+          409,
+          "Restore the deleted feature card before editing it",
+        );
+      const data = {
+        title: card.title,
+        description: card.description,
         sortOrder,
-      })),
-    });
-    await transaction.aboutUsWhyChooseCard.deleteMany({
-      where: { pageSettingId: "about-us" },
-    });
-    await transaction.aboutUsWhyChooseCard.createMany({
-      data: input.whyChooseCards.map((card, sortOrder) => ({
-        ...card,
-        pageSettingId: "about-us",
-        sortOrder,
-      })),
-    });
+      };
+      if (current) {
+        await transaction.aboutUsWhyChooseCard.update({
+          where: { id: current.id },
+          data,
+        });
+      } else {
+        await transaction.aboutUsWhyChooseCard.create({
+          data: {
+            ...data,
+            ...(card.id ? { id: card.id } : {}),
+            pageSettingId: "about-us",
+          },
+        });
+      }
+    }
+
     const settings = await transaction.aboutUsPageSetting.findUniqueOrThrow({
       where: { id: "about-us" },
       include: {
-        principles: { orderBy: { sortOrder: "asc" } },
-        legacyStats: { orderBy: { sortOrder: "asc" } },
-        whyChooseCards: { orderBy: { sortOrder: "asc" } },
+        principles: {
+          where: { deletedAt: null },
+          orderBy: { sortOrder: "asc" },
+        },
+        legacyStats: {
+          where: { deletedAt: null },
+          orderBy: { sortOrder: "asc" },
+        },
+        whyChooseCards: {
+          where: { deletedAt: null },
+          orderBy: { sortOrder: "asc" },
+        },
       },
     });
     return toSettings(settings);

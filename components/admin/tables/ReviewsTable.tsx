@@ -12,6 +12,7 @@ import type { TableMeta } from "./types";
 export type ReviewRow = {
   id: string; product: string; rating: number; title: string | null; body: string; authorName: string;
   status: "PENDING" | "APPROVED" | "HIDDEN"; createdAt: string;
+  deletedAt: string | null;
 };
 
 export function ReviewsTable({ rows, meta, filters }: { rows: ReviewRow[]; meta: TableMeta; filters: TableFilter[] }) {
@@ -39,6 +40,7 @@ export function ReviewsTable({ rows, meta, filters }: { rows: ReviewRow[]; meta:
       ),
     },
     { id: "status", header: "Status", sortKey: "status", cell: (r) => <StatusBadge status={r.status} /> },
+    { id: "deletedAt", header: "Record", cell: (r) => r.deletedAt ? <StatusBadge status="DELETED" label="Deleted" /> : <StatusBadge status="ACTIVE" label="Active" /> },
     { id: "createdAt", header: "Date", sortKey: "createdAt", cell: (r) => r.createdAt.slice(0, 10) },
     {
       id: "actions",
@@ -47,13 +49,14 @@ export function ReviewsTable({ rows, meta, filters }: { rows: ReviewRow[]; meta:
       cell: (r) => (
         <RowActions
           editHref={`/admin/reviews/${r.id}`}
-          deleteUrl={`/api/admin/reviews/${r.id}`}
+          deleteUrl={r.deletedAt ? undefined : `/api/admin/reviews/${r.id}`}
+          restoreUrl={r.deletedAt ? `/api/admin/reviews/${r.id}` : undefined}
           itemName="review"
           extra={
-            <>
+            !r.deletedAt ? <>
               {r.status !== "APPROVED" ? <ActionButton url={`/api/admin/reviews/${r.id}`} label="Approve" json={{ status: "APPROVED" }} success="Review approved" icon={<Check />} /> : null}
               {r.status !== "HIDDEN" ? <ActionButton url={`/api/admin/reviews/${r.id}`} label="Hide" json={{ status: "HIDDEN" }} success="Review hidden" icon={<EyeOff />} /> : null}
-            </>
+            </> : null
           }
         />
       ),

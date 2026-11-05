@@ -9,6 +9,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { DataTable, type Column, type TableFilter } from "@/components/admin/common/DataTable";
 import type { TableMeta } from "@/components/admin/tables/types";
 import { useAdminApi } from "@/components/admin/common/use-admin-api";
+import { RestoreButton } from "@/components/admin/common/RestoreButton";
+import { StatusBadge } from "@/components/admin/common/StatusBadge";
 import { CloudinaryImageUploader } from "@/components/admin/forms/ImageUploadField";
 import type { ContactPageSetting } from "@prisma/client";
 
@@ -22,6 +24,7 @@ type Location = {
   whatsapp: string | null;
   sortOrder: number;
   isActive: boolean;
+  deletedAt: string | null;
 };
 
 type Submission = {
@@ -36,7 +39,7 @@ type Submission = {
 };
 
 type Section = "details" | "locations" | "messages";
-type LocationDraft = Omit<Location, "id"> & { id?: string };
+type LocationDraft = Omit<Location, "id" | "deletedAt"> & { id?: string };
 
 const tabs: { key: Section; label: string; icon: typeof Mail }[] = [
   { key: "details", label: "Page details", icon: Mail },
@@ -232,7 +235,7 @@ function ContentList({
   const router = useRouter();
 
   async function remove(url: string, label: string) {
-    if (!window.confirm(`Delete this ${label}?`)) return;
+    if (!window.confirm(`Delete this ${label}? It will be removed from the storefront and can be restored from this page.`)) return;
     const result = await request(url, { method: "DELETE", success: `${label} deleted` });
     if (result !== undefined) router.refresh();
   }
@@ -251,14 +254,20 @@ function ContentList({
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2 font-medium">
                   {location.city}, {location.country}
-                  {!location.isActive ? <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">Hidden</span> : null}
+                  {location.deletedAt ? <StatusBadge status="DELETED" label="Deleted" /> : !location.isActive ? <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">Hidden</span> : null}
                 </div>
                 <p className="mt-1 text-sm text-muted-foreground">{location.company ? `${location.company} · ` : ""}{location.address}</p>
                 <p className="text-xs text-muted-foreground">{[location.phone, location.whatsapp].filter(Boolean).join(" · ")}</p>
               </div>
               <div className="flex gap-1">
-                <Button variant="ghost" size="icon" aria-label={`Edit ${location.city}`} onClick={() => setLocationDraft(location)}><Edit2 /></Button>
-                <Button variant="ghost" size="icon" aria-label={`Delete ${location.city}`} disabled={pending} onClick={() => remove(`/api/admin/contact-us/locations/${location.id}`, "location")}><X /></Button>
+                {location.deletedAt ? (
+                  <RestoreButton url={`/api/admin/contact-us/locations/${location.id}`} itemName="Location" />
+                ) : (
+                  <>
+                    <Button variant="ghost" size="icon" aria-label={`Edit ${location.city}`} onClick={() => setLocationDraft(location)}><Edit2 /></Button>
+                    <Button variant="ghost" size="icon" aria-label={`Delete ${location.city}`} disabled={pending} onClick={() => remove(`/api/admin/contact-us/locations/${location.id}`, "location")}><X /></Button>
+                  </>
+                )}
               </div>
             </div>
           ))}

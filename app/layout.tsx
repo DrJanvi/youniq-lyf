@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     default: `${SITE_NAME} – Fragrances & Body Care`,
     template: `%s | ${SITE_NAME}`,
   },
-  description: "Shop Banafa fragrances, body care, hair care and more.",
+  description: "Shop Youniqlyf fragrances, body care, hair care and more.",
   icons: { icon: "/logo.svg" },
   openGraph: { siteName: SITE_NAME, type: "website" },
 };

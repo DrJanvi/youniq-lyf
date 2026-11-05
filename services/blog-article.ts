@@ -35,7 +35,7 @@ export async function listBlogArticles(
   "use cache";
   cacheLife("minutes");
   cacheTag(PUBLIC_CACHE_TAGS.blogs);
-  const where = category ? { category } : {};
+  const where = { ...(category ? { category } : {}), deletedAt: null };
   const [articles, total] = await Promise.all([
     prisma.blogArticle.findMany({
       where,
@@ -65,7 +65,7 @@ export async function listLatestBlogArticles(excludeSlug: string) {
   cacheLife("minutes");
   cacheTag(PUBLIC_CACHE_TAGS.blogs);
   const articles = await prisma.blogArticle.findMany({
-    where: { slug: { not: excludeSlug } },
+    where: { slug: { not: excludeSlug }, deletedAt: null },
     orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }],
     take: 3,
     select: {
@@ -95,6 +95,11 @@ export async function listBlogArticlesAdmin(params: ListParams) {
     ...(params.filters.category
       ? { category: params.filters.category }
       : {}),
+    ...(params.filters.deleted === "deleted"
+      ? { deletedAt: { not: null } }
+      : params.filters.deleted === "active"
+        ? { deletedAt: null }
+        : {}),
   };
   const [articles, total] = await Promise.all([
     prisma.blogArticle.findMany({
@@ -119,7 +124,7 @@ export async function getBlogArticleBySlug(slug: string) {
   "use cache";
   cacheLife("minutes");
   cacheTag(PUBLIC_CACHE_TAGS.blogs);
-  return prisma.blogArticle.findUnique({ where: { slug } });
+  return prisma.blogArticle.findUnique({ where: { slug, deletedAt: null } });
 }
 
 export async function createBlogArticle(input: BlogArticleInput) {
@@ -149,9 +154,23 @@ export async function updateBlogArticle(id: string, input: BlogArticleInput) {
 }
 
 export async function deleteBlogArticle(id: string) {
-  const article = await prisma.blogArticle.delete({ where: { id } });
+  const result = await prisma.blogArticle.updateMany({
+    where: { id, deletedAt: null },
+    data: { deletedAt: new Date() },
+  });
+  if (!result.count) throw new ApiError(404, "Blog article not found");
   invalidatePublicCache(PUBLIC_CACHE_TAGS.blogs);
-  return article;
+  return { deleted: true };
+}
+
+export async function restoreBlogArticle(id: string) {
+  const result = await prisma.blogArticle.updateMany({
+    where: { id, deletedAt: { not: null } },
+    data: { deletedAt: null },
+  });
+  if (!result.count) throw new ApiError(404, "Deleted blog article not found");
+  invalidatePublicCache(PUBLIC_CACHE_TAGS.blogs);
+  return { restored: true };
 }
 
 export async function listBlogArticleSlugs() {
@@ -159,6 +178,7 @@ export async function listBlogArticleSlugs() {
   cacheLife("minutes");
   cacheTag(PUBLIC_CACHE_TAGS.blogs);
   return prisma.blogArticle.findMany({
+    where: { deletedAt: null },
     select: { slug: true, updatedAt: true },
     orderBy: { publishedAt: "desc" },
   });

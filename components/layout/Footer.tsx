@@ -6,7 +6,7 @@ import { Section } from "../ui/Section";
 
 const ABOUT_LINKS = [
   ["About Us", "/about-us"],
-  ["Our Story", "/our-story"],
+  ["Our Story", "/about-us"],
   ["Testimonials", "/testimonials"],
   ["Contact Us", "/contact"],
   ["Blogs", "/blogs"],
@@ -117,11 +117,15 @@ export async function Footer() {
           <div className="grid w-full max-w-[1760px] grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-5 lg:gap-x-8">
             {/* <div className="mx-auto grid w-full max-w-[1760px] grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.5fr)_minmax(8rem,0.9fr)_minmax(8rem,0.9fr)_minmax(0,1.8fr] lg:gap-x-8"> */}
             <div className="col-span-2">
-              <Link href="/" aria-label="Banafa home" className="inline-block">
+              <Link
+                href="/"
+                aria-label="Youniqlyf home"
+                className="inline-block"
+              >
                 <Logo className="h-32.5 w-auto lg:h-40" height={160} />
               </Link>
               <p className="mt-6 max-w-[33ch] text-sm leading-[1.9] text-[#777]">
-                Buabed Banafa Perfumes, established in 1995, is a pioneer in
+                Buabed Youniqlyf Perfumes, established in 1995, is a pioneer in
                 fragrance and personal care manufacturing. With decades of
                 expertise, we create premium perfumes and cosmetics inspired by
                 Arabian and European blends, delivering quality, innovation and
@@ -147,7 +151,7 @@ export async function Footer() {
               </ul>
             </nav>
 
-            <nav aria-label="About Banafa">
+            <nav aria-label="About Youniqlyf">
               <h2 className="font-cormorant text-xl leading-tight font-medium uppercase">
                 About
               </h2>

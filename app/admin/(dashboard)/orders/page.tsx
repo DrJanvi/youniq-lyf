@@ -13,6 +13,7 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
     defaultSort: "createdAt",
     filters: {
       status: ["PENDING", "APPROVED", "REJECTED", "DISPATCHED", "OUT_FOR_DELIVERY", "DELIVERED", "DELIVERY_ATTEMPT_FAILED"],
+      deleted: ["active", "deleted"],
     },
   });
   const result = await listOrdersAdmin(p.page, p.filters.status as OrderStatus | undefined, p);
@@ -34,6 +35,11 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
             { value: "DELIVERED", label: "Delivered" },
             { value: "DELIVERY_ATTEMPT_FAILED", label: "Delivery attempt failed" },
           ],
+        }, {
+          param: "deleted",
+          label: "Record",
+          value: p.filters.deleted,
+          options: [{ value: "active", label: "Not deleted" }, { value: "deleted", label: "Deleted" }],
         }]}
         rows={result.data.map((o) => ({
           id: o.id,
@@ -44,6 +50,7 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
           couponCode: o.couponCode,
           total: formatMoney(o.total, o.currency),
           status: o.status,
+          deletedAt: o.deletedAt?.toISOString() ?? null,
         }))}
       />
     </>

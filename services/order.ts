@@ -5,17 +5,38 @@ import { paginated, type PageParams } from "@/lib/pagination";
 import { round2 } from "@/lib/pricing";
 import { getCart } from "./cart";
 import { quoteCoupon } from "./coupon";
+import { sendInvoiceForOrder } from "./invoice";
 import type { OrderStatus, PaymentMethod, Prisma } from "@prisma/client";
 import type { ListParams } from "@/lib/admin/list-params";
 import type { OrderDeliveryUpdate } from "@/lib/validation";
 
-const customerInclude = { items: true } as const;
+const customerInclude = {
+  items: { include: { product: { select: { images: true } } } },
+  invoice: {
+    select: { sequence: true, emailStatus: true, issuedAt: true, sentAt: true },
+  },
+} as const;
 const adminListInclude = {
   items: true,
   user: { select: { email: true, name: true } },
+  invoice: {
+    select: { sequence: true, emailStatus: true, issuedAt: true, sentAt: true },
+  },
 } as const;
 const adminInclude = {
   ...adminListInclude,
+  invoice: {
+    select: {
+      sequence: true,
+      emailStatus: true,
+      recipientEmail: true,
+      emailAttempts: true,
+      lastAttemptAt: true,
+      lastError: true,
+      issuedAt: true,
+      sentAt: true,
+    },
+  },
   deliveryAttempts: { orderBy: { createdAt: "desc" } },
 } as const;
 
@@ -26,6 +47,7 @@ type OrderItemRecord = {
   title: string;
   unitPrice: Prisma.Decimal;
   quantity: number;
+  product?: { images: Prisma.JsonValue };
 };
 
 function serialize<T extends {
@@ -75,6 +97,12 @@ export async function checkout(
     address.country,
     address.postalCode,
   ].join(", ");
+  const customer = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { email: true },
+  });
+  if (!customer) throw new ApiError(404, "Customer not found");
+
   const order = await prisma.$transaction(async (tx) => {
     const created = await tx.order.create({
       data: {
@@ -98,17 +126,32 @@ export async function checkout(
             quantity: l.quantity,
           })),
         },
+        invoice: { create: { recipientEmail: customer.email } },
       },
       include: customerInclude,
     });
     await tx.cartItem.deleteMany({ where: { cart: { userId } } });
     return created;
   });
-  return serialize(order);
+
+  let invoiceEmailStatus = order.invoice?.emailStatus ?? "PENDING";
+  try {
+    const delivery = await sendInvoiceForOrder(order.id);
+    invoiceEmailStatus = delivery.emailStatus;
+  } catch (error) {
+    console.error(`Could not attempt invoice delivery for order ${order.id}`, error);
+  }
+
+  return serialize({
+    ...order,
+    invoice: order.invoice
+      ? { ...order.invoice, emailStatus: invoiceEmailStatus }
+      : null,
+  });
 }
 
 export async function listUserOrders(userId: string, page: PageParams) {
-  const where = { userId };
+  const where = { userId, deletedAt: null };
   const [rows, total] = await Promise.all([
     prisma.order.findMany({ where, include: customerInclude, orderBy: { createdAt: "desc" }, skip: page.skip, take: page.limit }),
     prisma.order.count({ where }),
@@ -116,8 +159,21 @@ export async function listUserOrders(userId: string, page: PageParams) {
   return paginated(rows.map(serialize), total, page);
 }
 
+export async function getUserOrder(userId: string, orderId: string) {
+  const row = await prisma.order.findFirst({
+    where: { id: orderId, userId, deletedAt: null },
+    include: customerInclude,
+  });
+  return row ? serialize(row) : null;
+}
+
 export async function listOrdersAdmin(page: PageParams, status?: OrderStatus, p?: ListParams) {
   const where: Prisma.OrderWhereInput = {
+    ...(p?.filters.deleted === "deleted"
+      ? { deletedAt: { not: null } }
+      : p?.filters.deleted === "active"
+        ? { deletedAt: null }
+        : {}),
     ...(status ? { status } : {}),
     ...(p?.q
       ? { OR: [{ id: { startsWith: p.q } }, { shippingName: { contains: p.q } }, { shippingPhone: { contains: p.q } }, { user: { email: { contains: p.q } } }] }
@@ -139,21 +195,44 @@ export async function getOrderAdmin(id: string) {
 
 /** Orders that have been accepted or entered delivery cannot be removed. */
 export async function deleteOrder(id: string) {
-  const deleted = await prisma.order.deleteMany({
-    where: { id, status: { in: ["PENDING", "REJECTED"] } },
+  const deleted = await prisma.order.updateMany({
+    where: { id, status: { in: ["PENDING", "REJECTED"] }, deletedAt: null },
+    data: { deletedAt: new Date() },
   });
   if (deleted.count > 0) return;
-  const order = await prisma.order.findUnique({ where: { id }, select: { id: true } });
-  throw new ApiError(order ? 409 : 404, order ? "Accepted or delivery orders cannot be deleted" : "Order not found");
+  const order = await prisma.order.findUnique({
+    where: { id },
+    select: { id: true, deletedAt: true },
+  });
+  if (!order || order.deletedAt) throw new ApiError(404, "Order not found");
+  throw new ApiError(409, "Accepted or delivery orders cannot be deleted");
+}
+
+export async function restoreOrder(id: string) {
+  const restored = await prisma.order.updateMany({
+    where: { id, deletedAt: { not: null }, status: { in: ["PENDING", "REJECTED"] } },
+    data: { deletedAt: null },
+  });
+  if (restored.count) return { restored: true };
+  const order = await prisma.order.findUnique({
+    where: { id },
+    select: { deletedAt: true },
+  });
+  if (!order?.deletedAt) throw new ApiError(404, "Deleted order not found");
+  throw new ApiError(409, "Only pending or rejected orders can be restored");
 }
 
 export async function decideOrder(id: string, status: "APPROVED" | "REJECTED", adminNote?: string) {
   const updated = await prisma.$transaction(async (tx) => {
     // Conditional update makes the PENDING -> decided transition atomic.
-    const claimed = await tx.order.updateMany({ where: { id, status: "PENDING" }, data: { status, adminNote } });
+    const claimed = await tx.order.updateMany({
+      where: { id, status: "PENDING", deletedAt: null },
+      data: { status, adminNote },
+    });
     if (claimed.count === 0) {
-      const exists = await tx.order.findUnique({ where: { id }, select: { id: true } });
-      throw new ApiError(exists ? 409 : 404, exists ? "Order already decided" : "Order not found");
+      const exists = await tx.order.findUnique({ where: { id }, select: { id: true, deletedAt: true } });
+      if (!exists || exists.deletedAt) throw new ApiError(404, "Order not found");
+      throw new ApiError(409, "Order already decided");
     }
     if (status === "APPROVED") {
       const items = await tx.orderItem.findMany({ where: { orderId: id } });
@@ -189,12 +268,13 @@ export async function updateOrderDelivery(id: string, update: OrderDeliveryUpdat
 
   const updated = await prisma.$transaction(async (tx) => {
     const claimed = await tx.order.updateMany({
-      where: { id, status: { in: allowedFrom } },
+      where: { id, status: { in: allowedFrom }, deletedAt: null },
       data,
     });
     if (claimed.count === 0) {
-      const exists = await tx.order.findUnique({ where: { id }, select: { id: true } });
-      throw new ApiError(exists ? 409 : 404, exists ? "Invalid order status transition" : "Order not found");
+      const exists = await tx.order.findUnique({ where: { id }, select: { id: true, deletedAt: true } });
+      if (!exists || exists.deletedAt) throw new ApiError(404, "Order not found");
+      throw new ApiError(409, "Invalid order status transition");
     }
 
     if (update.status === "DELIVERED" || update.status === "DELIVERY_ATTEMPT_FAILED") {

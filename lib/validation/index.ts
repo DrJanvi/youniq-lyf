@@ -19,6 +19,48 @@ const nameSchema = (label: string) =>
     .max(50, `${label} must be at most 50 characters`)
     .regex(/^[\p{L}\p{M}][\p{L}\p{M}\s'.-]*$/u, `${label} contains invalid characters`);
 
+const phonePattern = /^\+?[0-9][0-9\s().-]*$/;
+const MIN_PHONE_DIGITS = 7;
+export const MAX_PHONE_DIGITS = 15;
+
+const countPhoneDigits = (phone: string) => phone.replace(/\D/g, "").length;
+
+export function limitPhoneDigits(phone: string, maxDigits = MAX_PHONE_DIGITS) {
+  let digitCount = 0;
+  return phone.replace(/\d/g, (digit) => {
+    if (digitCount >= maxDigits) return "";
+    digitCount += 1;
+    return digit;
+  });
+}
+
+const phoneSchema = z
+  .string()
+  .trim()
+  .max(40, "Phone number is too long")
+  .regex(phonePattern, "Enter a valid phone number")
+  .refine(
+    (phone) => countPhoneDigits(phone) >= MIN_PHONE_DIGITS,
+    `Phone number must contain at least ${MIN_PHONE_DIGITS} digits`,
+  )
+  .refine(
+    (phone) => countPhoneDigits(phone) <= MAX_PHONE_DIGITS,
+    `Phone number cannot contain more than ${MAX_PHONE_DIGITS} digits`,
+  );
+
+const userGenderSchema = z.enum(["MALE", "FEMALE", "OTHER", "PREFER_NOT_TO_SAY"]);
+
+export const todayDateOnly = () => new Date().toISOString().slice(0, 10);
+
+const dateOnlySchema = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, "Enter a valid date")
+  .refine((value) => {
+    const date = new Date(`${value}T00:00:00.000Z`);
+    return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === value;
+  }, "Enter a valid date")
+  .refine((value) => value <= todayDateOnly(), "Date of birth cannot be in the future");
+
 export const customerEmailSchema = z
   .string()
   .trim()
@@ -35,6 +77,27 @@ export const newPasswordSchema = z
   .regex(/[A-Za-z]/, "Must contain at least one letter")
   .regex(/\d/, "Must contain at least one number");
 
+export const changePasswordSchema = z
+  .object({
+    currentPassword: z
+      .string()
+      .min(1, "Current password is required")
+      .max(72, "Password is too long"),
+    newPassword: newPasswordSchema,
+    confirmPassword: z.string().min(1, "Confirm your new password").max(72),
+  })
+  .refine((value) => value.newPassword === value.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Passwords do not match",
+  });
+
+export const deleteAccountSchema = z.object({
+  currentPassword: z
+    .string()
+    .min(1, "Current password is required")
+    .max(72, "Password is too long"),
+});
+
 export const customerLoginSchema = z.object({
   email: customerEmailSchema,
   password: z.string().min(1, "Password is required").max(72, "Password is too long"),
@@ -44,7 +107,24 @@ export const registerSchema = z.object({
   firstName: nameSchema("First name"),
   lastName: nameSchema("Last name"),
   email: customerEmailSchema,
+  phone: phoneSchema,
+  gender: userGenderSchema,
+  dateOfBirth: dateOnlySchema,
   password: newPasswordSchema,
+});
+
+const fullNameSchema = z
+  .string()
+  .trim()
+  .min(2, "Full name must be at least 2 characters")
+  .max(100, "Full name must be at most 100 characters")
+  .regex(/^[\p{L}\p{M}][\p{L}\p{M}\s'.-]*$/u, "Full name contains invalid characters");
+
+export const accountDetailsSchema = z.object({
+  name: fullNameSchema,
+  phone: z.union([z.literal(""), phoneSchema]),
+  gender: z.union([z.literal(""), userGenderSchema]),
+  dateOfBirth: z.union([z.literal(""), dateOnlySchema]),
 });
 
 export const otpCodeSchema = z.string().regex(/^\d{6}$/, "Enter the 6-digit code");
@@ -345,6 +425,73 @@ export const partnerRequestSchema = z
     }
   });
 
+export const careerJobRoleValues = [
+  "MARKETING",
+  "SALES",
+  "E_COMMERCE",
+  "OPERATIONS",
+  "OTHER",
+] as const;
+
+export const careerJobRoleOptions = [
+  { value: "MARKETING", label: "Marketing" },
+  { value: "SALES", label: "Sales" },
+  { value: "E_COMMERCE", label: "E-commerce" },
+  { value: "OPERATIONS", label: "Operations" },
+  { value: "OTHER", label: "Other" },
+] as const;
+
+export const careerApplicationSchema = z
+  .object({
+    fullName: z
+      .string()
+      .trim()
+      .min(2, "Enter your full name")
+      .max(100, "Name must be at most 100 characters")
+      .regex(/^[\p{L}\p{M}][\p{L}\p{M}\s'.-]*$/u, "Enter a valid name"),
+    email: customerEmailSchema,
+    jobRole: z.enum(careerJobRoleValues, { error: "Select a job role" }),
+    countryCode: z
+      .string()
+      .trim()
+      .regex(/^\+\d{1,3}$/, "Select a valid country code")
+      .refine((value) => partnerCountryCallingCodes.has(value), "Select a valid country code"),
+    phoneNumber: z
+      .string()
+      .trim()
+      .min(1, "Enter your mobile number")
+      .max(30, "Mobile number is too long")
+      .regex(/^[\d\s().-]+$/, "Enter a valid mobile number")
+      .transform((value) => value.replace(/\D/g, "")),
+    consent: z.boolean().refine((accepted) => accepted, "Please agree before submitting your application"),
+  })
+  .superRefine((value, context) => {
+    const totalDigits = value.countryCode.length - 1 + value.phoneNumber.length;
+    if (totalDigits < 7 || totalDigits > 15) {
+      context.addIssue({
+        code: "custom",
+        path: ["phoneNumber"],
+        message: "Mobile number must contain 7 to 15 digits, including the country code",
+      });
+    }
+  });
+
+export const careerPageSettingSchema = z.object({
+  imageUrl: z
+    .string()
+    .trim()
+    .max(1000, "Image URL must be at most 1000 characters")
+    .nullable()
+    .refine(
+      (value) =>
+        value === null ||
+        (URL.canParse(value) &&
+          new URL(value).protocol === "https:" &&
+          new URL(value).hostname === "res.cloudinary.com"),
+      "Select a secure Cloudinary image or use the placeholder",
+    ),
+});
+
 const optionalContactText = (max: number) =>
   z.string().trim().max(max).transform((value) => value || undefined);
 
@@ -441,6 +588,7 @@ export const aboutUsPageSettingSchema = z.object({
   principlesHeading: z.string().trim().min(1).max(255),
   principles: z.array(
     z.object({
+      id: z.string().trim().min(1).max(36).optional(),
       icon: aboutPrincipleIcon,
       title: z.string().trim().min(1).max(160),
       description: z.string().trim().min(1).max(1000),
@@ -463,6 +611,7 @@ export const aboutUsPageSettingSchema = z.object({
   legacyParagraph2: z.string().trim().min(1).max(5000),
   legacyStats: z.array(
     z.object({
+      id: z.string().trim().min(1).max(36).optional(),
       icon: aboutPrincipleIcon,
       title: z.string().trim().min(1).max(160),
     }),
@@ -472,18 +621,22 @@ export const aboutUsPageSettingSchema = z.object({
   whyChooseDescription: z.string().trim().min(1).max(5000),
   whyChooseCards: z.tuple([
     z.object({
+      id: z.string().trim().min(1).max(36).optional(),
       title: z.string().trim().min(1).max(160),
       description: z.string().trim().min(1).max(1000),
     }),
     z.object({
+      id: z.string().trim().min(1).max(36).optional(),
       title: z.string().trim().min(1).max(160),
       description: z.string().trim().min(1).max(1000),
     }),
     z.object({
+      id: z.string().trim().min(1).max(36).optional(),
       title: z.string().trim().min(1).max(160),
       description: z.string().trim().min(1).max(1000),
     }),
     z.object({
+      id: z.string().trim().min(1).max(36).optional(),
       title: z.string().trim().min(1).max(160),
       description: z.string().trim().min(1).max(1000),
     }),

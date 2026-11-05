@@ -6,6 +6,7 @@ import { Button } from "@/components/admin/ui/button";
 import { AdminTableImage } from "@/components/admin/common/AdminTableImage";
 import { DataTable, type Column } from "@/components/admin/common/DataTable";
 import { RowActions } from "@/components/admin/common/RowActions";
+import { StatusBadge } from "@/components/admin/common/StatusBadge";
 import type { TableMeta } from "./types";
 
 export type HeroBannerRow = {
@@ -15,9 +16,10 @@ export type HeroBannerRow = {
   link: string;
   alt: string | null;
   sortOrder: number;
+  deletedAt: string | null;
 };
 
-export function HeroBannersTable({ rows, meta }: { rows: HeroBannerRow[]; meta: TableMeta }) {
+export function HeroBannersTable({ rows, meta, deleted }: { rows: HeroBannerRow[]; meta: TableMeta; deleted?: string }) {
   const columns: Column<HeroBannerRow>[] = [
     {
       id: "desktopImage",
@@ -39,11 +41,12 @@ export function HeroBannersTable({ rows, meta }: { rows: HeroBannerRow[]; meta: 
     { id: "alt", header: "Alt text", sortKey: "alt", cell: (r) => r.alt ?? "—" },
     { id: "link", header: "Link", cell: (r) => <a href={r.link} target="_blank" rel="noreferrer" className="block max-w-xs truncate text-primary hover:underline">{r.link}</a> },
     { id: "sortOrder", header: "Order", sortKey: "sortOrder", cell: (r) => r.sortOrder },
+    { id: "deletedAt", header: "Record", cell: (r) => r.deletedAt ? <StatusBadge status="DELETED" label="Deleted" /> : <StatusBadge status="ACTIVE" label="Active" /> },
     {
       id: "actions",
       header: "",
       className: "text-right",
-      cell: (r) => <RowActions editHref={`/admin/hero-banners/${r.id}`} deleteUrl={`/api/admin/hero-banners/${r.id}`} itemName="banner" />,
+      cell: (r) => <RowActions editHref={`/admin/hero-banners/${r.id}`} deleteUrl={r.deletedAt ? undefined : `/api/admin/hero-banners/${r.id}`} restoreUrl={r.deletedAt ? `/api/admin/hero-banners/${r.id}` : undefined} itemName="banner" />,
     },
   ];
   return (
@@ -54,6 +57,7 @@ export function HeroBannersTable({ rows, meta }: { rows: HeroBannerRow[]; meta: 
       {...meta}
       searchValue={meta.q}
       searchPlaceholder="Search banners…"
+      filters={[{ param: "deleted", label: "Record", value: deleted, options: [{ value: "active", label: "Not deleted" }, { value: "deleted", label: "Deleted" }] }]}
       emptyTitle="No hero banners yet"
       emptyAction={
         <Button asChild size="sm">

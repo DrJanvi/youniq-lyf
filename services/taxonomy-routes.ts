@@ -2,7 +2,7 @@ import "server-only";
 import type { ZodType } from "zod";
 import { api, readJson, type IdCtx } from "@/lib/http";
 import { requireAdminApi } from "@/lib/auth/session";
-import { createTaxonomy, deleteTaxonomy, listTaxonomy, updateTaxonomy } from "./taxonomy";
+import { createTaxonomy, deleteTaxonomy, listTaxonomy, restoreTaxonomy, updateTaxonomy } from "./taxonomy";
 
 type Kind = "category" | "brand" | "productType";
 
@@ -29,6 +29,10 @@ export function adminTaxonomyRoutes(kind: Kind, schema: ZodType<{ name: string; 
       DELETE: api<IdCtx>(async (_req, { params }) => {
         await requireAdminApi();
         await deleteTaxonomy(kind, (await params).id);
+      }),
+      POST: api<IdCtx>(async (_req, { params }) => {
+        await requireAdminApi();
+        return restoreTaxonomy(kind, (await params).id);
       }),
     },
   };

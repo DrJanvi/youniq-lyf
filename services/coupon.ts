@@ -1,21 +1,26 @@
-import "server-only";
-import { randomBytes } from "node:crypto";
-import type { Prisma } from "@prisma/client";
-import type { z } from "zod";
-import { ApiError } from "@/lib/http";
 import type { ListParams } from "@/lib/admin/list-params";
+import { ApiError } from "@/lib/http";
 import { paginated, type PageParams } from "@/lib/pagination";
-import { prisma } from "@/lib/prisma";
 import { round2 } from "@/lib/pricing";
+import { prisma } from "@/lib/prisma";
 import type { couponInputSchema } from "@/lib/validation";
+import type { Prisma } from "@prisma/client";
+import { randomBytes } from "node:crypto";
+import "server-only";
+import type { z } from "zod";
 import { getCart } from "./cart";
 
 type CouponInput = z.infer<typeof couponInputSchema>;
 
-const serialize = <T extends { value: unknown; minimumSubtotal: unknown; maxDiscount: unknown }>(coupon: T) => ({
+const serialize = <
+  T extends { value: unknown; minimumSubtotal: unknown; maxDiscount: unknown },
+>(
+  coupon: T,
+) => ({
   ...coupon,
   value: Number(coupon.value),
-  minimumSubtotal: coupon.minimumSubtotal === null ? null : Number(coupon.minimumSubtotal),
+  minimumSubtotal:
+    coupon.minimumSubtotal === null ? null : Number(coupon.minimumSubtotal),
   maxDiscount: coupon.maxDiscount === null ? null : Number(coupon.maxDiscount),
 });
 
@@ -34,12 +39,23 @@ export async function listCoupons(page: PageParams, p?: ListParams) {
   const filters = p?.filters ?? {};
   const now = new Date();
   const where: Prisma.CouponWhereInput = {
+    ...(filters.deleted === "deleted"
+      ? { deletedAt: { not: null } }
+      : filters.deleted === "active"
+        ? { deletedAt: null }
+        : {}),
     ...(p?.q ? { code: { contains: p.q.trim().toUpperCase() } } : {}),
     ...(filters.type ? { type: filters.type as "PERCENT" | "FIXED" } : {}),
-    ...(filters.status === "active" ? { isActive: true } : filters.status === "inactive" ? { isActive: false } : {}),
+    ...(filters.status === "active"
+      ? { isActive: true }
+      : filters.status === "inactive"
+        ? { isActive: false }
+        : {}),
     ...(filters.status === "expired" ? { endsAt: { lt: now } } : {}),
   };
-  const orderBy: Prisma.CouponOrderByWithRelationInput = { [p?.sort ?? "createdAt"]: p?.dir ?? "desc" };
+  const orderBy: Prisma.CouponOrderByWithRelationInput = {
+    [p?.sort ?? "createdAt"]: p?.dir ?? "desc",
+  };
   const [rows, total] = await Promise.all([
     prisma.coupon.findMany({
       where,
@@ -62,48 +78,83 @@ export async function createCoupon(input: CouponInput) {
 }
 
 export async function updateCoupon(id: string, input: CouponInput) {
-  const existing = await prisma.coupon.findUnique({ where: { id }, select: { id: true } });
+  const existing = await prisma.coupon.findUnique({
+    where: { id },
+    select: { id: true },
+  });
   if (!existing) throw new ApiError(404, "Coupon not found");
-  return serialize(await prisma.coupon.update({ where: { id }, data: couponData(input) }));
+  return serialize(
+    await prisma.coupon.update({ where: { id }, data: couponData(input) }),
+  );
 }
 
 export async function deleteCoupon(id: string) {
-  const deleted = await prisma.coupon.deleteMany({ where: { id } });
+  const deleted = await prisma.coupon.updateMany({
+    where: { id, deletedAt: null },
+    data: { deletedAt: new Date() },
+  });
   if (deleted.count === 0) throw new ApiError(404, "Coupon not found");
+}
+
+export async function restoreCoupon(id: string) {
+  const restored = await prisma.coupon.updateMany({
+    where: { id, deletedAt: { not: null } },
+    data: { deletedAt: null },
+  });
+  if (restored.count === 0) throw new ApiError(404, "Deleted coupon not found");
+  return { restored: true };
 }
 
 export async function generateCouponCode() {
   for (let attempt = 0; attempt < 5; attempt += 1) {
-    const code = `BANAFA-${randomBytes(5).toString("hex").toUpperCase()}`;
-    const existing = await prisma.coupon.findUnique({ where: { code }, select: { id: true } });
+    const code = `YOUNIQLYF-${randomBytes(5).toString("hex").toUpperCase()}`;
+    const existing = await prisma.coupon.findUnique({
+      where: { code },
+      select: { id: true },
+    });
     if (!existing) return code;
   }
-  throw new ApiError(503, "Could not generate a unique coupon code. Please try again.");
+  throw new ApiError(
+    503,
+    "Could not generate a unique coupon code. Please try again.",
+  );
 }
 
 export async function quoteCoupon(code: string, subtotal: number) {
   const normalizedCode = code.trim().toUpperCase();
-  const coupon = await prisma.coupon.findUnique({ where: { code: normalizedCode } });
-  if (!coupon || !coupon.isActive) throw new ApiError(400, "This coupon code is invalid or inactive");
+  const coupon = await prisma.coupon.findFirst({
+    where: { code: normalizedCode, deletedAt: null },
+  });
+  if (!coupon || !coupon.isActive)
+    throw new ApiError(400, "This coupon code is invalid or inactive");
 
   const now = new Date();
-  if (coupon.startsAt && coupon.startsAt > now) throw new ApiError(400, "This coupon is not active yet");
-  if (coupon.endsAt && coupon.endsAt <= now) throw new ApiError(400, "This coupon has expired");
+  if (coupon.startsAt && coupon.startsAt > now)
+    throw new ApiError(400, "This coupon is not active yet");
+  if (coupon.endsAt && coupon.endsAt <= now)
+    throw new ApiError(400, "This coupon has expired");
 
   const eligibleSubtotal = round2(subtotal);
-  if (eligibleSubtotal <= 0) throw new ApiError(400, "A coupon cannot be applied to a zero-value order");
-  const minimumSubtotal = coupon.minimumSubtotal === null ? null : Number(coupon.minimumSubtotal);
+  if (eligibleSubtotal <= 0)
+    throw new ApiError(400, "A coupon cannot be applied to a zero-value order");
+  const minimumSubtotal =
+    coupon.minimumSubtotal === null ? null : Number(coupon.minimumSubtotal);
   if (minimumSubtotal !== null && eligibleSubtotal < minimumSubtotal) {
-    throw new ApiError(400, `This coupon requires a minimum order of ${minimumSubtotal.toFixed(2)}`);
+    throw new ApiError(
+      400,
+      `This coupon requires a minimum order of ${minimumSubtotal.toFixed(2)}`,
+    );
   }
 
   let discountAmount =
     coupon.type === "PERCENT"
       ? round2((eligibleSubtotal * Number(coupon.value)) / 100)
       : Number(coupon.value);
-  if (coupon.maxDiscount !== null) discountAmount = Math.min(discountAmount, Number(coupon.maxDiscount));
+  if (coupon.maxDiscount !== null)
+    discountAmount = Math.min(discountAmount, Number(coupon.maxDiscount));
   discountAmount = round2(Math.min(eligibleSubtotal, discountAmount));
-  if (discountAmount <= 0) throw new ApiError(400, "This coupon does not reduce the order total");
+  if (discountAmount <= 0)
+    throw new ApiError(400, "This coupon does not reduce the order total");
 
   return {
     couponId: coupon.id,
@@ -116,6 +167,10 @@ export async function quoteCoupon(code: string, subtotal: number) {
 export async function previewCoupon(userId: string, code: string) {
   const cart = await getCart(userId);
   if (cart.items.length === 0) throw new ApiError(400, "Cart is empty");
-  const { code: normalizedCode, discountAmount, total } = await quoteCoupon(code, cart.total);
+  const {
+    code: normalizedCode,
+    discountAmount,
+    total,
+  } = await quoteCoupon(code, cart.total);
   return { code: normalizedCode, discountAmount, total };
 }

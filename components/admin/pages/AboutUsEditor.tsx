@@ -1,11 +1,15 @@
 "use client";
 
-import { useState, type FormEvent, type ReactNode } from "react";
-import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
-import { Button } from "@/components/admin/ui/button";
-import { CloudinaryImageUploader } from "@/components/admin/forms/ImageUploadField";
+import { RestoreButton } from "@/components/admin/common/RestoreButton";
 import { useAdminApi } from "@/components/admin/common/use-admin-api";
-import type { AboutUsPageSettings } from "@/services/about-us";
+import { CloudinaryImageUploader } from "@/components/admin/forms/ImageUploadField";
+import { Button } from "@/components/admin/ui/button";
+import type {
+  AboutUsPageSettings,
+  DeletedAboutUsItem,
+} from "@/services/about-us";
+import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
+import { useState, type FormEvent, type ReactNode } from "react";
 
 const inputClass =
   "w-full rounded-xl border border-input bg-background px-3 py-2 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-ring";
@@ -30,8 +34,10 @@ function AdminField({
 
 export function AboutUsEditor({
   settings,
+  deletedItems,
 }: {
   settings: AboutUsPageSettings;
+  deletedItems: DeletedAboutUsItem[];
 }) {
   const { request, pending } = useAdminApi();
   const [desktopImage, setDesktopImage] = useState(settings.desktopImage ?? "");
@@ -94,7 +100,8 @@ export function AboutUsEditor({
         journeyHeading: value("journeyHeading"),
         journeyDescription: value("journeyDescription"),
         principlesHeading: value("principlesHeading"),
-        principles: principles.map(({ icon, title, description }) => ({
+        principles: principles.map(({ id, icon, title, description }) => ({
+          id,
           icon,
           title,
           description,
@@ -111,11 +118,16 @@ export function AboutUsEditor({
         legacyIntro: value("legacyIntro"),
         legacyParagraph1: value("legacyParagraph1"),
         legacyParagraph2: value("legacyParagraph2"),
-        legacyStats: legacyStats.map(({ icon, title }) => ({ icon, title })),
+        legacyStats: legacyStats.map(({ id, icon, title }) => ({
+          id,
+          icon,
+          title,
+        })),
         whyChooseImage,
         whyChooseHeading: value("whyChooseHeading"),
         whyChooseDescription: value("whyChooseDescription"),
         whyChooseCards: settings.whyChooseCards.map((_, index) => ({
+          id: settings.whyChooseCards[index].id,
           title: value(`whyChooseCards.${index}.title`),
           description: value(`whyChooseCards.${index}.description`),
         })),
@@ -130,576 +142,622 @@ export function AboutUsEditor({
   }
 
   return (
-    <form onSubmit={submit} className="flex max-w-5xl flex-col gap-6">
-      <section className="rounded-3xl bg-card p-6 shadow-sm ring-1 ring-border">
-        <h2 className="font-heading text-xl font-bold">Hero content</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          The title and introduction appear over the hero image.
-        </p>
-        <div className="mt-5 grid gap-4">
-          <AdminField label="Hero heading">
-            <textarea
-              name="heroHeading"
-              required
-              maxLength={255}
-              rows={3}
-              defaultValue={settings.heroHeading}
-              className={inputClass}
-            />
-          </AdminField>
-          <AdminField label="Hero introduction">
-            <textarea
-              name="heroDescription"
-              required
-              maxLength={1000}
-              rows={3}
-              defaultValue={settings.heroDescription}
-              className={inputClass}
-            />
-          </AdminField>
-        </div>
-      </section>
-
-      <section className="rounded-3xl bg-card p-6 shadow-sm ring-1 ring-border">
-        <h2 className="font-heading text-xl font-bold">Hero images</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Upload separate images for desktop and mobile screens. PNG, JPEG, or
-          WebP images under 2 MB are supported.
-        </p>
-        <div className="mt-5 grid gap-6 md:grid-cols-2">
-          <div className="flex flex-col gap-3">
-            <CloudinaryImageUploader
-              value={desktopImage}
-              onChange={setDesktopImage}
-              label="Desktop hero image"
-              description="Shown on tablet and desktop layouts."
-            />
-            {desktopImage ? (
-              <Button
-                type="button"
-                variant="outline"
-                className="self-start"
-                onClick={() => setDesktopImage("")}
-              >
-                Remove desktop image
-              </Button>
-            ) : null}
-          </div>
-          <div className="flex flex-col gap-3">
-            <CloudinaryImageUploader
-              value={mobileImage}
-              onChange={setMobileImage}
-              label="Mobile hero image"
-              description="Shown on small-screen layouts."
-            />
-            {mobileImage ? (
-              <Button
-                type="button"
-                variant="outline"
-                className="self-start"
-                onClick={() => setMobileImage("")}
-              >
-                Remove mobile image
-              </Button>
-            ) : null}
-          </div>
-        </div>
-      </section>
-
-      <section className="rounded-3xl bg-card p-6 shadow-sm ring-1 ring-border">
-        <h2 className="font-heading text-xl font-bold">Our journey</h2>
-        <div className="mt-5 grid gap-4 sm:grid-cols-2">
-          <AdminField label="Section heading">
-            <input
-              name="journeyHeading"
-              required
-              maxLength={200}
-              defaultValue={settings.journeyHeading}
-              className={inputClass}
-            />
-          </AdminField>
-          <AdminField label="Section introduction">
-            <textarea
-              name="journeyDescription"
-              required
-              maxLength={1000}
-              rows={3}
-              defaultValue={settings.journeyDescription}
-              className={inputClass}
-            />
-          </AdminField>
-        </div>
-      </section>
-
-      <section className="rounded-3xl bg-card p-6 shadow-sm ring-1 ring-border">
-        <h2 className="font-heading text-xl font-bold">Timeline milestones</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Edit the four milestones displayed on the storefront.
-        </p>
-        <div className="mt-5 grid gap-5 lg:grid-cols-2">
-          {settings.milestones.map((milestone, index) => (
-            <fieldset
-              key={index}
-              className="grid gap-4 rounded-2xl border border-border p-4"
-            >
-              <legend className="px-2 text-sm font-semibold">
-                Milestone {index + 1}
-              </legend>
-              <AdminField label="Year or value">
-                <input
-                  name={`milestones.${index}.year`}
-                  required
-                  maxLength={40}
-                  defaultValue={milestone.year}
-                  className={inputClass}
-                />
-              </AdminField>
-              <AdminField label="Title">
-                <input
-                  name={`milestones.${index}.title`}
-                  required
-                  maxLength={160}
-                  defaultValue={milestone.title}
-                  className={inputClass}
-                />
-              </AdminField>
-              <AdminField label="Description">
-                <textarea
-                  name={`milestones.${index}.description`}
-                  required
-                  maxLength={500}
-                  rows={3}
-                  defaultValue={milestone.description}
-                  className={inputClass}
-                />
-              </AdminField>
-            </fieldset>
-          ))}
-        </div>
-      </section>
-
-      <section className="rounded-3xl bg-card p-6 shadow-sm ring-1 ring-border">
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
-            <h2 className="font-heading text-xl font-bold">Principles</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Manage the principles section shown below the journey timeline.
-            </p>
-          </div>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() =>
-              setPrinciples((current) => [
-                ...current,
-                {
-                  id: crypto.randomUUID(),
-                  icon: "/assets/about-us/mission.svg",
-                  title: "",
-                  description: "",
-                },
-              ])
-            }
-          >
-            <Plus /> Add principle
-          </Button>
-        </div>
-        <div className="mt-5">
-          <AdminField label="Section heading">
-            <input
-              name="principlesHeading"
-              required
-              maxLength={255}
-              defaultValue={settings.principlesHeading}
-              className={inputClass}
-            />
-          </AdminField>
-        </div>
-        <div className="mt-5 grid gap-5 lg:grid-cols-2">
-          {principles.map((principle, index) => (
-            <fieldset
-              key={principle.id}
-              className="grid gap-4 rounded-2xl border border-border p-4"
-            >
-              <legend className="px-2 text-sm font-semibold">
-                Principle {index + 1}
-              </legend>
-              <CloudinaryImageUploader
-                value={principle.icon}
-                onChange={(icon) => updatePrinciple(index, { icon })}
-                label="Upload principle icon"
-                description="Use a transparent PNG, JPEG, or WebP icon."
-              />
-              <div className="grid gap-4 sm:grid-cols-2">
-                <AdminField label="Title">
-                  <input
-                    required
-                    maxLength={160}
-                    value={principle.title}
-                    onChange={(event) =>
-                      updatePrinciple(index, { title: event.currentTarget.value })
-                    }
-                    className={inputClass}
-                  />
-                </AdminField>
-                <AdminField label="Description">
-                  <textarea
-                    required
-                    maxLength={1000}
-                    rows={3}
-                    value={principle.description}
-                    onChange={(event) =>
-                      updatePrinciple(index, {
-                        description: event.currentTarget.value,
-                      })
-                    }
-                    className={inputClass}
-                  />
-                </AdminField>
-              </div>
-              <div className="flex justify-between">
-                <div className="flex gap-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon"
-                    aria-label={`Move principle ${index + 1} up`}
-                    disabled={index === 0}
-                    onClick={() => movePrinciple(index, -1)}
-                  >
-                    <ArrowUp />
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon"
-                    aria-label={`Move principle ${index + 1} down`}
-                    disabled={index === principles.length - 1}
-                    onClick={() => movePrinciple(index, 1)}
-                  >
-                    <ArrowDown />
-                  </Button>
-                </div>
-                <Button
-                  type="button"
-                  variant="destructive"
-                  disabled={principles.length === 1}
-                  onClick={() =>
-                    setPrinciples((current) =>
-                      current.filter((_, itemIndex) => itemIndex !== index),
-                    )
-                  }
-                >
-                  <Trash2 /> Remove
-                </Button>
-              </div>
-            </fieldset>
-          ))}
-        </div>
-      </section>
-
-      <section className="rounded-3xl bg-card p-6 shadow-sm ring-1 ring-border">
-        <h2 className="font-heading text-xl font-bold">Who We Are</h2>
-        <div className="mt-5 grid gap-5">
-          <div className="grid gap-3">
-            <CloudinaryImageUploader
-              value={whoImage}
-              onChange={setWhoImage}
-              label="Who We Are image"
-              description="Upload the image displayed beside this section."
-            />
-            {whoImage ? (
-              <Button
-                type="button"
-                variant="outline"
-                className="self-start"
-                onClick={() => setWhoImage("")}
-              >
-                Remove image
-              </Button>
-            ) : null}
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <AdminField label="Heading">
-              <input
-                name="whoHeading"
-                required
-                maxLength={200}
-                defaultValue={settings.whoHeading}
-                className={inputClass}
-              />
-            </AdminField>
-            <AdminField label="Subheading">
-              <input
-                name="whoSubheading"
+    <div className="flex max-w-5xl flex-col gap-6">
+      <form onSubmit={submit} className="flex flex-col gap-6">
+        <section className="bg-card ring-border rounded-3xl p-6 shadow-sm ring-1">
+          <h2 className="font-heading text-xl font-bold">Hero content</h2>
+          <p className="text-muted-foreground mt-1 text-sm">
+            The title and introduction appear over the hero image.
+          </p>
+          <div className="mt-5 grid gap-4">
+            <AdminField label="Hero heading">
+              <textarea
+                name="heroHeading"
                 required
                 maxLength={255}
-                defaultValue={settings.whoSubheading}
+                rows={3}
+                defaultValue={settings.heroHeading}
                 className={inputClass}
               />
             </AdminField>
-            <AdminField label="Tradition badge text">
-              <input
-                name="whoBadge"
+            <AdminField label="Hero introduction">
+              <textarea
+                name="heroDescription"
                 required
-                maxLength={120}
-                defaultValue={settings.whoBadge}
+                maxLength={1000}
+                rows={3}
+                defaultValue={settings.heroDescription}
                 className={inputClass}
               />
             </AdminField>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {settings.whoParagraphs.map((paragraph, index) => (
-              <AdminField key={index} label={`Paragraph ${index + 1}`}>
-                <textarea
-                  name={`whoParagraph${index + 1}`}
-                  required
-                  maxLength={5000}
-                  rows={4}
-                  defaultValue={paragraph}
-                  className={inputClass}
-                />
-              </AdminField>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="rounded-3xl bg-card p-6 shadow-sm ring-1 ring-border">
-        <h2 className="font-heading text-xl font-bold">
-          A Legacy of Fragrance
-        </h2>
-        <div className="mt-5 grid gap-4">
-          <div className="grid gap-3">
-            <CloudinaryImageUploader
-              value={legacyImage}
-              onChange={setLegacyImage}
-              label="Legacy section image"
-              description="Upload the image displayed beside this section."
-            />
-            {legacyImage ? (
-              <Button
-                type="button"
-                variant="outline"
-                className="self-start"
-                onClick={() => setLegacyImage("")}
-              >
-                Remove image
-              </Button>
-            ) : null}
-          </div>
-          <AdminField label="Heading">
-            <input
-              name="legacyHeading"
-              required
-              maxLength={255}
-              defaultValue={settings.legacyHeading}
-              className={inputClass}
-            />
-          </AdminField>
-          <AdminField label="Introduction">
-            <textarea
-              name="legacyIntro"
-              required
-              maxLength={5000}
-              rows={4}
-              defaultValue={settings.legacyIntro}
-              className={inputClass}
-            />
-          </AdminField>
-          <AdminField label="Paragraph below stats 1">
-            <textarea
-              name="legacyParagraph1"
-              required
-              maxLength={5000}
-              rows={4}
-              defaultValue={settings.legacyParagraph1}
-              className={inputClass}
-            />
-          </AdminField>
-          <AdminField label="Paragraph below stats 2">
-            <textarea
-              name="legacyParagraph2"
-              required
-              maxLength={5000}
-              rows={4}
-              defaultValue={settings.legacyParagraph2}
-              className={inputClass}
-            />
-          </AdminField>
-        </div>
-        <div className="mt-8 flex flex-wrap items-start justify-between gap-3">
-          <div>
-            <h3 className="font-heading text-lg font-bold">Legacy stats</h3>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Add, remove, reorder, and upload an icon for each stat.
-            </p>
-          </div>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() =>
-              setLegacyStats((current) => [
-                ...current,
-                {
-                  id: crypto.randomUUID(),
-                  icon: "/assets/about-us/stat-established.svg",
-                  title: "",
-                },
-              ])
-            }
-          >
-            <Plus /> Add stat
-          </Button>
-        </div>
-        <div className="mt-5 grid gap-5 lg:grid-cols-2">
-          {legacyStats.map((stat, index) => (
-            <fieldset
-              key={stat.id}
-              className="grid gap-4 rounded-2xl border border-border p-4"
-            >
-              <legend className="px-2 text-sm font-semibold">
-                Stat {index + 1}
-              </legend>
+        <section className="bg-card ring-border rounded-3xl p-6 shadow-sm ring-1">
+          <h2 className="font-heading text-xl font-bold">Hero images</h2>
+          <p className="text-muted-foreground mt-1 text-sm">
+            Upload separate images for desktop and mobile screens. PNG, JPEG, or
+            WebP images under 2 MB are supported.
+          </p>
+          <div className="mt-5 grid gap-6 md:grid-cols-2">
+            <div className="flex flex-col gap-3">
               <CloudinaryImageUploader
-                value={stat.icon}
-                onChange={(icon) => updateLegacyStat(index, { icon })}
-                label="Upload stat icon"
-                description="Use a small transparent icon."
+                value={desktopImage}
+                onChange={setDesktopImage}
+                label="Desktop hero image"
+                description="Shown on tablet and desktop layouts."
               />
-              <AdminField label="Label">
-                <input
-                  required
-                  maxLength={160}
-                  value={stat.title}
-                  onChange={(event) =>
-                    updateLegacyStat(index, { title: event.currentTarget.value })
-                  }
-                  className={inputClass}
-                />
-              </AdminField>
-              <div className="flex justify-between">
-                <div className="flex gap-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon"
-                    aria-label={`Move stat ${index + 1} up`}
-                    disabled={index === 0}
-                    onClick={() => moveLegacyStat(index, -1)}
-                  >
-                    <ArrowUp />
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon"
-                    aria-label={`Move stat ${index + 1} down`}
-                    disabled={index === legacyStats.length - 1}
-                    onClick={() => moveLegacyStat(index, 1)}
-                  >
-                    <ArrowDown />
-                  </Button>
-                </div>
+              {desktopImage ? (
                 <Button
                   type="button"
-                  variant="destructive"
-                  disabled={legacyStats.length === 1}
-                  onClick={() =>
-                    setLegacyStats((current) =>
-                      current.filter((_, itemIndex) => itemIndex !== index),
-                    )
-                  }
+                  variant="outline"
+                  className="self-start"
+                  onClick={() => setDesktopImage("")}
                 >
-                  <Trash2 /> Remove
+                  Remove desktop image
                 </Button>
-              </div>
-            </fieldset>
-          ))}
-        </div>
-      </section>
-
-      <section className="rounded-3xl bg-card p-6 shadow-sm ring-1 ring-border">
-        <h2 className="font-heading text-xl font-bold">
-          Why Choose Buabed Banafa?
-        </h2>
-        <div className="mt-5 grid gap-5">
-          <div className="grid gap-3">
-            <CloudinaryImageUploader
-              value={whyChooseImage}
-              onChange={setWhyChooseImage}
-              label="Why Choose section image"
-              description="Upload the image displayed beside the feature cards."
-            />
-            {whyChooseImage ? (
-              <Button
-                type="button"
-                variant="outline"
-                className="self-start"
-                onClick={() => setWhyChooseImage("")}
-              >
-                Remove image
-              </Button>
-            ) : null}
+              ) : null}
+            </div>
+            <div className="flex flex-col gap-3">
+              <CloudinaryImageUploader
+                value={mobileImage}
+                onChange={setMobileImage}
+                label="Mobile hero image"
+                description="Shown on small-screen layouts."
+              />
+              {mobileImage ? (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="self-start"
+                  onClick={() => setMobileImage("")}
+                >
+                  Remove mobile image
+                </Button>
+              ) : null}
+            </div>
           </div>
-          <AdminField label="Heading">
-            <input
-              name="whyChooseHeading"
-              required
-              maxLength={255}
-              defaultValue={settings.whyChooseHeading}
-              className={inputClass}
-            />
-          </AdminField>
-          <AdminField label="Introduction">
-            <textarea
-              name="whyChooseDescription"
-              required
-              maxLength={5000}
-              rows={4}
-              defaultValue={settings.whyChooseDescription}
-              className={inputClass}
-            />
-          </AdminField>
-          <div className="grid gap-5 lg:grid-cols-2">
-            {settings.whyChooseCards.map((card, index) => (
+        </section>
+
+        <section className="bg-card ring-border rounded-3xl p-6 shadow-sm ring-1">
+          <h2 className="font-heading text-xl font-bold">Our journey</h2>
+          <div className="mt-5 grid gap-4 sm:grid-cols-2">
+            <AdminField label="Section heading">
+              <input
+                name="journeyHeading"
+                required
+                maxLength={200}
+                defaultValue={settings.journeyHeading}
+                className={inputClass}
+              />
+            </AdminField>
+            <AdminField label="Section introduction">
+              <textarea
+                name="journeyDescription"
+                required
+                maxLength={1000}
+                rows={3}
+                defaultValue={settings.journeyDescription}
+                className={inputClass}
+              />
+            </AdminField>
+          </div>
+        </section>
+
+        <section className="bg-card ring-border rounded-3xl p-6 shadow-sm ring-1">
+          <h2 className="font-heading text-xl font-bold">
+            Timeline milestones
+          </h2>
+          <p className="text-muted-foreground mt-1 text-sm">
+            Edit the four milestones displayed on the storefront.
+          </p>
+          <div className="mt-5 grid gap-5 lg:grid-cols-2">
+            {settings.milestones.map((milestone, index) => (
               <fieldset
-                key={card.id}
-                className="grid gap-4 rounded-2xl border border-border p-4"
+                key={index}
+                className="border-border grid gap-4 rounded-2xl border p-4"
               >
                 <legend className="px-2 text-sm font-semibold">
-                  Feature {index + 1}
+                  Milestone {index + 1}
                 </legend>
+                <AdminField label="Year or value">
+                  <input
+                    name={`milestones.${index}.year`}
+                    required
+                    maxLength={40}
+                    defaultValue={milestone.year}
+                    className={inputClass}
+                  />
+                </AdminField>
                 <AdminField label="Title">
                   <input
-                    name={`whyChooseCards.${index}.title`}
+                    name={`milestones.${index}.title`}
                     required
                     maxLength={160}
-                    defaultValue={card.title}
+                    defaultValue={milestone.title}
                     className={inputClass}
                   />
                 </AdminField>
                 <AdminField label="Description">
                   <textarea
-                    name={`whyChooseCards.${index}.description`}
+                    name={`milestones.${index}.description`}
                     required
-                    maxLength={1000}
-                    rows={4}
-                    defaultValue={card.description}
+                    maxLength={500}
+                    rows={3}
+                    defaultValue={milestone.description}
                     className={inputClass}
                   />
                 </AdminField>
               </fieldset>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      <div>
-        <Button type="submit" disabled={pending}>
-          {pending ? "Saving…" : "Save About Us page"}
-        </Button>
-      </div>
-    </form>
+        <section className="bg-card ring-border rounded-3xl p-6 shadow-sm ring-1">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h2 className="font-heading text-xl font-bold">Principles</h2>
+              <p className="text-muted-foreground mt-1 text-sm">
+                Manage the principles section shown below the journey timeline.
+              </p>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() =>
+                setPrinciples((current) => [
+                  ...current,
+                  {
+                    id: crypto.randomUUID(),
+                    icon: "/assets/about-us/mission.svg",
+                    title: "",
+                    description: "",
+                  },
+                ])
+              }
+            >
+              <Plus /> Add principle
+            </Button>
+          </div>
+          <div className="mt-5">
+            <AdminField label="Section heading">
+              <input
+                name="principlesHeading"
+                required
+                maxLength={255}
+                defaultValue={settings.principlesHeading}
+                className={inputClass}
+              />
+            </AdminField>
+          </div>
+          <div className="mt-5 grid gap-5 lg:grid-cols-2">
+            {principles.map((principle, index) => (
+              <fieldset
+                key={principle.id}
+                className="border-border grid gap-4 rounded-2xl border p-4"
+              >
+                <legend className="px-2 text-sm font-semibold">
+                  Principle {index + 1}
+                </legend>
+                <CloudinaryImageUploader
+                  value={principle.icon}
+                  onChange={(icon) => updatePrinciple(index, { icon })}
+                  label="Upload principle icon"
+                  description="Use a transparent PNG, JPEG, or WebP icon."
+                />
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <AdminField label="Title">
+                    <input
+                      required
+                      maxLength={160}
+                      value={principle.title}
+                      onChange={(event) =>
+                        updatePrinciple(index, {
+                          title: event.currentTarget.value,
+                        })
+                      }
+                      className={inputClass}
+                    />
+                  </AdminField>
+                  <AdminField label="Description">
+                    <textarea
+                      required
+                      maxLength={1000}
+                      rows={3}
+                      value={principle.description}
+                      onChange={(event) =>
+                        updatePrinciple(index, {
+                          description: event.currentTarget.value,
+                        })
+                      }
+                      className={inputClass}
+                    />
+                  </AdminField>
+                </div>
+                <div className="flex justify-between">
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      aria-label={`Move principle ${index + 1} up`}
+                      disabled={index === 0}
+                      onClick={() => movePrinciple(index, -1)}
+                    >
+                      <ArrowUp />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      aria-label={`Move principle ${index + 1} down`}
+                      disabled={index === principles.length - 1}
+                      onClick={() => movePrinciple(index, 1)}
+                    >
+                      <ArrowDown />
+                    </Button>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    disabled={principles.length === 1}
+                    onClick={() =>
+                      setPrinciples((current) =>
+                        current.filter((_, itemIndex) => itemIndex !== index),
+                      )
+                    }
+                  >
+                    <Trash2 /> Remove
+                  </Button>
+                </div>
+              </fieldset>
+            ))}
+          </div>
+        </section>
+
+        <section className="bg-card ring-border rounded-3xl p-6 shadow-sm ring-1">
+          <h2 className="font-heading text-xl font-bold">Who We Are</h2>
+          <div className="mt-5 grid gap-5">
+            <div className="grid gap-3">
+              <CloudinaryImageUploader
+                value={whoImage}
+                onChange={setWhoImage}
+                label="Who We Are image"
+                description="Upload the image displayed beside this section."
+              />
+              {whoImage ? (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="self-start"
+                  onClick={() => setWhoImage("")}
+                >
+                  Remove image
+                </Button>
+              ) : null}
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <AdminField label="Heading">
+                <input
+                  name="whoHeading"
+                  required
+                  maxLength={200}
+                  defaultValue={settings.whoHeading}
+                  className={inputClass}
+                />
+              </AdminField>
+              <AdminField label="Subheading">
+                <input
+                  name="whoSubheading"
+                  required
+                  maxLength={255}
+                  defaultValue={settings.whoSubheading}
+                  className={inputClass}
+                />
+              </AdminField>
+              <AdminField label="Tradition badge text">
+                <input
+                  name="whoBadge"
+                  required
+                  maxLength={120}
+                  defaultValue={settings.whoBadge}
+                  className={inputClass}
+                />
+              </AdminField>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {settings.whoParagraphs.map((paragraph, index) => (
+                <AdminField key={index} label={`Paragraph ${index + 1}`}>
+                  <textarea
+                    name={`whoParagraph${index + 1}`}
+                    required
+                    maxLength={5000}
+                    rows={4}
+                    defaultValue={paragraph}
+                    className={inputClass}
+                  />
+                </AdminField>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-card ring-border rounded-3xl p-6 shadow-sm ring-1">
+          <h2 className="font-heading text-xl font-bold">
+            A Legacy of Fragrance
+          </h2>
+          <div className="mt-5 grid gap-4">
+            <div className="grid gap-3">
+              <CloudinaryImageUploader
+                value={legacyImage}
+                onChange={setLegacyImage}
+                label="Legacy section image"
+                description="Upload the image displayed beside this section."
+              />
+              {legacyImage ? (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="self-start"
+                  onClick={() => setLegacyImage("")}
+                >
+                  Remove image
+                </Button>
+              ) : null}
+            </div>
+            <AdminField label="Heading">
+              <input
+                name="legacyHeading"
+                required
+                maxLength={255}
+                defaultValue={settings.legacyHeading}
+                className={inputClass}
+              />
+            </AdminField>
+            <AdminField label="Introduction">
+              <textarea
+                name="legacyIntro"
+                required
+                maxLength={5000}
+                rows={4}
+                defaultValue={settings.legacyIntro}
+                className={inputClass}
+              />
+            </AdminField>
+            <AdminField label="Paragraph below stats 1">
+              <textarea
+                name="legacyParagraph1"
+                required
+                maxLength={5000}
+                rows={4}
+                defaultValue={settings.legacyParagraph1}
+                className={inputClass}
+              />
+            </AdminField>
+            <AdminField label="Paragraph below stats 2">
+              <textarea
+                name="legacyParagraph2"
+                required
+                maxLength={5000}
+                rows={4}
+                defaultValue={settings.legacyParagraph2}
+                className={inputClass}
+              />
+            </AdminField>
+          </div>
+          <div className="mt-8 flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h3 className="font-heading text-lg font-bold">Legacy stats</h3>
+              <p className="text-muted-foreground mt-1 text-sm">
+                Add, remove, reorder, and upload an icon for each stat.
+              </p>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() =>
+                setLegacyStats((current) => [
+                  ...current,
+                  {
+                    id: crypto.randomUUID(),
+                    icon: "/assets/about-us/stat-established.svg",
+                    title: "",
+                  },
+                ])
+              }
+            >
+              <Plus /> Add stat
+            </Button>
+          </div>
+          <div className="mt-5 grid gap-5 lg:grid-cols-2">
+            {legacyStats.map((stat, index) => (
+              <fieldset
+                key={stat.id}
+                className="border-border grid gap-4 rounded-2xl border p-4"
+              >
+                <legend className="px-2 text-sm font-semibold">
+                  Stat {index + 1}
+                </legend>
+                <CloudinaryImageUploader
+                  value={stat.icon}
+                  onChange={(icon) => updateLegacyStat(index, { icon })}
+                  label="Upload stat icon"
+                  description="Use a small transparent icon."
+                />
+                <AdminField label="Label">
+                  <input
+                    required
+                    maxLength={160}
+                    value={stat.title}
+                    onChange={(event) =>
+                      updateLegacyStat(index, {
+                        title: event.currentTarget.value,
+                      })
+                    }
+                    className={inputClass}
+                  />
+                </AdminField>
+                <div className="flex justify-between">
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      aria-label={`Move stat ${index + 1} up`}
+                      disabled={index === 0}
+                      onClick={() => moveLegacyStat(index, -1)}
+                    >
+                      <ArrowUp />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      aria-label={`Move stat ${index + 1} down`}
+                      disabled={index === legacyStats.length - 1}
+                      onClick={() => moveLegacyStat(index, 1)}
+                    >
+                      <ArrowDown />
+                    </Button>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    disabled={legacyStats.length === 1}
+                    onClick={() =>
+                      setLegacyStats((current) =>
+                        current.filter((_, itemIndex) => itemIndex !== index),
+                      )
+                    }
+                  >
+                    <Trash2 /> Remove
+                  </Button>
+                </div>
+              </fieldset>
+            ))}
+          </div>
+        </section>
+
+        <section className="bg-card ring-border rounded-3xl p-6 shadow-sm ring-1">
+          <h2 className="font-heading text-xl font-bold">
+            Why Choose Buabed Youniqlyf?
+          </h2>
+          <div className="mt-5 grid gap-5">
+            <div className="grid gap-3">
+              <CloudinaryImageUploader
+                value={whyChooseImage}
+                onChange={setWhyChooseImage}
+                label="Why Choose section image"
+                description="Upload the image displayed beside the feature cards."
+              />
+              {whyChooseImage ? (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="self-start"
+                  onClick={() => setWhyChooseImage("")}
+                >
+                  Remove image
+                </Button>
+              ) : null}
+            </div>
+            <AdminField label="Heading">
+              <input
+                name="whyChooseHeading"
+                required
+                maxLength={255}
+                defaultValue={settings.whyChooseHeading}
+                className={inputClass}
+              />
+            </AdminField>
+            <AdminField label="Introduction">
+              <textarea
+                name="whyChooseDescription"
+                required
+                maxLength={5000}
+                rows={4}
+                defaultValue={settings.whyChooseDescription}
+                className={inputClass}
+              />
+            </AdminField>
+            <div className="grid gap-5 lg:grid-cols-2">
+              {settings.whyChooseCards.map((card, index) => (
+                <fieldset
+                  key={card.id}
+                  className="border-border grid gap-4 rounded-2xl border p-4"
+                >
+                  <legend className="px-2 text-sm font-semibold">
+                    Feature {index + 1}
+                  </legend>
+                  <AdminField label="Title">
+                    <input
+                      name={`whyChooseCards.${index}.title`}
+                      required
+                      maxLength={160}
+                      defaultValue={card.title}
+                      className={inputClass}
+                    />
+                  </AdminField>
+                  <AdminField label="Description">
+                    <textarea
+                      name={`whyChooseCards.${index}.description`}
+                      required
+                      maxLength={1000}
+                      rows={4}
+                      defaultValue={card.description}
+                      className={inputClass}
+                    />
+                  </AdminField>
+                </fieldset>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <div>
+          <Button type="submit" disabled={pending}>
+            {pending ? "Saving…" : "Save About Us page"}
+          </Button>
+        </div>
+      </form>
+      {deletedItems.length ? (
+        <section className="bg-card ring-border rounded-3xl p-6 shadow-sm ring-1">
+          <h2 className="font-heading text-xl font-bold">Deleted content</h2>
+          <p className="text-muted-foreground mt-1 text-sm">
+            Restore removed principles, legacy stats, or feature cards here.
+          </p>
+          <div className="divide-border mt-4 divide-y">
+            {deletedItems.map((item) => (
+              <div
+                key={`${item.kind}:${item.id}`}
+                className="flex items-center justify-between gap-4 py-3 first:pt-0 last:pb-0"
+              >
+                <div className="min-w-0">
+                  <p className="font-medium">{item.title}</p>
+                  <p className="text-muted-foreground text-sm">
+                    {item.kind === "legacy-stat"
+                      ? "Legacy stat"
+                      : item.kind === "why-choose-card"
+                        ? "Feature card"
+                        : "Principle"}
+                    {item.description ? ` · ${item.description}` : ""}
+                  </p>
+                </div>
+                <RestoreButton
+                  url={`/api/admin/about-us/${item.kind}/${item.id}`}
+                  itemName={
+                    item.kind === "legacy-stat"
+                      ? "Legacy stat"
+                      : item.kind === "why-choose-card"
+                        ? "Feature card"
+                        : "Principle"
+                  }
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
+    </div>
   );
 }

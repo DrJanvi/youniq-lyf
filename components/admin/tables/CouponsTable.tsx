@@ -19,11 +19,12 @@ export type CouponRow = {
   startsAt: string | null;
   endsAt: string | null;
   isActive: boolean;
+  deletedAt: string | null;
 };
 
 export function CouponsTable({ rows, meta, filters }: { rows: CouponRow[]; meta: TableMeta; filters: TableFilter[] }) {
   const columns: Column<CouponRow>[] = [
-    { id: "code", header: "Code", sortKey: "code", cell: (coupon) => <Link href={`/admin/coupons/${coupon.id}`} className="font-mono font-medium hover:underline">{coupon.code}</Link> },
+    { id: "code", header: "Code", sortKey: "code", cell: (coupon) => coupon.deletedAt ? <span className="font-mono font-medium">{coupon.code}</span> : <Link href={`/admin/coupons/${coupon.id}`} className="font-mono font-medium hover:underline">{coupon.code}</Link> },
     {
       id: "value",
       header: "Value",
@@ -39,11 +40,12 @@ export function CouponsTable({ rows, meta, filters }: { rows: CouponRow[]; meta:
     { id: "startsAt", header: "Starts", sortKey: "startsAt", cell: (coupon) => formatDateTime(coupon.startsAt) },
     { id: "endsAt", header: "Ends", sortKey: "endsAt", cell: (coupon) => formatDateTime(coupon.endsAt) },
     { id: "isActive", header: "Status", sortKey: "isActive", cell: (coupon) => <StatusBadge status={coupon.isActive ? "ACTIVE" : "INACTIVE"} /> },
+    { id: "deletedAt", header: "Record", cell: (coupon) => coupon.deletedAt ? <StatusBadge status="DELETED" label="Deleted" /> : <StatusBadge status="ACTIVE" label="Active" /> },
     {
       id: "actions",
       header: "",
       className: "text-right",
-      cell: (coupon) => <RowActions editHref={`/admin/coupons/${coupon.id}`} deleteUrl={`/api/admin/coupons/${coupon.id}`} itemName={coupon.code} />,
+      cell: (coupon) => <RowActions editHref={`/admin/coupons/${coupon.id}`} deleteUrl={coupon.deletedAt ? undefined : `/api/admin/coupons/${coupon.id}`} restoreUrl={coupon.deletedAt ? `/api/admin/coupons/${coupon.id}` : undefined} itemName={coupon.code} />,
     },
   ];
 

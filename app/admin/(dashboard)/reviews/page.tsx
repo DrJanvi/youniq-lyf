@@ -11,7 +11,7 @@ export default async function AdminReviewsPage({ searchParams }: { searchParams:
   const p = parseListParams(await searchParams, {
     sortable: ["createdAt", "rating", "status", "product"],
     defaultSort: "createdAt",
-    filters: { status: ["PENDING", "APPROVED", "HIDDEN"], rating: ["1", "2", "3", "4", "5"] },
+    filters: { status: ["PENDING", "APPROVED", "HIDDEN"], rating: ["1", "2", "3", "4", "5"], deleted: ["active", "deleted"] },
   });
   const result = await listReviewsAdmin(p.page, p.filters.status as ReviewStatus | undefined, undefined, p);
   return (
@@ -22,8 +22,9 @@ export default async function AdminReviewsPage({ searchParams }: { searchParams:
         filters={[
           { param: "status", label: "Status", value: p.filters.status, options: [{ value: "PENDING", label: "Pending" }, { value: "APPROVED", label: "Approved" }, { value: "HIDDEN", label: "Hidden" }] },
           { param: "rating", label: "Rating", value: p.filters.rating, options: [5, 4, 3, 2, 1].map((n) => ({ value: String(n), label: `${n} stars` })) },
+          { param: "deleted", label: "Record", value: p.filters.deleted, options: [{ value: "active", label: "Not deleted" }, { value: "deleted", label: "Deleted" }] },
         ]}
-        rows={result.data.map((r) => ({ id: r.id, product: r.product.title, rating: r.rating, title: r.title, body: r.body, authorName: r.authorName, status: r.status, createdAt: r.createdAt }))}
+        rows={result.data.map((r) => ({ id: r.id, product: r.product.title, rating: r.rating, title: r.title, body: r.body, authorName: r.authorName, status: r.status, createdAt: r.createdAt, deletedAt: r.deletedAt }))}
       />
     </>
   );
