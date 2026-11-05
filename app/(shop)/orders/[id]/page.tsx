@@ -107,6 +107,18 @@ export default async function OrderDetailsPage({
                               <p className="font-cormorant line-clamp-2 text-base font-semibold text-text-primary">
                                 {item.title}
                               </p>
+                              {item.variantName ? (
+                                <p className="mt-1 flex items-center gap-2 text-xs text-text-muted">
+                                  <span
+                                    aria-hidden="true"
+                                    className="size-3 rounded-full border border-surface-border"
+                                    style={{
+                                      backgroundColor: item.variantColor ?? undefined,
+                                    }}
+                                  />
+                                  Color: {item.variantName}
+                                </p>
+                              ) : null}
                               <p className="mt-1 text-xs text-text-muted">
                                 Qty: {item.quantity}
                               </p>

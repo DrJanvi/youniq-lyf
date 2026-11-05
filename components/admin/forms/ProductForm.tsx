@@ -6,6 +6,7 @@ import { CheckboxGroupField, FormSection, NumberField, SelectField, SwitchField,
 import { FormActions } from "./FormActions";
 import { ImageUploadField } from "./ImageUploadField";
 import { useEntityForm } from "./use-entity-form";
+import { useFieldArray } from "react-hook-form";
 
 type Opt = { value: string; label: string };
 
@@ -20,6 +21,15 @@ export type ProductFormValues = {
   title: string; slug: string; description: string; images: string; aboutPoints: string; aboutIntro: string; price: number; currency: string; stock: number;
   gender: "UNISEX" | "MALE" | "FEMALE"; isActive: boolean; categoryId: string; brandId: string; productTypeId: string;
   presetTags: string[]; tags: string; seoTitle: string; seoDescription: string;
+  variants: {
+    id?: string;
+    name: string;
+    color: string;
+    images: string;
+    priceOverride?: number;
+    stock: number;
+    isActive: boolean;
+  }[];
 };
 
 const split = (v: string, sep: string) => v.split(sep).map((s) => s.trim()).filter(Boolean);
@@ -32,6 +42,15 @@ export function ProductForm({
     title: string; slug: string; description: string; images: string[]; aboutPoints: { title: string; description: string }[]; aboutIntro: string; price: number; currency: string; stock: number;
     gender: string; isActive: boolean; categoryId: string; brandId: string; productTypeId: string; tags: string[];
     seoTitle: string; seoDescription: string;
+    hasVariants: boolean;
+    variants: {
+      id: string;
+      name: string;
+      color: string;
+      images: string[];
+      priceOverride: number | null;
+      stock: number;
+    }[];
   };
   categories: Opt[];
   brands: Opt[];
@@ -49,10 +68,16 @@ export function ProductForm({
             .join("\n"),
           presetTags: product.tags.filter((t) => PRESET_SLUGS.includes(t)),
           tags: product.tags.filter((t) => !PRESET_SLUGS.includes(t)).join(", "),
+          variants: product.variants.map((variant) => ({
+            ...variant,
+            images: variant.images.join("\n"),
+            priceOverride: variant.priceOverride ?? undefined,
+            isActive: true,
+          })),
         }
       : {
           title: "", slug: "", description: "", images: "", aboutPoints: "", aboutIntro: "", price: 0, currency: "AED", stock: 0, gender: "UNISEX", isActive: true,
-          categoryId: "", brandId: "", productTypeId: "", presetTags: [], tags: "", seoTitle: "", seoDescription: "",
+          categoryId: "", brandId: "", productTypeId: "", presetTags: [], tags: "", seoTitle: "", seoDescription: "", variants: [],
         },
     url: id ? `/api/admin/products/${id}` : "/api/admin/products",
     method: id ? "PATCH" : "POST",
@@ -78,6 +103,11 @@ export function ProductForm({
       price: v.price,
       currency: v.currency,
       stock: v.stock,
+      variants: v.variants.map(({ images, priceOverride, ...variant }) => ({
+        ...variant,
+        images: split(images, "\n"),
+        priceOverride: priceOverride ?? null,
+      })),
       gender: v.gender,
       isActive: v.isActive,
       seoTitle: v.seoTitle || undefined,
@@ -89,6 +119,12 @@ export function ProductForm({
     }),
   });
   const c = form.control;
+  const { fields, append, remove } = useFieldArray({
+    control: c,
+    name: "variants",
+    keyName: "fieldKey",
+  });
+  const stockIsVariantManaged = Boolean(product?.hasVariants || fields.length);
 
   return (
     <Form {...form}>
@@ -125,7 +161,16 @@ export function ProductForm({
         <FormSection title="Pricing & inventory">
           <NumberField control={c} name="price" label="Price" required min={0} step="0.01" />
           <TextField control={c} name="currency" label="Currency" required maxLength={3} />
-          <NumberField control={c} name="stock" label="Stock" required min={0} step={1} />
+          <NumberField
+            control={c}
+            name="stock"
+            label="Stock"
+            required
+            min={0}
+            step={1}
+            disabled={stockIsVariantManaged}
+            description={stockIsVariantManaged ? "Calculated from active color variant stock." : undefined}
+          />
           <SelectField
             control={c}
             name="gender"
@@ -136,6 +181,86 @@ export function ProductForm({
               { value: "FEMALE", label: "Female" },
             ]}
           />
+        </FormSection>
+        <FormSection title="Color variants">
+          <div className="full flex flex-col gap-5">
+            <p className="text-sm text-muted-foreground">
+              Optional. Add colors with their own gallery, stock, and optional price. Removing a saved color keeps its record for existing orders.
+            </p>
+            {fields.map((field, index) => (
+              <div key={field.fieldKey} className="grid gap-4 rounded-xl border border-border p-4 sm:grid-cols-2">
+                <TextField
+                  control={c}
+                  name={`variants.${index}.name`}
+                  label="Color name"
+                  required
+                />
+                <TextField
+                  control={c}
+                  name={`variants.${index}.color`}
+                  label="Swatch color"
+                  type="color"
+                  required
+                />
+                <NumberField
+                  control={c}
+                  name={`variants.${index}.priceOverride`}
+                  label="Price override"
+                  min={0}
+                  step="0.01"
+                  description="Leave empty to use the product price."
+                />
+                <NumberField
+                  control={c}
+                  name={`variants.${index}.stock`}
+                  label="Variant stock"
+                  required
+                  min={0}
+                  step={1}
+                />
+                <div className="full">
+                  <ImageUploadField
+                    control={c}
+                    name={`variants.${index}.images`}
+                    label="Upload color images"
+                    multiple
+                    maxFiles={20}
+                  />
+                  <TextareaField
+                    control={c}
+                    name={`variants.${index}.images`}
+                    label="Color image URLs"
+                    rows={2}
+                    description="One URL per line. The product gallery is used if this is empty."
+                  />
+                </div>
+                <div className="full flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => remove(index)}
+                    className="text-sm font-medium text-destructive underline underline-offset-4"
+                  >
+                    Remove color
+                  </button>
+                </div>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() => append({
+                name: "",
+                color: "#000000",
+                images: "",
+                priceOverride: undefined,
+                stock: 0,
+                isActive: true,
+              })}
+              disabled={fields.length >= 50}
+              className="self-start rounded-full border border-border px-4 py-2 text-sm font-medium hover:bg-muted disabled:opacity-50"
+            >
+              Add color
+            </button>
+          </div>
         </FormSection>
         <FormSection title="Organisation">
           <SelectField control={c} name="categoryId" label="Category" required options={categories} />

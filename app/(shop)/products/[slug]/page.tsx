@@ -42,6 +42,13 @@ export default async function ProductPage({ params }: Props) {
     listRelatedProducts(product.category.id, product.id, 4),
   ]);
   const path = `/products/${product.slug}`;
+  const lowestVariant = product.variants.reduce<
+    (typeof product.variants)[number] | null
+  >(
+    (lowest, variant) =>
+      !lowest || variant.finalPrice < lowest.finalPrice ? variant : lowest,
+    null,
+  );
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -66,7 +73,7 @@ export default async function ProductPage({ params }: Props) {
       "@type": "Offer",
       url: absoluteUrl(path),
       priceCurrency: product.currency,
-      price: product.finalPrice,
+      price: lowestVariant?.finalPrice ?? product.finalPrice,
       availability: product.inStock
         ? "https://schema.org/InStock"
         : "https://schema.org/OutOfStock",

@@ -22,7 +22,7 @@ function toPdfData(
   recipientEmail = invoice.recipientEmail,
 ): InvoicePdfData {
   const items = invoice.order.items.map((item) => ({
-    title: item.title,
+    title: item.variantName ? `${item.title} (${item.variantName})` : item.title,
     quantity: item.quantity,
     unitPrice: Number(item.unitPrice),
   }));

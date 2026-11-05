@@ -58,6 +58,20 @@ export const productFormSchema = z.object({
   price: price("Price"),
   currency: z.string().trim().length(3, "Use a 3-letter currency code").transform((v) => v.toUpperCase()),
   stock: z.number({ error: "Stock is required" }).int("Stock must be a whole number").min(0, "Stock cannot be negative"),
+  variants: z.array(
+    z.object({
+      id: z.string().uuid().optional(),
+      name: z.string().trim().min(1, "Variant name is required").max(120),
+      color: z.string().regex(/^#[\da-fA-F]{6}$/, "Use a 6-digit hex color"),
+      images: z
+        .string()
+        .refine((value) => value.split("\n").map((line) => line.trim()).filter(Boolean).every((url) => URL.canParse(url)), "Every line must be a valid URL")
+        .refine((value) => value.split("\n").filter((line) => line.trim()).length <= 20, "At most 20 images"),
+      priceOverride: z.number().min(0, "Price cannot be negative").max(10_000_000, "Price is too large").optional(),
+      stock: z.number({ error: "Stock is required" }).int("Stock must be a whole number").min(0, "Stock cannot be negative"),
+      isActive: z.boolean(),
+    }),
+  ).max(50, "At most 50 color variants"),
   gender: z.enum(["UNISEX", "MALE", "FEMALE"]),
   isActive: z.boolean(),
   categoryId: z.string().min(1, "Select a category"),
