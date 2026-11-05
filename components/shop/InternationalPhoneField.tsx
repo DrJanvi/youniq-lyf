@@ -65,13 +65,13 @@ export function InternationalPhoneField({
 
   return (
     <div
-      className={`flex h-12 w-full overflow-hidden border border-surface-border bg-white transition-colors focus-within:border-brand-taupe focus-within:ring-2 focus-within:ring-brand-taupe/40 aria-invalid:border-badge-sale-text aria-invalid:ring-badge-sale-text/20 ${className}`}
+      className={`flex h-12 w-full overflow-hidden border border-surface-border bg-white transition-colors focus-within:border-brand-primary focus-within:ring-2 focus-within:ring-brand-primary/40 aria-invalid:border-badge-sale-text aria-invalid:ring-badge-sale-text/20 ${className}`}
       aria-invalid={invalid}
     >
       <CountryCodeSelector
         selectedCountry={selectedCountry}
         onSelect={selectCountry}
-        className="inline-flex h-full shrink-0 items-center gap-1 border-r border-surface-border px-3 text-sm text-text-primary outline-none focus-visible:ring-2 focus-visible:ring-brand-taupe focus-visible:ring-inset sm:px-4"
+        className="inline-flex h-full shrink-0 items-center gap-1 border-r border-surface-border px-3 text-sm text-text-primary outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-inset sm:px-4"
       />
       <input
         id={id}

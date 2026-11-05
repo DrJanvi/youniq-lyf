@@ -40,22 +40,22 @@ export function CountryCodeSelector({
           aria-label={`Country calling code: ${selectedCountry.name} +${selectedCountry.dialCode}`}
           className={
             className ??
-            "inline-flex h-full shrink-0 items-center gap-1 border-r border-[#eee8e5] px-4 text-sm text-[#4c4542] outline-none focus-visible:ring-2 focus-visible:ring-[#b99082] focus-visible:ring-inset"
+            "inline-flex h-full shrink-0 items-center gap-1 border-r border-surface-border px-4 text-sm text-text-primary outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-inset"
           }
         >
           +{selectedCountry.dialCode}
-          <ChevronDown className="size-4 text-[#8d817c]" aria-hidden="true" />
+          <ChevronDown className="size-4 text-text-muted" aria-hidden="true" />
         </button>
       </PopoverPrimitive.Trigger>
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content
           align="start"
           sideOffset={6}
-          className="z-70 w-[min(20rem,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-[#eee8e5] bg-white p-2 text-[#251f1d] shadow-xl outline-none"
+          className="z-70 w-[min(20rem,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-surface-border bg-white p-2 text-text-primary shadow-xl outline-none"
         >
           <div className="relative">
             <Search
-              className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-[#8d817c]"
+              className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-text-muted"
               aria-hidden="true"
             />
             <input
@@ -65,7 +65,7 @@ export function CountryCodeSelector({
               onChange={(event) => setQuery(event.currentTarget.value)}
               placeholder="Search country or code"
               aria-label="Search country calling codes"
-              className="h-10 w-full rounded-xl border border-[#eee8e5] bg-white pr-3 pl-9 text-sm outline-none placeholder:text-[#aaa] focus:border-[#b99082] focus:ring-2 focus:ring-[#b99082]/20"
+              className="h-10 w-full rounded-xl border border-surface-border bg-white pr-3 pl-9 text-sm outline-none placeholder:text-text-muted focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
             />
           </div>
           <div
@@ -85,17 +85,17 @@ export function CountryCodeSelector({
                     onSelect(country);
                     setOpen(false);
                   }}
-                  className="flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2 text-left text-sm hover:bg-[#f8f2ef] focus-visible:bg-[#f8f2ef] focus-visible:outline-none"
+                  className="flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2 text-left text-sm hover:bg-surface-card focus-visible:bg-surface-card focus-visible:outline-none"
                 >
                   <span>{country.name}</span>
-                  <span className="shrink-0 text-[#746963]">
+                  <span className="shrink-0 text-text-muted">
                     +{country.dialCode}
                   </span>
                 </button>
               );
             })}
             {!filteredCountries.length ? (
-              <p className="px-3 py-5 text-center text-sm text-[#746963]">
+              <p className="px-3 py-5 text-center text-sm text-text-muted">
                 No matching country codes
               </p>
             ) : null}

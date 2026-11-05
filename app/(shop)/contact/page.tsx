@@ -38,33 +38,33 @@ export default async function ContactPage() {
       <Section className="mt-0! py-10 md:py-14">
         <div className="grid items-start gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
           <div>
-            <h2 className="font-cormorant text-3xl font-medium text-[#292522] md:text-4xl">
+            <h2 className="font-cormorant text-3xl font-medium text-text-primary md:text-4xl">
               {settings.contactHeading}
             </h2>
-            <p className="mt-3 max-w-lg text-sm leading-6 text-[#847b77]">
+            <p className="mt-3 max-w-lg text-sm leading-6 text-text-muted">
               {settings.contactIntro}
             </p>
 
-            <div className="mt-6 divide-y divide-[#eee8e5] border-y border-[#eee8e5]">
+            <div className="mt-6 divide-y divide-surface-border border-y border-surface-border">
               <div className="flex gap-4 py-5">
                 <Mail
-                  className="text-brand-taupe mt-0.5 size-4 shrink-0"
+                  className="text-brand-primary mt-0.5 size-4 shrink-0"
                   aria-hidden="true"
                 />
                 <div>
-                  <h3 className="font-cormorant text-brand-espresso text-lg font-semibold">
+                  <h3 className="font-cormorant text-text-primary text-lg font-semibold">
                     Email Us
                   </h3>
                   <a
                     href={`mailto:${settings.email}`}
-                    className="hover:text-brand-espresso mt-1 block text-sm text-[#777]"
+                    className="hover:text-text-primary mt-1 block text-sm text-text-muted"
                   >
                     {settings.email}
                   </a>
                   {settings.alternateEmail ? (
                     <a
                       href={`mailto:${settings.alternateEmail}`}
-                      className="hover:text-brand-espresso mt-1 block text-sm text-[#777]"
+                      className="hover:text-text-primary mt-1 block text-sm text-text-muted"
                     >
                       {settings.alternateEmail}
                     </a>
@@ -73,16 +73,16 @@ export default async function ContactPage() {
               </div>
               <div className="flex gap-4 py-5">
                 <Phone
-                  className="text-brand-taupe mt-0.5 size-4 shrink-0"
+                  className="text-brand-primary mt-0.5 size-4 shrink-0"
                   aria-hidden="true"
                 />
                 <div>
-                  <h3 className="font-cormorant text-brand-espresso text-lg font-semibold">
+                  <h3 className="font-cormorant text-text-primary text-lg font-semibold">
                     Call Us
                   </h3>
                   <a
                     href={phoneHref(settings.phone)}
-                    className="hover:text-brand-espresso mt-1 block text-sm text-[#777]"
+                    className="hover:text-text-primary mt-1 block text-sm text-text-muted"
                   >
                     {settings.phone}
                   </a>
@@ -91,7 +91,7 @@ export default async function ContactPage() {
                       href={`https://wa.me/${settings.whatsapp.replace(/\D/g, "")}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="hover:text-brand-espresso mt-1 block text-sm text-[#777]"
+                      className="hover:text-text-primary mt-1 block text-sm text-text-muted"
                     >
                       WhatsApp: {settings.whatsapp}
                     </a>
@@ -100,14 +100,14 @@ export default async function ContactPage() {
               </div>
               <div className="flex gap-4 py-5">
                 <Headphones
-                  className="text-brand-taupe mt-0.5 size-4 shrink-0"
+                  className="text-brand-primary mt-0.5 size-4 shrink-0"
                   aria-hidden="true"
                 />
                 <div>
-                  <h3 className="font-cormorant text-brand-espresso text-lg font-semibold">
+                  <h3 className="font-cormorant text-text-primary text-lg font-semibold">
                     {settings.supportTitle}
                   </h3>
-                  <p className="mt-1 text-sm leading-6 text-[#777]">
+                  <p className="mt-1 text-sm leading-6 text-text-muted">
                     {settings.supportDescription}
                   </p>
                 </div>
@@ -116,31 +116,31 @@ export default async function ContactPage() {
 
             {locations.length ? (
               <div className="mt-6">
-                <h3 className="text-brand-taupe-dark border-b border-[#eee8e5] pb-3 text-xs font-bold tracking-[0.12em]">
+                <h3 className="text-brand-primary-dark border-b border-surface-border pb-3 text-xs font-bold tracking-[0.12em]">
                   OUR LOCATIONS
                 </h3>
-                <div className="divide-y divide-[#eee8e5]">
+                <div className="divide-y divide-surface-border">
                   {locations.map((location, index) => (
                     <div key={location.id} className="flex gap-4 py-4">
-                      <span className="font-cormorant text-brand-taupe pt-1 text-[18px] font-semibold tracking-wide">
+                      <span className="font-cormorant text-brand-primary pt-1 text-[18px] font-semibold tracking-wide">
                         {String(index + 1).padStart(2, "0")}
                       </span>
                       <div>
-                        <h4 className="font-cormorant text-brand-espresso text-lg font-semibold">
+                        <h4 className="font-cormorant text-text-primary text-lg font-semibold">
                           {location.city}, {location.country}
                         </h4>
                         {location.company ? (
-                          <p className="mt-1 text-xs leading-5 text-[#777]">
+                          <p className="mt-1 text-xs leading-5 text-text-muted">
                             {location.company}
                           </p>
                         ) : null}
-                        <p className="text-xs leading-5 text-[#777]">
+                        <p className="text-xs leading-5 text-text-muted">
                           {location.address}
                         </p>
                         {location.phone ? (
                           <a
                             href={phoneHref(location.phone)}
-                            className="hover:text-brand-espresso mt-1 block text-xs text-[#777]"
+                            className="hover:text-text-primary mt-1 block text-xs text-text-muted"
                           >
                             {location.phone}
                           </a>
@@ -150,7 +150,7 @@ export default async function ContactPage() {
                             href={`https://wa.me/${location.whatsapp.replace(/\D/g, "")}`}
                             target="_blank"
                             rel="noreferrer"
-                            className="hover:text-brand-espresso mt-1 block text-xs text-[#777]"
+                            className="hover:text-text-primary mt-1 block text-xs text-text-muted"
                           >
                             WhatsApp {location.whatsapp}
                           </a>
@@ -163,11 +163,11 @@ export default async function ContactPage() {
             ) : null}
           </div>
 
-          <div className="rounded-3xl border border-[#f0eae7] bg-[#FBFBFB] p-6 shadow-[0_12px_35px_-25px_rgba(60,42,33,.3)] sm:p-8">
-            <h2 className="font-cormorant text-3xl font-medium text-[#292522] md:text-4xl">
+          <div className="rounded-3xl border border-surface-border bg-surface-main p-6 shadow-md sm:p-8">
+            <h2 className="font-cormorant text-3xl font-medium text-text-primary md:text-4xl">
               How can we help?
             </h2>
-            <p className="mt-2 text-sm text-[#847b77]">
+            <p className="mt-2 text-sm text-text-muted">
               Complete the form and our team will be in touch.
             </p>
             <div className="mt-6">
@@ -184,7 +184,7 @@ export default async function ContactPage() {
               <section aria-labelledby="contact-faq-heading">
                 <h2
                   id="contact-faq-heading"
-                  className="font-cormorant text-brand-espresso text-2xl font-medium md:text-3xl"
+                  className="font-cormorant text-text-primary text-2xl font-medium md:text-3xl"
                 >
                   Frequently Asked Questions
                 </h2>
@@ -196,7 +196,7 @@ export default async function ContactPage() {
                       titleClassName="font-cormorant text-lg"
                     >
                       <div
-                        className="storefront-rich-content max-w-2xl text-sm leading-6 text-[#777]"
+                        className="storefront-rich-content max-w-2xl text-sm leading-6 text-text-muted"
                         dangerouslySetInnerHTML={{
                           __html: sanitizeRichTextContent(faq.answer),
                         }}
@@ -207,7 +207,7 @@ export default async function ContactPage() {
               </section>
             ) : null}
             {settings.image ? (
-              <div className="relative rounded-2xl bg-[#D1CBC8] p-0.75 shadow-sm">
+              <div className="relative rounded-2xl bg-surface-card p-0.75 shadow-sm">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={settings.image}
@@ -216,7 +216,7 @@ export default async function ContactPage() {
                 />
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-5.75 rounded-[10px] border border-[#F8F8F8]/50"
+                  className="pointer-events-none absolute inset-5.75 rounded-[10px] border border-surface-border/50"
                 />
               </div>
             ) : null}

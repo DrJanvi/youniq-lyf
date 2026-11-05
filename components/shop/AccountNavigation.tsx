@@ -50,8 +50,8 @@ export function AccountNavigation({ active }: { active: AccountSection }) {
             aria-current={isActive ? "page" : undefined}
             className={`flex shrink-0 items-center justify-between gap-5 rounded-full px-4 py-2.5 text-sm transition-colors ${
               isActive
-                ? "bg-[#f7f2f1] text-text-primary"
-                : "text-text-muted hover:bg-[#faf8f7] hover:text-text-primary"
+                ? "bg-surface-card text-text-primary"
+                : "text-text-muted hover:bg-surface-card hover:text-text-primary"
             }`}
           >
             {item.label}

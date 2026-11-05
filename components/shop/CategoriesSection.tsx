@@ -49,7 +49,7 @@ export function CategoriesSection({ categories }: { categories: Category[] }) {
             </Link>
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 rounded-3xl border-2 border-[rgba(239,239,239,0.5)]"
+              className="pointer-events-none absolute inset-0 rounded-3xl border-2 border-surface-border/50"
             />
           </li>
         ))}

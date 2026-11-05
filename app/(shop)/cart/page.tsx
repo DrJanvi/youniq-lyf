@@ -54,15 +54,15 @@ export default async function CartPage() {
         {cart.items.length === 0 ? (
           <div className="min-h-49 pt-9 text-center">
             <div role="status">
-              <h2 className="font-cormorant text-[30px] leading-6 font-semibold text-[#28221f]">
+              <h2 className="font-cormorant text-[30px] leading-6 font-semibold text-text-primary">
                 Your cart is currently empty
               </h2>
-              <p className="mt-3 text-[12px] leading-4 text-[#9a928d]">
+              <p className="mt-3 text-[12px] leading-4 text-text-muted">
                 Explore our collections and find a new ritual.
               </p>
               <Link
                 href="/products"
-                className="mt-7 inline-flex h-12 min-w-41 items-center justify-center rounded-full border border-[#d9bdb1] px-4 text-[14px] font-medium tracking-wider text-[#a67e6e] uppercase transition-colors hover:bg-[#faf5f2]"
+                className="mt-7 inline-flex h-12 min-w-41 items-center justify-center rounded-full border border-brand-primary/30 px-4 text-[14px] font-medium tracking-wider text-brand-primary-dark uppercase transition-colors hover:bg-surface-card"
               >
                 Return to shop
               </Link>
@@ -73,18 +73,18 @@ export default async function CartPage() {
             <section aria-label="Cart items" className="min-w-0">
               <div className="mb-6.25 flex min-h-9 items-start justify-between gap-4">
                 <div>
-                  <p className="text-[14px] leading-5 font-medium text-[#514944]">
-                    <span className="text-[#9d493a]">{cart.items.length}</span>{" "}
+                  <p className="text-[14px] leading-5 font-medium text-text-primary">
+                    <span className="text-status-error">{cart.items.length}</span>{" "}
                     {cart.items.length === 1 ? "saved item" : "saved items"}
                   </p>
-                  <p className="mt-1 text-[12px] leading-4 text-[#a29b97]">
+                  <p className="mt-1 text-[12px] leading-4 text-text-muted">
                     Complimentary delivery on every order
                   </p>
                 </div>
                 <CartClearButton />
               </div>
 
-              <div className="hidden grid-cols-[minmax(0,1fr)_116px_128px] gap-8 bg-[#f5f4f3] px-5 py-2 text-[14px] font-semibold tracking-[0.08em] text-[#211E1C] uppercase sm:grid">
+              <div className="hidden grid-cols-[minmax(0,1fr)_116px_128px] gap-8 bg-surface-card px-5 py-2 text-[14px] font-semibold tracking-[0.08em] text-text-primary uppercase sm:grid">
                 <span className="font-cormorant text-center">Product</span>
                 <span className="font-cormorant text-center">Quantity</span>
                 <span className="font-cormorant min-w-20 text-right">
@@ -128,7 +128,7 @@ export default async function CartPage() {
           >
             <h2
               id="recommendations-heading"
-              className="font-cormorant mb-8 text-center text-[clamp(2.5rem,3vw,4rem)] font-medium tracking-[0.08em] text-[#211b19] uppercase md:mb-10"
+              className="font-cormorant mb-8 text-center text-[clamp(2.5rem,3vw,4rem)] font-medium tracking-[0.08em] text-text-primary uppercase md:mb-10"
             >
               You may also like
             </h2>
@@ -140,7 +140,7 @@ export default async function CartPage() {
             <div className="mt-8 flex justify-center">
               <Link
                 href="/products"
-                className="inline-flex h-11.5 min-w-26.5 items-center justify-center gap-2 rounded-full bg-[#b48d7d] px-5 text-[16px] tracking-[0.06em] text-white uppercase transition-colors hover:bg-[#a77f70]"
+                className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white inline-flex h-11.5 min-w-26.5 items-center justify-center gap-2 rounded-full px-5 text-[16px] tracking-[0.06em] uppercase transition-colors"
               >
                 View more
                 <span aria-hidden="true" className="text-sm leading-none">

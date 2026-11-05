@@ -12,7 +12,7 @@ export function Rating({ value, count }: { value: number; count?: number }) {
         {Array.from({ length: roundedValue }, (_, index) => (
           <SolidStarIcon
             key={`filled-${index}`}
-            className="text-brand-taupe size-4"
+            className="text-rating-gold size-4"
           />
         ))}
         {Array.from({ length: 5 - roundedValue }, (_, index) => (

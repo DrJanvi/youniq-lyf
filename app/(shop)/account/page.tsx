@@ -23,16 +23,16 @@ export default async function AccountPage({
       {params.recovered === "1" ? (
         <p
           role="status"
-          className="mb-3 rounded-xl bg-[#f0f7ef] p-4 text-sm text-green-800"
+          className="mb-3 rounded-xl bg-status-success-soft p-4 text-sm text-green-800"
         >
           Your account has been restored. The deletion request was canceled.
         </p>
       ) : null}
       <section>
-        <h2 className="rounded-lg bg-[#f3f3f3] px-4 py-3 text-sm font-medium text-text-primary">
+        <h2 className="rounded-lg bg-surface-card px-4 py-3 text-sm font-medium text-text-primary">
           Account Details
         </h2>
-        <div className="mt-2 rounded-lg bg-[#fafafa] p-4 sm:p-6">
+        <div className="mt-2 rounded-lg bg-surface-main p-4 sm:p-6">
           <AccountDetailsForm
             name={profile.name ?? ""}
             email={profile.email ?? ""}

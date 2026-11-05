@@ -13,22 +13,28 @@ const groups: { title: string; swatches: Swatch[] }[] = [
     title: "Brand & Accents",
     swatches: [
       {
-        name: "brand-taupe",
-        hex: "#B49084",
-        bg: "bg-brand-taupe",
-        text: "text-brand-taupe",
+        name: "brand-primary",
+        hex: "#F7621C",
+        bg: "bg-brand-primary",
+        text: "text-brand-primary",
       },
       {
-        name: "brand-taupe-dark",
-        hex: "#7D6154",
-        bg: "bg-brand-taupe-dark",
-        text: "text-brand-taupe-dark",
+        name: "brand-primary-dark",
+        hex: "#D0440A",
+        bg: "bg-brand-primary-dark",
+        text: "text-brand-primary-dark",
       },
       {
-        name: "brand-espresso",
-        hex: "#3C2A21",
-        bg: "bg-brand-espresso",
-        text: "text-brand-espresso",
+        name: "brand-primary-hover",
+        hex: "#B83B06",
+        bg: "bg-brand-primary-hover",
+        text: "text-brand-primary-hover",
+      },
+      {
+        name: "brand-primary-soft",
+        hex: "#FFF0E8",
+        bg: "bg-brand-primary-soft",
+        text: "text-brand-primary-soft",
       },
       {
         name: "badge-sale",
@@ -101,7 +107,7 @@ const groups: { title: string; swatches: Swatch[] }[] = [
       },
       {
         name: "text-muted",
-        hex: "#848484",
+        hex: "#766D69",
         bg: "bg-text-muted",
         text: "text-text-muted",
       },
@@ -113,12 +119,59 @@ const groups: { title: string; swatches: Swatch[] }[] = [
       },
     ],
   },
+  {
+    title: "Status",
+    swatches: [
+      {
+        name: "status-success",
+        hex: "#15803D",
+        bg: "bg-status-success",
+        text: "text-status-success",
+      },
+      {
+        name: "status-success-soft",
+        hex: "#F0F7EF",
+        bg: "bg-status-success-soft",
+        text: "text-status-success-soft",
+      },
+      {
+        name: "status-error",
+        hex: "#A7362A",
+        bg: "bg-status-error",
+        text: "text-status-error",
+      },
+      {
+        name: "status-error-dark",
+        hex: "#983737",
+        bg: "bg-status-error-dark",
+        text: "text-status-error-dark",
+      },
+      {
+        name: "status-error-soft",
+        hex: "#FFF4F5",
+        bg: "bg-status-error-soft",
+        text: "text-status-error-soft",
+      },
+      {
+        name: "status-warning",
+        hex: "#B45309",
+        bg: "bg-status-warning",
+        text: "text-status-warning",
+      },
+      {
+        name: "status-warning-soft",
+        hex: "#FFF7ED",
+        bg: "bg-status-warning-soft",
+        text: "text-status-warning-soft",
+      },
+    ],
+  },
 ];
 
 export default function ColorsPage() {
   return (
     <main className="mx-auto w-full max-w-5xl px-6 py-12">
-      <h1 className="font-cormorant text-brand-espresso text-4xl font-semibold">
+      <h1 className="font-cormorant text-text-primary text-4xl font-semibold">
         Color Tokens
       </h1>
       <p className="text-text-muted mt-2">
@@ -164,10 +217,10 @@ export default function ColorsPage() {
           In context
         </h2>
         <div className="border-surface-border bg-surface-card max-w-xs rounded-lg border p-4">
-          <span className="bg-badge-sale rounded px-2 py-0.5 text-xs text-white">
+          <span className="bg-badge-sale text-badge-sale-text rounded px-2 py-0.5 text-xs">
             Sale
           </span>
-          <h3 className="text-brand-espresso mt-3 font-medium">
+          <h3 className="text-text-primary mt-3 font-medium">
             Oud Noir Eau de Parfum
           </h3>
           <p className="text-rating-gold">★★★★☆</p>
@@ -175,7 +228,7 @@ export default function ColorsPage() {
             <span className="text-text-primary font-semibold">$80</span>{" "}
             <span className="text-text-strike line-through">$100</span>
           </p>
-          <button className="bg-brand-taupe hover:bg-brand-taupe-dark mt-3 rounded px-4 py-2 text-sm text-white">
+          <button className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white mt-3 rounded px-4 py-2 text-sm">
             Add to cart
           </button>
         </div>

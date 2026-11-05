@@ -7,7 +7,7 @@ import { apiFetch } from "@/lib/client-api";
 import type { SavedAddressDTO, SavedAddressInput } from "@/services/address";
 
 const fieldClass =
-  "h-11 w-full rounded-full border border-[#e8e4e1] bg-white px-4 text-sm text-text-primary outline-none placeholder:text-text-muted focus:border-brand-taupe focus:ring-2 focus:ring-brand-taupe/20";
+  "h-11 w-full rounded-full border border-surface-border bg-white px-4 text-sm text-text-primary outline-none placeholder:text-text-muted focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20";
 
 export function AccountAddressForm({
   address,
@@ -80,12 +80,12 @@ export function AccountAddressForm({
 
   return (
     <section className="rounded-2xl bg-white p-3 sm:p-4">
-      <h2 className="rounded-lg bg-[#f3f3f3] px-4 py-3 text-sm font-medium text-text-primary">
+      <h2 className="rounded-lg bg-surface-card px-4 py-3 text-sm font-medium text-text-primary">
         Shipping Address ({displayNumber})
       </h2>
       <form
         onSubmit={submit}
-        className="mt-2 rounded-xl bg-[#fafafa] p-4 sm:p-5"
+        className="mt-2 rounded-xl bg-surface-main p-4 sm:p-5"
       >
         <div className="grid gap-3 sm:grid-cols-2">
           <label className="sr-only" htmlFor="saved-address-first-name">
@@ -124,7 +124,7 @@ export function AccountAddressForm({
             placeholder="Email"
             value={customerEmail ?? ""}
             readOnly
-            className={`${fieldClass} bg-[#f3f3f3] text-text-muted`}
+            className={`${fieldClass} bg-surface-card text-text-muted`}
           />
           <label className="sr-only" htmlFor="saved-address-phone">
             Phone number
@@ -153,7 +153,7 @@ export function AccountAddressForm({
             minLength={5}
             maxLength={1000}
             rows={3}
-            className="min-h-20 w-full resize-y rounded-2xl border border-[#e8e4e1] bg-white px-4 py-3 text-sm text-text-primary outline-none placeholder:text-text-muted focus:border-brand-taupe focus:ring-2 focus:ring-brand-taupe/20 sm:col-span-2"
+            className="min-h-20 w-full resize-y rounded-2xl border border-surface-border bg-white px-4 py-3 text-sm text-text-primary outline-none placeholder:text-text-muted focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 sm:col-span-2"
           />
           <label className="sr-only" htmlFor="saved-address-city">
             City
@@ -220,7 +220,7 @@ export function AccountAddressForm({
           <button
             type="submit"
             disabled={busy}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-brand-taupe px-5 text-xs font-semibold uppercase tracking-wide text-white transition-colors hover:bg-brand-taupe-dark disabled:opacity-50"
+            className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white inline-flex h-10 items-center justify-center gap-2 rounded-full px-5 text-xs font-semibold uppercase tracking-wide transition-colors disabled:opacity-50"
           >
             {busy ? "Saving..." : "Save"}
             <ArrowRight className="size-4" aria-hidden="true" />

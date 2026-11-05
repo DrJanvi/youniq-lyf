@@ -51,12 +51,12 @@ export function CartItemRow(p: Props) {
   }
 
   return (
-    <li className="grid gap-4 border-b border-[#f0eeed] py-5 sm:min-h-43.5 sm:grid-cols-[minmax(0,1fr)_116px_128px] sm:items-center sm:gap-8 sm:pt-8 sm:pb-5">
+    <li className="grid gap-4 border-b border-surface-border py-5 sm:min-h-43.5 sm:grid-cols-[minmax(0,1fr)_116px_128px] sm:items-center sm:gap-8 sm:pt-8 sm:pb-5">
       <div className="flex min-w-0 items-center gap-4">
         <Link
           href={`/products/${p.slug}`}
           aria-label={p.title}
-          className="relative grid size-20 shrink-0 place-items-center overflow-hidden rounded-[3px] border border-[#f0eeed] bg-[#f8f8f8] sm:size-30"
+          className="relative grid size-20 shrink-0 place-items-center overflow-hidden rounded-[3px] border border-surface-border bg-surface-card sm:size-30"
         >
           {p.image ? (
             <Image
@@ -74,12 +74,12 @@ export function CartItemRow(p: Props) {
         <div className="min-w-0">
           <Link
             href={`/products/${p.slug}`}
-            className="font-cormorant line-clamp-2 block text-[1.125rem] leading-[1.1] font-semibold tracking-[0.02em] text-[#352a25] hover:underline"
+            className="font-cormorant line-clamp-2 block text-[1.125rem] leading-[1.1] font-semibold tracking-[0.02em] text-text-primary hover:underline"
           >
             {p.title}
           </Link>
-          <p className="mt-1 text-[12px] text-[#7b706b]">{p.category}</p>
-          <p className="mt-2 text-[11px] font-medium text-[#4d8c52]">
+          <p className="mt-1 text-[12px] text-text-muted">{p.category}</p>
+          <p className="mt-2 text-[11px] font-medium text-status-success">
             {p.stock > 0 ? "In stock" : "Out of stock"}
           </p>
           <div className="mt-2 sm:hidden">
@@ -94,18 +94,18 @@ export function CartItemRow(p: Props) {
 
       <div className="flex items-center justify-between gap-4 pl-24 sm:pl-0">
         <span className="text-text-muted text-xs sm:hidden">Quantity</span>
-        <span className="flex h-11 w-29 items-center justify-between rounded-full border border-[#e6ddd7] bg-white px-1.5">
+        <span className="flex h-11 w-29 items-center justify-between rounded-full border border-surface-border bg-white px-1.5">
           <Button
             aria-label={`Decrease quantity of ${p.title}`}
             disabled={busy}
             onClick={() => change(p.quantity - 1)}
-            className="flex size-7 items-center justify-center rounded-full border-0 bg-transparent p-0! text-[#756b67] hover:bg-[#f8f3f1]"
+            className="flex size-7 items-center justify-center rounded-full border-0 bg-transparent p-0! text-text-muted hover:bg-brand-primary/10"
           >
             <MinusIcon className="size-4" />
           </Button>
           <span
             aria-live="polite"
-            className="min-w-5 text-center text-[12px] font-medium text-[#4f413b]"
+            className="min-w-5 text-center text-[12px] font-medium text-text-primary"
           >
             {p.quantity}
           </span>
@@ -113,7 +113,7 @@ export function CartItemRow(p: Props) {
             aria-label={`Increase quantity of ${p.title}`}
             disabled={busy || p.quantity >= p.stock}
             onClick={() => change(p.quantity + 1)}
-            className="flex size-7 items-center justify-center rounded-full border-0 bg-transparent p-0! text-lg leading-none font-light text-[#756b67] hover:bg-[#f8f3f1]"
+            className="flex size-7 items-center justify-center rounded-full border-0 bg-transparent p-0! text-lg leading-none font-light text-text-muted hover:bg-brand-primary/10"
           >
             <PlusIcon className="size-4" />
           </Button>
@@ -124,11 +124,11 @@ export function CartItemRow(p: Props) {
         <span className="text-text-muted text-xs sm:hidden">Total</span>
         <div className="flex items-center gap-3">
           <span className="text-right">
-            <strong className="block text-[15px] font-semibold text-[#4b3b34]">
+            <strong className="block text-[15px] font-semibold text-text-primary">
               {formatMoney(p.lineTotal, p.currency)}
             </strong>
             {p.finalPrice < p.price ? (
-              <del className="mt-1 hidden text-[13px] text-[#aaa19d] sm:block">
+              <del className="mt-1 hidden text-[13px] text-text-muted sm:block">
                 {formatMoney(p.price * p.quantity, p.currency)}
               </del>
             ) : null}
@@ -137,7 +137,7 @@ export function CartItemRow(p: Props) {
             aria-label={`Remove ${p.title} from cart`}
             disabled={busy}
             onClick={() => change(0)}
-            className="flex size-7 items-center justify-center rounded-full border-0 bg-transparent p-0! text-[22px] leading-none text-[#a49a95] hover:bg-[#f8f3f1] hover:text-[#573124]"
+            className="flex size-7 items-center justify-center rounded-full border-0 bg-transparent p-0! text-[22px] leading-none text-text-muted hover:bg-brand-primary/10 hover:text-text-primary"
           >
             <XMarkIcon className="size-4" />
           </Button>

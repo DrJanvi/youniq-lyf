@@ -84,7 +84,7 @@ function Field({
 }
 
 const linkButton =
-  "cursor-pointer font-medium text-brand-espresso hover:underline";
+  "cursor-pointer font-medium text-text-primary hover:underline";
 
 function SignInForm({
   next,
@@ -222,7 +222,7 @@ function VerifyStep({
       noValidate
       className="flex flex-col items-center gap-6 text-center"
     >
-      <h2 className="font-cormorant text-brand-espresso text-3xl font-semibold">
+      <h2 className="font-cormorant text-text-primary text-3xl font-semibold">
         Verify your email
       </h2>
       <p className="text-text-muted text-sm">
@@ -280,7 +280,7 @@ function VerifyStep({
         <button
           type="button"
           onClick={onBack}
-          className="hover:text-brand-espresso cursor-pointer hover:underline"
+          className="hover:text-text-primary cursor-pointer hover:underline"
         >
           Change details
         </button>
@@ -431,7 +431,7 @@ function RegisterForm({
       <Field id="reg-gender" label="Gender" error={errors.gender?.message}>
         <select
           id="reg-gender"
-          className="h-12 w-full rounded-lg border border-surface-border bg-white px-4 text-sm text-text-primary outline-none focus-visible:border-brand-taupe focus-visible:ring-2 focus-visible:ring-brand-taupe/40"
+          className="h-12 w-full rounded-lg border border-surface-border bg-white px-4 text-sm text-text-primary outline-none focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary/40"
           aria-invalid={!!errors.gender}
           aria-describedby={errors.gender ? "reg-gender-error" : undefined}
           {...register("gender")}

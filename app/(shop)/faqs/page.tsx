@@ -37,7 +37,7 @@ export default async function FaqsPage() {
                 titleClassName="font-cormorant text-lg sm:text-xl"
               >
                 <div
-                  className="storefront-rich-content max-w-3xl text-sm leading-6 text-[#777] sm:text-[15px]"
+                  className="storefront-rich-content max-w-3xl text-sm leading-6 text-text-muted sm:text-[15px]"
                   dangerouslySetInnerHTML={{
                     __html: sanitizeRichTextContent(faq.answer),
                   }}
@@ -46,11 +46,11 @@ export default async function FaqsPage() {
             ))}
           </div>
         ) : (
-          <div className="mx-auto max-w-5xl text-sm leading-6 text-[#777]">
+          <div className="mx-auto max-w-5xl text-sm leading-6 text-text-muted">
             <p>No FAQs are available yet. Contact us if you need assistance.</p>
             <Link
               href="/contact"
-              className="text-brand-espresso mt-3 inline-block underline underline-offset-4"
+              className="text-text-primary mt-3 inline-block underline underline-offset-4"
             >
               Contact Us
             </Link>

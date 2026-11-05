@@ -160,7 +160,7 @@ export function CareerApplicationForm() {
     <form
       onSubmit={onSubmit}
       noValidate
-      className="text-brand-espresso flex flex-col gap-4"
+      className="text-text-primary flex flex-col gap-4"
     >
       <div className="grid gap-x-3 gap-y-3 sm:grid-cols-2">
         <label className="text-xs font-semibold">
@@ -173,7 +173,7 @@ export function CareerApplicationForm() {
             aria-invalid={Boolean(errors.fullName)}
             aria-describedby={errors.fullName ? "career-name-error" : undefined}
             onChange={() => clearError("fullName")}
-            className="focus:border-brand-taupe focus:ring-brand-taupe/20 mt-2 h-10 w-full rounded-full border border-[#eee8e5] bg-white px-4 text-sm font-normal outline-none placeholder:text-[#aaa] focus:ring-2 aria-invalid:border-red-600"
+            className="focus:border-brand-primary focus:ring-brand-primary/20 mt-2 h-10 w-full rounded-full border border-surface-border bg-white px-4 text-sm font-normal outline-none placeholder:text-text-muted focus:ring-2 aria-invalid:border-red-600"
             placeholder="Your full name"
           />
           <FieldError id="career-name-error" message={errors.fullName} />
@@ -190,7 +190,7 @@ export function CareerApplicationForm() {
             aria-invalid={Boolean(errors.email)}
             aria-describedby={errors.email ? "career-email-error" : undefined}
             onChange={() => clearError("email")}
-            className="focus:border-brand-taupe focus:ring-brand-taupe/20 mt-2 h-10 w-full rounded-full border border-[#eee8e5] bg-white px-4 text-sm font-normal outline-none placeholder:text-[#aaa] focus:ring-2 aria-invalid:border-red-600"
+            className="focus:border-brand-primary focus:ring-brand-primary/20 mt-2 h-10 w-full rounded-full border border-surface-border bg-white px-4 text-sm font-normal outline-none placeholder:text-text-muted focus:ring-2 aria-invalid:border-red-600"
             placeholder="you@email.com"
           />
           <FieldError id="career-email-error" message={errors.email} />
@@ -208,7 +208,7 @@ export function CareerApplicationForm() {
                 errors.jobRole ? "career-role-error" : undefined
               }
               onChange={() => clearError("jobRole")}
-              className="focus:border-brand-taupe focus:ring-brand-taupe/20 h-10 w-full appearance-none rounded-full border border-[#eee8e5] bg-white px-4 pr-10 text-sm font-normal text-[#777] outline-none focus:ring-2 aria-invalid:border-red-600"
+              className="focus:border-brand-primary focus:ring-brand-primary/20 h-10 w-full appearance-none rounded-full border border-surface-border bg-white px-4 pr-10 text-sm font-normal text-text-muted outline-none focus:ring-2 aria-invalid:border-red-600"
             >
               <option value="" disabled>
                 Select a role
@@ -227,8 +227,8 @@ export function CareerApplicationForm() {
         <label className="text-xs font-semibold">
           Phone Number <span aria-hidden="true">*</span>
           <span
-            className={`focus-within:border-brand-taupe focus-within:ring-brand-taupe/20 mt-2 flex h-10 w-full overflow-hidden rounded-full border bg-white focus-within:ring-2 ${
-              errors.phoneNumber ? "border-red-600" : "border-[#eee8e5]"
+            className={`focus-within:border-brand-primary focus-within:ring-brand-primary/20 mt-2 flex h-10 w-full overflow-hidden rounded-full border bg-white focus-within:ring-2 ${
+              errors.phoneNumber ? "border-red-600" : "border-surface-border"
             }`}
           >
             <CountryCodeSelector
@@ -238,7 +238,7 @@ export function CareerApplicationForm() {
                 clearError("countryCode");
                 clearError("phoneNumber");
               }}
-              className="focus-visible:ring-brand-taupe/40 inline-flex h-full shrink-0 items-center gap-1 border-r border-[#eee8e5] px-3 text-sm text-[#4c4542] outline-none focus-visible:ring-2 focus-visible:ring-inset"
+              className="focus-visible:ring-brand-primary/40 inline-flex h-full shrink-0 items-center gap-1 border-r border-surface-border px-3 text-sm text-text-primary outline-none focus-visible:ring-2 focus-visible:ring-inset"
             />
             <input
               name="phoneNumber"
@@ -252,7 +252,7 @@ export function CareerApplicationForm() {
                 errors.phoneNumber ? "career-phone-error" : undefined
               }
               onChange={() => clearError("phoneNumber")}
-              className="min-w-0 flex-1 border-0 bg-transparent px-3 text-sm font-normal outline-none placeholder:text-[#aaa]"
+              className="min-w-0 flex-1 border-0 bg-transparent px-3 text-sm font-normal outline-none placeholder:text-text-muted"
               placeholder="6543210987"
             />
           </span>
@@ -286,7 +286,7 @@ export function CareerApplicationForm() {
           />
           <label
             htmlFor="career-resume"
-            className="peer-focus-visible:ring-brand-taupe flex min-h-[68px] cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-[#eadbd4] bg-[#fbf6f3] px-4 py-3 text-center text-[#b49084] transition-colors peer-focus-visible:ring-2 hover:bg-[#f8f0ec]"
+            className="border-brand-primary/30 bg-brand-primary-soft text-brand-primary-dark peer-focus-visible:ring-brand-primary flex min-h-[68px] cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-dashed px-4 py-3 text-center transition-colors peer-focus-visible:ring-2 hover:bg-brand-primary/15"
           >
             {resume ? (
               <>
@@ -294,7 +294,7 @@ export function CareerApplicationForm() {
                   <FileText className="size-4 shrink-0" aria-hidden="true" />
                   <span className="truncate">{resume.name}</span>
                 </span>
-                <span className="text-xs text-[#8d817c]">
+                <span className="text-xs text-text-muted">
                   {getResumeSizeLabel(resume.size)} · Click to replace
                 </span>
               </>
@@ -304,7 +304,7 @@ export function CareerApplicationForm() {
                   <Upload className="size-4" aria-hidden="true" />
                   Upload your resume
                 </span>
-                <span className="text-xs text-[#8d817c]">
+                <span className="text-xs text-text-muted">
                   PDF, DOC, DOCX · Max 5 MB
                 </span>
               </>
@@ -318,7 +318,7 @@ export function CareerApplicationForm() {
                 selectResume(null);
               }}
               aria-label="Remove selected resume"
-              className="absolute top-2 right-2 grid size-8 place-items-center rounded-full bg-white text-[#7d6154] shadow-sm hover:bg-[#f6e8e3]"
+              className="absolute top-2 right-2 grid size-8 place-items-center rounded-full bg-white text-brand-primary-dark shadow-sm hover:bg-brand-primary/10"
             >
               <X className="size-4" aria-hidden="true" />
             </button>
@@ -327,7 +327,7 @@ export function CareerApplicationForm() {
         <FieldError id="career-resume-error" message={errors.resume} />
       </div>
 
-      <label className="flex items-start gap-2 text-xs leading-relaxed text-[#777]">
+      <label className="flex items-start gap-2 text-xs leading-relaxed text-text-muted">
         <input
           name="consent"
           type="checkbox"
@@ -335,7 +335,7 @@ export function CareerApplicationForm() {
           aria-invalid={Boolean(errors.consent)}
           aria-describedby={errors.consent ? "career-consent-error" : undefined}
           onChange={() => clearError("consent")}
-          className="accent-brand-taupe mt-0.5 size-4 shrink-0"
+          className="accent-brand-primary mt-0.5 size-4 shrink-0"
         />
         <span>
           I agree that Youniqlyf may use my details to contact me about career
@@ -362,7 +362,7 @@ export function CareerApplicationForm() {
         disabled={
           pending || (resume !== null && resume.size > MAX_CAREER_RESUME_SIZE)
         }
-        className="bg-brand-taupe hover:bg-brand-taupe-dark flex min-h-11 w-full items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white shadow-[0_7px_16px_-7px_rgba(90,53,38,.45)] transition-colors disabled:cursor-wait disabled:opacity-60"
+        className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white flex min-h-11 w-full items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold shadow-md transition-colors disabled:cursor-wait disabled:opacity-60"
       >
         {pending ? "Submitting…" : "Submit Application"}
         <ArrowRight className="size-4" aria-hidden="true" />

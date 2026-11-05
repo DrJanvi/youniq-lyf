@@ -58,7 +58,7 @@ export function HighlightedCategoryContent({
 
   return (
     <Section
-      className="gap-8 overflow-hidden rounded-[2.5rem] bg-[#FFFCF9]"
+      className="gap-8 overflow-hidden rounded-[2.5rem] bg-surface-main"
       contentClassName="py-16 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8"
     >
       <div className="flex flex-col items-center justify-center text-center">
@@ -67,7 +67,7 @@ export function HighlightedCategoryContent({
         <div className="mt-6 grid grid-cols-4 gap-2" aria-label="Time remaining">
           {time.map(({ label, value }) => (
             <div key={label} className="flex flex-col gap-2">
-              <div className="flex aspect-4/3 items-center justify-center rounded-xl bg-[#F5EEE9] text-3xl font-semibold">
+              <div className="flex aspect-4/3 items-center justify-center rounded-xl bg-surface-card text-3xl font-semibold">
                 {String(value).padStart(2, "0")}
               </div>
               <div>{label}</div>
@@ -76,7 +76,7 @@ export function HighlightedCategoryContent({
         </div>
         <Link
           href={buttonLink}
-          className="bg-brand-taupe mt-8 flex items-center justify-center gap-2 rounded-full px-6 py-3 text-white hover:bg-black"
+          className="bg-brand-primary-dark text-white mt-8 flex items-center justify-center gap-2 rounded-full px-6 py-3 hover:bg-black"
         >
           Explore More
           <Image src="/assets/arrow.svg" alt="" width={20} height={15} aria-hidden="true" />

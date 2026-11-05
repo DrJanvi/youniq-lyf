@@ -11,7 +11,7 @@ export function PartnerWithUsSection() {
 
   return (
     <Section
-      className="relative flex min-h-137.5 flex-col gap-8 bg-[#FFFCF9]"
+      className="relative flex min-h-137.5 flex-col gap-8 bg-surface-main"
       contentClassName="pb-16 md:py-0 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 px-0! flex-1"
     >
       <Image
@@ -35,7 +35,7 @@ export function PartnerWithUsSection() {
         <h2 className="font-cormorant text-3xl font-semibold uppercase md:text-4xl">
           {title}
           <br />
-          <span className="text-4xl font-bold text-[#8E5947] md:text-5xl">
+          <span className="text-4xl font-bold text-brand-primary-dark md:text-5xl">
             {subTitle}
           </span>
         </h2>
@@ -46,7 +46,7 @@ export function PartnerWithUsSection() {
           <PartnerRequestDialog />
 
           <span className="font-cormorant flex flex-row items-center justify-center gap-2">
-            <AstroidIcon color="#743238" size={16} /> A new chapter starts here
+            <AstroidIcon color="var(--color-brand-primary)" size={16} /> A new chapter starts here
           </span>
         </div>
       </div>

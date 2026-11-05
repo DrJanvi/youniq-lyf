@@ -98,7 +98,7 @@ function SocialLinks() {
           aria-label={link}
           target="_blank"
           rel="noreferrer"
-          className="flex size-12 items-center justify-center rounded-full bg-[#f8f3f1] transition-colors hover:bg-[#efe5e1]"
+          className="flex size-12 items-center justify-center rounded-full bg-brand-primary-soft transition-colors hover:bg-brand-primary/20"
         >
           <Image src={icon} width={24} height={24} alt={link} />
         </Link>
@@ -112,8 +112,8 @@ export async function Footer() {
 
   return (
     <div className="mt-auto">
-      <Section as="footer" className="mt-20 bg-[#FFFCFC]" contentClassName="">
-        <div className="border-b border-[#f0eeee] py-16">
+      <Section as="footer" className="mt-20 bg-surface-main" contentClassName="">
+        <div className="border-b border-surface-border py-16">
           <div className="grid w-full max-w-[1760px] grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-5 lg:gap-x-8">
             {/* <div className="mx-auto grid w-full max-w-[1760px] grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.5fr)_minmax(8rem,0.9fr)_minmax(8rem,0.9fr)_minmax(0,1.8fr] lg:gap-x-8"> */}
             <div className="col-span-2">
@@ -124,7 +124,7 @@ export async function Footer() {
               >
                 <Logo className="h-32.5 w-auto lg:h-40" height={160} />
               </Link>
-              <p className="mt-6 max-w-[33ch] text-sm leading-[1.9] text-[#777]">
+              <p className="mt-6 max-w-[33ch] text-sm leading-[1.9] text-text-muted">
                 Buabed Youniqlyf Perfumes, established in 1995, is a pioneer in
                 fragrance and personal care manufacturing. With decades of
                 expertise, we create premium perfumes and cosmetics inspired by
@@ -137,12 +137,12 @@ export async function Footer() {
               <h2 className="font-cormorant text-xl leading-tight font-medium uppercase">
                 Collections
               </h2>
-              <ul className="mt-5 space-y-2.5 text-[15px] text-[#777] sm:text-base">
+              <ul className="mt-5 space-y-2.5 text-[15px] text-text-muted sm:text-base">
                 {categories.map((category) => (
                   <li key={category.id}>
                     <Link
                       href={`/category/${category.slug}`}
-                      className="hover:text-brand-espresso text-sm transition-colors"
+                      className="hover:text-text-primary text-sm transition-colors"
                     >
                       {category.name}
                     </Link>
@@ -155,12 +155,12 @@ export async function Footer() {
               <h2 className="font-cormorant text-xl leading-tight font-medium uppercase">
                 About
               </h2>
-              <ul className="mt-5 space-y-2.5 text-[15px] text-[#777] sm:text-base">
+              <ul className="mt-5 space-y-2.5 text-[15px] text-text-muted sm:text-base">
                 {ABOUT_LINKS.map(([label, href]) => (
                   <li key={label}>
                     <Link
                       href={href}
-                      className="hover:text-brand-espresso text-sm transition-colors"
+                      className="hover:text-text-primary text-sm transition-colors"
                     >
                       {label}
                     </Link>
@@ -173,12 +173,12 @@ export async function Footer() {
               <h2 className="font-cormorant text-xl leading-tight font-medium uppercase">
                 Help
               </h2>
-              <ul className="mt-5 space-y-2.5 text-[15px] text-[#777] sm:text-base">
+              <ul className="mt-5 space-y-2.5 text-[15px] text-text-muted sm:text-base">
                 {HELP_LINKS.map(([label, href]) => (
                   <li key={label}>
                     <Link
                       href={href}
-                      className="hover:text-brand-espresso text-sm transition-colors"
+                      className="hover:text-text-primary text-sm transition-colors"
                     >
                       {label}
                     </Link>
@@ -194,14 +194,14 @@ export async function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 px-6 py-4 text-center text-[#a0a0a0]">
+        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 px-6 py-4 text-center text-text-muted">
           <span>
             © Copyright {new Date().getFullYear()}. All Rights Reserved.
           </span>
-          <span aria-hidden="true" className="hidden text-[#333] sm:inline">
+          <span aria-hidden="true" className="hidden text-text-primary sm:inline">
             |
           </span>
-          <span className="text-[#333]">
+          <span className="text-text-primary">
             Powered by <span className="text-[#f5a500]">Doors</span>{" "}
             <strong>Studio</strong>
           </span>

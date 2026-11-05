@@ -65,7 +65,7 @@ export function AddToCartButton({
           aria-label={label}
           aria-busy={state === "busy"}
           title={error ?? label}
-          className={`flex size-10 cursor-pointer items-center justify-center rounded-full border border-brand-taupe bg-brand-taupe p-0 text-white shadow-sm transition-colors hover:bg-brand-taupe-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-taupe disabled:cursor-not-allowed disabled:bg-neutral-400 ${className}`}
+          className={`flex size-10 cursor-pointer items-center justify-center rounded-full border border-brand-primary bg-brand-primary-dark p-0 text-white shadow-sm transition-colors hover:bg-brand-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary disabled:cursor-not-allowed disabled:bg-neutral-400 ${className}`}
         >
           {state === "added" ? (
             <Check aria-hidden="true" className="size-4" />
@@ -89,7 +89,7 @@ export function AddToCartButton({
         onClick={add}
         disabled={disabled || state === "busy"}
         title={error ?? undefined}
-        className={`flex cursor-pointer items-center gap-2 rounded-full border border-white bg-[#b98b82] px-4 py-2.5 text-xs font-bold tracking-wide whitespace-nowrap text-white uppercase opacity-0 shadow-lg transition-opacity duration-300 ease-out group-hover:opacity-100 focus-visible:opacity-100 disabled:cursor-not-allowed disabled:bg-neutral-400 ${className}`}
+        className={`bg-brand-primary-dark text-white flex cursor-pointer items-center gap-2 rounded-full border border-white px-4 py-2.5 text-xs font-bold tracking-wide whitespace-nowrap uppercase opacity-0 shadow-lg transition-opacity duration-300 ease-out group-hover:opacity-100 focus-visible:opacity-100 disabled:cursor-not-allowed disabled:bg-neutral-400 ${className}`}
       >
         {disabled
           ? "Out of stock"

@@ -16,7 +16,7 @@ export function PageHeader({
 }: PageHeaderProps) {
   const editorial = variant === "editorial";
   return (
-    <section className="bg-[#fafafa]">
+    <section className="bg-surface-main">
       <Breadcrumbs crumbs={crumbs} />
       <header
         className={`mx-auto flex max-w-360 flex-col items-center px-4 text-center sm:px-6 lg:px-8 ${
@@ -25,14 +25,14 @@ export function PageHeader({
       >
         <h1
           className={`font-cormorant text-[clamp(2.5rem,3.5vw,2.875rem)] leading-[1.05] font-medium tracking-[0.08em] uppercase ${
-            editorial ? "text-[#111111]" : "text-[#573124]"
+            editorial ? "text-text-primary" : "text-text-primary"
           }`}
         >
           {title}
         </h1>
         {description ? (
           <p
-            className={`text-[#8b837e] ${
+            className={`text-text-muted ${
               editorial
                 ? "mt-5 max-w-[52ch] text-[15px] leading-6 sm:text-base"
                 : "mt-2 text-[12px] sm:text-[13px]"

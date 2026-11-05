@@ -33,9 +33,9 @@ export function PriceRange({
   return (
     <div>
       <div className="relative h-6">
-        <div className="absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-[#f3eeec]" />
+        <div className="absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-surface-card" />
         <div
-          className="bg-brand-taupe absolute top-1/2 h-1 -translate-y-1/2 rounded-full"
+          className="bg-brand-primary absolute top-1/2 h-1 -translate-y-1/2 rounded-full"
           style={{
             left: `${minPercent}%`,
             right: `${100 - maxPercent}%`,

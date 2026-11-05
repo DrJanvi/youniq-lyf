@@ -19,13 +19,13 @@ export function WishlistToolbar({
       role="search"
       className="grid w-full grid-cols-[auto_minmax(0,1fr)] items-center gap-x-3 gap-y-2 sm:flex sm:w-auto sm:justify-end sm:gap-x-4 sm:gap-y-3"
     >
-      <label className="flex min-w-0 items-center gap-2 text-[11px] text-[#a29b97] sm:gap-3">
+      <label className="flex min-w-0 items-center gap-2 text-[11px] text-text-muted sm:gap-3">
         <span>Sort by</span>
         <select
           name="sort"
           defaultValue={sort}
           onChange={(event) => event.currentTarget.form?.requestSubmit()}
-          className="h-9 min-w-0 cursor-pointer bg-transparent pr-1 text-[11px] font-medium text-[#433d3a] outline-none sm:text-[12px]"
+          className="h-9 min-w-0 cursor-pointer bg-transparent pr-1 text-[11px] font-medium text-text-primary outline-none sm:text-[12px]"
         >
           <option value="newest">Recently added</option>
           <option value="oldest">Oldest added</option>
@@ -33,14 +33,14 @@ export function WishlistToolbar({
           <option value="price-desc">Price: high to low</option>
         </select>
       </label>
-      <label className="col-span-2 flex h-9 min-w-0 w-full items-center gap-2 rounded-full border border-[#e9e2de] bg-white px-3 text-[#766d69] sm:col-span-1 sm:w-[212px]">
+      <label className="col-span-2 flex h-9 min-w-0 w-full items-center gap-2 rounded-full border border-surface-border bg-white px-3 text-text-muted sm:col-span-1 sm:w-[212px]">
         <span className="sr-only">Search your wishlist</span>
         <input
           type="search"
           name="q"
           defaultValue={query}
           placeholder="Search your wishlist"
-          className="min-w-0 flex-1 bg-transparent text-[11px] text-[#433d3a] outline-none placeholder:text-[#b3aaa5]"
+          className="min-w-0 flex-1 bg-transparent text-[11px] text-text-primary outline-none placeholder:text-text-muted"
         />
         <button
           type="submit"
@@ -102,7 +102,7 @@ export function WishlistRemoveButton({
         onClick={remove}
         disabled={busy}
         aria-label={`Remove ${title} from wishlist`}
-        className="inline-flex size-7 items-center justify-center text-[#aaa39f] transition-colors hover:text-[#573124] disabled:opacity-50"
+        className="inline-flex size-7 items-center justify-center text-text-muted transition-colors hover:text-text-primary disabled:opacity-50"
       >
         <X aria-hidden="true" className="size-4" />
       </button>
@@ -152,7 +152,7 @@ export function WishlistAddToCartButton({
         onClick={addToCart}
         disabled={stock < 1 || busy}
         title={error ?? undefined}
-        className="inline-flex h-[38px] min-w-[126px] items-center justify-center gap-2 rounded-full bg-[#b48d7d] px-4 text-[10px] font-medium tracking-[0.03em] text-white uppercase shadow-[0_3px_10px_rgba(96,62,47,0.18)] transition-colors hover:bg-[#a67e6e] disabled:cursor-not-allowed disabled:bg-[#c8bfba]"
+        className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white inline-flex h-[38px] min-w-[126px] items-center justify-center gap-2 rounded-full px-4 text-[10px] font-medium tracking-[0.03em] uppercase shadow-sm transition-colors disabled:cursor-not-allowed disabled:bg-surface-card"
       >
         {stock < 1 ? "Out of stock" : added ? "Added to cart" : "Add to cart"}
         {stock > 0 && !added ? (
@@ -192,7 +192,7 @@ export function WishlistClearButton({ hasItems }: { hasItems: boolean }) {
         type="button"
         onClick={clearWishlist}
         disabled={!hasItems || busy}
-        className="text-[11px] text-[#514944] underline decoration-[#cfc5c0] underline-offset-4 transition-colors hover:text-[#573124] disabled:cursor-not-allowed disabled:opacity-50"
+        className="text-[11px] text-text-primary underline decoration-surface-border underline-offset-4 transition-colors hover:text-text-primary disabled:cursor-not-allowed disabled:opacity-50"
       >
         Clear all
       </button>
@@ -228,7 +228,7 @@ export function WishlistMoveAllButton({ hasItems }: { hasItems: boolean }) {
         type="button"
         onClick={moveAllToCart}
         disabled={!hasItems || busy}
-        className="inline-flex h-[39px] items-center justify-center gap-2 rounded-full border border-[#d8bdb2] px-4 text-[11px] font-medium tracking-[0.02em] text-[#b48d7d] uppercase transition-colors hover:bg-[#faf5f2] disabled:cursor-not-allowed disabled:opacity-50"
+        className="border-brand-primary/30 text-brand-primary-dark inline-flex h-[39px] items-center justify-center gap-2 rounded-full border px-4 text-[11px] font-medium tracking-[0.02em] uppercase transition-colors hover:bg-brand-primary-soft disabled:cursor-not-allowed disabled:opacity-50"
       >
         Move all to cart <ArrowRight aria-hidden="true" className="size-4" />
       </button>

@@ -63,14 +63,14 @@ export function ProductPurchaseActions({
         <div
           role="group"
           aria-label={`Quantity: ${quantity}`}
-          className="inline-flex h-12 items-center rounded-full border border-[#eee7e3]"
+          className="inline-flex h-12 items-center rounded-full border border-surface-border"
         >
           <button
             type="button"
             onClick={() => setQuantity((value) => Math.max(1, value - 1))}
             disabled={quantity <= 1 || busy}
             aria-label="Decrease quantity"
-            className="flex size-12 items-center justify-center rounded-full text-[#766d69] transition hover:text-[#573124] disabled:opacity-40"
+            className="flex size-12 items-center justify-center rounded-full text-text-muted transition hover:text-text-primary disabled:opacity-40"
           >
             <Minus aria-hidden="true" className="size-4" />
           </button>
@@ -82,7 +82,7 @@ export function ProductPurchaseActions({
             onClick={() => setQuantity((value) => Math.min(stock, value + 1))}
             disabled={quantity >= stock || busy}
             aria-label="Increase quantity"
-            className="flex size-12 items-center justify-center rounded-full text-[#766d69] transition hover:text-[#573124] disabled:opacity-40"
+            className="flex size-12 items-center justify-center rounded-full text-text-muted transition hover:text-text-primary disabled:opacity-40"
           >
             <Plus aria-hidden="true" className="size-4" />
           </button>
@@ -93,7 +93,7 @@ export function ProductPurchaseActions({
         type="button"
         onClick={() => void purchase(false)}
         disabled={busy || stock < 1}
-        className="inline-flex min-h-14 items-center justify-center gap-3 rounded-full border border-[#e5dfdc] bg-white px-6 text-sm font-semibold tracking-[0.08em] text-[#292320] uppercase transition hover:bg-[#faf7f5] disabled:cursor-not-allowed disabled:opacity-50"
+        className="inline-flex min-h-14 items-center justify-center gap-3 rounded-full border border-surface-border bg-white px-6 text-sm font-semibold tracking-[0.08em] text-text-primary uppercase transition hover:bg-surface-card disabled:cursor-not-allowed disabled:opacity-50"
       >
         {busy ? "Adding..." : added ? "Added to cart" : "Add to cart"}
       </button>
@@ -101,7 +101,7 @@ export function ProductPurchaseActions({
         type="button"
         onClick={() => void purchase(true)}
         disabled={busy || stock < 1}
-        className="inline-flex min-h-14 items-center justify-center gap-3 rounded-full bg-[#b48d7d] px-6 text-sm font-semibold tracking-[0.08em] text-white uppercase transition hover:bg-[#a77f70] disabled:cursor-not-allowed disabled:opacity-50"
+        className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white inline-flex min-h-14 items-center justify-center gap-3 rounded-full px-6 text-sm font-semibold tracking-[0.08em] uppercase transition-colors disabled:cursor-not-allowed disabled:opacity-50"
       >
         Buy it now
         <ArrowRight aria-hidden="true" className="size-5" />

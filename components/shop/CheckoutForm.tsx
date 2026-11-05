@@ -22,7 +22,7 @@ type Props = {
 };
 
 const fieldClass =
-  "h-11 w-full rounded-md border border-[#e8e4e1] bg-white px-3 text-sm text-[#3d3530] outline-none placeholder:text-[#aaa19d] focus:border-[#b48d7d] focus:ring-1 focus:ring-[#b48d7d]";
+  "h-11 w-full rounded-md border border-surface-border bg-white px-3 text-sm text-text-primary outline-none placeholder:text-text-muted focus:border-brand-primary focus:ring-1 focus:ring-brand-primary";
 
 const paymentOptions: {
   value: PaymentMethod;
@@ -285,9 +285,9 @@ export function CheckoutForm({
     <form
       key={`${addressMode}-${editingAddressId ?? "new"}`}
       onSubmit={saveAddress}
-      className="mt-4 rounded-lg border border-[#eee7e3] bg-white p-4 sm:p-5"
+      className="mt-4 rounded-lg border border-surface-border bg-white p-4 sm:p-5"
     >
-      <h3 className="mb-4 text-sm font-semibold text-[#4c403b]">
+      <h3 className="mb-4 text-sm font-semibold text-text-primary">
         {addressMode === "edit" ? "Edit address" : "Add a new address"}
       </h3>
       <div className="grid gap-3 sm:grid-cols-2">
@@ -330,7 +330,7 @@ export function CheckoutForm({
           value={customerEmail ?? ""}
           placeholder="Email"
           readOnly
-          className={`${fieldClass} bg-[#faf9f8] text-[#8b837e]`}
+          className={`${fieldClass} bg-surface-main text-text-muted`}
         />
         <label className="sr-only" htmlFor="address-phone">
           Phone
@@ -413,12 +413,12 @@ export function CheckoutForm({
           className={fieldClass}
         />
       </div>
-      <label className="mt-4 inline-flex items-center gap-2 text-xs text-[#766d69]">
+      <label className="mt-4 inline-flex items-center gap-2 text-xs text-text-muted">
         <input
           name="isDefault"
           type="checkbox"
           defaultChecked={editingAddress?.isDefault ?? addresses.length === 0}
-          className="accent-[#b48d7d]"
+          className="accent-brand-primary"
         />
         Save as my default address
       </label>
@@ -431,7 +431,7 @@ export function CheckoutForm({
         <button
           type="submit"
           disabled={addressBusy}
-          className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-[#b48d7d] px-5 text-xs font-semibold tracking-wide text-white transition-colors hover:bg-[#a77f70] disabled:opacity-50"
+          className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white inline-flex h-10 items-center justify-center gap-2 rounded-full px-5 text-xs font-semibold tracking-wide transition-colors disabled:opacity-50"
         >
           {addressBusy ? "Saving…" : "Save address"}
           <span aria-hidden="true">→</span>
@@ -444,7 +444,7 @@ export function CheckoutForm({
               setEditingAddressId(null);
               setAddressError(null);
             }}
-            className="px-3 py-2 text-xs font-medium text-[#514944] hover:underline"
+            className="px-3 py-2 text-xs font-medium text-text-primary hover:underline"
           >
             Cancel
           </button>
@@ -456,8 +456,8 @@ export function CheckoutForm({
   return (
     <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1.55fr)_minmax(320px,0.95fr)] lg:gap-8">
       <div className="flex min-w-0 flex-col gap-5">
-        <section className="rounded-xl border border-[#eee7e3] bg-white p-3 sm:p-4">
-          <h2 className="rounded-lg bg-[#f5f4f3] px-4 py-3 text-sm font-semibold text-[#433b37]">
+        <section className="rounded-xl border border-surface-border bg-white p-3 sm:p-4">
+          <h2 className="rounded-lg bg-surface-card px-4 py-3 text-sm font-semibold text-text-primary">
             Shipping Address
           </h2>
           <div className="pt-4">
@@ -468,8 +468,8 @@ export function CheckoutForm({
                     key={address.id}
                     className={`flex items-start gap-3 rounded-lg border p-4 transition-colors ${
                       selectedAddressId === address.id
-                        ? "border-[#c9a99a] bg-[#fdfaf9]"
-                        : "border-[#eee7e3] bg-white"
+                        ? "border-brand-primary bg-brand-primary-soft"
+                        : "border-surface-border bg-white"
                     }`}
                   >
                     <input
@@ -483,15 +483,15 @@ export function CheckoutForm({
                         setEditingAddressId(null);
                       }}
                       aria-label={`Ship to ${address.firstName} ${address.lastName}`}
-                      className="mt-1 accent-[#b48d7d]"
+                      className="mt-1 accent-brand-primary"
                     />
-                    <div className="min-w-0 flex-1 text-xs leading-5 text-[#766d69]">
+                    <div className="min-w-0 flex-1 text-xs leading-5 text-text-muted">
                       <div className="flex flex-wrap items-center gap-2">
-                        <p className="font-semibold text-[#5b4035]">
+                        <p className="font-semibold text-text-primary">
                           {address.firstName} {address.lastName}
                         </p>
                         {address.isDefault ? (
-                          <span className="rounded-full bg-[#f3eae6] px-2 py-0.5 text-[10px] font-medium text-[#8b6252]">
+                          <span className="rounded-full bg-surface-card px-2 py-0.5 text-[10px] font-medium text-brand-primary-dark">
                             Default
                           </span>
                         ) : null}
@@ -502,7 +502,7 @@ export function CheckoutForm({
                     <button
                       type="button"
                       onClick={() => startEditingAddress(address)}
-                      className="shrink-0 px-1 text-xs font-medium text-[#a67e6e] underline underline-offset-2"
+                      className="shrink-0 px-1 text-xs font-medium text-brand-primary-dark underline underline-offset-2"
                     >
                       Edit
                     </button>
@@ -512,7 +512,7 @@ export function CheckoutForm({
                   <button
                     type="button"
                     onClick={() => setShowAllAddresses((show) => !show)}
-                    className="text-xs text-[#766d69] underline underline-offset-2"
+                    className="text-xs text-text-muted underline underline-offset-2"
                   >
                     {showAllAddresses
                       ? "Show fewer addresses"
@@ -521,7 +521,7 @@ export function CheckoutForm({
                 ) : null}
               </div>
             ) : (
-              <p className="py-2 text-sm text-[#766d69]">
+              <p className="py-2 text-sm text-text-muted">
                 Add a shipping address to continue.
               </p>
             )}
@@ -531,7 +531,7 @@ export function CheckoutForm({
                 <button
                   type="button"
                   onClick={startAddingAddress}
-                  className="inline-flex items-center gap-2 text-xs font-medium text-[#8a6b5e] hover:text-[#573124]"
+                  className="inline-flex items-center gap-2 text-xs font-medium text-brand-primary-dark hover:text-text-primary"
                 >
                   <span className="text-lg leading-none" aria-hidden="true">
                     +
@@ -539,7 +539,7 @@ export function CheckoutForm({
                   Add a New Address
                 </button>
                 {customerEmail ? (
-                  <p className="text-xs text-[#9a928d]">
+                  <p className="text-xs text-text-muted">
                     Signed in as {customerEmail}
                   </p>
                 ) : null}
@@ -548,8 +548,8 @@ export function CheckoutForm({
           </div>
         </section>
 
-        <section className="rounded-xl border border-[#eee7e3] bg-white p-3 sm:p-4">
-          <h2 className="rounded-lg bg-[#f5f4f3] px-4 py-3 text-sm font-semibold text-[#433b37]">
+        <section className="rounded-xl border border-surface-border bg-white p-3 sm:p-4">
+          <h2 className="rounded-lg bg-surface-card px-4 py-3 text-sm font-semibold text-text-primary">
             Select a Payment Mode
           </h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
@@ -558,8 +558,8 @@ export function CheckoutForm({
                 key={option.value}
                 className={`flex cursor-pointer items-start gap-2 rounded-lg border p-3 transition-colors ${
                   paymentMethod === option.value
-                    ? "border-[#c9a99a] bg-[#fdfaf9]"
-                    : "border-[#eee7e3] hover:border-[#d8c7bf]"
+                    ? "border-brand-primary bg-brand-primary-soft"
+                    : "border-surface-border hover:border-surface-border"
                 }`}
               >
                 <input
@@ -568,45 +568,45 @@ export function CheckoutForm({
                   value={option.value}
                   checked={paymentMethod === option.value}
                   onChange={() => setPaymentMethod(option.value)}
-                  className="mt-0.5 accent-[#b48d7d]"
+                  className="mt-0.5 accent-brand-primary"
                 />
                 <span>
-                  <span className="block text-xs font-medium text-[#514944]">
+                  <span className="block text-xs font-medium text-text-primary">
                     {option.label}
                   </span>
-                  <span className="mt-1 block text-[10px] leading-4 text-[#9a928d]">
+                  <span className="mt-1 block text-[10px] leading-4 text-text-muted">
                     {option.description}
                   </span>
                 </span>
               </label>
             ))}
           </div>
-          <p className="mt-3 text-xs text-[#9a928d]">
+          <p className="mt-3 text-xs text-text-muted">
             Demo checkout only. No payment provider will be charged.
           </p>
         </section>
       </div>
 
-      <aside className="rounded-xl border border-[#eee7e3] bg-[#fffdfc] p-5 sm:p-6 lg:sticky lg:top-6">
+      <aside className="rounded-xl border border-surface-border bg-surface-main p-5 sm:p-6 lg:sticky lg:top-6">
         <div className="flex items-center justify-between gap-3">
-          <h2 className="font-cormorant text-2xl font-semibold text-[#573124]">
+          <h2 className="font-cormorant text-2xl font-semibold text-text-primary">
             Order Summary
           </h2>
           <Link
             href="/cart"
-            className="text-xs font-medium text-[#a67e6e] underline underline-offset-2"
+            className="text-xs font-medium text-brand-primary-dark underline underline-offset-2"
           >
             Edit Cart
           </Link>
         </div>
 
-        <div className="mt-5 divide-y divide-[#f0eeed]">
+        <div className="mt-5 divide-y divide-surface-border">
           {visibleItems.map((item) => (
             <div
               key={item.product.id}
               className="flex items-center gap-3 py-3 first:pt-0"
             >
-              <div className="grid size-14 shrink-0 place-items-center overflow-hidden rounded border border-[#f0eeed] bg-white">
+              <div className="grid size-14 shrink-0 place-items-center overflow-hidden rounded border border-surface-border bg-white">
                 {item.product.images[0] ? (
                   <Image
                     src={item.product.images[0]}
@@ -617,18 +617,18 @@ export function CheckoutForm({
                     className="size-full object-contain p-1"
                   />
                 ) : (
-                  <span className="text-[9px] text-[#9a928d]">No image</span>
+                  <span className="text-[9px] text-text-muted">No image</span>
                 )}
               </div>
               <div className="min-w-0 flex-1">
-                <p className="line-clamp-2 text-xs leading-4 font-medium text-[#514944]">
+                <p className="line-clamp-2 text-xs leading-4 font-medium text-text-primary">
                   {item.product.title}
                 </p>
-                <p className="mt-1 text-xs font-semibold text-[#433b37]">
+                <p className="mt-1 text-xs font-semibold text-text-primary">
                   {formatMoney(item.lineTotal, item.product.currency)}
                 </p>
               </div>
-              <div className="flex shrink-0 items-center gap-1 rounded-full border border-[#eee7e3] px-1 py-1">
+              <div className="flex shrink-0 items-center gap-1 rounded-full border border-surface-border px-1 py-1">
                 <button
                   type="button"
                   aria-label={`Decrease quantity of ${item.product.title}`}
@@ -636,7 +636,7 @@ export function CheckoutForm({
                   onClick={() =>
                     changeQuantity(item.product.id, item.quantity - 1)
                   }
-                  className="grid size-6 place-items-center rounded-full text-sm text-[#766d69] hover:bg-[#f8f3f1] disabled:opacity-50"
+                  className="grid size-6 place-items-center rounded-full text-sm text-text-muted hover:bg-brand-primary/10 disabled:opacity-50"
                 >
                   −
                 </button>
@@ -653,7 +653,7 @@ export function CheckoutForm({
                   onClick={() =>
                     changeQuantity(item.product.id, item.quantity + 1)
                   }
-                  className="grid size-6 place-items-center rounded-full text-sm text-[#766d69] hover:bg-[#f8f3f1] disabled:opacity-50"
+                  className="grid size-6 place-items-center rounded-full text-sm text-text-muted hover:bg-brand-primary/10 disabled:opacity-50"
                 >
                   +
                 </button>
@@ -665,7 +665,7 @@ export function CheckoutForm({
           <button
             type="button"
             onClick={() => setShowAllItems((show) => !show)}
-            className="mt-2 text-xs text-[#a67e6e] underline underline-offset-2"
+            className="mt-2 text-xs text-brand-primary-dark underline underline-offset-2"
           >
             {showAllItems
               ? "Show fewer items"
@@ -678,13 +678,13 @@ export function CheckoutForm({
           </p>
         ) : null}
 
-        <div className="mt-5 border-t border-dashed border-[#e8e1dd] pt-4">
-          <h3 className="text-xs font-semibold tracking-wide text-[#514944]">
+        <div className="mt-5 border-t border-dashed border-surface-border pt-4">
+          <h3 className="text-xs font-semibold tracking-wide text-text-primary">
             Discount Code
           </h3>
           {appliedCoupon ? (
-            <div className="mt-2 flex items-center justify-between gap-3 rounded-md border border-[#d6e8d5] bg-[#f5faf4] px-3 py-2">
-              <p className="min-w-0 truncate text-xs text-[#376b3b]">
+            <div className="mt-2 flex items-center justify-between gap-3 rounded-md border border-status-success/30 bg-status-success-soft px-3 py-2">
+              <p className="min-w-0 truncate text-xs text-status-success">
                 <span className="font-semibold">{appliedCoupon.code}</span>{" "}
                 applied
               </p>
@@ -692,7 +692,7 @@ export function CheckoutForm({
                 type="button"
                 disabled={orderBusy}
                 onClick={removeCoupon}
-                className="shrink-0 text-xs font-medium text-[#766d69] underline underline-offset-2 disabled:opacity-50"
+                className="shrink-0 text-xs font-medium text-text-muted underline underline-offset-2 disabled:opacity-50"
               >
                 Remove
               </button>
@@ -718,13 +718,13 @@ export function CheckoutForm({
                   }
                 }}
                 placeholder="Enter coupon code"
-                className="h-10 min-w-0 flex-1 rounded-md border border-[#e8e4e1] bg-white px-3 text-xs text-[#3d3530] outline-none placeholder:text-[#aaa19d] focus:border-[#b48d7d]"
+                className="h-10 min-w-0 flex-1 rounded-md border border-surface-border bg-white px-3 text-xs text-text-primary outline-none placeholder:text-text-muted focus:border-brand-primary"
               />
               <button
                 type="button"
                 disabled={couponBusy || orderBusy || !couponCode.trim()}
                 onClick={() => void applyCoupon()}
-                className="h-10 rounded-md bg-[#b48d7d] px-4 text-xs font-medium text-white disabled:cursor-not-allowed disabled:opacity-50"
+                className="bg-brand-primary-dark text-white h-10 rounded-md px-4 text-xs font-medium disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {couponBusy ? "Applying…" : "Apply"}
               </button>
@@ -736,54 +736,54 @@ export function CheckoutForm({
             </p>
           ) : null}
           {couponMessage ? (
-            <p aria-live="polite" className="mt-2 text-xs text-[#4d8c52]">
+            <p aria-live="polite" className="mt-2 text-xs text-status-success">
               {couponMessage}
             </p>
           ) : null}
         </div>
 
-        <dl className="mt-5 space-y-2 border-t border-dashed border-[#e8e1dd] pt-4 text-xs">
+        <dl className="mt-5 space-y-2 border-t border-dashed border-surface-border pt-4 text-xs">
           <div className="flex justify-between gap-3">
-            <dt className="text-[#8b837e]">Subtotal</dt>
-            <dd className="text-[#514944]">
+            <dt className="text-text-muted">Subtotal</dt>
+            <dd className="text-text-primary">
               {formatMoney(cart.subtotal, currency)}
             </dd>
           </div>
           <div className="flex justify-between gap-3">
-            <dt className="text-[#8b837e]">Automatic discounts</dt>
-            <dd className="text-[#514944]">
+            <dt className="text-text-muted">Automatic discounts</dt>
+            <dd className="text-text-primary">
               −{formatMoney(cart.discountTotal, currency)}
             </dd>
           </div>
           {appliedCoupon ? (
             <div className="flex justify-between gap-3">
-              <dt className="text-[#8b837e]">Coupon ({appliedCoupon.code})</dt>
-              <dd className="text-[#514944]">
+              <dt className="text-text-muted">Coupon ({appliedCoupon.code})</dt>
+              <dd className="text-text-primary">
                 −{formatMoney(appliedCoupon.discountAmount, currency)}
               </dd>
             </div>
           ) : null}
           <div className="flex justify-between gap-3">
-            <dt className="text-[#8b837e]">Shipping Cost</dt>
-            <dd className="font-medium text-[#4d8c52]">Free</dd>
+            <dt className="text-text-muted">Shipping Cost</dt>
+            <dd className="font-medium text-status-success">Free</dd>
           </div>
         </dl>
 
         <div className="mt-4 rounded-lg bg-white px-4 py-3">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="font-cormorant text-xl font-semibold text-[#a67e6e]">
+              <p className="font-cormorant text-xl font-semibold text-brand-primary-dark">
                 Total
               </p>
-              <p className="text-[10px] text-[#9a928d]">Including taxes</p>
+              <p className="text-[10px] text-text-muted">Including taxes</p>
             </div>
-            <p className="text-lg font-semibold text-[#a67e6e]">
+            <p className="text-lg font-semibold text-brand-primary-dark">
               {formatMoney(orderTotal, currency)}
             </p>
           </div>
         </div>
 
-        <div className="mt-4 flex items-start gap-3 text-xs leading-5 text-[#8b837e]">
+        <div className="mt-4 flex items-start gap-3 text-xs leading-5 text-text-muted">
           <input
             id="checkout-terms"
             type="checkbox"
@@ -793,7 +793,7 @@ export function CheckoutForm({
               setAgreedToTerms(event.currentTarget.checked);
               setOrderError(null);
             }}
-            className="mt-1 size-4 shrink-0 accent-[#b48d7d]"
+            className="mt-1 size-4 shrink-0 accent-brand-primary"
           />
           <p>
             <label htmlFor="checkout-terms" className="cursor-pointer">
@@ -801,7 +801,7 @@ export function CheckoutForm({
             </label>
             <Link
               href="/terms-and-conditions"
-              className="text-[#4d83df] hover:underline"
+              className="text-brand-primary-dark hover:underline"
             >
               terms and conditions
             </Link>
@@ -822,22 +822,22 @@ export function CheckoutForm({
             !selectedAddress ||
             cart.items.length === 0
           }
-          className="font-cormorant mt-4 inline-flex h-16 w-full items-center justify-center gap-3 rounded-full bg-[#b48d7d] px-5 text-base font-semibold tracking-[0.08em] text-white uppercase transition-colors hover:bg-[#a77f70] disabled:cursor-not-allowed disabled:opacity-50"
+          className="font-cormorant bg-brand-primary-dark hover:bg-brand-primary-hover text-white mt-4 inline-flex h-16 w-full items-center justify-center gap-3 rounded-full px-5 text-base font-semibold tracking-[0.08em] uppercase transition-colors disabled:cursor-not-allowed disabled:opacity-50"
         >
           {orderBusy ? "Processing…" : "Pay Now"}
           <ArrowRight aria-hidden="true" className="size-5" />
         </button>
-        <p className="mt-3 text-center text-[10px] leading-4 text-[#9a928d]">
+        <p className="mt-3 text-center text-[10px] leading-4 text-text-muted">
           Demo checkout only. No payment is processed.
         </p>
         <div
           aria-label="Checkout guarantees"
-          className="mt-5 grid grid-cols-2 gap-3 text-[#827a76]"
+          className="mt-5 grid grid-cols-2 gap-3 text-text-muted"
         >
           <div className="flex items-center justify-center gap-2">
             <ShieldCheck
               aria-hidden="true"
-              className="size-7 shrink-0 text-[#c99887]"
+              className="text-brand-primary-dark size-7 shrink-0"
               strokeWidth={1.5}
             />
             <span className="text-sm leading-5">
@@ -849,7 +849,7 @@ export function CheckoutForm({
           <div className="flex items-center justify-center gap-2">
             <LockKeyhole
               aria-hidden="true"
-              className="size-7 shrink-0 text-[#c99887]"
+              className="text-brand-primary-dark size-7 shrink-0"
               strokeWidth={1.5}
             />
             <span className="text-sm leading-5">

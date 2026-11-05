@@ -125,20 +125,20 @@ export function PartnerRequestDialog() {
       }}
     >
       <DialogTrigger asChild>
-        <button className="mt-8 flex items-center justify-center gap-2 rounded-full bg-[#743238] px-6 py-3 font-medium text-white uppercase hover:bg-black">
+        <button className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white mt-8 flex items-center justify-center gap-2 rounded-full px-6 py-3 font-medium uppercase transition-colors">
           Become a Partner
           <ArrowRight size={20} aria-hidden="true" />
         </button>
       </DialogTrigger>
-      <DialogContent className="max-h-[calc(100dvh-2rem)] w-full max-w-[min(100vw-2rem,76rem)]! gap-0 overflow-y-auto rounded-4xl border-0 bg-[#fffcf9] p-6 text-[#292321] shadow-2xl sm:p-8 lg:p-14 [&>button]:top-5 [&>button]:right-5 [&>button]:size-11 [&>button]:rounded-full [&>button]:bg-[#fbf4f1] [&>button]:p-3 [&>button]:opacity-70">
+      <DialogContent className="max-h-[calc(100dvh-2rem)] w-full max-w-[min(100vw-2rem,76rem)]! gap-0 overflow-y-auto rounded-4xl border-0 bg-surface-main p-6 text-text-primary shadow-2xl sm:p-8 lg:p-14 [&>button]:top-5 [&>button]:right-5 [&>button]:size-11 [&>button]:rounded-full [&>button]:bg-surface-card [&>button]:p-3 [&>button]:opacity-70">
         <DialogHeader className="mb-8 text-left">
-          <p className="font-cormorant text-xl tracking-wide text-[#8e5947] italic">
+          <p className="font-cormorant text-xl tracking-wide text-brand-primary-dark italic">
             - partnerships
           </p>
           <DialogTitle className="font-cormorant text-4xl font-medium tracking-tight sm:text-5xl">
             Let’s Grow Together
           </DialogTitle>
-          <DialogDescription className="max-w-2xl text-sm text-[#77716e] sm:text-base">
+          <DialogDescription className="max-w-2xl text-sm text-text-muted sm:text-base">
             Tell us a little about yourself and our team will get in touch with
             you.
           </DialogDescription>
@@ -158,7 +158,7 @@ export function PartnerRequestDialog() {
                   errors.fullName ? "partner-name-error" : undefined
                 }
                 onChange={() => clearError("fullName")}
-                className="mt-2 h-14 w-full rounded-xl border border-[#eee8e5] bg-white px-5 font-sans text-base outline-none placeholder:text-[#777] focus:border-[#b99082] focus:ring-2 focus:ring-[#b99082]/20 aria-invalid:border-red-600"
+                className="mt-2 h-14 w-full rounded-xl border border-surface-border bg-white px-5 font-sans text-base outline-none placeholder:text-text-muted focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 aria-invalid:border-red-600"
                 placeholder="Enter your name"
               />
               <FieldError id="partner-name-error" message={errors.fullName} />
@@ -167,10 +167,10 @@ export function PartnerRequestDialog() {
             <label className="font-cormorant text-lg">
               Mobile Number <span aria-hidden="true">*</span>
               <span
-                className={`mt-2 flex h-14 w-full overflow-visible rounded-xl border bg-white focus-within:border-[#b99082] focus-within:ring-2 focus-within:ring-[#b99082]/20 ${
+                className={`mt-2 flex h-14 w-full overflow-visible rounded-xl border bg-white focus-within:border-brand-primary focus-within:ring-2 focus-within:ring-brand-primary/20 ${
                   errors.countryCode || errors.phoneNumber
                     ? "border-red-600"
-                    : "border-[#eee8e5]"
+                    : "border-surface-border"
                 }`}
               >
                 <CountryCodeSelector
@@ -196,7 +196,7 @@ export function PartnerRequestDialog() {
                       : undefined
                   }
                   onChange={() => clearError("phoneNumber")}
-                  className="min-w-0 flex-1 rounded-r-xl bg-transparent px-4 font-sans text-base outline-none placeholder:text-[#777]"
+                  className="min-w-0 flex-1 rounded-r-xl bg-transparent px-4 font-sans text-base outline-none placeholder:text-text-muted"
                   placeholder="Enter your mobile number"
                 />
               </span>
@@ -219,10 +219,10 @@ export function PartnerRequestDialog() {
               {partnerInterestOptions.map((option) => (
                 <label
                   key={option.value}
-                  className={`flex min-h-27 cursor-pointer flex-col justify-center rounded-2xl border px-5 py-4 transition-colors focus-within:ring-2 focus-within:ring-[#b99082]/50 ${
+                  className={`flex min-h-27 cursor-pointer flex-col justify-center rounded-2xl border px-5 py-4 transition-colors focus-within:ring-2 focus-within:ring-brand-primary/50 ${
                     selectedInterest === option.value
-                      ? "border-[#b99082] bg-[#faf4f1]"
-                      : "border-[#eee8e5] bg-white"
+                      ? "border-brand-primary bg-brand-primary-soft"
+                      : "border-surface-border bg-white"
                   }`}
                 >
                   <input
@@ -243,7 +243,7 @@ export function PartnerRequestDialog() {
                   <span className="font-cormorant text-xl font-semibold">
                     {option.label}
                   </span>
-                  <span className="mt-1 text-sm text-[#77716e]">
+                  <span className="mt-1 text-sm text-text-muted">
                     {option.description}
                   </span>
                 </label>
@@ -267,7 +267,7 @@ export function PartnerRequestDialog() {
             <button
               type="submit"
               disabled={pending}
-              className="inline-flex min-h-14 items-center justify-center gap-3 rounded-full bg-[#b99082] px-7 text-sm font-medium text-white uppercase transition-colors hover:bg-[#8e5947] disabled:cursor-wait disabled:opacity-60"
+              className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white inline-flex min-h-14 items-center justify-center gap-3 rounded-full px-7 text-sm font-medium uppercase transition-colors disabled:cursor-wait disabled:opacity-60"
             >
               {pending ? "Submitting…" : "Submit Enquiry"}
               {pending ? (
@@ -278,7 +278,7 @@ export function PartnerRequestDialog() {
                 <ArrowRight className="size-5" aria-hidden="true" />
               )}
             </button>
-            <p className="text-center text-sm text-[#9b9088]">
+            <p className="text-center text-sm text-text-muted">
               Your information will only be used to contact you regarding
               partnership opportunities.
             </p>

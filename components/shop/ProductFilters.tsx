@@ -124,7 +124,7 @@ export function ProductFilters({
         ) : null}
         <a
           href={action}
-          className="text-text-muted border-b border-[#d8cbc6] text-sm"
+          className="text-text-muted border-b border-surface-border text-sm"
         >
           Clear all
         </a>
@@ -183,7 +183,7 @@ export function ProductFilters({
       {showSubmitButton ? (
         <button
           type="submit"
-          className="bg-brand-taupe hover:bg-brand-taupe-dark mt-5 cursor-pointer border px-4 py-2 text-sm font-medium text-white"
+          className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white mt-5 cursor-pointer border px-4 py-2 text-sm font-medium"
         >
           Apply filters
         </button>

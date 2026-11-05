@@ -20,7 +20,7 @@ export function Accordion({
   const id = useId();
 
   return (
-    <div className="border-b border-[#ece5e2]">
+    <div className="border-b border-surface-border">
       <button
         type="button"
         aria-expanded={open}

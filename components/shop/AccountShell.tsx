@@ -13,12 +13,12 @@ export function AccountShell({
     <>
       <Breadcrumbs
         crumbs={[{ name: "Home", href: "/" }, { name: "My Account", href: "/account" }]}
-        className="bg-[#f8f8f8]"
+        className="bg-surface-card"
       />
-      <section className="bg-[#f8f8f8] pb-10">
+      <section className="bg-surface-card pb-10">
         <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 px-4 sm:px-6 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-5 lg:px-8">
           <aside className="h-fit rounded-2xl bg-white p-5 sm:p-7">
-            <h1 className="font-cormorant mb-4 text-center text-2xl font-semibold text-brand-espresso">
+            <h1 className="font-cormorant mb-4 text-center text-2xl font-semibold text-text-primary">
               My Account
             </h1>
             <AccountNavigation active={active} />
@@ -35,7 +35,7 @@ export function AccountShell({
 
 export function AccountPlaceholder({ title }: { title: string }) {
   return (
-    <section className="rounded-xl bg-[#f6f6f6] p-5 sm:p-7">
+    <section className="rounded-xl bg-surface-card p-5 sm:p-7">
       <h2 className="rounded-lg bg-white px-4 py-3 text-lg font-medium text-text-primary">
         {title}
       </h2>

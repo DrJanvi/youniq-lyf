@@ -3,36 +3,37 @@
  */
 :root {
   /* Brand */
-  --admin-primary: #7d6154;
-  --admin-primary-foreground: #ffffff;
-  --admin-accent-2: #b49084;
-  --admin-accent-2-foreground: #3c2a21;
-  --admin-highlight: #b49084;
-  --admin-secondary: #f6e8e3;
-  --admin-secondary-foreground: #3c2a21;
-  --admin-accent: #f6e8e3;
-  --admin-accent-foreground: #7d6154;
+  --admin-primary: var(--color-brand-primary-dark);
+  --admin-primary-foreground: var(--color-announcement-text);
+  --admin-accent-2: var(--color-brand-primary-dark);
+  --admin-accent-2-foreground: var(--color-announcement-text);
+  --admin-highlight: var(--color-brand-primary-dark);
+  --admin-secondary: var(--color-brand-primary-soft);
+  --admin-secondary-foreground: var(--color-text-primary);
+  --admin-accent: var(--color-brand-primary-soft);
+  --admin-accent-foreground: var(--color-text-primary);
 
   /* Status */
-  --admin-destructive: #a7362a;
-  --admin-success: #15803d;
-  --admin-warning: #b45309;
+  --admin-destructive: var(--color-status-error);
+  --admin-success: var(--color-status-success);
+  --admin-warning: var(--color-status-warning);
 
   /* Surfaces */
-  --admin-backdrop: #f6f6f6;
-  --admin-canvas: #faf8f7;
-  --admin-card: #ffffff;
-  --admin-foreground: #3c2a21;
-  --admin-muted: #f6f1ee;
-  --admin-muted-foreground: #75645d;
-  --admin-border: #ece5e2;
-  --admin-tint: #f6e8e3;
-  --admin-tint-warm: #fbf7f5;
+  --admin-backdrop: var(--color-surface-card);
+  --admin-canvas: var(--color-surface-main);
+  --admin-card: var(--color-surface-main);
+  --admin-foreground: var(--color-text-primary);
+  --admin-muted: var(--color-surface-card);
+  --admin-muted-foreground: var(--color-text-muted);
+  --admin-border: var(--color-surface-border);
+  --admin-tint: var(--color-brand-primary-soft);
+  --admin-tint-warm: var(--color-brand-primary-soft);
 
   /* Sidebar */
-  --admin-sidebar: #3c2a21;
-  --admin-sidebar-foreground: #f6e8e3;
-  --admin-sidebar-accent: #7d6154;
+  --admin-sidebar: var(--color-brand-primary-hover);
+  --admin-sidebar-foreground: var(--color-announcement-text);
+  --admin-sidebar-accent: var(--color-brand-primary-dark);
+  --admin-sidebar-accent-foreground: var(--color-announcement-text);
 
   --admin-radius: 0.25rem;
   --font-admin-heading: var(--font-plus-jakarta-sans);

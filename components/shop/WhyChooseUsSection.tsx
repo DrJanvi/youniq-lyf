@@ -29,7 +29,7 @@ export function WhyChooseUsSection() {
 
   return (
     <Section
-      className="relative my-22 gap-8 bg-[#FAF9F7]"
+      className="relative my-22 gap-8 bg-surface-card"
       contentClassName="flex flex-col items-center justify-center gap-6 md:gap-14 lg:flex-row py-10"
     >
       <div className="absolute top-0 h-22 w-full -translate-y-full bg-[url('/images/wave.webp')]" />
@@ -49,7 +49,7 @@ export function WhyChooseUsSection() {
         <div className="grid grid-cols-1 gap-12 gap-y-8 lg:grid-cols-2">
           {features.map((feature) => (
             <div key={feature.title} className="mb-4 flex gap-3">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#EFEBEA]">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-surface-card">
                 <Image
                   src={feature.image}
                   alt={feature.title}

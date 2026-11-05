@@ -63,9 +63,9 @@ export async function ProductListing({
 
   return (
     <div>
-      <div className="border-y-brand-taupe/10 mt-10 flex items-center justify-between gap-3 border-y py-3 md:gap-8 md:py-5">
+      <div className="border-y-brand-primary/10 mt-10 flex items-center justify-between gap-3 border-y py-3 md:gap-8 md:py-5">
         <p className="text-text-muted shrink-0 text-xs md:text-sm">
-          <span className="text-brand-taupe font-semibold">
+          <span className="text-brand-primary font-semibold">
             {result.pagination.total}
           </span>{" "}
           products
@@ -83,17 +83,17 @@ export async function ProductListing({
             hideCategory={Boolean(fixedCategory)}
           />
           <details className="group relative text-xs md:text-sm">
-            <summary className="text-text-muted flex cursor-pointer list-none items-center gap-1 rounded-full border border-[#ece5e2] px-3 py-2 md:border-0 md:px-0 md:py-0">
+            <summary className="text-text-muted flex cursor-pointer list-none items-center gap-1 rounded-full border border-surface-border px-3 py-2 md:border-0 md:px-0 md:py-0">
               Sort by:{" "}
-              <span className="text-brand-taupe font-semibold">
+              <span className="text-brand-primary font-semibold">
                 {currentSortLabel}
               </span>
               <ChevronDownIcon
                 aria-hidden="true"
-                className="text-brand-taupe size-4 shrink-0 transition-transform group-open:rotate-180"
+                className="text-brand-primary size-4 shrink-0 transition-transform group-open:rotate-180"
               />
             </summary>
-            <div className="absolute top-full right-0 z-20 mt-2 min-w-48 border border-[#ece5e2] bg-white py-2 shadow-lg">
+            <div className="absolute top-full right-0 z-20 mt-2 min-w-48 border border-surface-border bg-white py-2 shadow-lg">
               {SORTS.map((option) => (
                 <a
                   key={option.value || "newest"}
@@ -101,7 +101,7 @@ export async function ProductListing({
                   aria-current={
                     currentSort === option.value ? "page" : undefined
                   }
-                  className="text-text-muted hover:bg-[#f8f5f4] block px-4 py-2"
+                  className="text-text-muted hover:bg-surface-card block px-4 py-2"
                 >
                   {option.label}
                 </a>

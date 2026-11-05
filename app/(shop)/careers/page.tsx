@@ -20,19 +20,19 @@ export default async function CareersPage() {
     <div className="mx-auto max-w-7xl px-4 pt-6 pb-12 sm:px-6 lg:pt-8 lg:pb-16">
       <nav
         aria-label="Breadcrumb"
-        className="mb-6 flex items-center gap-2 text-xs text-[#a19a97]"
+        className="mb-6 flex items-center gap-2 text-xs text-text-muted"
       >
-        <Link href="/" className="hover:text-brand-espresso transition-colors">
+        <Link href="/" className="hover:text-text-primary transition-colors">
           Home
         </Link>
         <span aria-hidden="true">/</span>
-        <span aria-current="page" className="text-brand-espresso">
+        <span aria-current="page" className="text-text-primary">
           Careers
         </span>
       </nav>
 
       <div className="grid gap-4 lg:grid-cols-[minmax(260px,315px)_minmax(0,1fr)]">
-        <aside className="relative min-h-[360px] overflow-hidden rounded-2xl bg-[#d7c6bb] sm:min-h-[420px] lg:min-h-[500px]">
+        <aside className="relative min-h-[360px] overflow-hidden rounded-2xl bg-brand-primary-soft sm:min-h-[420px] lg:min-h-[500px]">
           <Image
             src={imageUrl ?? CAREER_PLACEHOLDER_IMAGE}
             alt="Youniqlyf fragrance campaign"
@@ -54,12 +54,12 @@ export default async function CareersPage() {
           </div>
         </aside>
 
-        <section className="rounded-2xl border border-[#f0eeec] bg-[#fcfbfa] px-5 py-7 sm:px-8 sm:py-9 lg:px-9 lg:py-8">
+        <section className="rounded-2xl border border-surface-border bg-surface-main px-5 py-7 sm:px-8 sm:py-9 lg:px-9 lg:py-8">
           <header className="mx-auto mb-6 max-w-lg text-center">
-            <h1 className="font-cormorant text-3xl font-medium tracking-[0.06em] text-[#171413] uppercase sm:text-4xl">
+            <h1 className="font-cormorant text-3xl font-medium tracking-[0.06em] text-text-primary uppercase sm:text-4xl">
               Join Our Team
             </h1>
-            <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-[#8d8581]">
+            <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-text-muted">
               Explore opportunities with us. Share your details and upload your
               resume to apply.
             </p>
