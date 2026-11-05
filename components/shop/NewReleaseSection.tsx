@@ -20,7 +20,7 @@ export function NewReleaseSection({
       <div>
         <div className="mb-9 flex items-center justify-between gap-8">
           <SectionHeading className="m-0!">New Releases</SectionHeading>
-          <button className="bg-brand-taupe hidden items-center justify-center gap-2 rounded-full px-6 py-3 text-white hover:bg-black md:flex">
+          <button className="bg-brand-primary-dark text-white hidden items-center justify-center gap-2 rounded-full px-6 py-3 hover:bg-black md:flex">
             View More
             <Image
               src="/assets/arrow.svg"
@@ -55,7 +55,7 @@ export function NewReleaseSection({
               className="lg:grid-cols-2!"
             />
 
-            <button className="bg-brand-taupe mx-auto mt-8 flex items-center justify-center gap-2 rounded-full px-6 py-3 text-white hover:bg-black md:hidden">
+            <button className="bg-brand-primary-dark text-white mx-auto mt-8 flex items-center justify-center gap-2 rounded-full px-6 py-3 hover:bg-black md:hidden">
               View More
               <Image
                 src="/assets/arrow.svg"

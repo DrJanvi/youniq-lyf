@@ -25,7 +25,7 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
   return (
     <AccountShell active="orders">
       <section className="space-y-3">
-        <h2 className="rounded-lg bg-[#f3f3f3] px-4 py-3 text-sm font-medium text-text-primary">
+        <h2 className="rounded-lg bg-surface-card px-4 py-3 text-sm font-medium text-text-primary">
           My Orders
         </h2>
         <div className="flex flex-col gap-3">
@@ -33,11 +33,11 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
             result.data.map((order: CustomerOrder) => (
               <article
                 key={order.id}
-                className="rounded-xl bg-[#fafafa] p-4 sm:p-5"
+                className="rounded-xl bg-surface-main p-4 sm:p-5"
               >
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
-                    <h3 className="font-sans text-lg font-semibold text-brand-taupe">
+                    <h3 className="font-sans text-lg font-semibold text-brand-primary">
                       Order #{formatOrderNumber(order.id)}
                     </h3>
                     <p className="mt-1 text-sm text-text-muted">
@@ -47,7 +47,7 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
                   </div>
                   <OrderStatusBadge status={order.status} />
                 </div>
-                <div className="mt-4 flex flex-col gap-4 border-t border-[#eee9e7] pt-4 sm:flex-row sm:items-end sm:justify-between">
+                <div className="mt-4 flex flex-col gap-4 border-t border-surface-border pt-4 sm:flex-row sm:items-end sm:justify-between">
                   {order.items[0] ? (
                     <div className="flex min-w-0 items-center gap-3 sm:flex-1 sm:gap-4">
                       <OrderItemThumbnail item={order.items[0]} size="sm" />
@@ -82,7 +82,7 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
                             href={order.deliveryTrackingUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="mt-1 inline-block text-xs text-brand-taupe-dark underline"
+                            className="mt-1 inline-block text-xs text-brand-primary-dark underline"
                           >
                             Track delivery
                           </a>
@@ -96,7 +96,7 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
                   )}
                   <Link
                     href={`/orders/${order.id}`}
-                    className="inline-flex shrink-0 items-center justify-center gap-2 self-end rounded-full border border-brand-taupe px-4 py-2 text-xs font-medium text-brand-taupe-dark transition-colors hover:bg-[#f8f3f1] sm:self-auto"
+                    className="inline-flex shrink-0 items-center justify-center gap-2 self-end rounded-full border border-brand-primary px-4 py-2 text-xs font-medium text-brand-primary-dark transition-colors hover:bg-brand-primary/10 sm:self-auto"
                   >
                     View Order Details
                     <ArrowRight className="size-4" aria-hidden="true" />
@@ -105,9 +105,9 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
               </article>
             ))
           ) : (
-            <div className="rounded-xl bg-[#fafafa] px-5 py-10 text-center">
+            <div className="rounded-xl bg-surface-main px-5 py-10 text-center">
               <p className="text-sm text-text-muted">You have no orders yet.</p>
-              <Link href="/products" className="mt-4 inline-block text-sm text-brand-taupe-dark underline">
+              <Link href="/products" className="mt-4 inline-block text-sm text-brand-primary-dark underline">
                 Continue shopping
               </Link>
             </div>

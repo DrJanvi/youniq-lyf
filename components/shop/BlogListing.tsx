@@ -89,7 +89,7 @@ function formatDate(value: string) {
 
 function ArticleMeta({ article }: { article: BlogArticleCard }) {
   return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-[#8b8580]">
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-text-muted">
       <span className="inline-flex items-center gap-1.5">
         <CalendarDays aria-hidden="true" className="size-3.5" />
         {formatDate(article.publishedAt)}
@@ -108,26 +108,26 @@ function FeaturedArticles({ articles }: { articles: BlogArticleCard[] }) {
 
   return (
     <Section className="py-10 sm:py-14">
-      <h2 className="mb-6 font-cormorant text-3xl leading-tight text-[#241d19] sm:text-4xl">
+      <h2 className="mb-6 font-cormorant text-3xl leading-tight text-text-primary sm:text-4xl">
         Take a look at the latest articles
       </h2>
       <div
         className={`grid gap-4 ${sideArticles.length ? "lg:grid-cols-[1.08fr_1fr]" : ""}`}
       >
-        <article className="flex flex-col overflow-hidden rounded-2xl bg-[#faf9f8] p-4 ring-1 ring-black/5 sm:p-5">
+        <article className="flex flex-col overflow-hidden rounded-2xl bg-surface-main p-4 ring-1 ring-black/5 sm:p-5">
           <div className="flex flex-col items-start">
             <ArticleMeta article={lead} />
             <Link href={`/blogs/${lead.slug}`} className="group">
-              <h3 className="mt-3 font-cormorant text-2xl leading-tight text-[#2c211d] group-hover:text-[#a98678] sm:text-3xl">
+              <h3 className="mt-3 font-cormorant text-2xl leading-tight text-text-primary group-hover:text-brand-primary-dark sm:text-3xl">
                 {lead.title}
               </h3>
             </Link>
-            <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#89817b]">
+            <p className="mt-2 line-clamp-2 text-sm leading-6 text-text-muted">
               {lead.excerpt}
             </p>
             <Link
               href={`/blogs/${lead.slug}`}
-              className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#b99586] px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-[#8d6a5e]"
+              className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-colors"
             >
               LEARN MORE <ArrowRight aria-hidden="true" className="size-4" />
             </Link>
@@ -152,7 +152,7 @@ function FeaturedArticles({ articles }: { articles: BlogArticleCard[] }) {
             {sideArticles.map((article) => (
               <article
                 key={article.id}
-                className="grid gap-4 rounded-2xl bg-[#faf9f8] p-4 ring-1 ring-black/5 sm:grid-cols-[minmax(150px,0.9fr)_1fr] sm:items-center sm:p-5"
+                className="grid gap-4 rounded-2xl bg-surface-main p-4 ring-1 ring-black/5 sm:grid-cols-[minmax(150px,0.9fr)_1fr] sm:items-center sm:p-5"
               >
                 <Link
                   href={`/blogs/${article.slug}`}
@@ -171,16 +171,16 @@ function FeaturedArticles({ articles }: { articles: BlogArticleCard[] }) {
                 <div className="flex flex-col items-start">
                   <ArticleMeta article={article} />
                   <Link href={`/blogs/${article.slug}`} className="group">
-                    <h3 className="mt-3 line-clamp-2 font-cormorant text-xl leading-tight text-[#2c211d] group-hover:text-[#a98678] sm:text-2xl">
+                    <h3 className="mt-3 line-clamp-2 font-cormorant text-xl leading-tight text-text-primary group-hover:text-brand-primary-dark sm:text-2xl">
                       {article.title}
                     </h3>
                   </Link>
-                  <p className="mt-2 line-clamp-2 text-sm leading-5 text-[#89817b]">
+                  <p className="mt-2 line-clamp-2 text-sm leading-5 text-text-muted">
                     {article.excerpt}
                   </p>
                   <Link
                     href={`/blogs/${article.slug}`}
-                    className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#b99586] px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-[#8d6a5e]"
+                    className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white mt-3 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-colors"
                   >
                     LEARN MORE{" "}
                     <ArrowRight aria-hidden="true" className="size-4" />
@@ -201,7 +201,7 @@ function StoryCard({ article }: { article: BlogArticleCard }) {
       <Link
         href={`/blogs/${article.slug}`}
         aria-label={`Read ${article.title}`}
-        className="relative mb-3 block aspect-[1.55] overflow-hidden rounded-xl bg-[#f7f3f0]"
+        className="relative mb-3 block aspect-[1.55] overflow-hidden rounded-xl bg-surface-card"
       >
         <Image
           src={article.image}
@@ -214,16 +214,16 @@ function StoryCard({ article }: { article: BlogArticleCard }) {
       </Link>
       <ArticleMeta article={article} />
       <Link href={`/blogs/${article.slug}`} className="group/title">
-        <h3 className="mt-2 line-clamp-2 font-cormorant text-xl leading-tight font-semibold text-[#2c211d] uppercase group-hover/title:text-[#a98678]">
+        <h3 className="mt-2 line-clamp-2 font-cormorant text-xl leading-tight font-semibold text-text-primary uppercase group-hover/title:text-brand-primary-dark">
           {article.title}
         </h3>
       </Link>
-      <p className="mt-2 line-clamp-2 text-sm leading-5 text-[#89817b]">
+      <p className="mt-2 line-clamp-2 text-sm leading-5 text-text-muted">
         {article.excerpt}
       </p>
       <Link
         href={`/blogs/${article.slug}`}
-        className="mt-3 inline-flex w-fit items-center gap-2 rounded-full border border-[#d8bdb2] px-4 py-2 text-[11px] font-medium text-[#a98678] transition-colors hover:bg-[#b99586] hover:text-white"
+        className="border-brand-primary/30 text-brand-primary-dark mt-3 inline-flex w-fit items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-medium transition-colors hover:bg-brand-primary-hover"
       >
         LEARN MORE <ArrowRight aria-hidden="true" className="size-4" />
       </Link>
@@ -287,10 +287,10 @@ export function BlogListing({
       <FeaturedArticles articles={featured} />
       <Section className="pb-14 sm:pb-20">
         <header className="mb-7 text-center">
-          <h2 className="font-cormorant text-4xl leading-tight text-[#241d19] sm:text-5xl">
+          <h2 className="font-cormorant text-4xl leading-tight text-text-primary sm:text-5xl">
             Latest Stories
           </h2>
-          <p className="mx-auto mt-2 max-w-xl text-xs leading-5 text-[#89817b] sm:text-sm">
+          <p className="mx-auto mt-2 max-w-xl text-xs leading-5 text-text-muted sm:text-sm">
             Thoughtful stories on fragrance, beauty, and the art of living well.
           </p>
         </header>
@@ -298,7 +298,7 @@ export function BlogListing({
           <div
             role="group"
             aria-label="Filter stories by category"
-            className="flex w-max max-w-full items-center gap-1 rounded-xl border border-[#ece8e5] bg-[#faf9f8] p-1"
+            className="flex w-max max-w-full items-center gap-1 rounded-xl border border-surface-border bg-surface-main p-1"
           >
             {CATEGORY_FILTERS.map((filter) => (
               <button
@@ -307,7 +307,7 @@ export function BlogListing({
                 aria-pressed={activeCategory === filter.value}
                 disabled={pending}
                 onClick={() => void changeCategory(filter.value)}
-                className={`shrink-0 rounded-lg px-3 py-2 text-xs transition-colors sm:px-4 ${activeCategory === filter.value ? "bg-[#b99586] text-white" : "text-[#8b8580] hover:text-[#35251f]"} disabled:cursor-wait disabled:opacity-70`}
+                className={`shrink-0 rounded-lg px-3 py-2 text-xs transition-colors sm:px-4 ${activeCategory === filter.value ? "bg-brand-primary-dark text-white" : "text-text-muted"} disabled:cursor-wait disabled:opacity-70`}
               >
                 {filter.label}
               </button>
@@ -324,7 +324,7 @@ export function BlogListing({
             ))}
           </div>
         ) : articles.length === 0 ? (
-          <p className="py-12 text-center text-sm text-[#89817b]">
+          <p className="py-12 text-center text-sm text-text-muted">
             No stories found in this category.
           </p>
         ) : null}
@@ -334,7 +334,7 @@ export function BlogListing({
               type="button"
               onClick={() => void loadMore()}
               disabled={pending}
-              className="inline-flex items-center gap-2 rounded-full bg-[#b99586] px-5 py-3 text-xs font-medium text-white transition-colors hover:bg-[#8d6a5e] disabled:cursor-wait disabled:opacity-60"
+              className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white inline-flex items-center gap-2 rounded-full px-5 py-3 text-xs font-medium transition-colors disabled:cursor-wait disabled:opacity-60"
             >
               {pending ? "Loading…" : "LOAD MORE"}
               <ArrowRight aria-hidden="true" className="size-4" />

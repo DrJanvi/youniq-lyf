@@ -5,8 +5,8 @@ import { useEffect, useState, type FormEvent } from "react";
 import { apiFetch } from "@/lib/client-api";
 
 const inputClass =
-  "w-full rounded-xl border border-[#eee7e3] bg-white px-4 py-3 text-sm text-[#2b2623] placeholder:text-[#9a918c] focus-visible:outline-2 focus-visible:outline-[#b48d7d]";
-const labelClass = "font-cormorant mb-2 block text-base font-semibold text-[#2b2623]";
+  "w-full rounded-xl border border-surface-border bg-white px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus-visible:outline-2 focus-visible:outline-brand-primary";
+const labelClass = "font-cormorant mb-2 block text-base font-semibold text-text-primary";
 
 export function ReviewModal({
   productId,
@@ -72,29 +72,29 @@ export function ReviewModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="review-modal-title"
-        className="relative max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-[28px] bg-[#fdfbfa] p-6 shadow-2xl md:p-10"
+        className="relative max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-[28px] bg-surface-main p-6 shadow-2xl md:p-10"
       >
         <button
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="absolute top-5 right-5 flex h-9 w-9 items-center justify-center rounded-full bg-[#f9ebe7] text-[#573124] transition hover:bg-[#f2dcd5]"
+          className="absolute top-5 right-5 flex h-9 w-9 items-center justify-center rounded-full bg-surface-card text-text-primary transition hover:bg-brand-primary-soft"
         >
           <X className="h-4 w-4" />
         </button>
 
         {done ? (
           <div className="py-10 text-center">
-            <h2 id="review-modal-title" className="font-cormorant text-4xl text-[#2b2623]">
+            <h2 id="review-modal-title" className="font-cormorant text-4xl text-text-primary">
               Thank you!
             </h2>
-            <p className="mt-3 text-sm text-[#766d69]">
+            <p className="mt-3 text-sm text-text-muted">
               Your review has been submitted and will appear once it is approved.
             </p>
             <button
               type="button"
               onClick={onClose}
-              className="mt-8 rounded-full bg-[#b48d7d] px-8 py-2.5 text-xs font-medium tracking-wider text-white uppercase transition hover:bg-[#a07a6a]"
+              className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white mt-8 rounded-full px-8 py-2.5 text-xs font-medium tracking-wider uppercase transition-colors"
             >
               Close
             </button>
@@ -102,10 +102,10 @@ export function ReviewModal({
         ) : (
           <form onSubmit={onSubmit} className="flex flex-col gap-5">
             <div>
-              <h2 id="review-modal-title" className="font-cormorant pr-12 text-4xl text-[#2b2623] md:text-5xl">
+              <h2 id="review-modal-title" className="font-cormorant pr-12 text-4xl text-text-primary md:text-5xl">
                 Share Your Experience
               </h2>
-              <p className="mt-2 text-sm text-[#766d69]">
+              <p className="mt-2 text-sm text-text-muted">
                 Your thoughts help others find their perfect scent.
               </p>
             </div>
@@ -124,7 +124,7 @@ export function ReviewModal({
                     className="p-0.5"
                   >
                     <Star
-                      className={`h-6 w-6 text-[#b48d7d] ${n <= (hover || rating) ? "fill-[#b48d7d]" : ""}`}
+                      className={`h-6 w-6 text-rating-gold ${n <= (hover || rating) ? "fill-rating-gold" : ""}`}
                     />
                   </button>
                 ))}
@@ -191,12 +191,12 @@ export function ReviewModal({
               <button
                 type="submit"
                 disabled={busy}
-                className="inline-flex items-center gap-2 rounded-full bg-[#b48d7d] px-8 py-3 text-xs font-medium tracking-wider text-white uppercase transition hover:bg-[#a07a6a] disabled:opacity-60"
+                className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white inline-flex items-center gap-2 rounded-full px-8 py-3 text-xs font-medium tracking-wider uppercase transition-colors disabled:opacity-60"
               >
                 {busy ? "Submitting..." : "Submit Review"}
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </button>
-              <p className="text-center text-xs text-[#9a918c]">
+              <p className="text-center text-xs text-text-muted">
                 Your email will not be published. Reviews appear after approval.
               </p>
             </div>

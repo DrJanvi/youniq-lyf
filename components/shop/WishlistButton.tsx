@@ -54,7 +54,7 @@ export function WishlistButton({
         disabled={busy}
         aria-pressed={active}
         aria-label={active ? "Remove from wishlist" : "Add to wishlist"}
-        className={`flex size-10 cursor-pointer items-center justify-center rounded-full bg-white ${active ? "text-brand-taupe" : "text-neutral-600"} opacity-20 shadow-sm transition-opacity duration-300 ease-out group-hover:opacity-100 focus-visible:opacity-100 ${className}`}
+        className={`flex size-10 cursor-pointer items-center justify-center rounded-full bg-white ${active ? "text-brand-primary" : "text-neutral-600"} opacity-20 shadow-sm transition-opacity duration-300 ease-out group-hover:opacity-100 focus-visible:opacity-100 ${className}`}
       >
         <Heart className="size-5" fill={active ? "currentColor" : "none"} />
       </button>
@@ -72,7 +72,7 @@ export function WishlistButton({
       {iconOnly ? (
         <Heart
           aria-hidden="true"
-          className={`size-5 ${active ? "text-brand-taupe" : ""}`}
+          className={`size-5 ${active ? "text-brand-primary" : ""}`}
           fill={active ? "currentColor" : "none"}
         />
       ) : active ? (

@@ -46,7 +46,7 @@ export default async function LoginPage({
         {deletionScheduled ? (
           <p
             role="status"
-            className="mb-5 rounded-xl bg-[#faf8f7] p-4 text-sm leading-6 text-text-primary"
+            className="mb-5 rounded-xl bg-surface-card p-4 text-sm leading-6 text-text-primary"
           >
             Your account deletion is scheduled. Sign in
             {deadline ? ` before ${deadline}` : " within 30 days"} to restore

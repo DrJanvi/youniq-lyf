@@ -20,7 +20,7 @@ export function ReviewList({ reviews }: { reviews: ReviewDTO[] }) {
             <Rating value={r.rating} />
           </div>
           {r.title ? (
-            <strong className="font-cormorant text-brand-espresso text-xl">
+            <strong className="font-cormorant text-text-primary text-xl">
               {r.title}
             </strong>
           ) : null}

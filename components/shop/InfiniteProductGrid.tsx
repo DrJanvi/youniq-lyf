@@ -89,7 +89,7 @@ export function InfiniteProductGrid({
           type="button"
           onClick={() => void loadNextPage()}
           disabled={isLoading}
-          className="text-brand-taupe border-b border-current text-sm font-medium disabled:opacity-50"
+          className="text-brand-primary border-b border-current text-sm font-medium disabled:opacity-50"
         >
           Load more products
         </button>
@@ -105,7 +105,7 @@ export function InfiniteProductGrid({
           <button
             type="button"
             onClick={() => void loadNextPage()}
-            className="text-brand-taupe border-b border-current text-sm font-medium"
+            className="text-brand-primary border-b border-current text-sm font-medium"
           >
             Try again
           </button>

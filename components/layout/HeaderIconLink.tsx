@@ -36,7 +36,7 @@ export function HeaderCountBadge({ count }: { count: number }) {
   return count > 0 ? (
     <span
       aria-hidden="true"
-      className="absolute -top-2 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#b98b82] px-1 text-[10px] leading-none font-bold text-white"
+      className="bg-brand-primary-dark text-white absolute -top-2 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[10px] leading-none font-bold"
     >
       {count > 99 ? "99+" : count}
     </span>

@@ -25,7 +25,7 @@ export async function PolicyContentPage({
         ]}
       />
       <Section className="mt-0! py-10 md:py-14">
-        <article className="storefront-rich-content mx-auto text-sm leading-7 text-[#77716d] sm:text-base">
+        <article className="storefront-rich-content mx-auto text-sm leading-7 text-text-muted sm:text-base">
           {content ? (
             <div
               dangerouslySetInnerHTML={{

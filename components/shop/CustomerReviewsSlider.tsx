@@ -121,7 +121,7 @@ export function CustomerReviewsSlider({
           onClick={() => scroll(-1)}
           className="bg-surface-card grid size-14 place-items-center rounded-full text-2xl transition-opacity disabled:opacity-40"
         >
-          <ArrowLeft aria-hidden="true" size={22} color="#909090" />
+          <ArrowLeft aria-hidden="true" size={22} color="var(--color-text-muted)" />
         </button>
         <button
           type="button"
@@ -130,7 +130,7 @@ export function CustomerReviewsSlider({
           onClick={() => scroll(1)}
           className="bg-surface-card grid size-14 place-items-center rounded-full text-2xl transition-opacity disabled:opacity-40"
         >
-          <ArrowRight aria-hidden="true" size={22} color="#909090" />
+          <ArrowRight aria-hidden="true" size={22} color="var(--color-text-muted)" />
         </button>
       </div>
     </div>

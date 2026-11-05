@@ -86,14 +86,14 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
             onClick={onNavigate}
             aria-current={active ? "page" : undefined}
             className={cn(
-              "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
-              active && "bg-sidebar-accent text-sidebar-foreground font-medium",
+              "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
+              active && "bg-sidebar-accent text-sidebar-accent-foreground font-medium",
             )}
           >
             <Icon
               className={cn(
                 "size-4",
-                active ? "text-accent-2" : "text-sidebar-foreground/60",
+                active ? "text-sidebar-accent-foreground" : "text-sidebar-foreground/80",
               )}
             />
             {label}
@@ -115,7 +115,7 @@ function Brand() {
           <Boxes className="size-4" />
         </span>
         Youniqlyf
-        <span className="text-sidebar-foreground/60 ml-auto rounded-md border border-white/10 px-2 py-1 text-[10px] font-medium tracking-wider uppercase">
+        <span className="text-sidebar-foreground/80 ml-auto rounded-md border border-white/10 px-2 py-1 text-[10px] font-medium tracking-wider uppercase">
           Admin
         </span>
       </Link>
@@ -139,19 +139,19 @@ function AdminFooter({
   return (
     <div className="shrink-0 border-t border-white/10 p-3">
       <div className="flex items-center gap-3 px-2 py-2">
-        <span className="bg-sidebar-accent grid size-9 shrink-0 place-items-center rounded-md text-sm font-semibold text-white">
+        <span className="bg-sidebar-accent text-sidebar-accent-foreground grid size-9 shrink-0 place-items-center rounded-md text-sm font-semibold">
           {initials}
         </span>
         <div className="min-w-0">
           <p className="truncate text-sm font-medium text-white">{name}</p>
-          <p className="text-sidebar-foreground/60 text-xs">
+          <p className="text-sidebar-foreground/80 text-xs">
             Store administrator
           </p>
         </div>
       </div>
       <Link
         href="/"
-        className="text-sidebar-foreground/70 hover:bg-sidebar-accent flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors hover:text-white"
+        className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors"
       >
         <ExternalLink className="size-4" />
         View storefront
@@ -159,7 +159,7 @@ function AdminFooter({
       <button
         type="button"
         onClick={onLogout}
-        className="text-sidebar-foreground/70 hover:bg-sidebar-accent flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors hover:text-white"
+        className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors"
       >
         <LogOut className="size-4" />
         Log out

@@ -52,7 +52,7 @@ export function AccountDeletionPanel() {
             setError(null);
             setConfirming(true);
           }}
-          className="h-10 w-auto rounded-full bg-brand-taupe px-5 text-xs font-medium uppercase tracking-wide hover:bg-brand-taupe-dark"
+          className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white h-10 w-auto rounded-full px-5 text-xs font-medium uppercase tracking-wide"
         >
           Delete My Account
           <ArrowRight className="ml-2 size-4" aria-hidden="true" />
@@ -61,7 +61,7 @@ export function AccountDeletionPanel() {
         <section
           aria-labelledby="account-delete-title"
           aria-describedby="account-delete-description"
-          className="w-full rounded-xl border border-[#e8d8d2] bg-[#fff9f7] p-4 sm:p-5"
+          className="w-full rounded-xl border border-status-error/20 bg-surface-main p-4 sm:p-5"
         >
           <h3
             id="account-delete-title"
@@ -104,7 +104,7 @@ export function AccountDeletionPanel() {
               <Button
                 type="submit"
                 disabled={busy}
-                className="h-10 w-auto rounded-full bg-[#b34242] px-5 text-xs font-medium uppercase tracking-wide hover:bg-[#983737]"
+                className="h-10 w-auto rounded-full bg-status-error px-5 text-xs font-medium uppercase tracking-wide hover:bg-status-error-dark"
               >
                 {busy ? "Scheduling..." : "Confirm Deletion"}
               </Button>

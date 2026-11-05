@@ -1,19 +1,27 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-taupe: #B49084;
-  --color-brand-taupe-dark: #7D6154;
-  --color-brand-espresso: #3C2A21;
+  --color-brand-primary: #F7621C;
+  --color-brand-primary-dark: #D0440A;
+  --color-brand-primary-hover: #B83B06;
+  --color-brand-primary-soft: #FFF0E8;
   --color-badge-sale: #F6E8E3;
   --color-badge-sale-text: #A7362A;
   --color-rating-gold: #D9822B;
+  --color-status-success: #15803D;
+  --color-status-success-soft: #F0F7EF;
+  --color-status-error: #A7362A;
+  --color-status-error-dark: #983737;
+  --color-status-error-soft: #FFF4F5;
+  --color-status-warning: #B45309;
+  --color-status-warning-soft: #FFF7ED;
   --color-surface-main: #FFFFFF;
   --color-surface-card: #F6F6F6;
   --color-surface-border: #ECECEC;
   --color-announcement-bg: #1C1C1C;
   --color-announcement-text: #FFFFFF;
   --color-text-primary: #1E1E1E;
-  --color-text-muted: #848484;
+  --color-text-muted: #766D69;
   --color-text-strike: #A3A3A3;
 }
 
@@ -31,6 +39,7 @@
   --color-popover-foreground: var(--admin-foreground);
   --color-primary: var(--admin-primary);
   --color-primary-foreground: var(--admin-primary-foreground);
+  --color-primary-hover: var(--color-brand-primary-hover);
   --color-secondary: var(--admin-secondary);
   --color-secondary-foreground: var(--admin-secondary-foreground);
   --color-muted: var(--admin-muted);
@@ -45,6 +54,7 @@
   --color-sidebar: var(--admin-sidebar);
   --color-sidebar-foreground: var(--admin-sidebar-foreground);
   --color-sidebar-accent: var(--admin-sidebar-accent);
+  --color-sidebar-accent-foreground: var(--admin-sidebar-accent-foreground);
   --color-success: var(--admin-success);
   --color-accent-2: var(--admin-accent-2);
   --color-accent-2-foreground: var(--admin-accent-2-foreground);
@@ -82,7 +92,7 @@ body {
 
 .blog-editor-content :is(h2, h3, h4),
 .blog-article-content :is(h2, h3, h4) {
-  color: #241d19;
+  color: var(--color-text-primary);
   font-family: var(--font-cormorant-garamond);
   font-weight: 600;
   line-height: 1.25;
@@ -113,7 +123,7 @@ body {
 }
 
 .storefront-rich-content :is(h2, h3, h4) {
-  color: #241d19;
+  color: var(--color-text-primary);
   font-family: var(--font-cormorant-garamond);
   font-weight: 600;
   line-height: 1.25;
@@ -144,13 +154,13 @@ body {
 }
 
 .storefront-rich-content a {
-  color: #7d6154;
+  color: var(--color-brand-primary-dark);
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
 
 .storefront-rich-content blockquote {
-  border-left: 2px solid #b49084;
+  border-left: 2px solid var(--color-brand-primary);
   padding-left: 1rem;
 }
 
@@ -162,7 +172,7 @@ body {
 }
 
 .storefront-rich-content :is(th, td) {
-  border: 1px solid #ece5e2;
+  border: 1px solid var(--color-surface-border);
   padding: 0.5rem 0.75rem;
 }
 
@@ -178,19 +188,19 @@ body {
 
 .blog-editor-content blockquote,
 .blog-article-content blockquote {
-  border-left: 3px solid #b99586;
-  color: #77716d;
+  border-left: 3px solid var(--color-brand-primary);
+  color: var(--color-text-muted);
   padding-left: 1rem;
 }
 
 .blog-editor-content hr,
 .blog-article-content hr {
-  border-color: #e7ded8;
+  border-color: var(--color-surface-border);
 }
 
 .blog-editor-content a,
 .blog-article-content a {
-  color: #9b7567;
+  color: var(--color-brand-primary-dark);
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
@@ -203,7 +213,7 @@ body {
 
 .blog-editor-content :is(th, td),
 .blog-article-content :is(th, td) {
-  border: 1px solid #e7ded8;
+  border: 1px solid var(--color-surface-border);
   padding: 0.5rem 0.75rem;
   text-align: left;
   vertical-align: top;
@@ -211,7 +221,7 @@ body {
 
 .blog-editor-content th,
 .blog-article-content th {
-  background: #f7f3f0;
+  background: var(--color-brand-primary-soft);
   font-weight: 600;
 }
 
@@ -257,13 +267,13 @@ body {
   appearance: none;
   border: 0;
   border-radius: 50%;
-  background: var(--color-brand-taupe);
+  background: var(--color-brand-primary);
   cursor: grab;
   pointer-events: auto;
 }
 
 .price-range-thumb:focus-visible::-webkit-slider-thumb {
-  outline: 2px solid var(--color-brand-espresso);
+  outline: 2px solid var(--color-text-primary);
   outline-offset: 2px;
 }
 
@@ -272,13 +282,13 @@ body {
   height: 22px;
   border: 0;
   border-radius: 50%;
-  background: var(--color-brand-taupe);
+  background: var(--color-brand-primary);
   cursor: grab;
   pointer-events: auto;
 }
 
 .price-range-thumb:focus-visible::-moz-range-thumb {
-  outline: 2px solid var(--color-brand-espresso);
+  outline: 2px solid var(--color-text-primary);
   outline-offset: 2px;
 }
 

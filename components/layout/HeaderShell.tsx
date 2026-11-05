@@ -31,20 +31,20 @@ const MORE_LINKS = [
 const DROPDOWN =
   "invisible absolute top-full z-50 w-64 origin-top translate-y-2 pt-3 opacity-0 transition duration-200 ease-out motion-reduce:transition-none group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100";
 const PANEL =
-  "relative rounded-2xl border border-surface-border bg-white/95 p-2 text-brand-espresso shadow-[0_20px_50px_-12px_rgba(60,42,33,0.25),0_4px_12px_-4px_rgba(60,42,33,0.08)] backdrop-blur-md before:absolute before:-top-1.5 before:left-8 before:size-3 before:rotate-45 before:rounded-tl-sm before:border-l before:border-t before:border-surface-border before:bg-white";
+  "relative rounded-2xl border border-surface-border bg-white/95 p-2 text-text-primary shadow-xl backdrop-blur-md before:absolute before:-top-1.5 before:left-8 before:size-3 before:rotate-45 before:rounded-tl-sm before:border-l before:border-t before:border-surface-border before:bg-white";
 const DROPDOWN_LABEL =
   "px-3 pb-1 pt-2 text-[11px] font-medium uppercase tracking-[0.18em] text-text-muted";
 const DROPDOWN_LINK =
-  "group/item relative flex items-center justify-between rounded-xl px-3 py-2.5 text-sm text-brand-espresso transition-colors duration-150 hover:bg-brand-taupe/10 hover:text-brand-taupe-dark focus-visible:bg-brand-taupe/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-taupe/50 before:absolute before:left-0 before:top-1/2 before:h-0 before:w-0.5 before:-translate-y-1/2 before:rounded-full before:bg-brand-taupe before:transition-all hover:before:h-5";
+  "group/item relative flex items-center justify-between rounded-xl px-3 py-2.5 text-sm text-text-primary transition-colors duration-150 hover:bg-brand-primary/10 hover:text-brand-primary-dark focus-visible:bg-brand-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/50 before:absolute before:left-0 before:top-1/2 before:h-0 before:w-0.5 before:-translate-y-1/2 before:rounded-full before:bg-brand-primary before:transition-all hover:before:h-5";
 const DROPDOWN_ARROW =
   "size-4 -translate-x-1 opacity-0 transition duration-150 group-hover/item:translate-x-0 group-hover/item:opacity-100";
 const TRIGGER_CHEVRON =
   "size-4 transition-transform duration-200 group-focus-within:rotate-180 group-hover:rotate-180";
 
 const MOBILE_ROW =
-  "flex items-center justify-between rounded-xl px-3 py-3.5 text-base text-brand-espresso transition-colors hover:bg-brand-taupe/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-taupe/50 [&::-webkit-details-marker]:hidden";
+  "flex items-center justify-between rounded-xl px-3 py-3.5 text-base text-text-primary transition-colors hover:bg-brand-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/50 [&::-webkit-details-marker]:hidden";
 const MOBILE_SUBLINK =
-  "flex items-center justify-between rounded-lg px-3 py-2.5 text-sm text-brand-espresso/80 transition-colors hover:bg-white hover:text-brand-taupe-dark";
+  "flex items-center justify-between rounded-lg px-3 py-2.5 text-sm text-text-primary/80 transition-colors hover:bg-white hover:text-brand-primary-dark";
 
 type HeaderShellProps = {
   categories: NavCategory[];
@@ -80,7 +80,7 @@ export function HeaderShell({
     clsx(
       MOBILE_ROW,
       pathname === href &&
-        "bg-brand-taupe/10 font-medium text-brand-taupe-dark",
+        "bg-brand-primary/10 font-medium text-brand-primary-dark",
     );
   const dismissDesktopDropdown = (event: MouseEvent<HTMLAnchorElement>) => {
     setDesktopDropdownDismissed(true);
@@ -200,7 +200,7 @@ export function HeaderShell({
                         href="/products"
                         className={clsx(
                           DROPDOWN_LINK,
-                          "text-brand-taupe-dark font-medium",
+                          "text-brand-primary-dark font-medium",
                         )}
                         onClick={dismissDesktopDropdown}
                       >
@@ -330,7 +330,7 @@ export function HeaderShell({
       >
         <div
           className={clsx(
-            "bg-brand-espresso/40 absolute inset-0 backdrop-blur-sm transition-opacity duration-300",
+            "bg-text-primary/40 absolute inset-0 backdrop-blur-sm transition-opacity duration-300",
             open ? "opacity-100" : "opacity-0",
           )}
           onClick={() => setOpen(false)}
@@ -338,7 +338,7 @@ export function HeaderShell({
         <aside
           aria-label="Menu"
           className={clsx(
-            "text-brand-espresso absolute inset-y-0 left-0 flex w-[88%] max-w-sm flex-col rounded-r-3xl bg-white shadow-2xl transition-transform duration-300 ease-out motion-reduce:transition-none",
+            "text-text-primary absolute inset-y-0 left-0 flex w-[88%] max-w-sm flex-col rounded-r-3xl bg-white shadow-2xl transition-transform duration-300 ease-out motion-reduce:transition-none",
             open ? "translate-x-0" : "-translate-x-full",
           )}
         >
@@ -348,7 +348,7 @@ export function HeaderShell({
               type="button"
               aria-label="Close menu"
               onClick={() => setOpen(false)}
-              className="bg-surface-card hover:bg-brand-taupe/15 focus-visible:ring-brand-taupe/50 flex size-10 items-center justify-center rounded-full transition-colors focus-visible:ring-2 focus-visible:outline-none"
+              className="bg-surface-card hover:bg-brand-primary/15 focus-visible:ring-brand-primary/50 flex size-10 items-center justify-center rounded-full transition-colors focus-visible:ring-2 focus-visible:outline-none"
             >
               <XMarkIcon aria-hidden="true" className="size-5" />
             </button>
@@ -391,7 +391,7 @@ export function HeaderShell({
                       href="/products"
                       className={clsx(
                         MOBILE_SUBLINK,
-                        "text-brand-taupe-dark font-medium",
+                        "text-brand-primary-dark font-medium",
                       )}
                       onClick={() => setOpen(false)}
                     >

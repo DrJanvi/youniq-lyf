@@ -32,7 +32,7 @@ export function ProductCard({
       {image ? (
         <div className="relative mb-3">
           <Link href={`/products/${product.slug}`} className="block">
-            <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-[0.875rem] bg-[#fafafa] p-[15%]">
+            <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-[0.875rem] bg-surface-main p-[15%]">
               <Image
                 src={image}
                 alt={product.title}
@@ -43,7 +43,7 @@ export function ProductCard({
               />
 
               {firstTag ? (
-                <span className="pointer-events-none absolute top-5 right-5 rounded-full bg-white px-3 py-1 text-[10px] font-medium tracking-wide text-[#3d3935] uppercase">
+                <span className="pointer-events-none absolute top-5 right-5 rounded-full bg-white px-3 py-1 text-[10px] font-medium tracking-wide text-text-primary uppercase">
                   {firstTag}
                 </span>
               ) : null}
@@ -75,7 +75,7 @@ export function ProductCard({
         <p className="text-text-muted text-xs font-medium">
           {product.category.name}
         </p>
-        <h3 className="font-cormorant group-hover:text-brand-taupe mt-1.5 line-clamp-2 min-h-14 text-lg leading-7 font-bold transition-colors duration-300 ease-out">
+        <h3 className="font-cormorant group-hover:text-brand-primary mt-1.5 line-clamp-2 min-h-14 text-lg leading-7 font-bold transition-colors duration-300 ease-out">
           {product.title}
         </h3>
       </Link>

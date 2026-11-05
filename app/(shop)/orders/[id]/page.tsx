@@ -38,9 +38,9 @@ export default async function OrderDetailsPage({
     <>
       <Breadcrumbs
         crumbs={[{ name: "Home", href: "/" }, { name: "My Account", href: "/account" }]}
-        className="bg-[#f8f8f8]"
+        className="bg-surface-card"
       />
-      <main className="bg-[#f8f8f8] pb-10">
+      <main className="bg-surface-card pb-10">
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="py-4">
             <Link
@@ -54,13 +54,13 @@ export default async function OrderDetailsPage({
           <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1.8fr)_minmax(280px,0.9fr)]">
             <div className="flex min-w-0 flex-col gap-4">
               <section className="rounded-2xl bg-white p-3 sm:p-4">
-                <h2 className="rounded-lg bg-[#f3f3f3] px-4 py-3 text-sm font-medium text-text-primary">
+                <h2 className="rounded-lg bg-surface-card px-4 py-3 text-sm font-medium text-text-primary">
                   Order Details
                 </h2>
-                <div className="mt-2 rounded-xl bg-[#fafafa] p-4 sm:p-5">
+                <div className="mt-2 rounded-xl bg-surface-main p-4 sm:p-5">
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
-                      <h3 className="font-sans text-lg font-semibold text-brand-taupe">
+                      <h3 className="font-sans text-lg font-semibold text-brand-primary">
                         Order #{formatOrderNumber(order.id)}
                       </h3>
                       <p className="mt-1 text-sm text-text-muted">
@@ -83,7 +83,7 @@ export default async function OrderDetailsPage({
                           href={order.deliveryTrackingUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="mt-1 inline-block text-brand-taupe-dark underline"
+                          className="mt-1 inline-block text-brand-primary-dark underline"
                         >
                           Track delivery
                         </a>
@@ -91,12 +91,12 @@ export default async function OrderDetailsPage({
                     </div>
                   ) : null}
 
-                  <div className="mt-5 border-t border-[#eee9e7] pt-4">
+                  <div className="mt-5 border-t border-surface-border pt-4">
                     <h3 className="text-sm font-semibold text-text-primary">
                       Items in this order
                     </h3>
                     {order.items.length ? (
-                      <ul className="mt-2 divide-y divide-[#eee9e7]">
+                      <ul className="mt-2 divide-y divide-surface-border">
                         {order.items.map((item) => (
                           <li
                             key={item.id}
@@ -130,10 +130,10 @@ export default async function OrderDetailsPage({
               </section>
 
               <section className="rounded-2xl bg-white p-4 sm:p-6">
-                <h2 className="font-cormorant text-xl font-semibold tracking-[0.08em] text-brand-espresso uppercase sm:text-2xl">
+                <h2 className="font-cormorant text-xl font-semibold tracking-[0.08em] text-text-primary uppercase sm:text-2xl">
                   Payment Information
                 </h2>
-                <dl className="mt-4 grid gap-4 rounded-xl bg-[#fafafa] p-4 sm:grid-cols-2 sm:p-5">
+                <dl className="mt-4 grid gap-4 rounded-xl bg-surface-main p-4 sm:grid-cols-2 sm:p-5">
                   <div>
                     <dt className="text-sm text-text-muted">Payment Method</dt>
                     <dd className="mt-1 text-sm font-medium text-text-primary">
@@ -152,8 +152,8 @@ export default async function OrderDetailsPage({
 
             <aside className="flex flex-col gap-4">
               {order.invoice ? (
-                <section className="rounded-2xl border border-[#eee9e7] bg-white p-5 sm:p-6">
-                  <h2 className="font-cormorant text-xl font-semibold tracking-[0.08em] text-brand-espresso uppercase sm:text-2xl">
+                <section className="rounded-2xl border border-surface-border bg-white p-5 sm:p-6">
+                  <h2 className="font-cormorant text-xl font-semibold tracking-[0.08em] text-text-primary uppercase sm:text-2xl">
                     Invoice
                   </h2>
                   <p className="mt-3 text-sm text-text-muted">
@@ -162,15 +162,15 @@ export default async function OrderDetailsPage({
                   <a
                     href={`/api/orders/${order.id}/invoice`}
                     download
-                    className="mt-4 inline-flex items-center gap-2 rounded-full bg-brand-taupe px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-taupe-dark"
+                    className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors"
                   >
                     <Download className="size-4" aria-hidden="true" />
                     Download PDF
                   </a>
                 </section>
               ) : null}
-              <section className="rounded-2xl border border-[#eee9e7] bg-white p-5 sm:p-6">
-                <h2 className="font-cormorant text-xl font-semibold tracking-[0.08em] text-brand-espresso uppercase sm:text-2xl">
+              <section className="rounded-2xl border border-surface-border bg-white p-5 sm:p-6">
+                <h2 className="font-cormorant text-xl font-semibold tracking-[0.08em] text-text-primary uppercase sm:text-2xl">
                   Order Summary
                 </h2>
                 <dl className="mt-5 space-y-3 text-sm">
@@ -188,17 +188,17 @@ export default async function OrderDetailsPage({
                       </dd>
                     </div>
                   ) : null}
-                  <div className="border-t border-[#eee9e7] pt-3">
+                  <div className="border-t border-surface-border pt-3">
                     <dt className="text-xs font-medium text-text-muted">Total</dt>
-                    <dd className="mt-1 text-right text-2xl font-semibold text-brand-espresso">
+                    <dd className="mt-1 text-right text-2xl font-semibold text-text-primary">
                       {formatMoney(order.total, order.currency)}
                     </dd>
                   </div>
                 </dl>
               </section>
 
-              <section className="rounded-2xl border border-[#eee9e7] bg-white p-5 sm:p-6">
-                <h2 className="font-cormorant text-xl font-semibold tracking-[0.08em] text-brand-espresso uppercase sm:text-2xl">
+              <section className="rounded-2xl border border-surface-border bg-white p-5 sm:p-6">
+                <h2 className="font-cormorant text-xl font-semibold tracking-[0.08em] text-text-primary uppercase sm:text-2xl">
                   Shipping Address
                 </h2>
                 <address className="mt-3 space-y-1 text-sm not-italic text-text-muted">

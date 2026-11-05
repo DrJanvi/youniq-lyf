@@ -152,7 +152,7 @@ export function AccountDetailsForm({
         <div className="relative">
           <select
             id="account-gender"
-            className="border-surface-border text-text-primary focus-visible:border-brand-taupe focus-visible:ring-brand-taupe/40 h-12 w-full appearance-none rounded-full border bg-white px-4 text-sm outline-none focus-visible:ring-2"
+            className="border-surface-border text-text-primary focus-visible:border-brand-primary focus-visible:ring-brand-primary/40 h-12 w-full appearance-none rounded-full border bg-white px-4 text-sm outline-none focus-visible:ring-2"
             aria-invalid={!!errors.gender}
             aria-describedby={
               errors.gender ? "account-gender-error" : undefined
@@ -190,7 +190,7 @@ export function AccountDetailsForm({
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="bg-brand-taupe hover:bg-brand-taupe-dark h-11 w-auto rounded-full px-5 text-xs font-medium uppercase"
+          className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white h-11 w-auto rounded-full px-5 text-xs font-medium uppercase"
         >
           {isSubmitting ? "Updating..." : "Update Account Details"}
         </Button>

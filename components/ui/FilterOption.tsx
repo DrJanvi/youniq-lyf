@@ -31,13 +31,13 @@ export function FilterOption({
       />
       <span
         aria-hidden="true"
-        className="peer-focus-visible:outline-brand-taupe peer-checked:border-brand-taupe peer-checked:bg-brand-taupe flex size-5 shrink-0 items-center justify-center rounded border border-[#d8d8d8] text-white peer-focus-visible:outline-2"
+        className="peer-focus-visible:outline-brand-primary peer-checked:border-brand-primary peer-checked:bg-brand-primary flex size-5 shrink-0 items-center justify-center rounded border border-surface-border text-white peer-focus-visible:outline-2"
       >
         <CheckIcon className="size-4" />
       </span>
       <span className="flex-1 text-sm">{label}</span>
       {count !== undefined ? (
-        <span className="text-sm text-[#aaa]">{count}</span>
+        <span className="text-sm text-text-muted">{count}</span>
       ) : null}
     </label>
   );

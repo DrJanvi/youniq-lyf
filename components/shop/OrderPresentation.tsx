@@ -51,7 +51,7 @@ export function OrderItemThumbnail({
 
   return (
     <div
-      className={`grid shrink-0 place-items-center overflow-hidden rounded-lg border border-[#f0eeed] bg-white ${
+      className={`grid shrink-0 place-items-center overflow-hidden rounded-lg border border-surface-border bg-white ${
         size === "sm" ? "size-16" : "size-20"
       }`}
     >

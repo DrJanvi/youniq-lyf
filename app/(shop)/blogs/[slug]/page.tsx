@@ -83,13 +83,13 @@ export default async function BlogArticlePage({ params }: PageProps) {
       <Breadcrumbs crumbs={crumbs} />
       <Section className="pb-7 sm:pb-10">
         <header className="mx-auto max-w-4xl py-5 text-center sm:py-8">
-          <h1 className="font-cormorant text-[clamp(2.25rem,4vw,3.5rem)] leading-[1.05] font-medium tracking-[0.045em] text-[#171412] uppercase">
+          <h1 className="font-cormorant text-[clamp(2.25rem,4vw,3.5rem)] leading-[1.05] font-medium tracking-[0.045em] text-text-primary uppercase">
             {article.title}
           </h1>
-          <p className="mt-4 flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 text-xs text-[#8b8580] sm:text-sm">
+          <p className="mt-4 flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 text-xs text-text-muted sm:text-sm">
             <span>
               Posted by{" "}
-              <span className="font-medium text-[#514740]">
+              <span className="font-medium text-text-primary">
                 Buabed Youniqlyf
               </span>
             </span>
@@ -99,7 +99,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
             <span>{article.readTime} Min Read</span>
           </p>
         </header>
-        <div className="relative aspect-[1.3] overflow-hidden rounded-2xl bg-[#f7f3f0] sm:aspect-[1.9] lg:aspect-[2.55]">
+        <div className="relative aspect-[1.3] overflow-hidden rounded-2xl bg-surface-card sm:aspect-[1.9] lg:aspect-[2.55]">
           <Image
             src={article.image}
             alt={article.title}
@@ -115,19 +115,19 @@ export default async function BlogArticlePage({ params }: PageProps) {
           url={absoluteUrl(`/blogs/${article.slug}`)}
         />
         <div
-          className="blog-article-content mx-auto mt-7 max-w-6xl text-[15px] leading-7 text-[#77716d] sm:mt-9 sm:text-base"
+          className="blog-article-content mx-auto mt-7 max-w-6xl text-[15px] leading-7 text-text-muted sm:mt-9 sm:text-base"
           dangerouslySetInnerHTML={{
             __html: sanitizeBlogContent(article.content),
           }}
         />
       </Section>
       {exploreArticles.length > 0 ? (
-        <Section className="border-t border-[#f0ece9] py-12 sm:py-16">
+        <Section className="border-t border-surface-border py-12 sm:py-16">
           <header className="mb-7 flex flex-col gap-3 sm:mb-9 sm:flex-row sm:items-end sm:justify-between">
-            <h2 className="font-cormorant text-4xl leading-tight text-[#241d19] sm:text-5xl">
+            <h2 className="font-cormorant text-4xl leading-tight text-text-primary sm:text-5xl">
               Explore more
             </h2>
-            <p className="max-w-[52ch] text-sm leading-6 text-[#89817b] sm:text-right">
+            <p className="max-w-[52ch] text-sm leading-6 text-text-muted sm:text-right">
               Discover more fragrance inspirations, beauty tips, and lifestyle
               stories curated to elevate your everyday experiences with Buabed
               Youniqlyf.
@@ -139,7 +139,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
                 <Link
                   href={`/blogs/${relatedArticle.slug}`}
                   aria-label={`Read ${relatedArticle.title}`}
-                  className="relative mb-3 block aspect-[1.55] overflow-hidden rounded-xl bg-[#f7f3f0]"
+                  className="relative mb-3 block aspect-[1.55] overflow-hidden rounded-xl bg-surface-card"
                 >
                   <Image
                     src={relatedArticle.image}
@@ -150,7 +150,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   />
                 </Link>
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-[#8b8580]">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-text-muted">
                   <span className="inline-flex items-center gap-1.5">
                     <CalendarDays aria-hidden="true" className="size-3.5" />
                     {formatCardDate(relatedArticle.publishedAt)}
@@ -164,16 +164,16 @@ export default async function BlogArticlePage({ params }: PageProps) {
                   href={`/blogs/${relatedArticle.slug}`}
                   className="group/title"
                 >
-                  <h3 className="font-cormorant mt-2 line-clamp-2 text-xl leading-tight font-semibold text-[#2c211d] uppercase group-hover/title:text-[#a98678]">
+                  <h3 className="font-cormorant mt-2 line-clamp-2 text-xl leading-tight font-semibold text-text-primary uppercase group-hover/title:text-brand-primary-dark">
                     {relatedArticle.title}
                   </h3>
                 </Link>
-                <p className="mt-2 line-clamp-2 text-sm leading-5 text-[#89817b]">
+                <p className="mt-2 line-clamp-2 text-sm leading-5 text-text-muted">
                   {relatedArticle.excerpt}
                 </p>
                 <Link
                   href={`/blogs/${relatedArticle.slug}`}
-                  className="mt-3 inline-flex w-fit items-center gap-2 rounded-full border border-[#d8bdb2] px-4 py-2 text-[11px] font-medium text-[#a98678] transition-colors hover:bg-[#b99586] hover:text-white"
+                  className="border-brand-primary/30 text-brand-primary-dark mt-3 inline-flex w-fit items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-medium transition-colors hover:bg-brand-primary-hover"
                 >
                   LEARN MORE{" "}
                   <ArrowRight aria-hidden="true" className="size-4" />

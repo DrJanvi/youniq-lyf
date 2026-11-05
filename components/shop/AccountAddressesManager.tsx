@@ -149,32 +149,32 @@ export function AccountAddressesManager({
   return (
     <div className="space-y-4">
       <section className="rounded-2xl bg-white p-3 sm:p-4">
-        <h2 className="rounded-lg bg-[#f3f3f3] px-4 py-3 text-sm font-medium text-text-primary">
+        <h2 className="rounded-lg bg-surface-card px-4 py-3 text-sm font-medium text-text-primary">
           Manage Address
         </h2>
         {addresses.length ? (
-          <div className="mt-2 overflow-hidden rounded-xl border border-[#eee9e7] bg-white">
+          <div className="mt-2 overflow-hidden rounded-xl border border-surface-border bg-white">
             {addresses.map((address) => {
               const isBusy = busyAddressId === address.id;
               const fullName = `${address.firstName} ${address.lastName}`;
               return (
                 <article
                   key={address.id}
-                  className={`flex flex-col gap-4 border-b border-[#eee9e7] p-4 last:border-b-0 sm:flex-row sm:items-center sm:justify-between sm:gap-6 ${
-                    address.isDefault ? "bg-[#faf8f7]" : "bg-white"
+                  className={`flex flex-col gap-4 border-b border-surface-border p-4 last:border-b-0 sm:flex-row sm:items-center sm:justify-between sm:gap-6 ${
+                    address.isDefault ? "bg-surface-card" : "bg-white"
                   }`}
                 >
                   <div className="flex min-w-0 items-start gap-3">
                     <span
                       className={`mt-0.5 grid size-4 shrink-0 place-items-center rounded-full border ${
                         address.isDefault
-                          ? "border-brand-taupe"
-                          : "border-[#d7d2cf]"
+                          ? "border-brand-primary"
+                          : "border-surface-border"
                       }`}
                       aria-hidden="true"
                     >
                       {address.isDefault ? (
-                        <span className="size-2 rounded-full bg-brand-taupe" />
+                        <span className="size-2 rounded-full bg-brand-primary" />
                       ) : null}
                     </span>
                     <div className="min-w-0">
@@ -183,7 +183,7 @@ export function AccountAddressesManager({
                           {fullName}
                         </h3>
                         {address.isDefault ? (
-                          <span className="rounded-full bg-[#f0e7e3] px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide text-brand-taupe-dark">
+                          <span className="rounded-full bg-surface-card px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide text-brand-primary-dark">
                             Default
                           </span>
                         ) : null}
@@ -200,7 +200,7 @@ export function AccountAddressesManager({
                         type="button"
                         onClick={() => void setDefaultAddress(address)}
                         disabled={isBusy}
-                        className="inline-flex h-9 items-center gap-2 rounded-full bg-brand-taupe px-4 text-xs font-medium text-white transition-colors hover:bg-brand-taupe-dark disabled:opacity-50"
+                        className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white inline-flex h-9 items-center gap-2 rounded-full px-4 text-xs font-medium transition-colors disabled:opacity-50"
                       >
                         {isBusy ? "Updating..." : "Set as Default"}
                         <ArrowRight className="size-4" aria-hidden="true" />
@@ -212,7 +212,7 @@ export function AccountAddressesManager({
                         setActionError(null);
                         setFormMode({ type: "edit", addressId: address.id });
                       }}
-                      className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-medium text-brand-taupe-dark transition-colors hover:bg-[#f8f3f1]"
+                      className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-medium text-brand-primary-dark transition-colors hover:bg-brand-primary/10"
                       aria-label={`Edit address for ${fullName}`}
                     >
                       Edit
@@ -222,7 +222,7 @@ export function AccountAddressesManager({
                       type="button"
                       onClick={() => void deleteAddress(address)}
                       disabled={isBusy}
-                      className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-medium text-brand-taupe-dark transition-colors hover:bg-[#f8f3f1] disabled:opacity-50"
+                      className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-medium text-brand-primary-dark transition-colors hover:bg-brand-primary/10 disabled:opacity-50"
                       aria-label={`Delete address for ${fullName}`}
                     >
                       {isBusy ? "Deleting..." : "Delete"}
@@ -234,7 +234,7 @@ export function AccountAddressesManager({
             })}
           </div>
         ) : (
-          <p className="mt-2 rounded-xl bg-[#fafafa] px-4 py-8 text-center text-sm text-text-muted">
+          <p className="mt-2 rounded-xl bg-surface-main px-4 py-8 text-center text-sm text-text-muted">
             You have no saved addresses yet.
           </p>
         )}
@@ -249,7 +249,7 @@ export function AccountAddressesManager({
             setActionError(null);
             setFormMode({ type: "add" });
           }}
-          className="mt-4 inline-flex items-center gap-2 rounded-full px-2 py-2 text-sm font-medium text-brand-taupe-dark underline decoration-brand-taupe underline-offset-4 transition-colors hover:text-brand-espresso"
+          className="mt-4 inline-flex items-center gap-2 rounded-full px-2 py-2 text-sm font-medium text-brand-primary-dark underline decoration-brand-primary underline-offset-4 transition-colors hover:text-text-primary"
         >
           <Plus className="size-4" aria-hidden="true" />
           Add New Address

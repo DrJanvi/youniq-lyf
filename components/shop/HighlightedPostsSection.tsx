@@ -69,7 +69,7 @@ export async function HighlightedPostsSection() {
         ))}
       </ul>
 
-      <button className="bg-brand-taupe mx-auto mt-8 flex items-center justify-center gap-2 rounded-full px-6 py-3 text-white hover:bg-black">
+      <button className="bg-brand-primary-dark text-white mx-auto mt-8 flex items-center justify-center gap-2 rounded-full px-6 py-3 hover:bg-black">
         Load More
         <Image
           src="/assets/arrow.svg"

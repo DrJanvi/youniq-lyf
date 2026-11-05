@@ -5,7 +5,7 @@ import { Link2, Share2 } from "lucide-react";
 import { toast } from "sonner";
 
 const buttonClassName =
-  "flex size-9 items-center justify-center rounded-full bg-[#f8f3f1] text-[#b99a8e] transition-colors hover:bg-[#efe5e1] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9b7567]";
+  "flex size-9 items-center justify-center rounded-full bg-brand-primary-soft text-brand-primary-dark transition-colors hover:bg-brand-primary/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary";
 
 export function BlogShareButtons({
   title,
@@ -39,7 +39,7 @@ export function BlogShareButtons({
 
   return (
     <div className="mt-4 flex items-center gap-2.5" role="group" aria-label="Share this article">
-      <span className="mr-1 font-cormorant text-base text-[#241d19]">Share</span>
+      <span className="mr-1 font-cormorant text-base text-text-primary">Share</span>
       <a
         href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`}
         target="_blank"

@@ -30,7 +30,7 @@ export function CartClearButton() {
         type="button"
         disabled={busy}
         onClick={clearCart}
-        className="text-[12px] text-[#766d69] underline decoration-[#cfc5c0] underline-offset-4 transition-colors hover:text-[#573124] disabled:opacity-50"
+        className="text-[12px] text-text-muted underline decoration-surface-border underline-offset-4 transition-colors hover:text-text-primary disabled:opacity-50"
       >
         Clear all
       </button>
@@ -75,10 +75,10 @@ export function CartFooterActions({ productIds }: { productIds: string[] }) {
 
   return (
     <>
-      <div className="mt-8 flex flex-wrap items-center justify-between gap-4 text-[11px] font-medium tracking-[0.08em] text-[#8a6b5e] uppercase">
+      <div className="mt-8 flex flex-wrap items-center justify-between gap-4 text-[11px] font-medium tracking-[0.08em] text-brand-primary-dark uppercase">
         <Link
           href="/products"
-          className="inline-flex items-center gap-2 hover:text-[#573124]"
+          className="inline-flex items-center gap-2 hover:text-text-primary"
         >
           <ArrowLeftIcon className="size-3" />
           Continue shopping
@@ -87,7 +87,7 @@ export function CartFooterActions({ productIds }: { productIds: string[] }) {
           type="button"
           disabled={busy}
           onClick={moveToWishlist}
-          className="inline-flex h-10.25 w-54.75 items-center justify-center gap-2 rounded-full border border-[#d8c7bf] bg-transparent px-5 text-[14px] tracking-normal transition-colors hover:bg-[#f8f2ef] disabled:opacity-50"
+          className="inline-flex h-10.25 w-54.75 items-center justify-center gap-2 rounded-full border border-surface-border bg-transparent px-5 text-[14px] tracking-normal transition-colors hover:bg-surface-card disabled:opacity-50"
         >
           Move all to wishlist
           <ArrowRightIcon className="size-3" />

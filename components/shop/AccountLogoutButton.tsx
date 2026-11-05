@@ -12,7 +12,7 @@ export function AccountLogoutButton() {
   return (
     <div className="flex flex-col gap-2">
       <Button
-        className="rounded-md bg-[#fff4f5] text-[#c62f3a] hover:bg-[#fde9eb]"
+        className="rounded-md bg-status-error-soft text-status-error hover:bg-status-error-soft"
         disabled={busy}
         onClick={async () => {
           setBusy(true);

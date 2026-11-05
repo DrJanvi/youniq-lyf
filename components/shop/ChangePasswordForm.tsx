@@ -143,7 +143,7 @@ export function ChangePasswordForm() {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="h-10 w-auto rounded-full bg-brand-taupe px-5 text-xs font-medium uppercase tracking-wide hover:bg-brand-taupe-dark"
+          className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white h-10 w-auto rounded-full px-5 text-xs font-medium uppercase tracking-wide"
         >
           {isSubmitting ? "Updating..." : "Update Password"}
           <ArrowRight className="ml-2 size-4" aria-hidden="true" />

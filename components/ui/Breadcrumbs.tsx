@@ -29,8 +29,8 @@ export function Breadcrumbs({
                 href={c.href}
                 className={clsx(
                   i === crumbs.length - 1
-                    ? "text-[#504B48]"
-                    : "text-[#9B9591] hover:underline",
+                    ? "text-text-primary"
+                    : "text-text-muted hover:underline",
                 )}
               >
                 {c.name}
@@ -39,7 +39,7 @@ export function Breadcrumbs({
               <span aria-current="page">{c.name}</span>
             )}
             {i < crumbs.length - 1 ? (
-              <span className="text-[#9B9591]">{"/"}</span>
+              <span className="text-text-muted">{"/"}</span>
             ) : null}
           </li>
         ))}
