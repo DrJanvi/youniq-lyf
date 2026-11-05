@@ -1,4 +1,5 @@
 import { ApiError } from "@/lib/http";
+import { getVariantGalleryImages } from "@/lib/product-images";
 import type { Prisma } from "@prisma/client";
 
 type CartOrderLine = {
@@ -27,9 +28,10 @@ export function snapshotOrderItem(line: CartOrderLine) {
       ? {
           variantName: line.variant.name,
           variantColor: line.variant.color,
-          variantImages: line.variant.images.length
-            ? line.variant.images
-            : line.product.images,
+          variantImages: getVariantGalleryImages(
+            line.product.images,
+            line.variant.images,
+          ),
         }
       : {}),
     unitPrice: line.variant?.finalPrice ?? line.product.finalPrice,

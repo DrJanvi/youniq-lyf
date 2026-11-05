@@ -5,6 +5,7 @@ import { ProductPurchaseActions } from "@/components/shop/ProductPurchaseActions
 import { WishlistButton } from "@/components/shop/WishlistButton";
 import { PriceTag } from "@/components/ui/PriceTag";
 import { Rating } from "@/components/ui/Rating";
+import { getVariantGalleryImages } from "@/lib/product-images";
 import type { ProductDTO } from "@/services/product";
 import { RotateCcw, ShieldCheck, Truck } from "lucide-react";
 import Link from "next/link";
@@ -28,8 +29,14 @@ export function ProductDetailsPanel({
     null,
   );
   const displayPrice = selectedVariant ?? lowestVariant ?? product;
-  const galleryImages =
-    selectedVariant?.images.length ? selectedVariant.images : product.images;
+  const galleryVariantImages = selectedVariant
+    ? selectedVariant.images
+    : product.variants.flatMap((variant) => variant.images);
+  const galleryImages = getVariantGalleryImages(
+    product.images,
+    galleryVariantImages,
+    Boolean(selectedVariant),
+  );
   const selectedStock = product.hasVariants
     ? (selectedVariant?.stock ?? 0)
     : product.stock;
