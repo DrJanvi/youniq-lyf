@@ -56,7 +56,21 @@ export default async function AdminOrderPage({ params }: { params: Promise<{ id:
                 <TableBody>
                   {order.items.map((i) => (
                     <TableRow key={i.id}>
-                      <TableCell className="font-medium">{i.title}</TableCell>
+                      <TableCell>
+                        <p className="font-medium">{i.title}</p>
+                        {i.variantName ? (
+                          <p className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                            <span
+                              aria-hidden="true"
+                              className="size-3 rounded-full border border-border"
+                              style={{
+                                backgroundColor: i.variantColor ?? undefined,
+                              }}
+                            />
+                            Color: {i.variantName}
+                          </p>
+                        ) : null}
+                      </TableCell>
                       <TableCell className="text-right tabular-nums">
                         {money(i.unitPrice)}
                       </TableCell>

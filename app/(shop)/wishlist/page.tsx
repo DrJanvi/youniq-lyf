@@ -129,12 +129,23 @@ export default async function WishlistPage({
                 </span>
                 <span role="columnheader" aria-label="Actions" />
               </div>
-              {result.data.map(({ product, createdAt }) => (
-                <div
-                  role="row"
-                  key={product.id}
-                  className="grid grid-cols-2 gap-x-3 gap-y-3 border-b border-surface-border py-4 sm:gap-x-5 lg:grid-cols-[minmax(300px,1.7fr)_110px_150px_190px_136px] lg:items-center lg:gap-x-0 lg:px-1 lg:py-3.5"
-                >
+              {result.data.map(({ product, createdAt }) => {
+                const lowestVariant = product.variants.reduce<
+                  (typeof product.variants)[number] | null
+                >(
+                  (lowest, variant) =>
+                    !lowest || variant.finalPrice < lowest.finalPrice
+                      ? variant
+                      : lowest,
+                  null,
+                );
+                const displayPrice = lowestVariant ?? product;
+                return (
+                  <div
+                    role="row"
+                    key={product.id}
+                    className="grid grid-cols-2 gap-x-3 gap-y-3 border-b border-surface-border py-4 sm:gap-x-5 lg:grid-cols-[minmax(300px,1.7fr)_110px_150px_190px_136px] lg:items-center lg:gap-x-0 lg:px-1 lg:py-3.5"
+                  >
                   <div
                     role="cell"
                     className="col-span-2 flex min-w-0 items-center gap-2 lg:col-span-1 lg:gap-3"
@@ -184,7 +195,8 @@ export default async function WishlistPage({
                       Price
                     </span>
                     <span className="whitespace-nowrap">
-                      {formatMoney(product.finalPrice, product.currency)}
+                      {lowestVariant ? "From " : ""}
+                      {formatMoney(displayPrice.finalPrice, product.currency)}
                     </span>
                   </div>
 
@@ -224,12 +236,15 @@ export default async function WishlistPage({
                   >
                     <WishlistAddToCartButton
                       productId={product.id}
+                      productSlug={product.slug}
                       title={product.title}
                       stock={product.stock}
+                      requiresVariant={product.hasVariants}
                     />
                   </div>
-                </div>
-              ))}
+                  </div>
+                );
+              })}
             </div>
           ) : (
             <div className="py-12 text-center" role="status">

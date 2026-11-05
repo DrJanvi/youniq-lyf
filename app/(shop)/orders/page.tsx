@@ -55,6 +55,19 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
                         <p className="font-cormorant line-clamp-2 text-base font-semibold text-text-primary">
                           {order.items[0].title}
                         </p>
+                        {order.items[0].variantName ? (
+                          <p className="mt-1 flex items-center gap-2 text-xs text-text-muted">
+                            <span
+                              aria-hidden="true"
+                              className="size-3 rounded-full border border-surface-border"
+                              style={{
+                                backgroundColor:
+                                  order.items[0].variantColor ?? undefined,
+                              }}
+                            />
+                            Color: {order.items[0].variantName}
+                          </p>
+                        ) : null}
                         <p className="mt-1 text-sm text-text-muted">
                           Qty: {order.items[0].quantity}
                           {order.items.length > 1

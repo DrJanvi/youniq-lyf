@@ -12,6 +12,9 @@ import { useState } from "react";
 
 type Props = {
   productId: string;
+  variantId: string | null;
+  variantName: string | null;
+  variantColor: string | null;
   slug: string;
   title: string;
   image?: string;
@@ -34,13 +37,20 @@ export function CartItemRow(p: Props) {
     setError(null);
     try {
       if (next < 1)
-        await apiFetch(`/api/cart?productId=${p.productId}`, {
+        await apiFetch(
+          `/api/cart?productId=${encodeURIComponent(p.productId)}${p.variantId ? `&variantId=${encodeURIComponent(p.variantId)}` : ""}`,
+          {
           method: "DELETE",
-        });
+          },
+        );
       else
         await apiFetch("/api/cart", {
           method: "POST",
-          json: { productId: p.productId, quantity: next },
+          json: {
+            productId: p.productId,
+            ...(p.variantId ? { variantId: p.variantId } : {}),
+            quantity: next,
+          },
         });
       router.refresh();
     } catch (e) {
@@ -79,6 +89,16 @@ export function CartItemRow(p: Props) {
             {p.title}
           </Link>
           <p className="mt-1 text-[12px] text-text-muted">{p.category}</p>
+          {p.variantName ? (
+            <p className="mt-1 flex items-center gap-2 text-xs text-text-muted">
+              <span
+                aria-hidden="true"
+                className="size-3 rounded-full border border-surface-border"
+                style={{ backgroundColor: p.variantColor ?? undefined }}
+              />
+              Color: {p.variantName}
+            </p>
+          ) : null}
           <p className="mt-2 text-[11px] font-medium text-status-success">
             {p.stock > 0 ? "In stock" : "Out of stock"}
           </p>

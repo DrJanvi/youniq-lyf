@@ -15,6 +15,19 @@ const include = {
   category: { select: { id: true, name: true, slug: true } },
   brand: { select: { id: true, name: true, slug: true } },
   productType: { select: { id: true, name: true, slug: true } },
+  variants: {
+    where: { isActive: true },
+    select: {
+      id: true,
+      name: true,
+      color: true,
+      images: true,
+      priceOverride: true,
+      stock: true,
+    },
+    orderBy: { createdAt: "asc" },
+  },
+  _count: { select: { variants: true } },
   tags: { include: { tag: true } },
 } satisfies Prisma.ProductInclude;
 
@@ -52,6 +65,15 @@ type CachedProductRow = {
   createdAt: string;
   categoryId: string;
   price: number;
+  variantCount: number;
+  variants: {
+    id: string;
+    name: string;
+    color: string;
+    images: unknown;
+    priceOverride: number | null;
+    stock: number;
+  }[];
   category: { id: string; name: string; slug: string };
   brand: { id: string; name: string; slug: string } | null;
   productType: { id: string; name: string; slug: string } | null;
@@ -68,6 +90,8 @@ export type ProductDTO = {
   aboutIntro: string;
   currency: string;
   stock: number;
+  hasVariants: boolean;
+  variants: ProductVariantDTO[];
   inStock: boolean;
   gender: string;
   rating: number;
@@ -83,6 +107,15 @@ export type ProductDTO = {
   brand: { id: string; name: string; slug: string } | null;
   productType: { id: string; name: string; slug: string } | null;
   tags: string[];
+} & Pricing;
+
+export type ProductVariantDTO = {
+  id: string;
+  name: string;
+  color: string;
+  images: string[];
+  priceOverride: number | null;
+  stock: number;
 } & Pricing;
 
 export async function getActiveRules(): Promise<DiscountRule[]> {
@@ -133,6 +166,15 @@ function toCachedProduct(p: ProductRow): CachedProductRow {
     createdAt: p.createdAt.toISOString(),
     categoryId: p.categoryId,
     price: Number(p.price),
+    variantCount: p._count.variants,
+    variants: p.variants.map((variant) => ({
+      id: variant.id,
+      name: variant.name,
+      color: variant.color,
+      images: variant.images,
+      priceOverride: variant.priceOverride === null ? null : Number(variant.priceOverride),
+      stock: variant.stock,
+    })),
     category: p.category,
     brand: p.brand,
     productType: p.productType,
@@ -144,6 +186,7 @@ export function toDTO(
   p: CachedProductRow,
   rules: DiscountRule[],
   stock = p.stock,
+  variantStocks?: Map<string, number>,
 ): ProductDTO {
   const aboutPoints = Array.isArray(p.aboutPoints)
     ? p.aboutPoints.flatMap((point) => {
@@ -171,6 +214,21 @@ export function toDTO(
     aboutIntro: p.aboutIntro ?? "",
     currency: p.currency,
     stock,
+    hasVariants: p.variantCount > 0,
+    variants: p.variants.map((variant) => {
+      const price = variant.priceOverride ?? p.price;
+      return {
+        id: variant.id,
+        name: variant.name,
+        color: variant.color,
+        images: Array.isArray(variant.images)
+          ? variant.images.filter((image): image is string => typeof image === "string")
+          : [],
+        priceOverride: variant.priceOverride,
+        stock: variantStocks?.get(variant.id) ?? variant.stock,
+        ...computePricing({ id: p.id, categoryId: p.categoryId, price }, rules),
+      };
+    }),
     inStock: stock > 0,
     gender: p.gender,
     rating: Number(p.rating),
@@ -188,6 +246,15 @@ export function toDTO(
     tags: p.tags.map((t) => t.tag.slug),
     ...computePricing({ id: p.id, categoryId: p.categoryId, price: p.price }, rules),
   };
+}
+
+async function getActiveVariantStocks(productIds: string[]) {
+  if (!productIds.length) return new Map<string, number>();
+  const rows = await prisma.productVariant.findMany({
+    where: { productId: { in: productIds }, isActive: true },
+    select: { id: true, stock: true },
+  });
+  return new Map(rows.map(({ id, stock }) => [id, stock]));
 }
 
 export type ProductFilters = {
@@ -349,20 +416,22 @@ async function getCachedPublicProductPage(
 async function applyLivePricingAndStock(rows: CachedProductRow[]) {
   if (!rows.length) return [];
   await connection();
-  const [rules, stocks] = await Promise.all([
+  const ids = rows.map(({ id }) => id);
+  const [rules, stocks, variantStocks] = await Promise.all([
     getActiveRules(),
     prisma.product.findMany({
       where: {
         ...STOREFRONT_PRODUCT_WHERE,
-        id: { in: rows.map(({ id }) => id) },
+        id: { in: ids },
       },
       select: { id: true, stock: true },
     }),
+    getActiveVariantStocks(ids),
   ]);
   const stockById = new Map(stocks.map(({ id, stock }) => [id, stock]));
   return rows
     .filter(({ id }) => stockById.has(id))
-    .map((row) => toDTO(row, rules, stockById.get(row.id)));
+    .map((row) => toDTO(row, rules, stockById.get(row.id), variantStocks));
 }
 
 /**
@@ -428,19 +497,22 @@ export async function getProductBySlug(slug: string, opts: { includeInactive?: b
       prisma.product.findUnique({ where: { slug }, include }),
       getActiveRules(),
     ]);
-    return row ? toDTO(toCachedProduct(row), rules) : null;
+    if (!row) return null;
+    const variantStocks = await getActiveVariantStocks([row.id]);
+    return toDTO(toCachedProduct(row), rules, row.stock, variantStocks);
   }
   const row = await getCachedPublicProductBySlug(slug);
   if (!row) return null;
   await connection();
-  const [rules, current] = await Promise.all([
+  const [rules, current, variantStocks] = await Promise.all([
     getActiveRules(),
     prisma.product.findUnique({
       where: { id: row.id, ...STOREFRONT_PRODUCT_WHERE },
       select: { stock: true },
     }),
+    getActiveVariantStocks([row.id]),
   ]);
-  return current ? toDTO(row, rules, current.stock) : null;
+  return current ? toDTO(row, rules, current.stock, variantStocks) : null;
 }
 
 async function getCachedPublicProductBySlug(slug: string) {
@@ -484,7 +556,9 @@ export async function getProductById(id: string) {
     prisma.product.findUnique({ where: { id }, include }),
     getActiveRules(),
   ]);
-  return row ? toDTO(toCachedProduct(row), rules) : null;
+  if (!row) return null;
+  const variantStocks = await getActiveVariantStocks([row.id]);
+  return toDTO(toCachedProduct(row), rules, row.stock, variantStocks);
 }
 
 export async function getProductsByIds(ids: string[]) {
@@ -524,14 +598,96 @@ async function syncTags(productId: string, tags: string[]) {
   ]);
 }
 
+type VariantInput = z.infer<typeof productInputSchema>["variants"][number];
+
+async function syncVariants(
+  tx: Prisma.TransactionClient,
+  productId: string,
+  variants: VariantInput[],
+) {
+  const existing = await tx.productVariant.findMany({
+    where: { productId },
+    select: { id: true, isActive: true },
+  });
+  const existingIds = new Set(existing.map(({ id }) => id));
+  const submittedIds = variants.flatMap((variant) => variant.id ? [variant.id] : []);
+  if (new Set(submittedIds).size !== submittedIds.length) {
+    throw new ApiError(400, "A variant can only be included once");
+  }
+  if (submittedIds.some((id) => !existingIds.has(id))) {
+    throw new ApiError(400, "A variant does not belong to this product");
+  }
+
+  for (const variant of variants) {
+    const { id, ...data } = variant;
+    const variantData = { ...data, priceOverride: data.priceOverride ?? null };
+    if (id) {
+      await tx.productVariant.update({ where: { id }, data: variantData });
+    } else {
+      await tx.productVariant.create({ data: { ...variantData, productId } });
+    }
+  }
+
+  const submittedIdSet = new Set(submittedIds);
+  const removedIds = existing
+    .filter(({ id, isActive }) => isActive && !submittedIdSet.has(id))
+    .map(({ id }) => id);
+  if (removedIds.length) {
+    await tx.productVariant.updateMany({
+      where: { id: { in: removedIds } },
+      data: { isActive: false },
+    });
+  }
+
+  const activeVariants = await tx.productVariant.findMany({
+    where: { productId, isActive: true },
+    select: { id: true, stock: true },
+  });
+  const inactiveVariants = await tx.productVariant.findMany({
+    where: { productId, isActive: false },
+    select: { id: true },
+  });
+  if (inactiveVariants.length) {
+    await tx.cartItem.deleteMany({
+      where: { productId, variantId: { in: inactiveVariants.map(({ id }) => id) } },
+    });
+  }
+  if (activeVariants.length) {
+    await tx.cartItem.deleteMany({ where: { productId, variantId: null } });
+  }
+
+  return {
+    hasVariantRecords: existing.length > 0 || variants.length > 0,
+    stock: activeVariants.reduce((total, variant) => total + variant.stock, 0),
+  };
+}
+
 export async function createProduct(input: z.infer<typeof productInputSchema>) {
   await assertLiveTaxonomyReferences(input);
   const slug = await uniqueSlug(input.slug || input.title, async (s) =>
     Boolean(await prisma.product.findUnique({ where: { slug: s }, select: { id: true } })),
   );
-  const { tags, ...rest } = input;
+  const { tags, variants, ...rest } = input;
+  const hasVariantRecords = variants.length > 0;
+  const stock = hasVariantRecords
+    ? variants.reduce((total, variant) => total + (variant.isActive ? variant.stock : 0), 0)
+    : rest.stock;
   const row = await prisma.product.create({
-    data: { ...rest, slug, brandId: rest.brandId || null, productTypeId: rest.productTypeId || null },
+    data: {
+      ...rest,
+      stock,
+      slug,
+      brandId: rest.brandId || null,
+      productTypeId: rest.productTypeId || null,
+      variants: variants.length
+        ? {
+            create: variants.map((variant) => ({
+              ...variant,
+              priceOverride: variant.priceOverride ?? null,
+            })),
+          }
+        : undefined,
+    },
   });
   await syncTags(row.id, tags);
   const product = await getProductById(row.id);
@@ -540,9 +696,12 @@ export async function createProduct(input: z.infer<typeof productInputSchema>) {
 }
 
 export async function updateProduct(id: string, input: z.infer<typeof productUpdateSchema>) {
-  const existing = await prisma.product.findUnique({ where: { id } });
+  const existing = await prisma.product.findUnique({
+    where: { id },
+    include: { _count: { select: { variants: true } } },
+  });
   if (!existing) throw new ApiError(404, "Product not found");
-  const { tags, slug, ...rest } = input;
+  const { tags, slug, variants, stock: requestedStock, ...rest } = input;
   await assertLiveTaxonomyReferences({
     categoryId: rest.categoryId ?? existing.categoryId,
     brandId: rest.brandId === undefined ? existing.brandId : rest.brandId,
@@ -554,14 +713,49 @@ export async function updateProduct(id: string, input: z.infer<typeof productUpd
       s !== existing.slug && Boolean(await prisma.product.findUnique({ where: { slug: s }, select: { id: true } })),
     );
   }
-  await prisma.product.update({
-    where: { id },
-    data: {
-      ...rest,
-      ...(nextSlug ? { slug: nextSlug } : {}),
-      ...("brandId" in rest ? { brandId: rest.brandId || null } : {}),
-      ...("productTypeId" in rest ? { productTypeId: rest.productTypeId || null } : {}),
-    },
+  if (variants?.length && existing._count.variants === 0) {
+    const pendingLegacyItems = await prisma.orderItem.count({
+      where: {
+        productId: id,
+        variantId: null,
+        order: { is: { status: "PENDING", deletedAt: null } },
+      },
+    });
+    if (pendingLegacyItems) {
+      throw new ApiError(
+        409,
+        "Decide pending orders for this product before adding color variants",
+      );
+    }
+  }
+  await prisma.$transaction(async (tx) => {
+    let stock = requestedStock;
+    let updateStock = false;
+    if (variants !== undefined) {
+      const synced = await syncVariants(tx, id, variants);
+      if (synced.hasVariantRecords) {
+        stock = synced.stock;
+        updateStock = true;
+      } else if (requestedStock !== undefined) {
+        updateStock = true;
+      }
+    } else if (
+      existing._count.variants === 0 &&
+      requestedStock !== undefined
+    ) {
+      updateStock = true;
+    }
+
+    await tx.product.update({
+      where: { id },
+      data: {
+        ...rest,
+        ...(updateStock ? { stock } : {}),
+        ...(nextSlug ? { slug: nextSlug } : {}),
+        ...("brandId" in rest ? { brandId: rest.brandId || null } : {}),
+        ...("productTypeId" in rest ? { productTypeId: rest.productTypeId || null } : {}),
+      },
+    });
   });
   if (tags) await syncTags(id, tags);
   const product = await getProductById(id);

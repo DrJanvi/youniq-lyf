@@ -27,6 +27,15 @@ export function ProductCard({
   const firstTag = tagSlug
     ? (TAG_LABELS[tagSlug] ?? tagSlug.replace(/-/g, " "))
     : null;
+  const lowestVariantPrice = product.variants.reduce<
+    (typeof product.variants)[number] | null
+  >(
+    (lowest, variant) => !lowest || variant.finalPrice < lowest.finalPrice ? variant : lowest,
+    null,
+  );
+  const displayPrice = lowestVariantPrice ?? product;
+  const displayDiscountPercent =
+    lowestVariantPrice?.discountPercent ?? product.discountPercent;
   return (
     <article className="group border-surface-border flex flex-col gap-2 rounded-2xl border bg-white p-3">
       {image ? (
@@ -48,9 +57,9 @@ export function ProductCard({
                 </span>
               ) : null}
 
-              {product.discountPercent > 0 ? (
+              {displayDiscountPercent > 0 ? (
                 <span className="bg-badge-sale text-badge-sale-text pointer-events-none absolute top-5 left-5 rounded-full px-4 py-2 text-sm font-medium uppercase">
-                  {product.discountPercent}% OFF
+                  {displayDiscountPercent}% OFF
                 </span>
               ) : null}
             </div>
@@ -64,6 +73,8 @@ export function ProductCard({
             <div className="pointer-events-auto">
               <AddToCartButton
                 productId={product.id}
+                productHref={`/products/${product.slug}`}
+                requiresVariant={product.hasVariants}
                 disabled={!product.inStock}
                 overlay
               />
@@ -83,14 +94,21 @@ export function ProductCard({
         <Rating value={product.rating} count={product.reviewCount} />
       ) : null}
       <div className="flex items-center justify-between gap-2">
-        <PriceTag
-          price={product.price}
-          finalPrice={product.finalPrice}
-          currency={product.currency}
-        />
+        <div className="flex items-center gap-1">
+          {lowestVariantPrice ? (
+            <span className="text-[10px] font-medium text-text-muted">From</span>
+          ) : null}
+          <PriceTag
+            price={displayPrice.price}
+            finalPrice={displayPrice.finalPrice}
+            currency={product.currency}
+          />
+        </div>
         <div className="hidden shrink-0 md:block">
           <AddToCartButton
             productId={product.id}
+            productHref={`/products/${product.slug}`}
+            requiresVariant={product.hasVariants}
             disabled={!product.inStock}
             iconOnly
           />
@@ -99,6 +117,8 @@ export function ProductCard({
       <div className="mb-2 flex items-center gap-2 md:hidden">
         <AddToCartButton
           productId={product.id}
+          productHref={`/products/${product.slug}`}
+          requiresVariant={product.hasVariants}
           disabled={!product.inStock}
           overlay
           className="flex-1 justify-center opacity-100!"

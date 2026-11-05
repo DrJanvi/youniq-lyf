@@ -8,12 +8,16 @@ import { useState } from "react";
 
 export function AddToCartButton({
   productId,
+  productHref,
+  requiresVariant,
   disabled,
   className = "",
   overlay = false,
   iconOnly = false,
 }: {
   productId: string;
+  productHref: string;
+  requiresVariant: boolean;
   disabled?: boolean;
   className?: string;
   overlay?: boolean;
@@ -25,14 +29,24 @@ export function AddToCartButton({
   const [error, setError] = useState<string | null>(null);
 
   async function add() {
+    if (requiresVariant) {
+      router.push(productHref);
+      return;
+    }
     setState("busy");
     setError(null);
     try {
       const cart = await apiFetch<{
-        items: { product: { id: string }; quantity: number }[];
+        items: {
+          product: { id: string };
+          variantId: string | null;
+          quantity: number;
+        }[];
       }>("/api/cart");
       const current =
-        cart.items.find((i) => i.product.id === productId)?.quantity ?? 0;
+        cart.items.find(
+          (item) => item.product.id === productId && item.variantId === null,
+        )?.quantity ?? 0;
       await apiFetch("/api/cart", {
         method: "POST",
         json: { productId, quantity: current + 1 },
@@ -52,6 +66,8 @@ export function AddToCartButton({
   if (iconOnly) {
     const label = disabled
       ? "Out of stock"
+      : requiresVariant
+        ? "Choose a color"
       : state === "added"
         ? "Added to cart"
         : "Add to cart";
@@ -93,10 +109,12 @@ export function AddToCartButton({
       >
         {disabled
           ? "Out of stock"
+          : requiresVariant
+            ? "Choose color"
           : state === "added"
             ? "Added ✓"
             : "Add to cart"}
-        {!disabled && state !== "added" ? (
+        {!disabled && !requiresVariant && state !== "added" ? (
           <ArrowRight className="size-4" />
         ) : null}
       </button>
@@ -112,6 +130,8 @@ export function AddToCartButton({
       >
         {disabled
           ? "Out of stock"
+          : requiresVariant
+            ? "Choose color"
           : state === "added"
             ? "Added ✓"
             : "Add to cart"}

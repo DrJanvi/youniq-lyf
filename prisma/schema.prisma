@@ -189,9 +189,10 @@ model Product {
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
 
-  category    Category       @relation(fields: [categoryId], references: [id])
-  brand       Brand?         @relation(fields: [brandId], references: [id])
-  productType ProductType?   @relation(fields: [productTypeId], references: [id])
+  category    Category         @relation(fields: [categoryId], references: [id])
+  brand       Brand?           @relation(fields: [brandId], references: [id])
+  productType ProductType?     @relation(fields: [productTypeId], references: [id])
+  variants    ProductVariant[]
   tags        ProductTag[]
   discounts   Discount[]
   reviews     Review[]
@@ -208,6 +209,25 @@ model Product {
   @@index([title])
   @@index([deletedAt])
   @@index([deletedByTaxonomy])
+}
+
+model ProductVariant {
+  id            String   @id @default(uuid())
+  productId     String
+  name          String   @db.VarChar(120)
+  color         String   @db.VarChar(7)
+  images        Json
+  priceOverride Decimal? @db.Decimal(10, 2)
+  stock         Int      @default(0)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+
+  @@index([productId, isActive])
 }
 
 model ProductTag {
@@ -288,14 +308,17 @@ model Cart {
 }
 
 model CartItem {
-  id        String  @id @default(uuid())
-  cartId    String
-  productId String
-  quantity  Int     @default(1)
-  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id         String          @id @default(uuid())
+  cartId     String
+  productId  String
+  variantId  String?
+  variantKey String          @default("")
+  quantity   Int             @default(1)
+  cart       Cart            @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product    Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variant    ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
 
-  @@unique([cartId, productId])
+  @@unique([cartId, productId, variantKey])
 }
 
 model WishlistItem {
@@ -363,17 +386,17 @@ model Order {
 }
 
 model Invoice {
-  id            String            @id @default(uuid())
-  sequence      Int               @unique @default(autoincrement())
-  orderId       String            @unique
-  recipientEmail String?           @db.VarChar(190)
-  emailStatus   InvoiceEmailStatus @default(PENDING)
-  emailAttempts Int               @default(0)
-  lastAttemptAt DateTime?
-  lastError     String?           @db.Text
-  sentAt        DateTime?
-  issuedAt      DateTime          @default(now())
-  order         Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  id             String             @id @default(uuid())
+  sequence       Int                @unique @default(autoincrement())
+  orderId        String             @unique
+  recipientEmail String?            @db.VarChar(190)
+  emailStatus    InvoiceEmailStatus @default(PENDING)
+  emailAttempts  Int                @default(0)
+  lastAttemptAt  DateTime?
+  lastError      String?            @db.Text
+  sentAt         DateTime?
+  issuedAt       DateTime           @default(now())
+  order          Order              @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   @@index([emailStatus, lastAttemptAt])
 }
@@ -390,14 +413,19 @@ model OrderDeliveryAttempt {
 }
 
 model OrderItem {
-  id        String  @id @default(uuid())
-  orderId   String
-  productId String
-  title     String
-  unitPrice Decimal @db.Decimal(10, 2)
-  quantity  Int
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id])
+  id            String          @id @default(uuid())
+  orderId       String
+  productId     String
+  variantId     String?
+  title         String
+  variantName   String?         @db.VarChar(120)
+  variantColor  String?         @db.VarChar(7)
+  variantImages Json?
+  unitPrice     Decimal         @db.Decimal(10, 2)
+  quantity      Int
+  order         Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product       Product         @relation(fields: [productId], references: [id])
+  variant       ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
 }
 
 model HighlightedPost {

@@ -117,18 +117,26 @@ export function WishlistRemoveButton({
 
 export function WishlistAddToCartButton({
   productId,
+  productSlug,
   title,
   stock,
+  requiresVariant,
 }: {
   productId: string;
+  productSlug: string;
   title: string;
   stock: number;
+  requiresVariant: boolean;
 }) {
   const [busy, setBusy] = useState(false);
   const [added, setAdded] = useState(false);
   const { error, setError, handleError, router } = useWishlistActionError();
 
   async function addToCart() {
+    if (requiresVariant) {
+      router.push(`/products/${productSlug}`);
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
@@ -154,8 +162,14 @@ export function WishlistAddToCartButton({
         title={error ?? undefined}
         className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white inline-flex h-[38px] min-w-[126px] items-center justify-center gap-2 rounded-full px-4 text-[10px] font-medium tracking-[0.03em] uppercase shadow-sm transition-colors disabled:cursor-not-allowed disabled:bg-surface-card"
       >
-        {stock < 1 ? "Out of stock" : added ? "Added to cart" : "Add to cart"}
-        {stock > 0 && !added ? (
+        {stock < 1
+          ? "Out of stock"
+          : requiresVariant
+            ? "Choose color"
+            : added
+              ? "Added to cart"
+              : "Add to cart"}
+        {stock > 0 && !added && !requiresVariant ? (
           <ArrowRight aria-hidden="true" className="size-4" />
         ) : null}
       </button>
@@ -207,13 +221,21 @@ export function WishlistClearButton({ hasItems }: { hasItems: boolean }) {
 
 export function WishlistMoveAllButton({ hasItems }: { hasItems: boolean }) {
   const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
   const { error, setError, handleError, router } = useWishlistActionError();
 
   async function moveAllToCart() {
     setBusy(true);
     setError(null);
+    setMessage(null);
     try {
-      await apiFetch("/api/wishlist/move-to-cart", { method: "POST" });
+      const result = await apiFetch<{
+        moved: number;
+        requiresVariant?: number;
+      }>("/api/wishlist/move-to-cart", { method: "POST" });
+      if (result.requiresVariant) {
+        setMessage("Choose a color on each remaining product before moving it to your cart.");
+      }
       router.refresh();
     } catch (cause) {
       handleError(cause);
@@ -232,6 +254,11 @@ export function WishlistMoveAllButton({ hasItems }: { hasItems: boolean }) {
       >
         Move all to cart <ArrowRight aria-hidden="true" className="size-4" />
       </button>
+      {message ? (
+        <p role="status" className="mt-2 max-w-64 text-center text-xs text-text-muted">
+          {message}
+        </p>
+      ) : null}
       {error ? (
         <p role="alert" className="mt-3 text-center text-sm text-red-700">
           {error}

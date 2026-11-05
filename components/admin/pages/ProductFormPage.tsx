@@ -31,6 +31,7 @@ export async function ProductFormPage({ id }: { id?: string }) {
                 currency: product.currency, stock: product.stock, gender: product.gender, isActive: product.isActive,
                 categoryId: product.category.id, brandId: product.brand?.id ?? "", productTypeId: product.productType?.id ?? "",
                 tags: product.tags, seoTitle: product.seoTitle ?? "", seoDescription: product.seoDescription ?? "",
+                hasVariants: product.hasVariants, variants: product.variants,
               }
             : undefined
         }

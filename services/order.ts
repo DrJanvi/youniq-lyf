@@ -6,6 +6,10 @@ import { round2 } from "@/lib/pricing";
 import { getCart } from "./cart";
 import { quoteCoupon } from "./coupon";
 import { sendInvoiceForOrder } from "./invoice";
+import {
+  decrementApprovedOrderInventory,
+  snapshotOrderItem,
+} from "./order-logic";
 import type { OrderStatus, PaymentMethod, Prisma } from "@prisma/client";
 import type { ListParams } from "@/lib/admin/list-params";
 import type { OrderDeliveryUpdate } from "@/lib/validation";
@@ -44,7 +48,11 @@ type OrderItemRecord = {
   id: string;
   orderId: string;
   productId: string;
+  variantId: string | null;
   title: string;
+  variantName: string | null;
+  variantColor: string | null;
+  variantImages: Prisma.JsonValue | null;
   unitPrice: Prisma.Decimal;
   quantity: number;
   product?: { images: Prisma.JsonValue };
@@ -88,7 +96,11 @@ export async function checkout(
   });
   if (!address) throw new ApiError(404, "Saved address not found");
   for (const l of cart.items) {
-    if (l.quantity > l.product.stock) throw new ApiError(409, `"${l.product.title}" has only ${l.product.stock} in stock`);
+    const stock = l.variant?.stock ?? l.product.stock;
+    if (l.quantity > stock) {
+      const option = l.variant ? ` (${l.variant.name})` : "";
+      throw new ApiError(409, `"${l.product.title}"${option} has only ${stock} in stock`);
+    }
   }
   const shippingAddress = [
     address.addressLine,
@@ -119,12 +131,7 @@ export async function checkout(
         couponDiscount: coupon?.discountAmount ?? 0,
         total: coupon?.total ?? cart.total,
         items: {
-          create: cart.items.map((l) => ({
-            productId: l.product.id,
-            title: l.product.title,
-            unitPrice: l.product.finalPrice,
-            quantity: l.quantity,
-          })),
+          create: cart.items.map(snapshotOrderItem),
         },
         invoice: { create: { recipientEmail: customer.email } },
       },
@@ -236,13 +243,7 @@ export async function decideOrder(id: string, status: "APPROVED" | "REJECTED", a
     }
     if (status === "APPROVED") {
       const items = await tx.orderItem.findMany({ where: { orderId: id } });
-      for (const it of items) {
-        const r = await tx.product.updateMany({
-          where: { id: it.productId, stock: { gte: it.quantity } },
-          data: { stock: { decrement: it.quantity }, soldCount: { increment: it.quantity } },
-        });
-        if (r.count === 0) throw new ApiError(409, `Insufficient stock for "${it.title}"`);
-      }
+      await decrementApprovedOrderInventory(tx, items);
     }
     return tx.order.findUniqueOrThrow({ where: { id }, include: adminInclude });
   });

@@ -45,7 +45,10 @@ export function OrderItemThumbnail({
   item: CustomerOrderItem;
   size?: "sm" | "md";
 }) {
-  const images = item.product?.images;
+  const imageSnapshot = Array.isArray(item.variantImages)
+    ? item.variantImages.filter((image): image is string => typeof image === "string")
+    : [];
+  const images = imageSnapshot.length ? imageSnapshot : item.product?.images;
   const image = Array.isArray(images) && typeof images[0] === "string" ? images[0] : null;
   const dimensions = size === "sm" ? 64 : 80;
 

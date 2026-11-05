@@ -9,6 +9,12 @@ export type WishlistEntryDTO = {
   createdAt: string;
 };
 
+function lowestAvailablePrice(product: WishlistEntryDTO["product"]) {
+  return product.variants.length
+    ? Math.min(...product.variants.map((variant) => variant.finalPrice))
+    : product.finalPrice;
+}
+
 export async function getWishlistCount(userId: string): Promise<number> {
   return prisma.wishlistItem.count({
     where: { userId, product: { is: STOREFRONT_PRODUCT_WHERE } },
@@ -61,9 +67,9 @@ export async function listWishlistEntries(
   if (sort === "oldest") {
     entries.reverse();
   } else if (sort === "price-asc") {
-    entries.sort((a, b) => a.product.finalPrice - b.product.finalPrice);
+    entries.sort((a, b) => lowestAvailablePrice(a.product) - lowestAvailablePrice(b.product));
   } else if (sort === "price-desc") {
-    entries.sort((a, b) => b.product.finalPrice - a.product.finalPrice);
+    entries.sort((a, b) => lowestAvailablePrice(b.product) - lowestAvailablePrice(a.product));
   }
 
   const totalPages = Math.max(1, Math.ceil(entries.length / page.limit));
@@ -117,9 +123,20 @@ export async function moveWishlistItemToCart(userId: string, productId: string) 
   return prisma.$transaction(async (transaction) => {
     const wishlistItem = await transaction.wishlistItem.findFirst({
       where: { userId, productId, product: { is: STOREFRONT_PRODUCT_WHERE } },
-      select: { product: { select: { isActive: true, stock: true } } },
+      select: {
+        product: {
+          select: {
+            isActive: true,
+            stock: true,
+            _count: { select: { variants: true } },
+          },
+        },
+      },
     });
     if (!wishlistItem) return { moved: 0 };
+    if (wishlistItem.product._count.variants) {
+      throw new ApiError(409, "Choose a color before adding this product to your cart");
+    }
 
     const cart = await transaction.cart.upsert({
       where: { userId },
@@ -127,7 +144,13 @@ export async function moveWishlistItemToCart(userId: string, productId: string) 
       create: { userId },
     });
     const existing = await transaction.cartItem.findUnique({
-      where: { cartId_productId: { cartId: cart.id, productId } },
+      where: {
+        cartId_productId_variantKey: {
+          cartId: cart.id,
+          productId,
+          variantKey: "",
+        },
+      },
       select: { quantity: true },
     });
     const quantity = (existing?.quantity ?? 0) + 1;
@@ -136,9 +159,15 @@ export async function moveWishlistItemToCart(userId: string, productId: string) 
     }
 
     await transaction.cartItem.upsert({
-      where: { cartId_productId: { cartId: cart.id, productId } },
+      where: {
+        cartId_productId_variantKey: {
+          cartId: cart.id,
+          productId,
+          variantKey: "",
+        },
+      },
       update: { quantity },
-      create: { cartId: cart.id, productId, quantity },
+      create: { cartId: cart.id, productId, variantKey: "", quantity },
     });
     await transaction.wishlistItem.delete({
       where: { userId_productId: { userId, productId } },
@@ -164,19 +193,30 @@ export async function moveWishlistToCart(userId: string) {
     const [products, cartItems] = await Promise.all([
       transaction.product.findMany({
         where: { id: { in: productIds }, ...STOREFRONT_PRODUCT_WHERE },
-        select: { id: true, stock: true },
+        select: {
+          id: true,
+          stock: true,
+          _count: { select: { variants: true } },
+        },
       }),
       transaction.cartItem.findMany({
-        where: { cartId: cart.id, productId: { in: productIds } },
+        where: { cartId: cart.id, productId: { in: productIds }, variantKey: "" },
         select: { productId: true, quantity: true },
       }),
     ]);
-    const stockById = new Map(products.map((product) => [product.id, product.stock]));
+    const variantProductIds = new Set(
+      products.filter((product) => product._count.variants).map((product) => product.id),
+    );
+    const productsWithoutVariants = products.filter(
+      (product) => !variantProductIds.has(product.id),
+    );
+    const stockById = new Map(productsWithoutVariants.map((product) => [product.id, product.stock]));
+    const movableProductIds = productsWithoutVariants.map((product) => product.id);
     const quantityById = new Map(
       cartItems.map((item) => [item.productId, item.quantity]),
     );
 
-    for (const productId of productIds) {
+    for (const productId of movableProductIds) {
       const stock = stockById.get(productId) ?? 0;
       const nextQuantity = (quantityById.get(productId) ?? 0) + 1;
       if (nextQuantity > stock) {
@@ -184,17 +224,28 @@ export async function moveWishlistToCart(userId: string) {
       }
     }
 
-    for (const productId of productIds) {
+    for (const productId of movableProductIds) {
       const quantity = (quantityById.get(productId) ?? 0) + 1;
       await transaction.cartItem.upsert({
-        where: { cartId_productId: { cartId: cart.id, productId } },
+        where: {
+          cartId_productId_variantKey: {
+            cartId: cart.id,
+            productId,
+            variantKey: "",
+          },
+        },
         update: { quantity },
-        create: { cartId: cart.id, productId, quantity },
+        create: { cartId: cart.id, productId, variantKey: "", quantity },
       });
     }
-    await transaction.wishlistItem.deleteMany({
-      where: { userId, productId: { in: productIds } },
-    });
-    return { moved: productIds.length };
+    if (movableProductIds.length) {
+      await transaction.wishlistItem.deleteMany({
+        where: { userId, productId: { in: movableProductIds } },
+      });
+    }
+    return {
+      moved: movableProductIds.length,
+      requiresVariant: variantProductIds.size,
+    };
   });
 }

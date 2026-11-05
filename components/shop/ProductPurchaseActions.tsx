@@ -7,9 +7,11 @@ import { apiFetch, ClientApiError } from "@/lib/client-api";
 
 export function ProductPurchaseActions({
   productId,
+  variantId,
   stock,
 }: {
   productId: string;
+  variantId?: string;
   stock: number;
 }) {
   const router = useRouter();
@@ -25,13 +27,25 @@ export function ProductPurchaseActions({
     setAdded(false);
     try {
       const cart = await apiFetch<{
-        items: { product: { id: string }; quantity: number }[];
+        items: {
+          product: { id: string };
+          variantId: string | null;
+          quantity: number;
+        }[];
       }>("/api/cart");
       const current =
-        cart.items.find((item) => item.product.id === productId)?.quantity ?? 0;
+        cart.items.find(
+          (item) =>
+            item.product.id === productId &&
+            item.variantId === (variantId ?? null),
+        )?.quantity ?? 0;
       await apiFetch("/api/cart", {
         method: "POST",
-        json: { productId, quantity: current + quantity },
+        json: {
+          productId,
+          ...(variantId ? { variantId } : {}),
+          quantity: current + quantity,
+        },
       });
 
       if (goToCheckout) {

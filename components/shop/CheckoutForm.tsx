@@ -79,7 +79,7 @@ export function CheckoutForm({
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [addressBusy, setAddressBusy] = useState(false);
   const [orderBusy, setOrderBusy] = useState(false);
-  const [busyProductId, setBusyProductId] = useState<string | null>(null);
+  const [busyCartItemKey, setBusyCartItemKey] = useState<string | null>(null);
   const [addressError, setAddressError] = useState<string | null>(null);
   const [orderError, setOrderError] = useState<string | null>(null);
   const [cartError, setCartError] = useState<string | null>(null);
@@ -187,18 +187,28 @@ export function CheckoutForm({
     }
   }
 
-  async function changeQuantity(productId: string, quantity: number) {
-    setBusyProductId(productId);
+  async function changeQuantity(
+    productId: string,
+    variantId: string | null,
+    quantity: number,
+  ) {
+    const itemKey = `${productId}:${variantId ?? "base"}`;
+    setBusyCartItemKey(itemKey);
     setCartError(null);
     try {
       if (quantity < 1) {
-        await apiFetch(`/api/cart?productId=${encodeURIComponent(productId)}`, {
-          method: "DELETE",
-        });
+        await apiFetch(
+          `/api/cart?productId=${encodeURIComponent(productId)}${variantId ? `&variantId=${encodeURIComponent(variantId)}` : ""}`,
+          { method: "DELETE" },
+        );
       } else {
         await apiFetch("/api/cart", {
           method: "POST",
-          json: { productId, quantity },
+          json: {
+            productId,
+            ...(variantId ? { variantId } : {}),
+            quantity,
+          },
         });
       }
       if (appliedCoupon) {
@@ -214,7 +224,7 @@ export function CheckoutForm({
         error instanceof Error ? error.message : "Could not update your cart.",
       );
     } finally {
-      setBusyProductId(null);
+      setBusyCartItemKey(null);
     }
   }
 
@@ -603,13 +613,13 @@ export function CheckoutForm({
         <div className="mt-5 divide-y divide-surface-border">
           {visibleItems.map((item) => (
             <div
-              key={item.product.id}
+              key={`${item.product.id}:${item.variantId ?? "base"}`}
               className="flex items-center gap-3 py-3 first:pt-0"
             >
               <div className="grid size-14 shrink-0 place-items-center overflow-hidden rounded border border-surface-border bg-white">
-                {item.product.images[0] ? (
+                {item.variant?.images[0] ?? item.product.images[0] ? (
                   <Image
-                    src={item.product.images[0]}
+                    src={item.variant?.images[0] ?? item.product.images[0]}
                     alt=""
                     width={56}
                     height={56}
@@ -624,6 +634,11 @@ export function CheckoutForm({
                 <p className="line-clamp-2 text-xs leading-4 font-medium text-text-primary">
                   {item.product.title}
                 </p>
+                {item.variant ? (
+                  <p className="mt-1 text-[10px] text-text-muted">
+                    Color: {item.variant.name}
+                  </p>
+                ) : null}
                 <p className="mt-1 text-xs font-semibold text-text-primary">
                   {formatMoney(item.lineTotal, item.product.currency)}
                 </p>
@@ -632,9 +647,9 @@ export function CheckoutForm({
                 <button
                   type="button"
                   aria-label={`Decrease quantity of ${item.product.title}`}
-                  disabled={busyProductId === item.product.id}
+                  disabled={busyCartItemKey === `${item.product.id}:${item.variantId ?? "base"}`}
                   onClick={() =>
-                    changeQuantity(item.product.id, item.quantity - 1)
+                    changeQuantity(item.product.id, item.variantId, item.quantity - 1)
                   }
                   className="grid size-6 place-items-center rounded-full text-sm text-text-muted hover:bg-brand-primary/10 disabled:opacity-50"
                 >
@@ -647,11 +662,11 @@ export function CheckoutForm({
                   type="button"
                   aria-label={`Increase quantity of ${item.product.title}`}
                   disabled={
-                    busyProductId === item.product.id ||
-                    item.quantity >= item.product.stock
+                    busyCartItemKey === `${item.product.id}:${item.variantId ?? "base"}` ||
+                    item.quantity >= (item.variant?.stock ?? item.product.stock)
                   }
                   onClick={() =>
-                    changeQuantity(item.product.id, item.quantity + 1)
+                    changeQuantity(item.product.id, item.variantId, item.quantity + 1)
                   }
                   className="grid size-6 place-items-center rounded-full text-sm text-text-muted hover:bg-brand-primary/10 disabled:opacity-50"
                 >

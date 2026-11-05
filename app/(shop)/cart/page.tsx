@@ -94,28 +94,31 @@ export default async function CartPage() {
               <ul>
                 {cart.items.map((item) => (
                   <CartItemRow
-                    key={item.product.id}
+                    key={`${item.product.id}:${item.variantId ?? "base"}`}
                     productId={item.product.id}
+                    variantId={item.variantId}
+                    variantName={item.variant?.name ?? null}
+                    variantColor={item.variant?.color ?? null}
                     slug={item.product.slug}
                     title={item.product.title}
-                    image={item.product.images[0]}
+                    image={item.variant?.images[0] ?? item.product.images[0]}
                     category={item.product.category.name}
-                    price={item.product.price}
-                    finalPrice={item.product.finalPrice}
+                    price={item.variant?.price ?? item.product.price}
+                    finalPrice={item.variant?.finalPrice ?? item.product.finalPrice}
                     currency={item.product.currency}
                     quantity={item.quantity}
-                    stock={item.product.stock}
+                    stock={item.variant?.stock ?? item.product.stock}
                     lineTotal={item.lineTotal}
                   />
                 ))}
               </ul>
               <CartFooterActions
-                productIds={cart.items.map((item) => item.product.id)}
+                productIds={[...new Set(cart.items.map((item) => item.product.id))]}
               />
             </section>
 
             <CartOrderSummary
-              key={cart.items.map((item) => `${item.product.id}:${item.quantity}:${item.product.finalPrice}`).join("|")}
+              key={cart.items.map((item) => `${item.product.id}:${item.variantId ?? "base"}:${item.quantity}:${item.variant?.finalPrice ?? item.product.finalPrice}`).join("|")}
               cart={cart}
             />
           </div>

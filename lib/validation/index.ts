@@ -134,6 +134,16 @@ export const adminLoginSchema = z.object({
   password: z.string().min(1).max(200),
 });
 
+export const productVariantInputSchema = z.object({
+  id: z.string().uuid().optional(),
+  name: z.string().trim().min(1).max(120),
+  color: z.string().regex(/^#[\da-fA-F]{6}$/, "Use a 6-digit hex color"),
+  images: z.array(z.string().url()).max(20).default([]),
+  priceOverride: z.coerce.number().nonnegative().max(10_000_000).nullable().optional(),
+  stock: z.coerce.number().int().min(0).default(0),
+  isActive: z.boolean().default(true),
+});
+
 export const productInputSchema = z.object({
   title: z.string().trim().min(2).max(250),
   slug: optionalText,
@@ -152,6 +162,7 @@ export const productInputSchema = z.object({
   price: z.coerce.number().nonnegative().max(10_000_000),
   currency: z.string().trim().length(3).default("AED"),
   stock: z.coerce.number().int().min(0).default(0),
+  variants: z.array(productVariantInputSchema).max(50).default([]),
   gender: z.enum(["MALE", "FEMALE", "UNISEX"]).default("UNISEX"),
   isActive: z.boolean().default(true),
   seoTitle: optionalText,
@@ -248,7 +259,12 @@ export const reviewStatusSchema = z.object({ status: z.enum(["PENDING", "APPROVE
 
 export const cartItemSchema = z.object({
   productId: z.string().min(1),
+  variantId: z.string().uuid().optional(),
   quantity: z.coerce.number().int().min(1).max(99),
+});
+export const cartItemIdentitySchema = z.object({
+  productId: z.string().min(1),
+  variantId: z.string().uuid().optional(),
 });
 export const cartMergeSchema = z.object({ items: z.array(cartItemSchema).max(100) });
 export const wishlistItemSchema = z.object({ productId: z.string().min(1) });
