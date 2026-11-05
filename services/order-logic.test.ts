@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import type { Prisma } from "@prisma/client";
+import { getVariantGalleryImages } from "@/lib/product-images";
 import { computePricing } from "@/lib/pricing";
 import { productVariantInputSchema } from "@/lib/validation";
 import { ApiError } from "@/lib/http";
@@ -112,6 +113,40 @@ test("snapshots variant details and fallback gallery images", () => {
       unitPrice: 110,
       quantity: 2,
     },
+  );
+});
+
+test("keeps all base and variant images in the selected-color gallery", () => {
+  assert.deepEqual(
+    getVariantGalleryImages(
+      ["https://example.com/base.jpg", "https://example.com/shared.jpg"],
+      ["https://example.com/color.jpg", "https://example.com/shared.jpg"],
+    ),
+    [
+      "https://example.com/color.jpg",
+      "https://example.com/shared.jpg",
+      "https://example.com/base.jpg",
+    ],
+  );
+});
+
+test("shows every variant image in the unselected gallery after base images", () => {
+  const variantImages = [
+    ["https://example.com/red.jpg", "https://example.com/shared.jpg"],
+    ["https://example.com/blue.jpg", "https://example.com/shared.jpg"],
+  ].flat();
+  assert.deepEqual(
+    getVariantGalleryImages(
+      ["https://example.com/base.jpg"],
+      variantImages,
+      false,
+    ),
+    [
+      "https://example.com/base.jpg",
+      "https://example.com/red.jpg",
+      "https://example.com/shared.jpg",
+      "https://example.com/blue.jpg",
+    ],
   );
 });
 
