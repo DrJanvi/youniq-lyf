@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { InternationalPhoneField } from "@/components/shop/InternationalPhoneField";
 import { Button } from "@/components/shadcn/button";
 import { Input } from "@/components/shadcn/input";
 import {
@@ -23,8 +24,10 @@ import { FormMessage } from "@/components/ui/FormMessage";
 import { apiFetch } from "@/lib/client-api";
 import {
   customerLoginSchema,
+  MAX_PHONE_DIGITS,
   otpCodeSchema,
   registerSchema,
+  todayDateOnly,
 } from "@/lib/validation";
 
 const registerFormSchema = registerSchema
@@ -104,8 +107,11 @@ function SignInForm({
   const onSubmit = handleSubmit(async (values) => {
     setError(null);
     try {
-      await apiFetch("/api/auth/login", { method: "POST", json: values });
-      router.replace(next);
+      const result = await apiFetch<{ recovered?: boolean }>(
+        "/api/auth/login",
+        { method: "POST", json: values },
+      );
+      router.replace(result.recovered ? "/account?recovered=1" : next);
       router.refresh();
     } catch (e) {
       setError(errorMessage(e));
@@ -294,6 +300,7 @@ function RegisterForm({
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState<RegisterPayload | null>(null);
   const {
+    control,
     register,
     handleSubmit,
     getValues,
@@ -306,6 +313,8 @@ function RegisterForm({
       firstName: "",
       lastName: "",
       email: "",
+      phone: "",
+      dateOfBirth: "",
       password: "",
       confirmPassword: "",
     },
@@ -318,12 +327,15 @@ function RegisterForm({
     });
 
   const onSubmit = handleSubmit(
-    async ({ firstName, lastName, email, password }) => {
+    async ({ firstName, lastName, email, phone, gender, dateOfBirth, password }) => {
       setError(null);
       const payload = registerSchema.parse({
         firstName,
         lastName,
         email,
+        phone,
+        gender,
+        dateOfBirth,
         password,
       });
       try {
@@ -390,6 +402,62 @@ function RegisterForm({
           aria-invalid={!!errors.email}
           aria-describedby={errors.email ? "reg-email-error" : undefined}
           {...register("email")}
+        />
+      </Field>
+      <Field
+        id="reg-phone"
+        label="Phone number"
+        error={errors.phone?.message}
+        hint={`Maximum ${MAX_PHONE_DIGITS} digits, including country code.`}
+      >
+        <Controller
+          control={control}
+          name="phone"
+          render={({ field }) => (
+            <InternationalPhoneField
+              id="reg-phone"
+              name={field.name}
+              value={field.value}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
+              inputRef={field.ref}
+              invalid={!!errors.phone}
+              describedBy={errors.phone ? "reg-phone-error" : undefined}
+              className="rounded-lg"
+            />
+          )}
+        />
+      </Field>
+      <Field id="reg-gender" label="Gender" error={errors.gender?.message}>
+        <select
+          id="reg-gender"
+          className="h-12 w-full rounded-lg border border-surface-border bg-white px-4 text-sm text-text-primary outline-none focus-visible:border-brand-taupe focus-visible:ring-2 focus-visible:ring-brand-taupe/40"
+          aria-invalid={!!errors.gender}
+          aria-describedby={errors.gender ? "reg-gender-error" : undefined}
+          {...register("gender")}
+        >
+          <option value="">Select gender</option>
+          <option value="MALE">Male</option>
+          <option value="FEMALE">Female</option>
+          <option value="OTHER">Other</option>
+          <option value="PREFER_NOT_TO_SAY">Prefer not to say</option>
+        </select>
+      </Field>
+      <Field
+        id="reg-date-of-birth"
+        label="Date of birth"
+        error={errors.dateOfBirth?.message}
+      >
+        <Input
+          id="reg-date-of-birth"
+          type="date"
+          max={todayDateOnly()}
+          autoComplete="bday"
+          aria-invalid={!!errors.dateOfBirth}
+          aria-describedby={
+            errors.dateOfBirth ? "reg-date-of-birth-error" : undefined
+          }
+          {...register("dateOfBirth")}
         />
       </Field>
       <Field

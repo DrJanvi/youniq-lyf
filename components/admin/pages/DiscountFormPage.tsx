@@ -10,8 +10,8 @@ export async function DiscountFormPage({ id }: { id?: string }) {
   await requireAdminPage();
   const [discount, products, categories] = await Promise.all([
     id ? getDiscount(id) : null,
-    prisma.product.findMany({ select: { id: true, title: true }, orderBy: { title: "asc" }, take: 500 }),
-    prisma.category.findMany({ select: { id: true, name: true }, orderBy: { name: "asc" } }),
+    prisma.product.findMany({ where: { deletedAt: null }, select: { id: true, title: true }, orderBy: { title: "asc" }, take: 500 }),
+    prisma.category.findMany({ where: { deletedAt: null }, select: { id: true, name: true }, orderBy: { name: "asc" } }),
   ]);
   if (id && !discount) notFound();
   return (

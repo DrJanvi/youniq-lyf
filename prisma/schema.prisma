@@ -17,6 +17,13 @@ enum Gender {
   UNISEX
 }
 
+enum UserGender {
+  MALE
+  FEMALE
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
 enum DiscountType {
   PERCENT
   FIXED
@@ -38,6 +45,13 @@ enum OrderStatus {
   DELIVERY_ATTEMPT_FAILED
 }
 
+enum InvoiceEmailStatus {
+  PENDING
+  SENDING
+  SENT
+  FAILED
+}
+
 enum PaymentMethod {
   CASH_ON_DELIVERY
   RAZORPAY
@@ -55,20 +69,33 @@ enum PartnerInterest {
   OTHER
 }
 
+enum CareerJobRole {
+  MARKETING
+  SALES
+  E_COMMERCE
+  OPERATIONS
+  OTHER
+}
+
 enum OrderDeliveryOutcome {
   DELIVERED
   DELIVERY_ATTEMPT_FAILED
 }
 
 model User {
-  id           String   @id @default(uuid())
-  email        String?  @unique
-  username     String?  @unique
-  passwordHash String?
-  name         String?
-  role         Role     @default(CUSTOMER)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id                         String      @id @default(uuid())
+  email                      String?     @unique
+  username                   String?     @unique
+  passwordHash               String?
+  name                       String?
+  phone                      String?     @db.VarChar(40)
+  gender                     UserGender?
+  dateOfBirth                DateTime?   @db.Date
+  role                       Role        @default(CUSTOMER)
+  accountDeletionRequestedAt DateTime?
+  sessionVersion             Int         @default(0)
+  createdAt                  DateTime    @default(now())
+  updatedAt                  DateTime    @updatedAt
 
   cart           Cart?
   wishlist       WishlistItem[]
@@ -99,8 +126,11 @@ model Category {
   seoDescription String?
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
+  deletedAt      DateTime?
   products       Product[]
   discounts      Discount[]
+
+  @@index([deletedAt])
 }
 
 model Brand {
@@ -108,7 +138,10 @@ model Brand {
   name      String
   slug      String    @unique
   createdAt DateTime  @default(now())
+  deletedAt DateTime?
   products  Product[]
+
+  @@index([deletedAt])
 }
 
 model ProductType {
@@ -116,7 +149,10 @@ model ProductType {
   name      String
   slug      String    @unique
   createdAt DateTime  @default(now())
+  deletedAt DateTime?
   products  Product[]
+
+  @@index([deletedAt])
 }
 
 model Tag {
@@ -127,29 +163,31 @@ model Tag {
 }
 
 model Product {
-  id             String   @id @default(uuid())
-  slug           String   @unique @db.VarChar(255)
-  title          String   @db.VarChar(255)
-  description    String   @db.Text
-  images         Json
-  aboutPoints    Json?
-  aboutIntro     String?  @db.Text
-  rawImages      Json?    @map("raw_images")
-  price          Decimal  @db.Decimal(10, 2)
-  currency       String   @default("AED")
-  stock          Int      @default(0)
-  gender         Gender   @default(UNISEX)
-  rating         Decimal  @default(0) @db.Decimal(3, 2)
-  reviewCount    Int      @default(0)
-  soldCount      Int      @default(0)
-  isActive       Boolean  @default(true)
-  seoTitle       String?
-  seoDescription String?
-  categoryId     String
-  brandId        String?
-  productTypeId  String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id                String    @id @default(uuid())
+  slug              String    @unique @db.VarChar(255)
+  title             String    @db.VarChar(255)
+  description       String    @db.Text
+  images            Json
+  aboutPoints       Json?
+  aboutIntro        String?   @db.Text
+  rawImages         Json?     @map("raw_images")
+  price             Decimal   @db.Decimal(10, 2)
+  currency          String    @default("AED")
+  stock             Int       @default(0)
+  gender            Gender    @default(UNISEX)
+  rating            Decimal   @default(0) @db.Decimal(3, 2)
+  reviewCount       Int       @default(0)
+  soldCount         Int       @default(0)
+  isActive          Boolean   @default(true)
+  deletedAt         DateTime?
+  deletedByTaxonomy Boolean   @default(false)
+  seoTitle          String?
+  seoDescription    String?
+  categoryId        String
+  brandId           String?
+  productTypeId     String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
   category    Category       @relation(fields: [categoryId], references: [id])
   brand       Brand?         @relation(fields: [brandId], references: [id])
@@ -168,6 +206,8 @@ model Product {
   @@index([createdAt])
   @@index([soldCount])
   @@index([title])
+  @@index([deletedAt])
+  @@index([deletedByTaxonomy])
 }
 
 model ProductTag {
@@ -189,6 +229,7 @@ model Discount {
   startsAt   DateTime?
   endsAt     DateTime?
   isActive   Boolean      @default(true)
+  deletedAt  DateTime?
   productId  String?
   categoryId String?
   createdAt  DateTime     @default(now())
@@ -197,6 +238,7 @@ model Discount {
 
   @@index([productId])
   @@index([categoryId])
+  @@index([deletedAt])
 }
 
 model Coupon {
@@ -211,9 +253,11 @@ model Coupon {
   isActive        Boolean      @default(true)
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
+  deletedAt       DateTime?
   orders          Order[]
 
   @@index([isActive, startsAt, endsAt])
+  @@index([deletedAt])
 }
 
 model Review {
@@ -227,10 +271,12 @@ model Review {
   body        String       @db.Text
   status      ReviewStatus @default(PENDING)
   createdAt   DateTime     @default(now())
+  deletedAt   DateTime?
   product     Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
   user        User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@index([productId, status])
+  @@index([deletedAt])
 }
 
 model Cart {
@@ -303,14 +349,33 @@ model Order {
   deliveryTrackingUrl String?                @db.VarChar(1000)
   createdAt           DateTime               @default(now())
   updatedAt           DateTime               @updatedAt
+  deletedAt           DateTime?
   user                User                   @relation(fields: [userId], references: [id])
   coupon              Coupon?                @relation(fields: [couponId], references: [id], onDelete: SetNull)
   items               OrderItem[]
   deliveryAttempts    OrderDeliveryAttempt[]
+  invoice             Invoice?
 
   @@index([status, createdAt])
   @@index([userId])
   @@index([couponId])
+  @@index([deletedAt])
+}
+
+model Invoice {
+  id            String            @id @default(uuid())
+  sequence      Int               @unique @default(autoincrement())
+  orderId       String            @unique
+  recipientEmail String?           @db.VarChar(190)
+  emailStatus   InvoiceEmailStatus @default(PENDING)
+  emailAttempts Int               @default(0)
+  lastAttemptAt DateTime?
+  lastError     String?           @db.Text
+  sentAt        DateTime?
+  issuedAt      DateTime          @default(now())
+  order         Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([emailStatus, lastAttemptAt])
 }
 
 model OrderDeliveryAttempt {
@@ -336,39 +401,47 @@ model OrderItem {
 }
 
 model HighlightedPost {
-  id        String   @id @default(uuid())
-  image     String   @db.VarChar(1000)
-  link      String   @db.VarChar(1000)
+  id        String    @id @default(uuid())
+  image     String    @db.VarChar(1000)
+  link      String    @db.VarChar(1000)
   alt       String?
-  sortOrder Int      @default(0)
-  createdAt DateTime @default(now())
+  sortOrder Int       @default(0)
+  createdAt DateTime  @default(now())
+  deletedAt DateTime?
+
+  @@index([deletedAt])
 }
 
 model HeroBanner {
-  id           String   @id @default(uuid())
-  desktopImage String   @db.VarChar(1000)
-  mobileImage  String?  @db.VarChar(1000)
-  link         String   @db.VarChar(1000)
+  id           String    @id @default(uuid())
+  desktopImage String    @db.VarChar(1000)
+  mobileImage  String?   @db.VarChar(1000)
+  link         String    @db.VarChar(1000)
   alt          String?
-  sortOrder    Int      @default(0)
-  createdAt    DateTime @default(now())
+  sortOrder    Int       @default(0)
+  createdAt    DateTime  @default(now())
+  deletedAt    DateTime?
+
+  @@index([deletedAt])
 }
 
 model BlogArticle {
-  id          String   @id @default(uuid()) @db.VarChar(36)
-  slug        String   @unique @db.VarChar(160)
-  title       String   @db.VarChar(255)
-  category    String   @db.VarChar(60)
-  publishedAt DateTime @db.Date
+  id          String    @id @default(uuid()) @db.VarChar(36)
+  slug        String    @unique @db.VarChar(160)
+  title       String    @db.VarChar(255)
+  category    String    @db.VarChar(60)
+  publishedAt DateTime  @db.Date
   readTime    Int
-  excerpt     String   @db.VarChar(320)
-  image       String   @db.VarChar(1000)
-  content     String   @db.LongText
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  excerpt     String    @db.VarChar(320)
+  image       String    @db.VarChar(1000)
+  content     String    @db.LongText
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
 
   @@index([category, publishedAt])
   @@index([publishedAt])
+  @@index([deletedAt])
 }
 
 model HighlightedCategorySetting {
@@ -390,32 +463,34 @@ model ContactPageSetting {
   tagline            String   @default("Have a question about our products or your order? We'd love to hear from you.") @db.VarChar(500)
   contactHeading     String   @default("We're always close by.") @db.VarChar(200)
   contactIntro       String   @db.Text
-  email              String   @default("info@buabedbanafa.com") @db.VarChar(190)
+  email              String   @default("info@buabedyouniqlyf.com") @db.VarChar(190)
   alternateEmail     String?  @db.VarChar(190)
   phone              String   @default("+966 12 627 4600") @db.VarChar(40)
   whatsapp           String?  @db.VarChar(40)
   supportTitle       String   @default("Customer Support") @db.VarChar(120)
   supportDescription String   @default("For product advice, order updates, returns, and wholesale enquiries.") @db.VarChar(500)
   image              String?  @db.VarChar(1000)
-  imageAlt           String   @default("Banafa Perfumes location") @db.VarChar(255)
+  imageAlt           String   @default("Youniqlyf Perfumes location") @db.VarChar(255)
   updatedAt          DateTime @updatedAt
 }
 
 model ContactLocation {
-  id        String   @id @default(uuid())
-  slug      String   @unique @db.VarChar(160)
-  city      String   @db.VarChar(120)
-  country   String   @db.VarChar(120)
-  company   String?  @db.VarChar(190)
-  address   String   @db.Text
-  phone     String?  @db.VarChar(40)
-  whatsapp  String?  @db.VarChar(40)
-  sortOrder Int      @default(0)
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String    @id @default(uuid())
+  slug      String    @unique @db.VarChar(160)
+  city      String    @db.VarChar(120)
+  country   String    @db.VarChar(120)
+  company   String?   @db.VarChar(190)
+  address   String    @db.Text
+  phone     String?   @db.VarChar(40)
+  whatsapp  String?   @db.VarChar(40)
+  sortOrder Int       @default(0)
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   @@index([isActive, sortOrder])
+  @@index([deletedAt])
 }
 
 model ContactFaq {
@@ -427,9 +502,11 @@ model ContactFaq {
   isActive  Boolean        @default(true)
   createdAt DateTime       @default(now())
   updatedAt DateTime       @updatedAt
+  deletedAt DateTime?
 
   @@index([isActive, sortOrder])
   @@index([page, isActive, sortOrder])
+  @@index([deletedAt])
 }
 
 model PolicyPageContent {
@@ -466,6 +543,30 @@ model PartnerRequest {
   @@index([fullName])
 }
 
+model CareerApplication {
+  id                String        @id @default(uuid())
+  fullName          String        @db.VarChar(100)
+  email             String        @db.VarChar(190)
+  countryCode       String        @db.VarChar(4)
+  phoneNumber       String        @db.VarChar(15)
+  jobRole           CareerJobRole
+  resumePublicId    String        @db.VarChar(255)
+  resumeFileName    String        @db.VarChar(255)
+  resumeContentType String        @db.VarChar(100)
+  consentAt         DateTime      @default(now())
+  createdAt         DateTime      @default(now())
+
+  @@index([createdAt])
+  @@index([fullName])
+  @@index([email])
+}
+
+model CareerPageSetting {
+  id        String   @id @default("careers") @db.VarChar(40)
+  imageUrl  String?  @db.VarChar(1000)
+  updatedAt DateTime @updatedAt
+}
+
 model AboutUsPageSetting {
   id                    String                 @id @default("about-us") @db.VarChar(40)
   heroHeading           String                 @db.VarChar(255)
@@ -489,7 +590,7 @@ model AboutUsPageSetting {
   legacyParagraph1      String?                @db.Text
   legacyParagraph2      String?                @db.Text
   whyChooseImage        String?                @db.VarChar(1000)
-  whyChooseHeading      String                 @default("WHY CHOOSE BUABED BANAFA?") @db.VarChar(255)
+  whyChooseHeading      String                 @default("WHY CHOOSE BUABED YOUNIQLYF?") @db.VarChar(255)
   whyChooseDescription  String?                @db.Text
   milestone1Year        String                 @db.VarChar(40)
   milestone1Title       String                 @db.VarChar(160)
@@ -516,9 +617,11 @@ model AboutUsPrinciple {
   title         String             @db.VarChar(160)
   description   String             @db.VarChar(1000)
   sortOrder     Int                @default(0)
+  deletedAt     DateTime?
   pageSetting   AboutUsPageSetting @relation(fields: [pageSettingId], references: [id], onDelete: Cascade)
 
   @@index([pageSettingId, sortOrder])
+  @@index([deletedAt])
 }
 
 model AboutUsLegacyStat {
@@ -527,9 +630,11 @@ model AboutUsLegacyStat {
   icon          String             @db.VarChar(1000)
   title         String             @db.VarChar(160)
   sortOrder     Int                @default(0)
+  deletedAt     DateTime?
   pageSetting   AboutUsPageSetting @relation(fields: [pageSettingId], references: [id], onDelete: Cascade)
 
   @@index([pageSettingId, sortOrder])
+  @@index([deletedAt])
 }
 
 model AboutUsWhyChooseCard {
@@ -538,7 +643,9 @@ model AboutUsWhyChooseCard {
   title         String             @db.VarChar(160)
   description   String             @db.VarChar(1000)
   sortOrder     Int                @default(0)
+  deletedAt     DateTime?
   pageSetting   AboutUsPageSetting @relation(fields: [pageSettingId], references: [id], onDelete: Cascade)
 
   @@index([pageSettingId, sortOrder])
+  @@index([deletedAt])
 }

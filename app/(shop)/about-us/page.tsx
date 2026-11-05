@@ -8,7 +8,7 @@ import Link from "next/link";
 export const metadata: Metadata = buildMetadata({
   title: "About Us",
   description:
-    "Discover Banafa's history, fragrance craftsmanship, and commitment to thoughtful development.",
+    "Discover Youniqlyf's history, fragrance craftsmanship, and commitment to thoughtful development.",
   path: "/about-us",
 });
 
@@ -301,7 +301,7 @@ export default async function AboutUsPage() {
         </section>
       </Section>
 
-      {/* Why customers choose Banafa */}
+      {/* Why customers choose Youniqlyf */}
       <Section className="mt-0! bg-white py-10 md:py-16">
         <section
           aria-labelledby="about-why-choose-heading"

@@ -1,14 +1,14 @@
 "use client";
 
+import { formatMoney } from "@/components/ui/PriceTag";
+import { apiFetch } from "@/lib/client-api";
+import type { SavedAddressDTO } from "@/services/address";
+import type { CartDTO } from "@/services/cart";
+import { ArrowRight, LockKeyhole, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
-import { ArrowRight, LockKeyhole, ShieldCheck } from "lucide-react";
-import { formatMoney } from "@/components/ui/PriceTag";
-import { apiFetch } from "@/lib/client-api";
-import type { CartDTO } from "@/services/cart";
-import type { SavedAddressDTO } from "@/services/address";
 
 type PaymentMethod = "CASH_ON_DELIVERY" | "RAZORPAY" | "PAYU";
 type CouponQuote = { code: string; discountAmount: number; total: number };
@@ -17,6 +17,7 @@ type Props = {
   cart: CartDTO;
   customerEmail: string | null;
   customerName: string | null;
+  customerPhone: string | null;
   initialCouponCode?: string;
 };
 
@@ -58,6 +59,7 @@ export function CheckoutForm({
   cart,
   customerEmail,
   customerName,
+  customerPhone,
   initialCouponCode,
 }: Props) {
   const router = useRouter();
@@ -116,7 +118,11 @@ export function CheckoutForm({
       .catch((error: unknown) => {
         if (!active) return;
         setAppliedCoupon(null);
-        setCouponError(error instanceof Error ? error.message : "Could not apply this coupon.");
+        setCouponError(
+          error instanceof Error
+            ? error.message
+            : "Could not apply this coupon.",
+        );
       })
       .finally(() => {
         if (active) setCouponBusy(false);
@@ -198,7 +204,9 @@ export function CheckoutForm({
       if (appliedCoupon) {
         setAppliedCoupon(null);
         setCouponCode("");
-        setCouponMessage("Cart changed. Apply the coupon again to refresh the discount.");
+        setCouponMessage(
+          "Cart changed. Apply the coupon again to refresh the discount.",
+        );
       }
       router.refresh();
     } catch (error) {
@@ -224,7 +232,9 @@ export function CheckoutForm({
       setAppliedCoupon(quote);
       setCouponMessage("Coupon applied successfully.");
     } catch (error) {
-      setCouponError(error instanceof Error ? error.message : "Could not apply this coupon.");
+      setCouponError(
+        error instanceof Error ? error.message : "Could not apply this coupon.",
+      );
     } finally {
       setCouponBusy(false);
     }
@@ -244,7 +254,9 @@ export function CheckoutForm({
       return;
     }
     if (!selectedAddress) {
-      setOrderError("Choose or add a shipping address before placing your order.");
+      setOrderError(
+        "Choose or add a shipping address before placing your order.",
+      );
       return;
     }
 
@@ -329,7 +341,7 @@ export function CheckoutForm({
           type="tel"
           autoComplete="tel"
           placeholder="Phone*"
-          defaultValue={editingAddress?.phone ?? ""}
+          defaultValue={editingAddress?.phone ?? customerPhone ?? ""}
           required
           minLength={5}
           maxLength={30}
@@ -448,7 +460,7 @@ export function CheckoutForm({
           <h2 className="rounded-lg bg-[#f5f4f3] px-4 py-3 text-sm font-semibold text-[#433b37]">
             Shipping Address
           </h2>
-          <div className="px-1 pt-4 sm:px-2">
+          <div className="pt-4">
             {addresses.length ? (
               <div className="space-y-3">
                 {visibleAddresses.map((address) => (
@@ -502,7 +514,9 @@ export function CheckoutForm({
                     onClick={() => setShowAllAddresses((show) => !show)}
                     className="text-xs text-[#766d69] underline underline-offset-2"
                   >
-                    {showAllAddresses ? "Show fewer addresses" : "View all addresses"}
+                    {showAllAddresses
+                      ? "Show fewer addresses"
+                      : "View all addresses"}
                   </button>
                 ) : null}
               </div>
@@ -671,7 +685,8 @@ export function CheckoutForm({
           {appliedCoupon ? (
             <div className="mt-2 flex items-center justify-between gap-3 rounded-md border border-[#d6e8d5] bg-[#f5faf4] px-3 py-2">
               <p className="min-w-0 truncate text-xs text-[#376b3b]">
-                <span className="font-semibold">{appliedCoupon.code}</span> applied
+                <span className="font-semibold">{appliedCoupon.code}</span>{" "}
+                applied
               </p>
               <button
                 type="button"
@@ -715,8 +730,16 @@ export function CheckoutForm({
               </button>
             </div>
           )}
-          {couponError ? <p role="alert" className="mt-2 text-xs text-red-700">{couponError}</p> : null}
-          {couponMessage ? <p aria-live="polite" className="mt-2 text-xs text-[#4d8c52]">{couponMessage}</p> : null}
+          {couponError ? (
+            <p role="alert" className="mt-2 text-xs text-red-700">
+              {couponError}
+            </p>
+          ) : null}
+          {couponMessage ? (
+            <p aria-live="polite" className="mt-2 text-xs text-[#4d8c52]">
+              {couponMessage}
+            </p>
+          ) : null}
         </div>
 
         <dl className="mt-5 space-y-2 border-t border-dashed border-[#e8e1dd] pt-4 text-xs">
@@ -735,7 +758,9 @@ export function CheckoutForm({
           {appliedCoupon ? (
             <div className="flex justify-between gap-3">
               <dt className="text-[#8b837e]">Coupon ({appliedCoupon.code})</dt>
-              <dd className="text-[#514944]">−{formatMoney(appliedCoupon.discountAmount, currency)}</dd>
+              <dd className="text-[#514944]">
+                −{formatMoney(appliedCoupon.discountAmount, currency)}
+              </dd>
             </div>
           ) : null}
           <div className="flex justify-between gap-3">
@@ -797,7 +822,7 @@ export function CheckoutForm({
             !selectedAddress ||
             cart.items.length === 0
           }
-          className="mt-4 inline-flex h-16 w-full items-center justify-center gap-3 rounded-full bg-[#b48d7d] px-5 font-cormorant text-base font-semibold tracking-[0.08em] text-white uppercase transition-colors hover:bg-[#a77f70] disabled:cursor-not-allowed disabled:opacity-50"
+          className="font-cormorant mt-4 inline-flex h-16 w-full items-center justify-center gap-3 rounded-full bg-[#b48d7d] px-5 text-base font-semibold tracking-[0.08em] text-white uppercase transition-colors hover:bg-[#a77f70] disabled:cursor-not-allowed disabled:opacity-50"
         >
           {orderBusy ? "Processing…" : "Pay Now"}
           <ArrowRight aria-hidden="true" className="size-5" />

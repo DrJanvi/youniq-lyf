@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 
-export const SITE_NAME = "Banafa";
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+export const SITE_NAME = "Youniqlyf";
+export const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+).replace(/\/$/, "");
 
 export function absoluteUrl(path: string) {
   return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
@@ -14,7 +16,10 @@ export function buildMetadata(opts: {
   image?: string;
   noindex?: boolean;
 }): Metadata {
-  const description = opts.description?.replace(/\s+/g, " ").trim().slice(0, 160);
+  const description = opts.description
+    ?.replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 160);
   return {
     title: opts.title,
     description,
@@ -27,7 +32,11 @@ export function buildMetadata(opts: {
       siteName: SITE_NAME,
       images: opts.image ? [{ url: opts.image }] : undefined,
     },
-    twitter: { card: opts.image ? "summary_large_image" : "summary", title: opts.title, description },
+    twitter: {
+      card: opts.image ? "summary_large_image" : "summary",
+      title: opts.title,
+      description,
+    },
   };
 }
 

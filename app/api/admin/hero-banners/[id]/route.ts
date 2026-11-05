@@ -1,7 +1,7 @@
 import { api, readJson, type IdCtx } from "@/lib/http";
 import { requireAdminApi } from "@/lib/auth/session";
 import { heroBannerSchema } from "@/lib/validation";
-import { deleteHeroBanner, updateHeroBanner } from "@/services/hero-banner";
+import { deleteHeroBanner, restoreHeroBanner, updateHeroBanner } from "@/services/hero-banner";
 
 export const PATCH = api<IdCtx>(async (req, { params }) => {
   await requireAdminApi();
@@ -12,4 +12,9 @@ export const PATCH = api<IdCtx>(async (req, { params }) => {
 export const DELETE = api<IdCtx>(async (_req, { params }) => {
   await requireAdminApi();
   await deleteHeroBanner((await params).id);
+});
+
+export const POST = api<IdCtx>(async (_req, { params }) => {
+  await requireAdminApi();
+  return restoreHeroBanner((await params).id);
 });

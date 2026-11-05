@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { ProductListing } from "@/components/shop/ProductListing";
 import { PageHeader } from "@/components/shop/PageHeader";
+import { ProductListing } from "@/components/shop/ProductListing";
 import { Section } from "@/components/ui/Section";
 import { buildMetadata } from "@/lib/seo";
 import { getTaxonomyBySlug } from "@/services/taxonomy";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -26,7 +26,7 @@ export async function generateMetadata({
     description:
       category.seoDescription ??
       category.description ??
-      `Shop ${category.name} at Banafa.`,
+      `Shop ${category.name} at Youniqlyf.`,
     path: `/category/${slug}`,
     noindex: filtered,
   });

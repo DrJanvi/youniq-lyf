@@ -23,8 +23,6 @@ export type NavCategory = { id: string; name: string; slug: string };
 
 const MORE_LINKS = [
   { href: "/products", label: "About Us" },
-  { href: "/products", label: "Store Locator" },
-  { href: "/products", label: "Gift Cards" },
   { href: "/products", label: "Contact" },
   { href: "/blogs", label: "Blogs" },
 ];

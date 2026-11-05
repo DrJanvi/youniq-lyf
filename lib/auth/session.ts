@@ -27,18 +27,37 @@ const baseCookie = {
   path: "/",
 };
 
-export async function startSession(user: { id: string; role: "CUSTOMER" | "ADMIN" }) {
+export async function startSession(user: {
+  id: string;
+  role: "CUSTOMER" | "ADMIN";
+  sessionVersion?: number;
+}) {
   const jar = await cookies();
   if (user.role === "ADMIN") {
-    jar.set(ADMIN_COOKIE, await signToken({ sub: user.id, role: "ADMIN" }, ADMIN_MAX_AGE), {
-      ...baseCookie,
-      maxAge: ADMIN_MAX_AGE,
-    });
+    jar.set(
+      ADMIN_COOKIE,
+      await signToken(
+        { sub: user.id, role: "ADMIN", sessionVersion: 0 },
+        ADMIN_MAX_AGE,
+      ),
+      {
+        ...baseCookie,
+        maxAge: ADMIN_MAX_AGE,
+      },
+    );
   } else {
-    jar.set(SESSION_COOKIE, await signToken({ sub: user.id, role: "CUSTOMER" }, SESSION_MAX_AGE), {
-      ...baseCookie,
-      maxAge: SESSION_MAX_AGE,
-    });
+    jar.set(
+      SESSION_COOKIE,
+      await signToken(
+        {
+          sub: user.id,
+          role: "CUSTOMER",
+          sessionVersion: user.sessionVersion ?? 0,
+        },
+        SESSION_MAX_AGE,
+      ),
+      { ...baseCookie, maxAge: SESSION_MAX_AGE },
+    );
   }
 }
 
@@ -56,9 +75,31 @@ async function userFromCookie(
   if (!payload || payload.role !== role) return null;
   const user = await prisma.user.findUnique({
     where: { id: payload.sub },
-    select: { id: true, email: true, name: true, username: true, role: true },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      username: true,
+      role: true,
+      accountDeletionRequestedAt: true,
+      sessionVersion: true,
+    },
   });
-  return user && user.role === role ? user : null;
+  if (!user || user.role !== role) return null;
+  if (
+    role === "CUSTOMER" &&
+    (user.accountDeletionRequestedAt ||
+      user.sessionVersion !== payload.sessionVersion)
+  ) {
+    return null;
+  }
+  return {
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    username: user.username,
+    role: user.role,
+  };
 }
 
 export const getCurrentUser: () => Promise<CurrentUser | null> = cache(() =>
@@ -90,6 +131,7 @@ export async function requireUserPage(next: string) {
 }
 
 export async function requireAdminPage() {
+  await connection();
   const admin = await getCurrentAdmin();
   if (!admin) redirect("/admin/login");
   return admin;

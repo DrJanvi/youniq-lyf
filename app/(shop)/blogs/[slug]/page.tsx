@@ -1,9 +1,9 @@
+import { BlogShareButtons } from "@/components/shop/BlogShareButtons";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { Section } from "@/components/ui/Section";
-import { BlogShareButtons } from "@/components/shop/BlogShareButtons";
-import { absoluteUrl, buildMetadata } from "@/lib/seo";
 import { sanitizeBlogContent } from "@/lib/blog-content";
+import { absoluteUrl, buildMetadata } from "@/lib/seo";
 import {
   getBlogArticleBySlug,
   listLatestBlogArticles,
@@ -74,7 +74,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
     dateModified: article.updatedAt.toISOString(),
     timeRequired: `PT${article.readTime}M`,
     mainEntityOfPage: absoluteUrl(`/blogs/${article.slug}`),
-    publisher: { "@type": "Organization", name: "Banafa" },
+    publisher: { "@type": "Organization", name: "Youniqlyf" },
   };
 
   return (
@@ -88,7 +88,10 @@ export default async function BlogArticlePage({ params }: PageProps) {
           </h1>
           <p className="mt-4 flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 text-xs text-[#8b8580] sm:text-sm">
             <span>
-              Posted by <span className="font-medium text-[#514740]">Buabed Banafa</span>
+              Posted by{" "}
+              <span className="font-medium text-[#514740]">
+                Buabed Youniqlyf
+              </span>
             </span>
             <span aria-hidden="true">|</span>
             <span>{formatDate(article.publishedAt)}</span>
@@ -127,7 +130,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
             <p className="max-w-[52ch] text-sm leading-6 text-[#89817b] sm:text-right">
               Discover more fragrance inspirations, beauty tips, and lifestyle
               stories curated to elevate your everyday experiences with Buabed
-              Banafa.
+              Youniqlyf.
             </p>
           </header>
           <div className="grid gap-x-5 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
@@ -161,7 +164,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
                   href={`/blogs/${relatedArticle.slug}`}
                   className="group/title"
                 >
-                  <h3 className="mt-2 line-clamp-2 font-cormorant text-xl leading-tight font-semibold text-[#2c211d] uppercase group-hover/title:text-[#a98678]">
+                  <h3 className="font-cormorant mt-2 line-clamp-2 text-xl leading-tight font-semibold text-[#2c211d] uppercase group-hover/title:text-[#a98678]">
                     {relatedArticle.title}
                   </h3>
                 </Link>
@@ -172,7 +175,8 @@ export default async function BlogArticlePage({ params }: PageProps) {
                   href={`/blogs/${relatedArticle.slug}`}
                   className="mt-3 inline-flex w-fit items-center gap-2 rounded-full border border-[#d8bdb2] px-4 py-2 text-[11px] font-medium text-[#a98678] transition-colors hover:bg-[#b99586] hover:text-white"
                 >
-                  LEARN MORE <ArrowRight aria-hidden="true" className="size-4" />
+                  LEARN MORE{" "}
+                  <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
               </article>
             ))}

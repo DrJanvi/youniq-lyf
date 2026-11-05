@@ -80,3 +80,33 @@ export async function updateSavedAddress(
     });
   });
 }
+
+export async function deleteSavedAddress(userId: string, addressId: string) {
+  await prisma.$transaction(async (tx) => {
+    const existing = await tx.savedAddress.findFirst({
+      where: { id: addressId, userId },
+      select: { id: true, isDefault: true },
+    });
+    if (!existing) throw new ApiError(404, "Saved address not found");
+
+    await tx.savedAddress.delete({ where: { id: existing.id } });
+    if (!existing.isDefault) return;
+
+    await tx.savedAddress.updateMany({
+      where: { userId },
+      data: { isDefault: false },
+    });
+    const replacement = await tx.savedAddress.findFirst({
+      where: { userId },
+      orderBy: { createdAt: "asc" },
+      select: { id: true },
+    });
+    if (replacement) {
+      await tx.savedAddress.update({
+        where: { id: replacement.id },
+        data: { isDefault: true },
+      });
+    }
+  });
+  return listSavedAddresses(userId);
+}

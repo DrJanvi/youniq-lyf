@@ -9,6 +9,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Form } from "@/components/admin/ui/form";
 import { useAdminApi } from "@/components/admin/common/use-admin-api";
 import { BlogContentEditorField } from "@/components/admin/forms/BlogContentEditor";
+import { RestoreButton } from "@/components/admin/common/RestoreButton";
+import { StatusBadge } from "@/components/admin/common/StatusBadge";
 
 type FaqPage = "CONTACT" | "FAQ_PAGE";
 
@@ -19,9 +21,10 @@ type Faq = {
   page: FaqPage;
   sortOrder: number;
   isActive: boolean;
+  deletedAt: string | null;
 };
 
-type FaqDraft = Omit<Faq, "id"> & { id?: string };
+type FaqDraft = Omit<Faq, "id" | "deletedAt"> & { id?: string };
 type FaqFormValues = Omit<FaqDraft, "id">;
 
 const destinations: { value: FaqPage; label: string }[] = [
@@ -198,7 +201,7 @@ export function FaqsPage({ faqs }: { faqs: Faq[] }) {
   const router = useRouter();
 
   async function remove(id: string) {
-    if (!window.confirm("Delete this FAQ?")) return;
+    if (!window.confirm("Delete this FAQ? It will be removed from the storefront and can be restored from this page.")) return;
     const result = await request(`/api/admin/contact-us/faqs/${id}`, {
       method: "DELETE",
       success: "FAQ deleted",
@@ -256,7 +259,7 @@ export function FaqsPage({ faqs }: { faqs: Faq[] }) {
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2 font-medium">
                         {faq.question}
-                        {!faq.isActive ? (
+                        {faq.deletedAt ? <StatusBadge status="DELETED" label="Deleted" /> : !faq.isActive ? (
                           <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
                             Hidden
                           </span>
@@ -270,23 +273,29 @@ export function FaqsPage({ faqs }: { faqs: Faq[] }) {
                       </p>
                     </div>
                     <div className="flex gap-1">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        aria-label={`Edit ${faq.question}`}
-                        onClick={() => setFaqDraft(faq)}
-                      >
-                        <Edit2 />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        aria-label={`Delete ${faq.question}`}
-                        disabled={pending}
-                        onClick={() => remove(faq.id)}
-                      >
-                        <X />
-                      </Button>
+                      {faq.deletedAt ? (
+                        <RestoreButton url={`/api/admin/contact-us/faqs/${faq.id}`} itemName="FAQ" />
+                      ) : (
+                        <>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            aria-label={`Edit ${faq.question}`}
+                            onClick={() => setFaqDraft(faq)}
+                          >
+                            <Edit2 />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            aria-label={`Delete ${faq.question}`}
+                            disabled={pending}
+                            onClick={() => remove(faq.id)}
+                          >
+                            <X />
+                          </Button>
+                        </>
+                      )}
                     </div>
                   </div>
                 ))}

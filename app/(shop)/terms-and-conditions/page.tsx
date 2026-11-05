@@ -5,15 +5,12 @@ export const instant = false;
 
 export const metadata = buildMetadata({
   title: "Terms & Conditions",
-  description: "Review the terms and conditions for shopping with Banafa.",
+  description: "Review the terms and conditions for shopping with Youniqlyf.",
   path: "/terms-and-conditions",
 });
 
 export default function TermsAndConditionsPage() {
   return (
-    <PolicyContentPage
-      slug="terms-and-conditions"
-      title="Terms & Conditions"
-    />
+    <PolicyContentPage slug="terms-and-conditions" title="Terms & Conditions" />
   );
 }

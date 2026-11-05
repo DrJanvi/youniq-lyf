@@ -5,7 +5,7 @@ export const instant = false;
 
 export const metadata = buildMetadata({
   title: "Shipping, Payment & Cancellation Policy",
-  description: "Review Banafa's shipping, payment, and cancellation policy.",
+  description: "Review Youniqlyf's shipping, payment, and cancellation policy.",
   path: "/shipping-payment-cancellation-policy",
 });
 

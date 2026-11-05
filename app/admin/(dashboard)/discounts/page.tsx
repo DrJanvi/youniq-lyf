@@ -10,7 +10,7 @@ export default async function AdminDiscountsPage({ searchParams }: { searchParam
   const p = parseListParams(await searchParams, {
     sortable: ["name", "value", "startsAt", "endsAt", "isActive", "createdAt"],
     defaultSort: "createdAt",
-    filters: { status: ["active", "inactive", "expired"], type: ["PERCENT", "FIXED"] },
+    filters: { status: ["active", "inactive", "expired"], type: ["PERCENT", "FIXED"], deleted: ["active", "deleted"] },
   });
   const result = await listDiscounts(p.page, p);
   return (
@@ -20,6 +20,7 @@ export default async function AdminDiscountsPage({ searchParams }: { searchParam
         meta={{ total: result.pagination.total, page: result.pagination.page, totalPages: result.pagination.totalPages, sort: p.sort, dir: p.dir, q: p.q }}
         filters={[
           { param: "status", label: "Status", value: p.filters.status, options: [{ value: "active", label: "Active" }, { value: "inactive", label: "Inactive" }, { value: "expired", label: "Expired" }] },
+          { param: "deleted", label: "Record", value: p.filters.deleted, options: [{ value: "active", label: "Not deleted" }, { value: "deleted", label: "Deleted" }] },
           { param: "type", label: "Type", value: p.filters.type, options: [{ value: "PERCENT", label: "Percentage" }, { value: "FIXED", label: "Fixed" }] },
         ]}
         rows={result.data.map((d) => ({
@@ -31,6 +32,7 @@ export default async function AdminDiscountsPage({ searchParams }: { searchParam
           startsAt: d.startsAt?.toISOString() ?? null,
           endsAt: d.endsAt?.toISOString() ?? null,
           isActive: d.isActive,
+          deletedAt: d.deletedAt?.toISOString() ?? null,
         }))}
       />
     </>

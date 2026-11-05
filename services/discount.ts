@@ -26,6 +26,11 @@ export async function listDiscounts(page: PageParams, p?: ListParams) {
   const f = p?.filters ?? {};
   const now = new Date();
   const where: Prisma.DiscountWhereInput = {
+    ...(f.deleted === "deleted"
+      ? { deletedAt: { not: null } }
+      : f.deleted === "active"
+        ? { deletedAt: null }
+        : {}),
     ...(p?.q ? { name: { contains: p.q } } : {}),
     ...(f.type ? { type: f.type as "PERCENT" | "FIXED" } : {}),
     ...(f.status === "active" ? { isActive: true } : f.status === "inactive" ? { isActive: false } : {}),
@@ -62,7 +67,18 @@ export async function updateDiscount(id: string, input: Input) {
 }
 
 export async function deleteDiscount(id: string) {
-  await prisma.discount.delete({ where: { id } }).catch(() => {
-    throw new ApiError(404, "Discount not found");
+  const deleted = await prisma.discount.updateMany({
+    where: { id, deletedAt: null },
+    data: { deletedAt: new Date() },
   });
+  if (!deleted.count) throw new ApiError(404, "Discount not found");
+}
+
+export async function restoreDiscount(id: string) {
+  const restored = await prisma.discount.updateMany({
+    where: { id, deletedAt: { not: null } },
+    data: { deletedAt: null },
+  });
+  if (!restored.count) throw new ApiError(404, "Deleted discount not found");
+  return { restored: true };
 }

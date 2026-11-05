@@ -5,12 +5,10 @@ export const instant = false;
 
 export const metadata = buildMetadata({
   title: "Refunds Policy",
-  description: "Review Banafa's refunds policy.",
+  description: "Review Youniqlyf's refunds policy.",
   path: "/refunds-policy",
 });
 
 export default function RefundsPolicyPage() {
-  return (
-    <PolicyContentPage slug="refunds-policy" title="Refunds Policy" />
-  );
+  return <PolicyContentPage slug="refunds-policy" title="Refunds Policy" />;
 }

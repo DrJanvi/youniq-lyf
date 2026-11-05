@@ -14,7 +14,7 @@ export default async function AdminProductsPage({ searchParams }: { searchParams
   const p = parseListParams(await searchParams, {
     sortable,
     defaultSort: "createdAt",
-    filters: { category: true, gender: ["MALE", "FEMALE", "UNISEX"], status: ["active", "hidden"] },
+    filters: { category: true, gender: ["MALE", "FEMALE", "UNISEX"], status: ["active", "hidden"], deleted: ["active", "deleted"] },
   });
   const [result, categories] = await Promise.all([
     listProducts(
@@ -23,6 +23,7 @@ export default async function AdminProductsPage({ searchParams }: { searchParams
         category: p.filters.category,
         gender: p.filters.gender,
         status: p.filters.status as "active" | "hidden" | undefined,
+        deleted: p.filters.deleted as "active" | "deleted" | undefined,
         includeInactive: true,
         adminSort: { field: p.sort as (typeof sortable)[number], dir: p.dir },
       },
@@ -38,6 +39,7 @@ export default async function AdminProductsPage({ searchParams }: { searchParams
         filters={[
           { param: "category", label: "Category", value: p.filters.category, options: categories.map((c) => ({ value: c.slug, label: c.name })) },
           { param: "status", label: "Status", value: p.filters.status, options: [{ value: "active", label: "Active" }, { value: "hidden", label: "Hidden" }] },
+          { param: "deleted", label: "Record", value: p.filters.deleted, options: [{ value: "active", label: "Not deleted" }, { value: "deleted", label: "Deleted" }] },
           { param: "gender", label: "Gender", value: p.filters.gender, options: [{ value: "UNISEX", label: "Unisex" }, { value: "MALE", label: "Male" }, { value: "FEMALE", label: "Female" }] },
         ]}
         rows={result.data.map((x) => ({
@@ -50,6 +52,8 @@ export default async function AdminProductsPage({ searchParams }: { searchParams
           stock: x.stock,
           soldCount: x.soldCount,
           isActive: x.isActive,
+          deletedAt: x.deletedAt,
+          deletedByTaxonomy: x.deletedByTaxonomy,
         }))}
       />
     </>

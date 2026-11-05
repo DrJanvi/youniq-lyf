@@ -28,7 +28,7 @@ export function ProductCard({
     ? (TAG_LABELS[tagSlug] ?? tagSlug.replace(/-/g, " "))
     : null;
   return (
-    <article className="group flex flex-col gap-2 rounded-2xl border border-surface-border bg-white p-3 shadow-sm">
+    <article className="group border-surface-border flex flex-col gap-2 rounded-2xl border bg-white p-3">
       {image ? (
         <div className="relative mb-3">
           <Link href={`/products/${product.slug}`} className="block">
@@ -49,7 +49,7 @@ export function ProductCard({
               ) : null}
 
               {product.discountPercent > 0 ? (
-                <span className="pointer-events-none absolute top-5 left-5 rounded-full bg-badge-sale px-4 py-2 text-sm font-medium text-badge-sale-text uppercase">
+                <span className="bg-badge-sale text-badge-sale-text pointer-events-none absolute top-5 left-5 rounded-full px-4 py-2 text-sm font-medium uppercase">
                   {product.discountPercent}% OFF
                 </span>
               ) : null}
@@ -75,7 +75,7 @@ export function ProductCard({
         <p className="text-text-muted text-xs font-medium">
           {product.category.name}
         </p>
-        <h3 className="font-cormorant group-hover:text-brand-taupe mt-1.5 line-clamp-2 min-h-14 text-lg font-bold leading-7 transition-colors duration-300 ease-out">
+        <h3 className="font-cormorant group-hover:text-brand-taupe mt-1.5 line-clamp-2 min-h-14 text-lg leading-7 font-bold transition-colors duration-300 ease-out">
           {product.title}
         </h3>
       </Link>

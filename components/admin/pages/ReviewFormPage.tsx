@@ -9,7 +9,7 @@ export async function ReviewFormPage({ id }: { id?: string }) {
   await requireAdminPage();
   const [review, products] = await Promise.all([
     id ? getReview(id) : null,
-    prisma.product.findMany({ select: { id: true, title: true }, orderBy: { title: "asc" }, take: 500 }),
+    prisma.product.findMany({ where: { deletedAt: null }, select: { id: true, title: true }, orderBy: { title: "asc" }, take: 500 }),
   ]);
   if (id && !review) notFound();
   return (

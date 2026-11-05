@@ -13,8 +13,8 @@ import { getWishedIds } from "@/lib/shop-data";
 import { listHeroBanners } from "@/services/hero-banner";
 import { listByTag } from "@/services/product";
 import { listTopCategories } from "@/services/taxonomy";
-import { connection } from "next/server";
 import type { Metadata } from "next";
+import { connection } from "next/server";
 
 const homeTitle = `${SITE_NAME} - Fragrances & Body Care`;
 
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   ...buildMetadata({
     title: homeTitle,
     description:
-      "Discover best-selling and newly released Banafa perfumes, body care, hair care and home care products.",
+      "Discover best-selling and newly released Youniqlyf perfumes, body care, hair care and home care products.",
     path: "/",
   }),
   title: { absolute: homeTitle },
@@ -55,7 +55,14 @@ export default async function HomePage() {
           },
         }}
       />
-      <HeroSlider slides={banners.map((b) => ({ image: b.desktopImage, mobileImage: b.mobileImage, href: b.link, alt: b.alt ?? undefined }))} />
+      <HeroSlider
+        slides={banners.map((b) => ({
+          image: b.desktopImage,
+          mobileImage: b.mobileImage,
+          href: b.link,
+          alt: b.alt ?? undefined,
+        }))}
+      />
       <CategoriesSection categories={categories} />
       <BestSellerSection products={best} wishedIds={wished} />
       <HighlightedCategorySection />

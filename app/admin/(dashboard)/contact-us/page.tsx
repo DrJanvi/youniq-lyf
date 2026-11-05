@@ -29,8 +29,8 @@ export default async function AdminContactUsPage({ searchParams }: { searchParam
     <ContactUsPage
       section={section}
       settings={settings ?? defaultContactSettings}
-      locations={locations.map(({ id, city, country, company, address, phone, whatsapp, sortOrder, isActive }) => ({
-        id, city, country, company, address, phone, whatsapp, sortOrder, isActive,
+      locations={locations.map(({ id, city, country, company, address, phone, whatsapp, sortOrder, isActive, deletedAt }) => ({
+        id, city, country, company, address, phone, whatsapp, sortOrder, isActive, deletedAt: deletedAt?.toISOString() ?? null,
       }))}
       submissions={{
         rows: result.data.map((row) => ({ ...row, createdAt: row.createdAt.toISOString(), readAt: row.readAt?.toISOString() ?? null })),

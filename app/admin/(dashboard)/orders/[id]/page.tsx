@@ -4,10 +4,12 @@ import { PageHeader } from "@/components/admin/common/PageHeader";
 import { StatusBadge } from "@/components/admin/common/StatusBadge";
 import { OrderDecision } from "@/components/admin/forms/OrderDecision";
 import { OrderDeliveryActions } from "@/components/admin/forms/OrderDeliveryActions";
+import { InvoiceEmailRetry } from "@/components/admin/forms/InvoiceEmailRetry";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/admin/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/admin/ui/table";
 import { formatDateTime, formatMoney } from "@/lib/admin/format";
 import { requireAdminPage } from "@/lib/auth/session";
+import { formatInvoiceNumber } from "@/lib/invoice/number";
 import { paymentMethodLabels } from "@/lib/order-status";
 import { getOrderAdmin } from "@/services/order";
 
@@ -16,6 +18,8 @@ export default async function AdminOrderPage({ params }: { params: Promise<{ id:
   const order = await getOrderAdmin((await params).id);
   if (!order) notFound();
   const money = (n: number) => formatMoney(n, order.currency);
+  const invoice = order.invoice;
+  const retryInvoiceEmail = invoice && invoice.emailStatus !== "SENT";
   return (
     <>
       <PageHeader
@@ -117,6 +121,27 @@ export default async function AdminOrderPage({ params }: { params: Promise<{ id:
                 ) : null}
               </div>
             ) : null}
+            {invoice ? (
+              <div className="mt-3 rounded-md bg-muted p-2">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <p className="font-medium">Invoice {formatInvoiceNumber(invoice.sequence)}</p>
+                  <StatusBadge status={invoice.emailStatus} />
+                </div>
+                <p className="mt-1">Email: {invoice.recipientEmail ?? order.user.email ?? "Not provided"}</p>
+                {invoice.sentAt ? <p>Sent: {formatDateTime(invoice.sentAt)}</p> : null}
+                <p>Attempts: {invoice.emailAttempts}</p>
+                {invoice.lastError ? (
+                  <p className="mt-1 whitespace-pre-line text-destructive">{invoice.lastError}</p>
+                ) : null}
+                {retryInvoiceEmail ? (
+                  <div className="mt-2">
+                    <InvoiceEmailRetry orderId={order.id} />
+                  </div>
+                ) : null}
+              </div>
+            ) : (
+              <p className="mt-3 text-xs text-muted-foreground">No invoice was issued for this order.</p>
+            )}
           </CardContent>
         </Card>
       </div>

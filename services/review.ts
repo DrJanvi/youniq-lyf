@@ -6,6 +6,7 @@ import type { Prisma, ReviewStatus } from "@prisma/client";
 import type { ListParams } from "@/lib/admin/list-params";
 import { cacheLife, cacheTag } from "next/cache";
 import { invalidatePublicCache, PUBLIC_CACHE_TAGS } from "@/lib/public-cache";
+import { STOREFRONT_PRODUCT_WHERE } from "@/services/product";
 
 export type ReviewDTO = {
   id: string;
@@ -16,6 +17,7 @@ export type ReviewDTO = {
   body: string;
   status: ReviewStatus;
   createdAt: string;
+  deletedAt: string | null;
 };
 
 export type LatestReviewDTO = ReviewDTO & {
@@ -30,12 +32,17 @@ export type LatestReviewDTO = ReviewDTO & {
 
 const toDTO = (r: {
   id: string; productId: string; authorName: string; rating: number;
-  title: string | null; body: string; status: ReviewStatus; createdAt: Date;
-}): ReviewDTO => ({ ...r, createdAt: r.createdAt.toISOString() });
+  title: string | null; body: string; status: ReviewStatus; createdAt: Date; deletedAt: Date | null;
+}): ReviewDTO => ({ ...r, createdAt: r.createdAt.toISOString(), deletedAt: r.deletedAt?.toISOString() ?? null });
 
 export async function recalcRating(productId: string) {
   const agg = await prisma.review.aggregate({
-    where: { productId, status: "APPROVED" },
+    where: {
+      productId,
+      status: "APPROVED",
+      deletedAt: null,
+      product: { is: STOREFRONT_PRODUCT_WHERE },
+    },
     _avg: { rating: true },
     _count: true,
   });
@@ -49,7 +56,12 @@ export async function listApprovedReviews(productId: string, page: PageParams) {
   "use cache";
   cacheLife("minutes");
   cacheTag(PUBLIC_CACHE_TAGS.reviews);
-  const where = { productId, status: "APPROVED" as const };
+  const where = {
+    productId,
+    status: "APPROVED" as const,
+    deletedAt: null,
+    product: { is: STOREFRONT_PRODUCT_WHERE },
+  };
   const [rows, total] = await Promise.all([
     prisma.review.findMany({ where, orderBy: { createdAt: "desc" }, skip: page.skip, take: page.limit }),
     prisma.review.count({ where }),
@@ -63,7 +75,12 @@ export async function getReviewDistribution(productId: string) {
   cacheTag(PUBLIC_CACHE_TAGS.reviews);
   const rows = await prisma.review.groupBy({
     by: ["rating"],
-    where: { productId, status: "APPROVED" },
+    where: {
+      productId,
+      status: "APPROVED",
+      deletedAt: null,
+      product: { is: STOREFRONT_PRODUCT_WHERE },
+    },
     _count: true,
   });
   const counts: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
@@ -102,6 +119,11 @@ export async function listLatestReviews(): Promise<LatestReviewDTO[]> {
 export async function listReviewsAdmin(page: PageParams, status?: ReviewStatus, productId?: string, p?: ListParams) {
   const rating = Number(p?.filters.rating);
   const where: Prisma.ReviewWhereInput = {
+    ...(p?.filters.deleted === "deleted"
+      ? { deletedAt: { not: null } }
+      : p?.filters.deleted === "active"
+        ? { deletedAt: null }
+        : {}),
     ...(status ? { status } : {}),
     ...(productId ? { productId } : {}),
     ...(rating ? { rating } : {}),
@@ -144,7 +166,10 @@ export async function createReview(
   input: { productId: string; authorName: string; authorEmail?: string; rating: number; title?: string; body: string; status?: ReviewStatus; createdAt?: Date },
   userId?: string,
 ) {
-  const product = await prisma.product.findUnique({ where: { id: input.productId }, select: { id: true } });
+  const product = await prisma.product.findFirst({
+    where: { id: input.productId, ...STOREFRONT_PRODUCT_WHERE },
+    select: { id: true },
+  });
   if (!product) throw new ApiError(404, "Product not found");
   const row = await prisma.review.create({
     data: { ...input, userId: userId ?? null, status: input.status ?? "PENDING" },
@@ -165,8 +190,32 @@ export async function setReviewStatus(id: string, status: ReviewStatus) {
 }
 
 export async function deleteReview(id: string) {
-  const row = await prisma.review.delete({ where: { id } }).catch(() => null);
+  const row = await prisma.review.findFirst({
+    where: { id, deletedAt: null },
+    select: { productId: true },
+  });
   if (!row) throw new ApiError(404, "Review not found");
+  const result = await prisma.review.updateMany({
+    where: { id, deletedAt: null },
+    data: { deletedAt: new Date() },
+  });
+  if (!result.count) throw new ApiError(404, "Review not found");
   await recalcRating(row.productId);
   invalidatePublicCache(PUBLIC_CACHE_TAGS.reviews, PUBLIC_CACHE_TAGS.products);
+}
+
+export async function restoreReview(id: string) {
+  const row = await prisma.review.findUnique({
+    where: { id },
+    select: { productId: true, deletedAt: true },
+  });
+  if (!row?.deletedAt) throw new ApiError(404, "Deleted review not found");
+  const restored = await prisma.review.updateMany({
+    where: { id, deletedAt: { not: null } },
+    data: { deletedAt: null },
+  });
+  if (!restored.count) throw new ApiError(404, "Deleted review not found");
+  await recalcRating(row.productId);
+  invalidatePublicCache(PUBLIC_CACHE_TAGS.reviews, PUBLIC_CACHE_TAGS.products);
+  return { restored: true };
 }

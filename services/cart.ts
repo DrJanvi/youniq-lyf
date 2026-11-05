@@ -1,7 +1,11 @@
 import "server-only";
 import { prisma } from "@/lib/prisma";
 import { ApiError } from "@/lib/http";
-import { getProductsByIds, type ProductDTO } from "./product";
+import {
+  getProductsByIds,
+  STOREFRONT_PRODUCT_WHERE,
+  type ProductDTO,
+} from "./product";
 import { round2 } from "@/lib/pricing";
 
 export type CartDTO = {
@@ -40,13 +44,19 @@ export async function getCart(userId: string): Promise<CartDTO> {
 export async function getCartCount(userId: string): Promise<number> {
   const cart = await prisma.cart.findUnique({ where: { userId }, select: { id: true } });
   if (!cart) return 0;
-  const agg = await prisma.cartItem.aggregate({ where: { cartId: cart.id }, _sum: { quantity: true } });
+  const agg = await prisma.cartItem.aggregate({
+    where: { cartId: cart.id, product: { is: STOREFRONT_PRODUCT_WHERE } },
+    _sum: { quantity: true },
+  });
   return agg._sum.quantity ?? 0;
 }
 
 async function assertProduct(productId: string) {
-  const p = await prisma.product.findUnique({ where: { id: productId }, select: { isActive: true, stock: true } });
-  if (!p || !p.isActive) throw new ApiError(404, "Product not found");
+  const p = await prisma.product.findFirst({
+    where: { id: productId, ...STOREFRONT_PRODUCT_WHERE },
+    select: { stock: true },
+  });
+  if (!p) throw new ApiError(404, "Product not found");
   return p;
 }
 
@@ -78,8 +88,11 @@ export async function clearCart(userId: string) {
 export async function mergeCart(userId: string, items: { productId: string; quantity: number }[]) {
   const cart = await ensureCart(userId);
   for (const it of items) {
-    const p = await prisma.product.findUnique({ where: { id: it.productId }, select: { isActive: true, stock: true } });
-    if (!p || !p.isActive || p.stock < 1) continue;
+    const p = await prisma.product.findFirst({
+      where: { id: it.productId, ...STOREFRONT_PRODUCT_WHERE },
+      select: { stock: true },
+    });
+    if (!p || p.stock < 1) continue;
     const existing = await prisma.cartItem.findUnique({
       where: { cartId_productId: { cartId: cart.id, productId: it.productId } },
     });

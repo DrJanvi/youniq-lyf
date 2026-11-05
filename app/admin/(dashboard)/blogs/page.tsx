@@ -15,7 +15,7 @@ export default async function AdminBlogsPage({
   const params = parseListParams(await searchParams, {
     sortable: ["title", "category", "publishedAt", "createdAt"],
     defaultSort: "publishedAt",
-    filters: { category: BLOG_CATEGORIES },
+    filters: { category: BLOG_CATEGORIES, deleted: ["active", "deleted"] },
   });
   const result = await listBlogArticlesAdmin(params);
   return (
@@ -35,6 +35,7 @@ export default async function AdminBlogsPage({
           q: params.q,
         }}
         category={params.filters.category}
+        deleted={params.filters.deleted}
         rows={result.data.map((article) => ({
           id: article.id,
           title: article.title,
@@ -42,6 +43,7 @@ export default async function AdminBlogsPage({
           publishedAt: article.publishedAt,
           readTime: article.readTime,
           image: article.image,
+          deletedAt: article.deletedAt?.toISOString() ?? null,
         }))}
       />
     </>

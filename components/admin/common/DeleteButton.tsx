@@ -65,7 +65,9 @@ export function DeleteButton({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete {itemName}?</AlertDialogTitle>
-            <AlertDialogDescription>{description ?? "This action cannot be undone."}</AlertDialogDescription>
+            <AlertDialogDescription>
+              {description ?? "This item will be removed from the storefront and can be restored from this section."}
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel disabled={pending}>Cancel</AlertDialogCancel>

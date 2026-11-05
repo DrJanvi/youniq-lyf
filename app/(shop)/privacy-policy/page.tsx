@@ -5,12 +5,10 @@ export const instant = false;
 
 export const metadata = buildMetadata({
   title: "Privacy Policy",
-  description: "Read how Banafa handles customer and personal information.",
+  description: "Read how Youniqlyf handles customer and personal information.",
   path: "/privacy-policy",
 });
 
 export default function PrivacyPolicyPage() {
-  return (
-    <PolicyContentPage slug="privacy-policy" title="Privacy Policy" />
-  );
+  return <PolicyContentPage slug="privacy-policy" title="Privacy Policy" />;
 }

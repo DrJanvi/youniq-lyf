@@ -1,7 +1,7 @@
 import { api, readJson, type IdCtx } from "@/lib/http";
 import { requireAdminApi } from "@/lib/auth/session";
 import { orderAdminUpdateSchema, orderDeliveryUpdateSchema } from "@/lib/validation";
-import { decideOrder, deleteOrder, updateOrderDelivery } from "@/services/order";
+import { decideOrder, deleteOrder, restoreOrder, updateOrderDelivery } from "@/services/order";
 
 export const PATCH = api<IdCtx>(async (req, { params }) => {
   await requireAdminApi();
@@ -17,4 +17,9 @@ export const PATCH = api<IdCtx>(async (req, { params }) => {
 export const DELETE = api<IdCtx>(async (_req, { params }) => {
   await requireAdminApi();
   await deleteOrder((await params).id);
+});
+
+export const POST = api<IdCtx>(async (_req, { params }) => {
+  await requireAdminApi();
+  return restoreOrder((await params).id);
 });

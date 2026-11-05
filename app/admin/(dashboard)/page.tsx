@@ -22,6 +22,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+export const instant = false;
+
 const DAY = 86_400_000;
 
 function Stat({
@@ -70,21 +72,23 @@ export default async function AdminOverviewPage() {
     weekOrders,
     top,
   ] = await Promise.all([
-    prisma.product.count(),
-    prisma.order.count({ where: { status: "PENDING" } }),
-    prisma.review.count({ where: { status: "PENDING" } }),
-    prisma.product.count({ where: { stock: { lte: 5 }, isActive: true } }),
+    prisma.product.count({ where: { deletedAt: null } }),
+    prisma.order.count({ where: { status: "PENDING", deletedAt: null } }),
+    prisma.review.count({ where: { status: "PENDING", deletedAt: null } }),
+    prisma.product.count({ where: { stock: { lte: 5 }, isActive: true, deletedAt: null } }),
     prisma.contactSubmission.count({ where: { readAt: null } }),
     prisma.order.findMany({
+      where: { deletedAt: null },
       orderBy: { createdAt: "desc" },
       take: 5,
       include: { user: { select: { email: true } } },
     }),
     prisma.order.findMany({
-      where: { createdAt: { gte: since } },
+      where: { createdAt: { gte: since }, deletedAt: null },
       select: { createdAt: true },
     }),
     prisma.product.findMany({
+      where: { deletedAt: null },
       orderBy: [{ soldCount: "desc" }, { id: "asc" }],
       take: 4,
       select: {

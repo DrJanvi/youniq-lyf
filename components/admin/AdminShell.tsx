@@ -12,6 +12,7 @@ import { apiFetch } from "@/lib/client-api";
 import { cn } from "@/lib/utils";
 import {
   Boxes,
+  BriefcaseBusiness,
   ContactRound,
   ExternalLink,
   FileText,
@@ -48,7 +49,12 @@ const nav = [
   { href: "/admin/about-us", label: "About Us", icon: Info },
   { href: "/admin/policies", label: "Policies", icon: ScrollText },
   { href: "/admin/contact-us", label: "Contact Us", icon: ContactRound },
-  { href: "/admin/partner-requests", label: "Partner Request", icon: Handshake },
+  {
+    href: "/admin/partner-requests",
+    label: "Partner Request",
+    icon: Handshake,
+  },
+  { href: "/admin/careers", label: "Careers", icon: BriefcaseBusiness },
   { href: "/admin/faqs", label: "FAQs", icon: MessageSquareText },
   { href: "/admin/discounts", label: "Discounts", icon: Percent },
   { href: "/admin/coupons", label: "Coupons", icon: Tag },
@@ -81,8 +87,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
             aria-current={active ? "page" : undefined}
             className={cn(
               "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
-              active &&
-                "bg-sidebar-accent text-sidebar-foreground font-medium",
+              active && "bg-sidebar-accent text-sidebar-foreground font-medium",
             )}
           >
             <Icon
@@ -106,11 +111,11 @@ function Brand() {
         href="/admin"
         className="flex items-center gap-3 text-lg font-semibold tracking-tight text-white"
       >
-        <span className="grid size-8 place-items-center rounded-md bg-primary text-primary-foreground">
+        <span className="bg-primary text-primary-foreground grid size-8 place-items-center rounded-md">
           <Boxes className="size-4" />
         </span>
-        Banafa
-        <span className="ml-auto rounded-md border border-white/10 px-2 py-1 text-[10px] font-medium tracking-wider text-sidebar-foreground/60 uppercase">
+        Youniqlyf
+        <span className="text-sidebar-foreground/60 ml-auto rounded-md border border-white/10 px-2 py-1 text-[10px] font-medium tracking-wider uppercase">
           Admin
         </span>
       </Link>
@@ -134,19 +139,19 @@ function AdminFooter({
   return (
     <div className="shrink-0 border-t border-white/10 p-3">
       <div className="flex items-center gap-3 px-2 py-2">
-        <span className="grid size-9 shrink-0 place-items-center rounded-md bg-sidebar-accent text-sm font-semibold text-white">
+        <span className="bg-sidebar-accent grid size-9 shrink-0 place-items-center rounded-md text-sm font-semibold text-white">
           {initials}
         </span>
         <div className="min-w-0">
           <p className="truncate text-sm font-medium text-white">{name}</p>
-          <p className="text-xs text-sidebar-foreground/60">
+          <p className="text-sidebar-foreground/60 text-xs">
             Store administrator
           </p>
         </div>
       </div>
       <Link
         href="/"
-        className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent hover:text-white"
+        className="text-sidebar-foreground/70 hover:bg-sidebar-accent flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors hover:text-white"
       >
         <ExternalLink className="size-4" />
         View storefront
@@ -154,7 +159,7 @@ function AdminFooter({
       <button
         type="button"
         onClick={onLogout}
-        className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent hover:text-white"
+        className="text-sidebar-foreground/70 hover:bg-sidebar-accent flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors hover:text-white"
       >
         <LogOut className="size-4" />
         Log out
@@ -185,7 +190,7 @@ export function AdminShell({
 
   return (
     <div className="bg-canvas flex min-h-screen">
-      <aside className="bg-sidebar text-sidebar-foreground sticky top-0 hidden h-screen w-64 shrink-0 self-start flex-col border-r border-white/10 lg:flex">
+      <aside className="bg-sidebar text-sidebar-foreground sticky top-0 hidden h-screen w-64 shrink-0 flex-col self-start border-r border-white/10 lg:flex">
         <Brand />
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain py-4">
           <NavLinks />
@@ -211,7 +216,7 @@ export function AdminShell({
       </Sheet>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 items-center gap-3 border-b border-border bg-card px-4 lg:hidden">
+        <header className="border-border bg-card flex h-14 items-center gap-3 border-b px-4 lg:hidden">
           <Button
             variant="ghost"
             size="icon"
@@ -221,7 +226,7 @@ export function AdminShell({
             <Menu />
           </Button>
           <Link href="/admin" className="text-sm font-semibold tracking-tight">
-            Banafa Admin
+            Youniqlyf Admin
           </Link>
         </header>
         <main className="flex flex-1 flex-col gap-6 p-4 sm:p-6 lg:p-8">

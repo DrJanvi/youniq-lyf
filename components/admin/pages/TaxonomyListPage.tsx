@@ -9,7 +9,7 @@ import { listTaxonomyAdmin } from "@/services/taxonomy";
 export async function TaxonomyListPage({ kind, searchParams }: { kind: TaxonomyKind; searchParams: Promise<SearchParams> }) {
   await requireAdminPage();
   const cfg = taxonomyConfig[kind];
-  const p = parseListParams(await searchParams, { sortable: ["name", "products", "createdAt"], defaultSort: "name", defaultDir: "asc" });
+  const p = parseListParams(await searchParams, { sortable: ["name", "products", "createdAt"], defaultSort: "name", defaultDir: "asc", filters: { deleted: ["active", "deleted"] } });
   const result = await listTaxonomyAdmin(kind, p);
   const basePath = `/admin/${cfg.path}`;
   return (
@@ -21,7 +21,8 @@ export async function TaxonomyListPage({ kind, searchParams }: { kind: TaxonomyK
         singular={cfg.singular}
         withImage={cfg.withDetails}
         meta={{ total: result.pagination.total, page: result.pagination.page, totalPages: result.pagination.totalPages, sort: p.sort, dir: p.dir, q: p.q }}
-        rows={result.data.map((r) => ({ id: r.id, name: r.name, slug: r.slug, image: r.image, products: r._count.products, createdAt: r.createdAt.toISOString() }))}
+        deleted={p.filters.deleted}
+        rows={result.data.map((r) => ({ id: r.id, name: r.name, slug: r.slug, image: r.image, products: r._count.products, createdAt: r.createdAt.toISOString(), deletedAt: r.deletedAt?.toISOString() ?? null }))}
       />
     </>
   );
