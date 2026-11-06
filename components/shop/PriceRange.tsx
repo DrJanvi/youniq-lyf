@@ -77,8 +77,8 @@ export function PriceRange({
         />
       </div>
       <div className="mt-2 flex justify-between text-base font-medium">
-        <output>{formatMoney(range.min, "AED")}</output>
-        <output>{formatMoney(range.max, "AED")}</output>
+        <output>{formatMoney(range.min, "INR")}</output>
+        <output>{formatMoney(range.max, "INR")}</output>
       </div>
     </div>
   );

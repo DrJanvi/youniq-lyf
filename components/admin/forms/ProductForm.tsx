@@ -76,7 +76,7 @@ export function ProductForm({
           })),
         }
       : {
-          title: "", slug: "", description: "", images: "", aboutPoints: "", aboutIntro: "", price: 0, currency: "AED", stock: 0, gender: "UNISEX", isActive: true,
+          title: "", slug: "", description: "", images: "", aboutPoints: "", aboutIntro: "", price: 0, currency: "INR", stock: 0, gender: "UNISEX", isActive: true,
           categoryId: "", brandId: "", productTypeId: "", presetTags: [], tags: "", seoTitle: "", seoDescription: "", variants: [],
         },
     url: id ? `/api/admin/products/${id}` : "/api/admin/products",

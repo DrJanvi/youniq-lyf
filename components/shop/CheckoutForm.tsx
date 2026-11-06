@@ -90,7 +90,7 @@ export function CheckoutForm({
   const [couponError, setCouponError] = useState<string | null>(null);
   const [couponMessage, setCouponMessage] = useState<string | null>(null);
 
-  const currency = cart.items[0]?.product.currency ?? "AED";
+  const currency = cart.items[0]?.product.currency ?? "INR";
   const orderTotal = appliedCoupon?.total ?? cart.total;
   const selectedAddress = addresses.find(
     (address) => address.id === selectedAddressId,

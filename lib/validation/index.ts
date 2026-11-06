@@ -160,7 +160,7 @@ export const productInputSchema = z.object({
     .default([]),
   aboutIntro: z.string().trim().max(600).nullish(),
   price: z.coerce.number().nonnegative().max(10_000_000),
-  currency: z.string().trim().length(3).default("AED"),
+  currency: z.string().trim().length(3).default("INR"),
   stock: z.coerce.number().int().min(0).default(0),
   variants: z.array(productVariantInputSchema).max(50).default([]),
   gender: z.enum(["MALE", "FEMALE", "UNISEX"]).default("UNISEX"),

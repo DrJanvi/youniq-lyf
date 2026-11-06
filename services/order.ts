@@ -123,7 +123,7 @@ export async function checkout(
         shippingPhone: address.phone,
         shippingAddress,
         paymentMethod: input.paymentMethod,
-        currency: cart.items[0]?.product.currency ?? "AED",
+        currency: cart.items[0]?.product.currency ?? "INR",
         subtotal: cart.subtotal,
         discountTotal: round2(cart.discountTotal + (coupon?.discountAmount ?? 0)),
         couponId: coupon?.couponId ?? null,

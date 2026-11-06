@@ -11,13 +11,13 @@
   "price": {
     "amount": 26,
     "currency": {
-      "code": "AED",
-      "symbol": "د.إ",
-      "name": "United Arab Emirates Dirham",
-      "locale": "ar-AE"
+      "code": "INR",
+      "symbol": "₹",
+      "name": "Indian Rupee",
+      "locale": "en-IN"
     },
     "formatted": {
-      "withCurrency": "‏26.00 د.إ.‏",
+      "withCurrency": "₹26.00",
       "withoutCurrency": "26.00"
     },
     "parts": {
@@ -35,13 +35,13 @@
   "discount": {
     "amount": 24.7,
     "currency": {
-      "code": "AED",
-      "symbol": "د.إ",
-      "name": "United Arab Emirates Dirham",
-      "locale": "ar-AE"
+      "code": "INR",
+      "symbol": "₹",
+      "name": "Indian Rupee",
+      "locale": "en-IN"
     },
     "formatted": {
-      "withCurrency": "‏24.70 د.إ.‏",
+      "withCurrency": "₹24.70",
       "withoutCurrency": "24.70"
     },
     "parts": {
