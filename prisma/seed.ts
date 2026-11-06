@@ -94,7 +94,7 @@ async function main() {
         description: p.description,
         images: p.images ?? [],
         price,
-        currency: p.price.currency?.code ?? "AED",
+        currency: p.price.currency?.code ?? "INR",
         stock: p.quantity ?? 0,
         gender: ["MALE", "FEMALE", "UNISEX"].includes(p.gender)
           ? p.gender

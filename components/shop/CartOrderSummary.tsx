@@ -15,7 +15,7 @@ export function CartOrderSummary({ cart }: { cart: CartDTO }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
-  const currency = cart.items[0]?.product.currency ?? "AED";
+  const currency = cart.items[0]?.product.currency ?? "INR";
 
   async function applyCoupon(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

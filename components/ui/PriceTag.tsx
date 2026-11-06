@@ -1,17 +1,11 @@
-// Intl has no symbol for AED, so substitute the Arabic dirham sign.
-const CURRENCY_SYMBOLS: Record<string, string> = { AED: "د.إ" };
+const CURRENCY_SYMBOLS: Record<string, string> = { INR: "₹" };
 
-// Digits right after Arabic letters are reordered by the bidi algorithm and
-// push the symbol to the right. Isolating the symbol (RLI...PDI) prevents that.
-const isolateRtl = (s: string) => `\u2067${s}\u2069`;
-
-export function formatMoney(amount: number, currency = "AED") {
+export function formatMoney(amount: number, currency = "INR") {
   return new Intl.NumberFormat("en", { style: "currency", currency })
     .formatToParts(amount)
     .map((part) => {
       if (part.type !== "currency") return part.value;
-      const symbol = CURRENCY_SYMBOLS[currency];
-      return symbol ? isolateRtl(symbol) : part.value;
+      return CURRENCY_SYMBOLS[currency] ?? part.value;
     })
     .join("");
 }
@@ -19,7 +13,7 @@ export function formatMoney(amount: number, currency = "AED") {
 export function PriceTag({
   price,
   finalPrice,
-  currency = "AED",
+  currency = "INR",
 }: {
   price: number;
   finalPrice: number;
