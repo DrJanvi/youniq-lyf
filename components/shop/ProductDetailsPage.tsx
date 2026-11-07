@@ -4,6 +4,7 @@ import { ProductGrid } from "@/components/shop/ProductGrid";
 import { ProductReviews } from "@/components/shop/ProductReviews";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Section } from "@/components/ui/Section";
+import { sanitizeRichTextContent } from "@/lib/blog-content";
 import type { ProductDTO } from "@/services/product";
 import type { listApprovedReviews } from "@/services/review";
 
@@ -25,6 +26,7 @@ export function ProductDetailsPage({
   userName: string;
 }) {
   const path = `/products/${product.slug}`;
+  const descriptionHtml = sanitizeRichTextContent(product.description);
 
   return (
     <article className="flex flex-col">
@@ -41,7 +43,11 @@ export function ProductDetailsPage({
       />
 
       <Section className="pt-3 pb-14 md:pt-5 md:pb-20">
-        <ProductDetailsPanel product={product} wished={wished} />
+        <ProductDetailsPanel
+          product={product}
+          descriptionHtml={descriptionHtml}
+          wished={wished}
+        />
       </Section>
 
       {product.aboutPoints.length || product.aboutIntro ? (
