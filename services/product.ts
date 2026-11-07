@@ -20,6 +20,7 @@ const include = {
     select: {
       id: true,
       name: true,
+      sku: true,
       color: true,
       images: true,
       priceOverride: true,
@@ -69,6 +70,7 @@ type CachedProductRow = {
   variants: {
     id: string;
     name: string;
+    sku: string | null;
     color: string;
     images: unknown;
     priceOverride: number | null;
@@ -112,6 +114,7 @@ export type ProductDTO = {
 export type ProductVariantDTO = {
   id: string;
   name: string;
+  sku: string | null;
   color: string;
   images: string[];
   priceOverride: number | null;
@@ -170,6 +173,7 @@ function toCachedProduct(p: ProductRow): CachedProductRow {
     variants: p.variants.map((variant) => ({
       id: variant.id,
       name: variant.name,
+      sku: variant.sku,
       color: variant.color,
       images: variant.images,
       priceOverride: variant.priceOverride === null ? null : Number(variant.priceOverride),
@@ -220,6 +224,7 @@ export function toDTO(
       return {
         id: variant.id,
         name: variant.name,
+        sku: variant.sku,
         color: variant.color,
         images: Array.isArray(variant.images)
           ? variant.images.filter((image): image is string => typeof image === "string")
@@ -581,20 +586,29 @@ export async function listAllSlugs() {
   });
 }
 
-async function syncTags(productId: string, tags: string[]) {
+async function ensureTags(tags: string[]) {
   const slugs = [...new Set(tags.map(slugify).filter(Boolean))];
-  const tagRows = await Promise.all(
-    slugs.map((slug) =>
-      prisma.tag.upsert({
-        where: { slug },
-        update: {},
-        create: { slug, name: tags.find((t) => slugify(t) === slug) ?? slug },
-      }),
-    ),
-  );
+  if (!slugs.length) return [];
+
+  await prisma.tag.createMany({
+    data: slugs.map((slug) => ({
+      slug,
+      name: tags.find((tag) => slugify(tag) === slug) ?? slug,
+    })),
+    skipDuplicates: true,
+  });
+  return prisma.tag.findMany({
+    where: { slug: { in: slugs } },
+    select: { id: true },
+  });
+}
+
+async function syncTags(productId: string, tags: string[]) {
+  const tagRows = await ensureTags(tags);
+  const links = tagRows.map(({ id: tagId }) => ({ productId, tagId }));
   await prisma.$transaction([
     prisma.productTag.deleteMany({ where: { productId } }),
-    prisma.productTag.createMany({ data: tagRows.map((t) => ({ productId, tagId: t.id })) }),
+    ...(links.length ? [prisma.productTag.createMany({ data: links })] : []),
   ]);
 }
 
@@ -662,7 +676,10 @@ async function syncVariants(
   };
 }
 
-export async function createProduct(input: z.infer<typeof productInputSchema>) {
+export async function createProduct(
+  input: z.infer<typeof productInputSchema>,
+  source?: { shopifyId: string; createdAt?: Date },
+) {
   await assertLiveTaxonomyReferences(input);
   const slug = await uniqueSlug(input.slug || input.title, async (s) =>
     Boolean(await prisma.product.findUnique({ where: { slug: s }, select: { id: true } })),
@@ -672,24 +689,35 @@ export async function createProduct(input: z.infer<typeof productInputSchema>) {
   const stock = hasVariantRecords
     ? variants.reduce((total, variant) => total + (variant.isActive ? variant.stock : 0), 0)
     : rest.stock;
-  const row = await prisma.product.create({
-    data: {
-      ...rest,
-      stock,
-      slug,
-      brandId: rest.brandId || null,
-      productTypeId: rest.productTypeId || null,
-      variants: variants.length
-        ? {
-            create: variants.map((variant) => ({
-              ...variant,
-              priceOverride: variant.priceOverride ?? null,
-            })),
-          }
-        : undefined,
-    },
+  const tagRows = await ensureTags(tags);
+  const row = await prisma.$transaction(async (tx) => {
+    const product = await tx.product.create({
+      data: {
+        ...rest,
+        stock,
+        slug,
+        shopifyId: source?.shopifyId,
+        createdAt: source?.createdAt,
+        brandId: rest.brandId || null,
+        productTypeId: rest.productTypeId || null,
+        variants: variants.length
+          ? {
+              create: variants.map((variant) => ({
+                ...variant,
+                sku: variant.sku ?? null,
+                priceOverride: variant.priceOverride ?? null,
+              })),
+            }
+          : undefined,
+      },
+    });
+    if (tagRows.length) {
+      await tx.productTag.createMany({
+          data: tagRows.map(({ id: tagId }) => ({ productId: product.id, tagId })),
+      });
+    }
+    return product;
   });
-  await syncTags(row.id, tags);
   const product = await getProductById(row.id);
   invalidatePublicCache(PUBLIC_CACHE_TAGS.products, PUBLIC_CACHE_TAGS.taxonomy);
   return product;
