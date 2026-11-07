@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import {
   Boxes,
   BriefcaseBusiness,
+  CloudUpload,
   ContactRound,
   ExternalLink,
   FileText,
@@ -41,6 +42,7 @@ import { toast } from "sonner";
 const nav = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
   { href: "/admin/products", label: "Products", icon: Package },
+  { href: "/admin/import/shopify", label: "Shopify import", icon: CloudUpload },
   { href: "/admin/categories", label: "Categories", icon: FolderTree },
   { href: "/admin/brands", label: "Brands", icon: Tag },
   { href: "/admin/product-types", label: "Product types", icon: Tags },

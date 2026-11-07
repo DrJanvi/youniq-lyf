@@ -165,6 +165,7 @@ model Tag {
 model Product {
   id                String    @id @default(uuid())
   slug              String    @unique @db.VarChar(255)
+  shopifyId         String?   @unique @map("shopify_id") @db.VarChar(64)
   title             String    @db.VarChar(255)
   description       String    @db.Text
   images            Json
@@ -215,6 +216,7 @@ model ProductVariant {
   id            String   @id @default(uuid())
   productId     String
   name          String   @db.VarChar(120)
+  sku           String?  @db.VarChar(120)
   color         String   @db.VarChar(7)
   images        Json
   priceOverride Decimal? @db.Decimal(10, 2)
