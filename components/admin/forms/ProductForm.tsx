@@ -1,6 +1,7 @@
 "use client";
 
 import { Form } from "@/components/admin/ui/form";
+import { BlogContentEditorField } from "@/components/admin/forms/BlogContentEditor";
 import { productFormSchema } from "@/lib/validation/admin";
 import { CheckboxGroupField, FormSection, NumberField, SelectField, SwitchField, TextField, TextareaField } from "./Fields";
 import { FormActions } from "./FormActions";
@@ -133,7 +134,13 @@ export function ProductForm({
           <TextField control={c} name="title" label="Title" required />
           <TextField control={c} name="slug" label="Slug" description="Leave empty to generate from the title." />
           <div className="full">
-            <TextareaField control={c} name="description" label="Description" required rows={6} />
+            <BlogContentEditorField
+              control={c}
+              name="description"
+              label="Description"
+              required
+              description="Format the product description with the toolbar or keyboard shortcuts."
+            />
           </div>
           <div className="full">
             <ImageUploadField control={c} name="images" label="Upload product images" multiple maxFiles={20} />

@@ -13,12 +13,19 @@ import { useState } from "react";
 
 export function ProductDetailsPanel({
   product,
+  descriptionHtml,
   wished,
 }: {
   product: ProductDTO;
+  descriptionHtml: string;
   wished: boolean;
 }) {
-  const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null);
+  const [selectedVariantId, setSelectedVariantId] = useState<string | null>(
+    () =>
+      product.variants.find((variant) => variant.stock > 0)?.id ??
+      product.variants[0]?.id ??
+      null,
+  );
   const selectedVariant =
     product.variants.find((variant) => variant.id === selectedVariantId) ?? null;
   const lowestVariant = product.variants.reduce<
@@ -135,9 +142,10 @@ export function ProductDetailsPanel({
           ) : null}
         </div>
 
-        <p className="text-sm leading-6 text-text-muted">
-          {product.description}
-        </p>
+        <div
+          className="storefront-rich-content text-sm leading-6 text-text-muted"
+          dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+        />
 
         <p className="flex items-center gap-2 text-sm">
           <span
