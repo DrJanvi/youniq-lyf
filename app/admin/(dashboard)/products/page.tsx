@@ -1,11 +1,13 @@
 import { AddButton } from "@/components/admin/common/AddButton";
 import { PageHeader } from "@/components/admin/common/PageHeader";
 import { ProductsTable } from "@/components/admin/tables/ProductsTable";
+import { Button } from "@/components/admin/ui/button";
 import { type SearchParams, parseListParams } from "@/lib/admin/list-params";
 import { requireAdminPage } from "@/lib/auth/session";
 import { formatMoney } from "@/lib/admin/format";
 import { listProducts } from "@/services/product";
 import { listTaxonomy } from "@/services/taxonomy";
+import Link from "next/link";
 
 const sortable = ["title", "price", "stock", "soldCount", "createdAt", "isActive"] as const;
 
@@ -33,7 +35,18 @@ export default async function AdminProductsPage({ searchParams }: { searchParams
   ]);
   return (
     <>
-      <PageHeader title="Products" description="Manage your catalogue, prices and stock." actions={<AddButton href="/admin/products/new" label="Add product" />} />
+      <PageHeader
+        title="Products"
+        description="Manage your catalogue, prices and stock."
+        actions={
+          <>
+            <Button asChild variant="outline">
+              <Link href="/admin/import/shopify">Import from Shopify</Link>
+            </Button>
+            <AddButton href="/admin/products/new" label="Add product" />
+          </>
+        }
+      />
       <ProductsTable
         meta={{ total: result.pagination.total, page: result.pagination.page, totalPages: result.pagination.totalPages, sort: p.sort, dir: p.dir, q: p.q }}
         filters={[

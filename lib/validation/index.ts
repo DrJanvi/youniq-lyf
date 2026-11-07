@@ -137,6 +137,7 @@ export const adminLoginSchema = z.object({
 export const productVariantInputSchema = z.object({
   id: z.string().uuid().optional(),
   name: z.string().trim().min(1).max(120),
+  sku: z.string().trim().max(120).nullish(),
   color: z.string().regex(/^#[\da-fA-F]{6}$/, "Use a 6-digit hex color"),
   images: z.array(z.string().url()).max(20).default([]),
   priceOverride: z.coerce.number().nonnegative().max(10_000_000).nullable().optional(),
@@ -148,7 +149,7 @@ export const productInputSchema = z.object({
   title: z.string().trim().min(2).max(250),
   slug: optionalText,
   description: z.string().trim().min(1),
-  images: z.array(z.string().url()).max(20).default([]),
+  images: z.array(z.string().url()).max(30).default([]),
   aboutPoints: z
     .array(
       z.object({
@@ -170,7 +171,7 @@ export const productInputSchema = z.object({
   categoryId: z.string().min(1),
   brandId: z.string().nullish(),
   productTypeId: z.string().nullish(),
-  tags: z.array(z.string().trim().min(1).max(50)).max(20).default([]),
+  tags: z.array(z.string().trim().min(1).max(50)).max(250).default([]),
 });
 export const productUpdateSchema = productInputSchema.partial();
 
