@@ -13,7 +13,6 @@ import { cn } from "@/lib/utils";
 import {
   Boxes,
   BriefcaseBusiness,
-  CloudUpload,
   ContactRound,
   ExternalLink,
   FileText,
@@ -42,7 +41,7 @@ import { toast } from "sonner";
 const nav = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
   { href: "/admin/products", label: "Products", icon: Package },
-  { href: "/admin/import/shopify", label: "Shopify import", icon: CloudUpload },
+  // { href: "/admin/import/shopify", label: "Shopify import", icon: CloudUpload },
   { href: "/admin/categories", label: "Categories", icon: FolderTree },
   { href: "/admin/brands", label: "Brands", icon: Tag },
   { href: "/admin/product-types", label: "Product types", icon: Tags },
@@ -89,13 +88,16 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
             aria-current={active ? "page" : undefined}
             className={cn(
               "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
-              active && "bg-sidebar-accent text-sidebar-accent-foreground font-medium",
+              active &&
+                "bg-sidebar-accent text-sidebar-accent-foreground font-medium",
             )}
           >
             <Icon
               className={cn(
                 "size-4",
-                active ? "text-sidebar-accent-foreground" : "text-sidebar-foreground/80",
+                active
+                  ? "text-sidebar-accent-foreground"
+                  : "text-sidebar-foreground/80",
               )}
             />
             {label}
