@@ -83,10 +83,10 @@ function serialize<T extends {
   };
 }
 
-/** Mock checkout: turns the cart into a PENDING order awaiting admin approval. */
-export async function checkout(
+export async function prepareCheckout(
   userId: string,
-  input: { addressId: string; paymentMethod: PaymentMethod; couponCode?: string },
+  input: { addressId: string; couponCode?: string },
+  paymentMethod: "CASH_ON_DELIVERY" | "RAZORPAY",
 ) {
   const cart = await getCart(userId);
   if (!cart.items.length) throw new ApiError(400, "Cart is empty");
@@ -115,25 +115,52 @@ export async function checkout(
   });
   if (!customer) throw new ApiError(404, "Customer not found");
 
+  return {
+    customerEmail: customer.email,
+    cartItems: cart.items.map((line) => ({
+      productId: line.product.id,
+      variantId: line.variant?.id ?? null,
+      quantity: line.quantity,
+      unitPrice: line.variant?.finalPrice ?? line.product.finalPrice,
+    })),
+    orderData: {
+      userId,
+      shippingName: `${address.firstName} ${address.lastName}`,
+      shippingPhone: address.phone,
+      shippingAddress,
+      paymentMethod,
+      paymentStatus:
+        paymentMethod === "CASH_ON_DELIVERY"
+          ? ("NOT_REQUIRED" as const)
+          : ("PENDING" as const),
+      currency: cart.items[0]?.product.currency ?? "INR",
+      subtotal: cart.subtotal,
+      discountTotal: round2(cart.discountTotal + (coupon?.discountAmount ?? 0)),
+      couponId: coupon?.couponId ?? null,
+      couponCode: coupon?.code ?? null,
+      couponDiscount: coupon?.discountAmount ?? 0,
+      total: coupon?.total ?? cart.total,
+      items: {
+        create: cart.items.map(snapshotOrderItem),
+      },
+    },
+  };
+}
+
+/** Creates a COD order and issues its invoice using the existing checkout flow. */
+export async function checkout(
+  userId: string,
+  input: { addressId: string; paymentMethod: PaymentMethod; couponCode?: string },
+) {
+  if (input.paymentMethod !== "CASH_ON_DELIVERY") {
+    throw new ApiError(400, "Use Razorpay Checkout for online payments");
+  }
+  const prepared = await prepareCheckout(userId, input, "CASH_ON_DELIVERY");
   const order = await prisma.$transaction(async (tx) => {
     const created = await tx.order.create({
       data: {
-        userId,
-        shippingName: `${address.firstName} ${address.lastName}`,
-        shippingPhone: address.phone,
-        shippingAddress,
-        paymentMethod: input.paymentMethod,
-        currency: cart.items[0]?.product.currency ?? "INR",
-        subtotal: cart.subtotal,
-        discountTotal: round2(cart.discountTotal + (coupon?.discountAmount ?? 0)),
-        couponId: coupon?.couponId ?? null,
-        couponCode: coupon?.code ?? null,
-        couponDiscount: coupon?.discountAmount ?? 0,
-        total: coupon?.total ?? cart.total,
-        items: {
-          create: cart.items.map(snapshotOrderItem),
-        },
-        invoice: { create: { recipientEmail: customer.email } },
+        ...prepared.orderData,
+        invoice: { create: { recipientEmail: prepared.customerEmail } },
       },
       include: customerInclude,
     });
@@ -231,9 +258,32 @@ export async function restoreOrder(id: string) {
 
 export async function decideOrder(id: string, status: "APPROVED" | "REJECTED", adminNote?: string) {
   const updated = await prisma.$transaction(async (tx) => {
+    const current = await tx.order.findFirst({
+      where: { id, deletedAt: null },
+      select: { status: true, paymentMethod: true, paymentStatus: true },
+    });
+    if (!current) throw new ApiError(404, "Order not found");
+    if (current.status !== "PENDING") {
+      throw new ApiError(409, "Order already decided");
+    }
+    if (
+      status === "APPROVED" &&
+      current.paymentMethod !== "CASH_ON_DELIVERY" &&
+      current.paymentStatus !== "PAID"
+    ) {
+      throw new ApiError(409, "An online payment must be confirmed before approval");
+    }
+
     // Conditional update makes the PENDING -> decided transition atomic.
     const claimed = await tx.order.updateMany({
-      where: { id, status: "PENDING", deletedAt: null },
+      where: {
+        id,
+        status: "PENDING",
+        deletedAt: null,
+        ...(status === "APPROVED" && current.paymentMethod !== "CASH_ON_DELIVERY"
+          ? { paymentStatus: "PAID" }
+          : {}),
+      },
       data: { status, adminNote },
     });
     if (claimed.count === 0) {

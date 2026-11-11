@@ -284,8 +284,17 @@ export const savedAddressSchema = z.object({
 
 export const checkoutSchema = z.object({
   addressId: z.string().uuid(),
-  paymentMethod: z.enum(["CASH_ON_DELIVERY", "RAZORPAY", "PAYU"]),
+  paymentMethod: z.literal("CASH_ON_DELIVERY"),
   couponCode: couponCodeSchema.optional(),
+});
+export const razorpayCheckoutSchema = z.object({
+  addressId: z.string().uuid(),
+  couponCode: couponCodeSchema.optional(),
+});
+export const razorpayPaymentVerificationSchema = z.object({
+  razorpay_order_id: z.string().min(1).max(64),
+  razorpay_payment_id: z.string().min(1).max(64),
+  razorpay_signature: z.string().min(1).max(128),
 });
 export const orderDecisionSchema = z.object({
   status: z.enum(["APPROVED", "REJECTED"]),

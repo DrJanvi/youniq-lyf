@@ -61,6 +61,12 @@ export async function getInvoicePdfForUser(orderId: string, userId: string) {
     include: invoiceWithOrder,
   });
   if (!invoice) throw new ApiError(404, "Invoice not found");
+  if (
+    invoice.order.paymentMethod !== "CASH_ON_DELIVERY" &&
+    invoice.order.paymentStatus !== "PAID"
+  ) {
+    throw new ApiError(404, "Invoice not found");
+  }
 
   const data = toPdfData(
     invoice,
@@ -155,17 +161,21 @@ async function deliverInvoice(invoiceId: string) {
 export async function sendInvoiceForOrder(orderId: string) {
   const invoice = await prisma.invoice.findUnique({
     where: { orderId },
-    select: { id: true },
+    select: {
+      id: true,
+      order: { select: { paymentMethod: true, paymentStatus: true } },
+    },
   });
   if (!invoice) throw new ApiError(404, "Invoice not found for order");
+  if (
+    invoice.order.paymentMethod !== "CASH_ON_DELIVERY" &&
+    invoice.order.paymentStatus !== "PAID"
+  ) {
+    throw new ApiError(409, "Online payment must be confirmed before issuing an invoice");
+  }
   return deliverInvoice(invoice.id);
 }
 
 export async function retryInvoiceEmail(orderId: string) {
-  const invoice = await prisma.invoice.findUnique({
-    where: { orderId },
-    select: { id: true },
-  });
-  if (!invoice) throw new ApiError(404, "Invoice not found for order");
-  return deliverInvoice(invoice.id);
+  return sendInvoiceForOrder(orderId);
 }

@@ -14,7 +14,15 @@ import { TextareaField } from "./Fields";
 type Values = { adminNote: string };
 
 /** Approve / reject buttons that open a dialog with an optional note. */
-export function OrderDecision({ orderId, redirectTo }: { orderId: string; redirectTo?: string }) {
+export function OrderDecision({
+  orderId,
+  redirectTo,
+  canApprove = true,
+}: {
+  orderId: string;
+  redirectTo?: string;
+  canApprove?: boolean;
+}) {
   const [decision, setDecision] = useState<"APPROVED" | "REJECTED" | null>(null);
   const { request, pending } = useAdminApi();
   const form = useForm<Values>({ resolver: zodResolver(orderDecisionFormSchema as never), defaultValues: { adminNote: "" } });
@@ -35,9 +43,11 @@ export function OrderDecision({ orderId, redirectTo }: { orderId: string; redire
 
   return (
     <>
-      <Button size="sm" onClick={() => setDecision("APPROVED")}>
-        <Check /> Approve
-      </Button>
+      {canApprove ? (
+        <Button size="sm" onClick={() => setDecision("APPROVED")}>
+          <Check /> Approve
+        </Button>
+      ) : null}
       <Button size="sm" variant="outline" className="text-destructive" onClick={() => setDecision("REJECTED")}>
         <X /> Reject
       </Button>

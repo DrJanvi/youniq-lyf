@@ -10,8 +10,65 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
 
-type PaymentMethod = "CASH_ON_DELIVERY" | "RAZORPAY" | "PAYU";
+type PaymentMethod = "CASH_ON_DELIVERY" | "RAZORPAY";
 type CouponQuote = { code: string; discountAmount: number; total: number };
+type RazorpayCheckoutData = {
+  orderId: string;
+  attemptId: string;
+  razorpayOrderId: string;
+  amount: number;
+  currency: string;
+  keyId: string;
+  customer: { name: string; email: string | null; contact: string };
+};
+type RazorpayCheckoutResult = {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+};
+type RazorpayOptions = {
+  key: string;
+  amount: number;
+  currency: string;
+  name: string;
+  order_id: string;
+  prefill: { name?: string; email?: string; contact?: string };
+  handler: (result: RazorpayCheckoutResult) => void;
+  modal: { ondismiss: () => void };
+  theme: { color: string };
+};
+type RazorpayInstance = {
+  open: () => void;
+  on: (
+    event: "payment.failed",
+    handler: (result: { error?: { description?: string } }) => void,
+  ) => void;
+};
+
+declare global {
+  interface Window {
+    Razorpay?: new (options: RazorpayOptions) => RazorpayInstance;
+  }
+}
+
+let razorpayScriptPromise: Promise<void> | null = null;
+
+function loadRazorpayScript() {
+  if (window.Razorpay) return Promise.resolve();
+  if (razorpayScriptPromise) return razorpayScriptPromise;
+  razorpayScriptPromise = new Promise<void>((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error("Could not load Razorpay Checkout."));
+    document.body.appendChild(script);
+  }).finally(() => {
+    razorpayScriptPromise = null;
+  });
+  return razorpayScriptPromise;
+}
+
 type Props = {
   addresses: SavedAddressDTO[];
   cart: CartDTO;
@@ -37,12 +94,7 @@ const paymentOptions: {
   {
     value: "RAZORPAY",
     label: "Razorpay",
-    description: "Demo selection only; no payment is processed.",
-  },
-  {
-    value: "PAYU",
-    label: "PayU",
-    description: "Demo selection only; no payment is processed.",
+    description: "Pay securely online with Razorpay.",
   },
 ];
 
@@ -273,19 +325,98 @@ export function CheckoutForm({
     setOrderBusy(true);
     setOrderError(null);
     try {
-      await apiFetch("/api/orders", {
-        method: "POST",
-        json: {
-          addressId: selectedAddress.id,
-          paymentMethod,
-          ...(appliedCoupon ? { couponCode: appliedCoupon.code } : {}),
+      const checkoutInput = {
+        addressId: selectedAddress.id,
+        ...(appliedCoupon ? { couponCode: appliedCoupon.code } : {}),
+      };
+      if (paymentMethod === "CASH_ON_DELIVERY") {
+        await apiFetch("/api/orders", {
+          method: "POST",
+          json: { ...checkoutInput, paymentMethod },
+        });
+        router.push("/orders");
+        router.refresh();
+        return;
+      }
+
+      const checkout = await apiFetch<RazorpayCheckoutData>(
+        "/api/checkout/razorpay/order",
+        { method: "POST", json: checkoutInput },
+      );
+      await loadRazorpayScript();
+      if (!window.Razorpay) {
+        throw new Error("Razorpay Checkout did not initialize.");
+      }
+
+      let paymentSubmitted = false;
+      let paymentFailedMessage: string | null = null;
+      const customerName = checkout.customer.name.trim();
+      const customerEmail = checkout.customer.email?.trim();
+      const customerContact = checkout.customer.contact.trim();
+      const razorpay = new window.Razorpay({
+        key: checkout.keyId,
+        amount: checkout.amount,
+        currency: checkout.currency,
+        name: "Youniqlyf",
+        order_id: checkout.razorpayOrderId,
+        prefill: {
+          ...(customerName ? { name: customerName } : {}),
+          ...(customerEmail ? { email: customerEmail } : {}),
+          ...(customerContact ? { contact: customerContact } : {}),
+        },
+        theme: { color: "#7b5b39" },
+        handler: (result) => {
+          paymentSubmitted = true;
+          void apiFetch<{ orderId: string; paymentStatus: string }>(
+            "/api/checkout/razorpay/verify",
+            { method: "POST", json: result },
+          )
+            .then((verification) => {
+              if (verification.paymentStatus === "PAID") {
+                router.push(`/orders/${verification.orderId}`);
+                router.refresh();
+                return;
+              }
+              setOrderError(
+                verification.paymentStatus === "FAILED"
+                  ? "Payment failed. Your cart is unchanged; you can safely try again."
+                  : "Payment is being confirmed. Your cart is unchanged; check your orders before retrying.",
+              );
+              setOrderBusy(false);
+            })
+            .catch((error: unknown) => {
+              setOrderError(
+                error instanceof Error
+                  ? `Payment was submitted but could not be confirmed: ${error.message}`
+                  : "Payment was submitted but could not be confirmed. Check your orders before retrying.",
+              );
+              setOrderBusy(false);
+            });
+        },
+        modal: {
+          ondismiss: () => {
+            if (paymentSubmitted) return;
+            setOrderError(
+              paymentFailedMessage ??
+                "Payment was not completed. Your cart is unchanged; you can try again.",
+            );
+            setOrderBusy(false);
+          },
         },
       });
-      router.push("/orders");
-      router.refresh();
+      razorpay.on("payment.failed", (result) => {
+        paymentFailedMessage =
+          result.error?.description ??
+          "Payment failed. Your cart is unchanged; you can safely try again.";
+        setOrderError(paymentFailedMessage);
+        setOrderBusy(false);
+      });
+      razorpay.open();
     } catch (error) {
       setOrderError(
-        error instanceof Error ? error.message : "Could not place your order.",
+        error instanceof Error
+          ? error.message
+          : "Could not start checkout. Your cart is unchanged.",
       );
       setOrderBusy(false);
     }
@@ -562,7 +693,7 @@ export function CheckoutForm({
           <h2 className="rounded-lg bg-surface-card px-4 py-3 text-sm font-semibold text-text-primary">
             Select a Payment Mode
           </h2>
-          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {paymentOptions.map((option) => (
               <label
                 key={option.value}
@@ -591,9 +722,6 @@ export function CheckoutForm({
               </label>
             ))}
           </div>
-          <p className="mt-3 text-xs text-text-muted">
-            Demo checkout only. No payment provider will be charged.
-          </p>
         </section>
       </div>
 
@@ -830,7 +958,7 @@ export function CheckoutForm({
         ) : null}
         <button
           type="button"
-          onClick={placeOrder}
+          onClick={() => void placeOrder()}
           disabled={
             orderBusy ||
             !agreedToTerms ||
@@ -839,11 +967,17 @@ export function CheckoutForm({
           }
           className="font-cormorant bg-brand-primary-dark hover:bg-brand-primary-hover text-white mt-4 inline-flex h-16 w-full items-center justify-center gap-3 rounded-full px-5 text-base font-semibold tracking-[0.08em] uppercase transition-colors disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {orderBusy ? "Processing…" : "Pay Now"}
+          {orderBusy
+            ? "Opening secure checkout…"
+            : paymentMethod === "CASH_ON_DELIVERY"
+              ? "Place order"
+              : "Pay Now"}
           <ArrowRight aria-hidden="true" className="size-5" />
         </button>
         <p className="mt-3 text-center text-[10px] leading-4 text-text-muted">
-          Demo checkout only. No payment is processed.
+          {paymentMethod === "CASH_ON_DELIVERY"
+            ? "Pay for your order when it arrives."
+            : "Online payments are processed securely by Razorpay."}
         </p>
         <div
           aria-label="Checkout guarantees"
