@@ -43,7 +43,7 @@ export default async function CartPage() {
     <div className="flex flex-col">
       <PageHeader
         title="Your cart"
-        description="A quiet collection of your most-loved fragrances, body care and home rituals."
+        description="Your Youniq picks, gathered in one place and ready for your next look."
         crumbs={[
           { name: "Home", href: "/" },
           { name: "Cart", href: "/cart" },

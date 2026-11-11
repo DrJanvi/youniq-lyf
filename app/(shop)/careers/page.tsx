@@ -1,5 +1,4 @@
 import { CareerApplicationForm } from "@/components/shop/CareerApplicationForm";
-import { CAREER_PLACEHOLDER_IMAGE } from "@/lib/career-page";
 import { getCareerPageSettings } from "@/services/career";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -33,14 +32,21 @@ export default async function CareersPage() {
 
       <div className="grid gap-4 lg:grid-cols-[minmax(260px,315px)_minmax(0,1fr)]">
         <aside className="relative min-h-[360px] overflow-hidden rounded-2xl bg-brand-primary-soft sm:min-h-[420px] lg:min-h-[500px]">
-          <Image
-            src={imageUrl ?? CAREER_PLACEHOLDER_IMAGE}
-            alt="Youniqlyf fragrance campaign"
-            fill
-            sizes="(max-width: 1023px) 100vw, 315px"
-            unoptimized
-            className="object-cover"
-          />
+          {imageUrl ? (
+            <Image
+              src={imageUrl}
+              alt="Youniqlyf fashion campaign"
+              fill
+              sizes="(max-width: 1023px) 100vw, 315px"
+              unoptimized
+              className="object-cover"
+            />
+          ) : (
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-linear-to-br from-brand-primary-soft via-surface-card to-brand-primary/30"
+            />
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-7">
             <h2 className="font-cormorant text-2xl font-medium tracking-[0.08em] uppercase">
@@ -48,8 +54,8 @@ export default async function CareersPage() {
             </h2>
             <div className="mt-2 h-px w-14 bg-white/70" />
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/90">
-              Grow with us and help create exceptional fragrances that inspire
-              the world.
+              Join us in bringing expressive bags and accessories to everyday
+              style.
             </p>
           </div>
         </aside>

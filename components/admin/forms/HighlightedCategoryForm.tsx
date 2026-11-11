@@ -138,7 +138,7 @@ export function HighlightedCategoryForm({ initial }: { initial: Values }) {
               name="buttonLink"
               label="Button link"
               required
-              description="Enter a storefront path such as /category/fragrances or an HTTP(S) URL."
+              description="Enter a storefront path such as /category/bags or an HTTP(S) URL."
             />
           </div>
         </FormSection>

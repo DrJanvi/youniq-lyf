@@ -49,24 +49,6 @@ Font.register({
   ],
 });
 
-Font.register({
-  family: "YouniqlyfArabic",
-  fonts: [
-    {
-      src: assetRequire.resolve(
-        "@fontsource/noto-sans-arabic/files/noto-sans-arabic-arabic-400-normal.woff",
-      ),
-      fontWeight: 400,
-    },
-    {
-      src: assetRequire.resolve(
-        "@fontsource/noto-sans-arabic/files/noto-sans-arabic-arabic-700-normal.woff",
-      ),
-      fontWeight: 700,
-    },
-  ],
-});
-
 Font.registerHyphenationCallback((word) => [word]);
 
 const styles = StyleSheet.create({
@@ -88,36 +70,24 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   sellerDetails: {
-    width: "38%",
+    width: "72%",
     lineHeight: 1.5,
-  },
-  arabicDetails: {
-    fontFamily: "YouniqlyfArabic",
-    textAlign: "right",
-    direction: "rtl",
   },
   logo: {
     width: 74,
     height: 74,
     objectFit: "contain",
   },
-  companyName: {
+  companyNameText: {
     marginTop: 12,
     alignItems: "center",
     color: "#bd2b3a",
   },
-  companyNameEnglish: {
+  companyName: {
     fontSize: 15,
     fontWeight: 700,
     letterSpacing: 1.1,
     textAlign: "center",
-  },
-  companyNameArabic: {
-    fontFamily: "YouniqlyfArabic",
-    fontSize: 15,
-    fontWeight: 700,
-    textAlign: "center",
-    direction: "rtl",
   },
   invoiceHeading: {
     flexDirection: "row",
@@ -131,13 +101,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 700,
   },
-  invoiceTitleArabic: {
-    color: "#253b78",
-    fontFamily: "YouniqlyfArabic",
-    fontSize: 12,
-    fontWeight: 700,
-    direction: "rtl",
-  },
   invoiceMeta: {
     alignItems: "flex-end",
     lineHeight: 1.6,
@@ -149,11 +112,6 @@ const styles = StyleSheet.create({
     padding: 8,
     marginBottom: 12,
     lineHeight: 1.6,
-  },
-  customerArabic: {
-    fontFamily: "YouniqlyfArabic",
-    textAlign: "right",
-    direction: "rtl",
   },
   customerName: {
     fontWeight: 700,
@@ -188,12 +146,6 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     lineHeight: 1.6,
   },
-  headerArabic: {
-    fontFamily: "YouniqlyfArabic",
-    textAlign: "center",
-    direction: "rtl",
-    color: "#253b78",
-  },
   itemDescription: {
     fontWeight: 700,
     lineHeight: 1.4,
@@ -219,11 +171,6 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     fontSize: 10,
   },
-  totalArabic: {
-    fontFamily: "YouniqlyfArabic",
-    textAlign: "right",
-    direction: "rtl",
-  },
   footer: {
     marginTop: 16,
     paddingTop: 8,
@@ -234,12 +181,6 @@ const styles = StyleSheet.create({
     lineHeight: 1.5,
     color: "#59657c",
     fontSize: 7,
-  },
-  footerArabic: {
-    width: "45%",
-    fontFamily: "YouniqlyfArabic",
-    textAlign: "right",
-    direction: "rtl",
   },
 });
 
@@ -254,7 +195,7 @@ export function formatMoney(value: number, currency: string) {
 function formatDate(value: Date) {
   return new Intl.DateTimeFormat("en-GB", {
     dateStyle: "medium",
-    timeZone: "Asia/Dubai",
+    timeZone: "Asia/Kolkata",
   }).format(value);
 }
 
@@ -266,51 +207,33 @@ function InvoiceDocument({ data }: { data: InvoicePdfData }) {
   const invoiceNumber = formatInvoiceNumber(data.sequence);
 
   return (
-    <Document
-      title={`Invoice ${invoiceNumber}`}
-      author="Buabed Youniqlyf Perfumes Industry FZCO"
-    >
+    <Document title={`Invoice ${invoiceNumber}`} author="WHITE COAL CUBES">
       <Page size="A4" style={styles.page} wrap>
         <View style={styles.header} wrap={false}>
           <View style={styles.sellerDetails}>
-            <Text>Tel: 04 881 9580 · Direct: 04 881 9583</Text>
-            <Text>Fax: 04 881 9584 · P.O. Box: 61266</Text>
-            <Text>Jebel Ali, Dubai, United Arab Emirates</Text>
-            <Text>+971 4 881 9584 · youniqlyf@youniqlyf.ae</Text>
-            <Text>TRN: 100395754300003</Text>
+            <Text>WHITE COAL CUBES</Text>
+            <Text>2, A - 19, NDSE, Part 1</Text>
+            <Text>South Delhi, Delhi, 110049</Text>
+            <Text>Phone: +91 9871777077</Text>
+            <Text>Email: support@youniqlyf.com</Text>
+            <Text>GSTIN: 07BBQPS2233B1ZR</Text>
           </View>
           {/* React-PDF's Image component does not expose an alt prop. */}
           {/* eslint-disable-next-line jsx-a11y/alt-text */}
           <Image src={logoDataUri} style={styles.logo} />
-          <View style={[styles.sellerDetails, styles.arabicDetails]}>
-            <Text>هاتف: 04 881 9580 · مباشر: 04 881 9583</Text>
-            <Text>فاكس: 04 881 9584 · صندوق بريد: 61266</Text>
-            <Text>جبل علي، دبي، الإمارات العربية المتحدة</Text>
-            <Text>+971 4 881 9584 · youniqlyf@youniqlyf.ae</Text>
-            <Text>الرقم الضريبي: 100395754300003</Text>
-          </View>
         </View>
 
         <View style={styles.companyName} wrap={false}>
-          <Text style={styles.companyNameArabic}>
-            بو عبد بنافا لصناعة العطور
-          </Text>
-          <Text style={styles.companyNameEnglish}>
-            BUABED YOUNIQLYF PERFUMES INDUSTRY FZCO
-          </Text>
+          <Text style={styles.companyNameText}>Youniqlyf</Text>
         </View>
 
         <View style={styles.invoiceHeading} wrap={false}>
           <View>
             <Text style={styles.invoiceTitle}>INVOICE</Text>
-            <Text style={styles.invoiceTitleArabic}>فاتورة رقمية</Text>
             <Text>No. {invoiceNumber}</Text>
           </View>
           <View style={styles.invoiceMeta}>
             <Text>Date: {formatDate(data.issuedAt)}</Text>
-            <Text style={styles.arabicDetails}>
-              التاريخ: {formatDate(data.issuedAt)}
-            </Text>
           </View>
         </View>
 
@@ -318,27 +241,12 @@ function InvoiceDocument({ data }: { data: InvoicePdfData }) {
           <Text style={styles.customerName}>
             Customer: {data.shippingName || "Customer"}
           </Text>
-          <Text style={styles.customerArabic}>
-            السيد: {data.shippingName || "العميل"}
-          </Text>
-          {data.shippingPhone ? (
-            <>
-              <Text>Phone: {data.shippingPhone}</Text>
-              <Text style={styles.customerArabic}>
-                الهاتف: {data.shippingPhone}
-              </Text>
-            </>
-          ) : null}
+          {data.shippingPhone ? <Text>Phone: {data.shippingPhone}</Text> : null}
           {data.recipientEmail ? (
             <Text>Email: {data.recipientEmail}</Text>
           ) : null}
           {data.shippingAddress ? (
-            <>
-              <Text>Address: {data.shippingAddress}</Text>
-              <Text style={styles.customerArabic}>
-                العنوان: {data.shippingAddress}
-              </Text>
-            </>
+            <Text>Address: {data.shippingAddress}</Text>
           ) : null}
         </View>
 
@@ -346,23 +254,18 @@ function InvoiceDocument({ data }: { data: InvoicePdfData }) {
           <View style={[styles.row, styles.headerRow]} wrap={false}>
             <View style={[styles.cell, styles.serial]}>
               <Text style={styles.headerLabel}>Sr. No.</Text>
-              <Text style={styles.headerArabic}>الرقم</Text>
             </View>
             <View style={[styles.cell, styles.description]}>
               <Text style={styles.headerLabel}>Description</Text>
-              <Text style={styles.headerArabic}>التفاصيل</Text>
             </View>
             <View style={[styles.cell, styles.quantity]}>
               <Text style={styles.headerLabel}>Qty.</Text>
-              <Text style={styles.headerArabic}>الكمية</Text>
             </View>
             <View style={[styles.cell, styles.rate]}>
               <Text style={styles.headerLabel}>Rate</Text>
-              <Text style={styles.headerArabic}>السعر</Text>
             </View>
             <View style={[styles.cell, styles.amount]}>
               <Text style={styles.headerLabel}>Amount</Text>
-              <Text style={styles.headerArabic}>المبلغ</Text>
             </View>
           </View>
           {data.items.map((item, index) => (
@@ -396,7 +299,6 @@ function InvoiceDocument({ data }: { data: InvoicePdfData }) {
           <View style={styles.totalRow}>
             <View>
               <Text>Subtotal</Text>
-              <Text style={styles.totalArabic}>المجموع الفرعي</Text>
             </View>
             <Text>{formatMoney(data.lineSubtotal, data.currency)}</Text>
           </View>
@@ -407,7 +309,6 @@ function InvoiceDocument({ data }: { data: InvoicePdfData }) {
                   Coupon discount
                   {data.couponCode ? ` (${data.couponCode})` : ""}
                 </Text>
-                <Text style={styles.totalArabic}>خصم القسيمة</Text>
               </View>
               <Text>-{formatMoney(data.couponDiscount, data.currency)}</Text>
             </View>
@@ -415,7 +316,6 @@ function InvoiceDocument({ data }: { data: InvoicePdfData }) {
           <View style={[styles.totalRow, styles.grandTotal]}>
             <View>
               <Text>Total</Text>
-              <Text style={styles.totalArabic}>الإجمالي</Text>
             </View>
             <Text>{formatMoney(data.total, data.currency)}</Text>
           </View>
@@ -425,7 +325,6 @@ function InvoiceDocument({ data }: { data: InvoicePdfData }) {
           <Text style={{ width: "50%" }}>
             This invoice was generated electronically.
           </Text>
-          <Text style={styles.footerArabic}>صدرت هذه الفاتورة إلكترونياً.</Text>
         </View>
       </Page>
     </Document>

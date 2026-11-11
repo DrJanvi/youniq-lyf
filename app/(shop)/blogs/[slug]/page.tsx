@@ -90,7 +90,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
             <span>
               Posted by{" "}
               <span className="font-medium text-text-primary">
-                Buabed Youniqlyf
+                Youniqlyf
               </span>
             </span>
             <span aria-hidden="true">|</span>
@@ -128,9 +128,8 @@ export default async function BlogArticlePage({ params }: PageProps) {
               Explore more
             </h2>
             <p className="max-w-[52ch] text-sm leading-6 text-text-muted sm:text-right">
-              Discover more fragrance inspirations, beauty tips, and lifestyle
-              stories curated to elevate your everyday experiences with Buabed
-              Youniqlyf.
+              Discover more Youniq bags, accessory ideas, and style stories
+              curated to inspire your everyday look.
             </p>
           </header>
           <div className="grid gap-x-5 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">

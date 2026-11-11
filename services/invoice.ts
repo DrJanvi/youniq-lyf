@@ -22,7 +22,9 @@ function toPdfData(
   recipientEmail = invoice.recipientEmail,
 ): InvoicePdfData {
   const items = invoice.order.items.map((item) => ({
-    title: item.variantName ? `${item.title} (${item.variantName})` : item.title,
+    title: item.variantName
+      ? `${item.title} (${item.variantName})`
+      : item.title,
     quantity: item.quantity,
     unitPrice: Number(item.unitPrice),
   }));
@@ -126,7 +128,7 @@ async function deliverInvoice(invoiceId: string) {
     await getMailer().send(
       recipientEmail,
       `Your Youniqlyf invoice ${invoiceNumber}`,
-      `Dear ${invoice.order.shippingName || "Customer"},\n\nPlease find your digital invoice ${invoiceNumber} attached.\n\nBuabed Youniqlyf Perfumes Industry FZCO`,
+      `Dear ${invoice.order.shippingName || "Customer"},\n\nPlease find your digital invoice ${invoiceNumber} attached.\n\nFor assistance, contact support@youniqlyf.com or +91 9871777077.\n\nYouniqlyf`,
       [{ filename: `${invoiceNumber}.pdf`, content: pdf }],
     );
     await prisma.invoice.update({
@@ -171,7 +173,10 @@ export async function sendInvoiceForOrder(orderId: string) {
     invoice.order.paymentMethod !== "CASH_ON_DELIVERY" &&
     invoice.order.paymentStatus !== "PAID"
   ) {
-    throw new ApiError(409, "Online payment must be confirmed before issuing an invoice");
+    throw new ApiError(
+      409,
+      "Online payment must be confirmed before issuing an invoice",
+    );
   }
   return deliverInvoice(invoice.id);
 }

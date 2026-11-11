@@ -19,7 +19,7 @@ export async function generateMetadata({
   return buildMetadata({
     title: q ? `Search results for "${q}"` : "All products",
     description:
-      "Browse all Youniqlyf products: perfumes, body care, hair care and more.",
+      "Browse Youniq bags and Youniqlyf accessories, with styles for every day and every occasion.",
     // Filtered/search URLs canonicalise to the plain listing and are kept out of the index.
     path: "/products",
     noindex: filtered,
@@ -31,7 +31,7 @@ export default async function ProductsPage({ searchParams }: Props) {
     <div className="flex flex-col">
       <PageHeader
         title="All Products"
-        description="Beauty, fragrance & home rituals for every day."
+        description="Discover bags and accessories to make every look your own."
         crumbs={[
           { name: "Home", href: "/" },
           { name: "Products", href: "/products" },

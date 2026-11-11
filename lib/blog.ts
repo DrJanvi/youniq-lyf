@@ -1,6 +1,6 @@
 export const BLOG_CATEGORIES = [
-  "Perfume & Fragrance",
-  "Beauty & Skincare",
+  "Bags & Style",
+  "Accessories & Details",
   "Lifestyle",
   "Tips & Guides",
   "Brand Stories",

@@ -15,13 +15,13 @@ import { listTopCategories } from "@/services/taxonomy";
 import type { Metadata } from "next";
 import { connection } from "next/server";
 
-const homeTitle = `${SITE_NAME} - Fragrances & Body Care`;
+const homeTitle = `${SITE_NAME} - Bags & Accessories`;
 
 export const metadata: Metadata = {
   ...buildMetadata({
     title: homeTitle,
     description:
-      "Discover best-selling and newly released Youniqlyf perfumes, body care, hair care and home care products.",
+      "Discover Youniq bags and Youniqlyf accessories for effortless everyday style.",
     path: "/",
   }),
   title: { absolute: homeTitle },

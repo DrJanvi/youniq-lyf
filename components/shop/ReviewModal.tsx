@@ -106,7 +106,7 @@ export function ReviewModal({
                 Share Your Experience
               </h2>
               <p className="mt-2 text-sm text-text-muted">
-                Your thoughts help others find their perfect scent.
+                Your thoughts help others find their next favorite bag or accessory.
               </p>
             </div>
 

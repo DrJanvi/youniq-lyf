@@ -19,16 +19,16 @@ export const defaultContactSettings = {
     "Have a question about our products or your order? We'd love to hear from you.",
   contactHeading: "We're always close by.",
   contactIntro:
-    "Whether you need help choosing a fragrance or have a question about an order, our team is ready to assist.",
-  email: "info@buabedyouniqlyf.com",
+    "Whether you need help choosing a Youniq bag or accessory or have a question about an order, our team is ready to assist.",
+  email: "support@youniqlyf.com",
   alternateEmail: null,
-  phone: "+966 12 627 4600",
-  whatsapp: "+966 55 565 5711",
+  phone: "+91 9871777077",
+  whatsapp: "+91 9871777077",
   supportTitle: "Customer Support",
   supportDescription:
-    "For product advice, order updates, returns, and wholesale enquiries.",
+    "For help with bags and accessories, order updates, and returns.",
   image: null,
-  imageAlt: "Youniqlyf Perfumes location",
+  imageAlt: "Youniqlyf customer support",
 };
 
 function activeContactFaqs(page: ContactFaqPage) {

@@ -521,7 +521,7 @@ model HighlightedCategorySetting {
   image           String    @db.VarChar(1000)
   title           String    @db.VarChar(255)
   description     String    @db.Text
-  buttonLink      String    @default("/category/fragrances") @db.VarChar(1000)
+  buttonLink      String    @default("/products") @db.VarChar(1000)
   durationSeconds Int       @default(259200)
   isEnabled       Boolean   @default(true)
   autoRestart     Boolean   @default(false)
@@ -535,14 +535,14 @@ model ContactPageSetting {
   tagline            String   @default("Have a question about our products or your order? We'd love to hear from you.") @db.VarChar(500)
   contactHeading     String   @default("We're always close by.") @db.VarChar(200)
   contactIntro       String   @db.Text
-  email              String   @default("info@buabedyouniqlyf.com") @db.VarChar(190)
+  email              String   @default("support@youniqlyf.com") @db.VarChar(190)
   alternateEmail     String?  @db.VarChar(190)
-  phone              String   @default("+966 12 627 4600") @db.VarChar(40)
-  whatsapp           String?  @db.VarChar(40)
+  phone              String   @default("+91 9871777077") @db.VarChar(40)
+  whatsapp           String?  @default("+91 9871777077") @db.VarChar(40)
   supportTitle       String   @default("Customer Support") @db.VarChar(120)
-  supportDescription String   @default("For product advice, order updates, returns, and wholesale enquiries.") @db.VarChar(500)
+  supportDescription String   @default("For help with bags and accessories, order updates, and returns.") @db.VarChar(500)
   image              String?  @db.VarChar(1000)
-  imageAlt           String   @default("Youniqlyf Perfumes location") @db.VarChar(255)
+  imageAlt           String   @default("Youniqlyf customer support") @db.VarChar(255)
   updatedAt          DateTime @updatedAt
 }
 
@@ -647,22 +647,22 @@ model AboutUsPageSetting {
   mobileImage           String?                @db.VarChar(1000)
   journeyHeading        String                 @db.VarChar(200)
   journeyDescription    String                 @db.VarChar(1000)
-  principlesHeading     String                 @default("The principles behind every creation.") @db.VarChar(255)
+  principlesHeading     String                 @default("Our approach to everyday style.") @db.VarChar(255)
   whoImage              String?                @db.VarChar(1000)
   whoHeading            String                 @default("WHO WE ARE") @db.VarChar(200)
-  whoSubheading         String                 @default("Quality, Consistency, Creativity Beyond Expectations") @db.VarChar(255)
+  whoSubheading         String                 @default("Bags and accessories to make your look your own") @db.VarChar(255)
   whoParagraph1         String?                @db.Text
   whoParagraph2         String?                @db.Text
   whoParagraph3         String?                @db.Text
   whoParagraph4         String?                @db.Text
-  whoBadge              String                 @default("TRADITION REIMAGINED") @db.VarChar(120)
+  whoBadge              String                 @default("STYLE YOUR WAY") @db.VarChar(120)
   legacyImage           String?                @db.VarChar(1000)
-  legacyHeading         String                 @default("A LEGACY OF FRAGRANCE SINCE 1995") @db.VarChar(255)
+  legacyHeading         String                 @default("BAGS & ACCESSORIES FOR YOUR EVERYDAY") @db.VarChar(255)
   legacyIntro           String?                @db.Text
   legacyParagraph1      String?                @db.Text
   legacyParagraph2      String?                @db.Text
   whyChooseImage        String?                @db.VarChar(1000)
-  whyChooseHeading      String                 @default("WHY CHOOSE BUABED YOUNIQLYF?") @db.VarChar(255)
+  whyChooseHeading      String                 @default("WHY CHOOSE YOUNIQLYF?") @db.VarChar(255)
   whyChooseDescription  String?                @db.Text
   milestone1Year        String                 @db.VarChar(40)
   milestone1Title       String                 @db.VarChar(160)

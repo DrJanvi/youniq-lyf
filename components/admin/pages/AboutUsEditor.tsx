@@ -484,7 +484,7 @@ export function AboutUsEditor({
 
         <section className="bg-card ring-border rounded-3xl p-6 shadow-sm ring-1">
           <h2 className="font-heading text-xl font-bold">
-            A Legacy of Fragrance
+            Our Brand Story
           </h2>
           <div className="mt-5 grid gap-4">
             <div className="grid gap-3">
@@ -640,7 +640,7 @@ export function AboutUsEditor({
 
         <section className="bg-card ring-border rounded-3xl p-6 shadow-sm ring-1">
           <h2 className="font-heading text-xl font-bold">
-            Why Choose Buabed Youniqlyf?
+            Why Choose Youniqlyf?
           </h2>
           <div className="mt-5 grid gap-5">
             <div className="grid gap-3">

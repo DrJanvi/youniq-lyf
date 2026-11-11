@@ -17,10 +17,11 @@ const cormorantGaramond = Cormorant_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} – Fragrances & Body Care`,
+    default: `${SITE_NAME} – Bags & Accessories`,
     template: `%s | ${SITE_NAME}`,
   },
-  description: "Shop Youniqlyf fragrances, body care, hair care and more.",
+  description:
+    "Discover Youniq bags and Youniqlyf accessories, designed to bring style and function to every day.",
   icons: { icon: "/logo.svg" },
   openGraph: { siteName: SITE_NAME, type: "website" },
 };

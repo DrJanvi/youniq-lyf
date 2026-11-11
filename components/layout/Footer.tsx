@@ -125,11 +125,10 @@ export async function Footer() {
                 <Logo className="h-32.5 w-auto lg:h-40" height={160} />
               </Link>
               <p className="mt-6 max-w-[33ch] text-sm leading-[1.9] text-text-muted">
-                Buabed Youniqlyf Perfumes, established in 1995, is a pioneer in
-                fragrance and personal care manufacturing. With decades of
-                expertise, we create premium perfumes and cosmetics inspired by
-                Arabian and European blends, delivering quality, innovation and
-                excellence.
+                Youniqlyf brings together Youniq bags and accessories for
+                everyday style. Discover pieces designed to complement your
+                look, keep your essentials close, and go wherever the day takes
+                you.
               </p>
             </div>
 
@@ -198,13 +197,13 @@ export async function Footer() {
           <span>
             © Copyright {new Date().getFullYear()}. All Rights Reserved.
           </span>
-          <span aria-hidden="true" className="hidden text-text-primary sm:inline">
+          {/* <span aria-hidden="true" className="hidden text-text-primary sm:inline">
             |
           </span>
           <span className="text-text-primary">
             Powered by <span className="text-[#f5a500]">Doors</span>{" "}
             <strong>Studio</strong>
-          </span>
+          </span> */}
         </div>
       </Section>
     </div>

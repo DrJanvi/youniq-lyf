@@ -11,7 +11,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = buildMetadata({
   title: "Contact Us",
   description:
-    "Contact Youniqlyf for fragrance advice, order support, returns, and wholesale enquiries.",
+    "Contact Youniqlyf for help choosing a bag or accessory, order support, and returns.",
   path: "/contact",
 });
 

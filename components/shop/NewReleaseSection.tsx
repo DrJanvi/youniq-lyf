@@ -14,6 +14,8 @@ export function NewReleaseSection({
   wishedIds,
 }: NewReleaseSectionProps) {
   if (!products.length) return null;
+  const featuredProduct = products[0];
+  const featuredImage = featuredProduct.images[0];
 
   return (
     <Section contentClassName="py-16">
@@ -33,17 +35,21 @@ export function NewReleaseSection({
         </div>
         <div className="grid gap-8 md:grid-cols-5">
           <div className="relative overflow-hidden rounded-3xl md:col-span-2 md:max-h-164">
-            <Image
-              src={"/images/new_release.webp"}
-              alt="New Release"
-              width={423}
-              height={228}
-              unoptimized
-              className="h-full w-full object-cover"
-            />
+            {featuredImage ? (
+              <Image
+                src={featuredImage}
+                alt={featuredProduct.title}
+                width={423}
+                height={228}
+                unoptimized
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div aria-hidden="true" className="h-full min-h-64 bg-brand-primary-soft" />
+            )}
             <div className="absolute bottom-0 flex w-full items-center justify-center bg-linear-to-b from-transparent via-black/25 to-black/65 p-6 px-9 pt-12 text-white">
               <h3 className="font-cormorant text-center text-xl font-bold uppercase">
-                Beautiful Product
+                Youniq Bags & Accessories
               </h3>
             </div>
           </div>

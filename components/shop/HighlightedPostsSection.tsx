@@ -25,11 +25,11 @@ export async function HighlightedPostsSection() {
     <Section className="py-12">
       <div className="mb-9 flex flex-col text-center md:flex-row md:items-center! md:justify-between md:gap-4 md:text-left">
         <SectionHeading className="mb-4! md:mb-0! md:text-left!">
-          Beauty in every moment
+          Your Style, Your Story
         </SectionHeading>
         <p className="text-text-muted text-sm md:max-w-[45ch]">
-          Explore the world of fragrance, beauty and self-care through inspiring
-          moments and everyday rituals that make life more beautiful.
+          Explore Youniq bags and accessories through inspiring looks and
+          everyday moments that make your style your own.
         </p>
       </div>
       <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">

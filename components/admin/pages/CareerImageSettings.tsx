@@ -5,7 +5,6 @@ import { useState } from "react";
 import { Button } from "@/components/admin/ui/button";
 import { CloudinaryImageUploader } from "@/components/admin/forms/ImageUploadField";
 import { useAdminApi } from "@/components/admin/common/use-admin-api";
-import { CAREER_PLACEHOLDER_IMAGE } from "@/lib/career-page";
 
 export function CareerImageSettings({ imageUrl }: { imageUrl: string | null }) {
   const [selectedImageUrl, setSelectedImageUrl] = useState(imageUrl ?? "");
@@ -45,19 +44,21 @@ export function CareerImageSettings({ imageUrl }: { imageUrl: string | null }) {
             {pending ? "Saving…" : "Save image"}
           </Button>
         </div>
-        <div className="relative aspect-[2/3] w-24 justify-self-start overflow-hidden rounded-xl bg-muted sm:justify-self-end">
-          <Image
-            src={savedImageUrl ?? CAREER_PLACEHOLDER_IMAGE}
-            alt={
-              savedImageUrl
-                ? "Saved career page image"
-                : "Default career page placeholder"
-            }
-            fill
-            sizes="96px"
-            unoptimized
-            className="object-cover"
-          />
+        <div className="relative grid aspect-[2/3] w-24 place-items-center justify-self-start overflow-hidden rounded-xl bg-muted sm:justify-self-end">
+          {savedImageUrl ? (
+            <Image
+              src={savedImageUrl}
+              alt="Saved career page image"
+              fill
+              sizes="96px"
+              unoptimized
+              className="object-cover"
+            />
+          ) : (
+            <span className="px-2 text-center text-xs text-muted-foreground">
+              Youniqlyf campaign
+            </span>
+          )}
         </div>
       </div>
     </section>

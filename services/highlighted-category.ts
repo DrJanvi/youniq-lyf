@@ -4,11 +4,12 @@ import { prisma } from "@/lib/prisma";
 const SETTING_ID = "home";
 const DEFAULT_DURATION_SECONDS = 3 * 24 * 60 * 60 + 16 * 60 * 60 + 21 * 60 + 6;
 const DEFAULT_SETTING = {
-  image: "https://i.ibb.co/Yw3fc76/highlight.webp",
-  title: "A Scent That Leaves a Lasting Impression",
+  image:
+    "https://cdn.shopify.com/s/files/1/0686/7949/9934/files/7JA00026_6.jpg?v=1739871268",
+  title: "Meet Your Next Youniq Bag",
   description:
-    "Eternal OUD is an exquisite fragrance created for those who appreciate the art of refined perfumery.",
-  buttonLink: "/category/fragrances",
+    "Discover bags that bring together expressive style and everyday function.",
+  buttonLink: "/products",
 };
 
 export type HighlightedCategoryInput = {
