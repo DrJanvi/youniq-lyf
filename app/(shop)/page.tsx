@@ -5,7 +5,6 @@ import { HeroSlider } from "@/components/shop/HeroSlider";
 import { HighlightedCategorySection } from "@/components/shop/HighlightedCategorySection";
 import { HighlightedPostsSection } from "@/components/shop/HighlightedPostsSection";
 import { NewReleaseSection } from "@/components/shop/NewReleaseSection";
-import { PartnerWithUsSection } from "@/components/shop/PartnerWithUsSection";
 import { WhyChooseUsSection } from "@/components/shop/WhyChooseUsSection";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { SITE_NAME, absoluteUrl, buildMetadata } from "@/lib/seo";
@@ -70,7 +69,6 @@ export default async function HomePage() {
       <CustomerReviewsSection />
       <WhyChooseUsSection />
       <HighlightedPostsSection />
-      <PartnerWithUsSection />
     </div>
   );
 }
