@@ -69,7 +69,12 @@ export async function HighlightedPostsSection() {
         ))}
       </ul>
 
-      <button className="bg-brand-primary-dark text-white mx-auto mt-8 flex items-center justify-center gap-2 rounded-full px-6 py-3 hover:bg-black">
+      <a
+        href="https://www.instagram.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bg-brand-primary-dark text-white mx-auto mt-8 flex items-center justify-center gap-2 rounded-full px-6 py-3 hover:bg-black"
+      >
         Load More
         <Image
           src="/assets/arrow.svg"
@@ -78,7 +83,7 @@ export async function HighlightedPostsSection() {
           height={15}
           aria-hidden="true"
         />
-      </button>
+      </a>
     </Section>
   );
 }

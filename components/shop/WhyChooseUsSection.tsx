@@ -36,7 +36,7 @@ export function WhyChooseUsSection() {
       <div className="absolute bottom-0 h-22 w-full translate-y-full transform-[scaleY(-1)] bg-[url('/images/wave.webp')]" />
 
       <Image
-        src="/images/why_choose_us_3.png"
+        src="/images/why_choose_us_1.png"
         alt="Why Choose Us"
         width={292}
         height={369}
@@ -70,8 +70,8 @@ export function WhyChooseUsSection() {
         </div>
       </div>
       <Image
-        src="/images/why_choose_us_2.png"
-        alt="Why Choose Us 2"
+        src="/images/why_choose_us_4.png"
+        alt="Why Choose Us 4"
         width={267}
         height={311}
         aria-hidden="true"
