@@ -161,7 +161,7 @@ export function ProductForm({
               name="aboutPoints"
               label="About this product rows"
               rows={8}
-              description="One accordion row per line: title | explanation. Up to 10 rows. Suggested: Descriptions, What's inside the box, Fragrance profile, How to use, Ingredients & safety, Shipping & returns."
+              description="One accordion row per line: title | explanation. Up to 10 rows. Suggested: Features, Dimensions, Capacity, Materials & care, What's inside the box, Shipping & returns."
             />
           </div>
         </FormSection>

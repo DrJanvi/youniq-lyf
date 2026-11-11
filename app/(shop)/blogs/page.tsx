@@ -6,9 +6,9 @@ import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import { listBlogArticles } from "@/services/blog-article";
 import type { Metadata } from "next";
 
-const title = "Stories of Scent & Beauty";
+const title = "Stories of Bags & Style";
 const description =
-  "Explore the art of fragrance, timeless beauty rituals, and the inspiration behind every scent.";
+  "Explore Youniq bags, thoughtful accessories, styling ideas, and the details that make a look your own.";
 
 export const instant = false;
 

@@ -46,7 +46,7 @@ function createTransaction({
 const baseLine = {
   product: {
     id: "product-1",
-    title: "Scent",
+    title: "Crossbody Bag",
     finalPrice: 100,
     images: ["https://example.com/product.jpg"],
   },
@@ -106,7 +106,7 @@ test("snapshots variant details and fallback gallery images", () => {
     {
       productId: "product-1",
       variantId: "variant-1",
-      title: "Scent",
+      title: "Crossbody Bag",
       variantName: "Ruby",
       variantColor: "#cc2244",
       variantImages: ["https://example.com/product.jpg"],
@@ -154,7 +154,7 @@ test("preserves the legacy order-item shape and price without a variant", () => 
   assert.deepEqual(snapshotOrderItem({ ...baseLine, variant: null }), {
     productId: "product-1",
     variantId: null,
-    title: "Scent",
+    title: "Crossbody Bag",
     unitPrice: 100,
     quantity: 2,
   });
@@ -165,7 +165,7 @@ test("approval decrements both the selected variant and active aggregate stock",
   await decrementApprovedOrderInventory(tx, [
     {
       productId: "product-1",
-      title: "Scent",
+      title: "Crossbody Bag",
       quantity: 2,
       variantId: "variant-1",
       variantName: "Ruby",
@@ -198,7 +198,7 @@ test("approval of a removed variant preserves its historical stock record", asyn
   await decrementApprovedOrderInventory(tx, [
     {
       productId: "product-1",
-      title: "Scent",
+      title: "Crossbody Bag",
       quantity: 1,
       variantId: "variant-1",
       variantName: "Ruby",
@@ -215,7 +215,7 @@ test("approval without a variant retains the product-stock flow", async () => {
   await decrementApprovedOrderInventory(tx, [
     {
       productId: "product-1",
-      title: "Scent",
+      title: "Crossbody Bag",
       quantity: 2,
       variantId: null,
       variantName: null,
@@ -237,7 +237,7 @@ test("approval reports insufficient stock instead of silently succeeding", async
     decrementApprovedOrderInventory(tx, [
       {
         productId: "product-1",
-        title: "Scent",
+        title: "Crossbody Bag",
         quantity: 2,
         variantId: "variant-1",
         variantName: "Ruby",

@@ -215,7 +215,7 @@ export function HeaderShell({
                 </div>
               </div>
               <Link href="/products" className={link}>
-                Cosmetics
+                Bags
               </Link>
               <div className="relative flex items-center justify-center">
                 <Image
@@ -227,7 +227,7 @@ export function HeaderShell({
                   className="absolute top-0 right-0 translate-x-4 -translate-y-1.5"
                 />
                 <Link href="/products" className={clsx(link, "z-1")}>
-                  Fragrance
+                  Accessories
                 </Link>
               </div>
             </nav>
@@ -402,10 +402,10 @@ export function HeaderShell({
                 </ul>
               </details>
               <Link href="/products" className={mobileLink("/products")}>
-                Cosmetics
+                Bags
               </Link>
               <Link href="/products" className={MOBILE_ROW}>
-                Fragrance
+                Accessories
               </Link>
               <details className="group open:bg-surface-card/60 rounded-xl">
                 <summary

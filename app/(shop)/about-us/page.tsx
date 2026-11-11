@@ -8,7 +8,7 @@ import Link from "next/link";
 export const metadata: Metadata = buildMetadata({
   title: "About Us",
   description:
-    "Discover Youniqlyf's history, fragrance craftsmanship, and commitment to thoughtful development.",
+    "Get to know Youniqlyf, a fashion brand bringing together expressive bags and accessories for everyday style.",
   path: "/about-us",
 });
 
@@ -106,7 +106,7 @@ export default async function AboutUsPage() {
         </Section>
       </section>
 
-      {/* Company journey and milestone timeline */}
+      {/* Youniqlyf brand journey and milestone timeline */}
       <Section className="bg-surface-main mt-0! py-12 md:py-14 lg:py-16">
         <section aria-labelledby="about-journey-heading">
           <div className="grid gap-4 md:grid-cols-[1fr_0.55fr] md:items-start md:gap-10">
@@ -122,7 +122,7 @@ export default async function AboutUsPage() {
           </div>
 
           <ol
-            aria-label="Company history timeline"
+            aria-label="Youniqlyf brand journey timeline"
             className="border-surface-border md:before:bg-surface-card relative mt-10 grid gap-7 border-l pl-6 md:mt-14 md:grid-cols-4 md:gap-0 md:border-l-0 md:pl-0 md:before:absolute md:before:top-[2.85rem] md:before:right-1/4 md:before:left-1 md:before:h-px md:before:content-['']"
           >
             {settings.milestones.map((milestone, index) => (
@@ -233,7 +233,7 @@ export default async function AboutUsPage() {
         </section>
       </Section>
 
-      {/* Fragrance legacy and company highlights */}
+      {/* Brand story and collection highlights */}
       <Section className="mt-0! bg-white py-10 md:py-16">
         <section
           aria-labelledby="about-legacy-heading"

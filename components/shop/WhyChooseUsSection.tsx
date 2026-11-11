@@ -6,24 +6,24 @@ export function WhyChooseUsSection() {
 
   const features = [
     {
-      title: "Authentic Products",
-      description: "Authentic fragrances, verified for purity.",
-      image: "/assets/leaf.svg",
+      title: "Premium Quality",
+      description: "Carefully selected bags and accessories designed to offer style, durability and lasting quality.",
+      image: "/assets/premiumQuality.svg",
     },
     {
-      title: "Quality Fragrances",
-      description: "Crafted with premium global ingredients.",
-      image: "/assets/perfume.svg",
+      title: "Trendy Collections",
+      description: "Discover the latest styles and timeless designs that complement every outfit and occasion.",
+      image: "/assets/trendyCollections.svg",
     },
     {
-      title: "Fast Delivery",
-      description: "Fast GCC delivery in 24-48 hours.",
-      image: "/assets/delivery.svg",
+      title: "Style Meets Functionality",
+      description: "From everyday essentials to statement pieces, find the perfect blend of fashion and convenience.",
+      image: "/assets/styleMeetsFunctionality.svg",
     },
     {
-      title: "Easy Returns",
-      description: "Easy 14-day returns, guaranteed satisfaction.",
-      image: "/assets/return.svg",
+      title: "Customer First",
+      description: "Enjoy a smooth shopping experience with dedicated support and care at every step.",
+      image: "/assets/customerFirst.svg",
     },
   ];
 
@@ -36,7 +36,7 @@ export function WhyChooseUsSection() {
       <div className="absolute bottom-0 h-22 w-full translate-y-full transform-[scaleY(-1)] bg-[url('/images/wave.webp')]" />
 
       <Image
-        src="/images/why_choose_us_3.webp"
+        src="/images/why_choose_us_3.png"
         alt="Why Choose Us"
         width={292}
         height={369}
@@ -70,7 +70,7 @@ export function WhyChooseUsSection() {
         </div>
       </div>
       <Image
-        src="/images/why_choose_us_2.webp"
+        src="/images/why_choose_us_2.png"
         alt="Why Choose Us 2"
         width={267}
         height={311}

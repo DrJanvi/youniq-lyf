@@ -7,131 +7,128 @@ import "server-only";
 import type { z } from "zod";
 
 export const defaultAboutUsSettings = {
-  heroHeading: "THE ART OF\nFRAGRANCE, CRAFTED\nWITH PASSION",
+  heroHeading: "STYLE THAT\nMOVES WITH YOU",
   heroDescription:
-    "Discover timeless fragrances crafted with passion, quality, and modern elegance.",
+    "Discover Youniq bags and Youniqlyf accessories designed to bring effortless style and everyday function to your wardrobe.",
   desktopImage: null,
   mobileImage: null,
-  journeyHeading: "Our Journey",
+  journeyHeading: "Made for Your Every Day",
   journeyDescription:
-    "Decades of experience shaped by a steady commitment to fragrance, care and thoughtful development.",
-  principlesHeading: "The principles behind every creation.",
+    "Youniqlyf is about finding the pieces that make getting ready feel easy. Explore bags and accessories that bring personal style and useful details together.",
+  principlesHeading: "Our approach to everyday style.",
   principles: [
     {
       id: "mission",
       icon: "/assets/about-us/mission.svg",
       title: "Our Mission",
       description:
-        "To create exceptional fragrances and personal care products through quality, innovation, and craftsmanship, delivering distinctive experiences that exceed customer expectations.",
+        "Bring together Youniq bags and accessories that help you carry what matters and express your own style.",
     },
     {
       id: "vision",
       icon: "/assets/about-us/vision.svg",
       title: "Our Vision",
       description:
-        "We honor the raw beauty of Arabian ingredients, selecting every note with care and preserving the character that makes it unique.",
+        "Make it easy to find accessories that feel personal, versatile, and ready to go wherever the day takes you.",
     },
     {
       id: "values",
       icon: "/assets/about-us/values.svg",
       title: "Our Values",
       description:
-        "We believe in uncompromising quality, creative excellence, integrity, and lasting customer relationships. Every fragrance reflects our commitment to consistency, originality, and trust.",
+        "We value thoughtful details, easy-to-wear style, and a shopping experience that keeps you in control.",
     },
   ],
   whoImage: null,
   whoHeading: "WHO WE ARE",
-  whoSubheading: "Quality, Consistency, Creativity Beyond Expectations",
+  whoSubheading: "Bags and accessories to make your look your own",
   whoParagraphs: [
-    "Established in 1995 in Jebel Ali Free Zone, Buabed Youniqlyf Perfumes brings decades of fragrance expertise, combining the richness of Arabian, African, and European scents with modern innovation.",
-    "With manufacturing facilities in the UAE and Saudi Arabia, we specialize in perfumes, cosmetics, skincare, haircare, and personal care products, crafted to meet international quality standards.",
-    "From signature fragrances to customized blends, every product is developed in-house with a commitment to quality, originality, and customer satisfaction.",
-    "Our strategic marketing is based on our hard work and persistence, making our production compete with international brands on originality, clean compositions, and affordable prices.",
+    "Youniqlyf is a fashion brand for bags and accessories that bring a considered finishing touch to everyday dressing.",
+    "Explore Youniq bags and Youniqlyf accessories selected to balance personal style with the details you reach for throughout the day.",
+    "From everyday carry to the finishing touches, our collections are made to help you find pieces that work with your wardrobe and your routine.",
+    "We believe the right accessory should feel like you: easy to style, useful to carry, and ready for the moments that make up your day.",
   ] as [string, string, string, string],
-  whoBadge: "TRADITION REIMAGINED",
+  whoBadge: "STYLE YOUR WAY",
   legacyImage: null,
-  legacyHeading: "A LEGACY OF FRAGRANCE SINCE 1995",
+  legacyHeading: "BAGS & ACCESSORIES FOR YOUR EVERYDAY",
   legacyIntro:
-    "Established in 1995 in Jebel Ali Free Zone, Buabed Youniqlyf Perfumes was founded with a vision to create exceptional fragrances inspired by the richness of Arabian heritage and crafted to meet international quality standards.",
+    "Youniqlyf brings together bags and accessories to help make everyday styling feel simple, expressive, and uniquely yours.",
   legacyParagraph1:
-    "With years of expertise in fragrance manufacturing, we have expanded our capabilities to include perfumes, cosmetics, skincare, haircare, personal care, and home fragrances. Our commitment to quality, innovation, and craftsmanship continues to shape every product we create.",
+    "Find Youniq bags for the essentials you take along, and Youniqlyf accessories that add a personal touch to your look.",
   legacyParagraph2:
-    "Today, we continue to bring together traditional Arabian perfumery and modern manufacturing techniques to create distinctive fragrance experiences. From concept and development to production, our focus remains on quality, consistency, and delivering products that reflect our passion for perfumery.",
+    "Whether you're getting ready for a busy day or planning a special occasion, explore versatile pieces that move with your plans.",
   legacyStats: [
     {
       id: "established",
       icon: "/assets/about-us/stat-established.svg",
-      title: "Established",
+      title: "Everyday Style",
     },
     {
       id: "manufacturing",
       icon: "/assets/about-us/stat-manufacturing.svg",
-      title: "Manufacturing Expansion",
+      title: "Useful Details",
     },
     {
       id: "workforce",
       icon: "/assets/about-us/stat-workforce.svg",
-      title: "Specialized Workforce",
+      title: "Versatile Picks",
     },
     {
       id: "varieties",
       icon: "/assets/about-us/stat-varieties.svg",
-      title: "Fragrance Varieties",
+      title: "Youniq Collections",
     },
   ],
   whyChooseImage: null,
-  whyChooseHeading: "WHY CHOOSE BUABED YOUNIQLYF?",
+  whyChooseHeading: "WHY CHOOSE YOUNIQLYF?",
   whyChooseDescription:
-    "Discover a world where fragrance heritage meets everyday luxury. From captivating perfumes to thoughtfully crafted personal care essentials, every creation brings a distinctive touch to your daily rituals.",
+    "Find Youniq bags and Youniqlyf accessories that bring together personal style, everyday use, and finishing touches for every occasion.",
   whyChooseCards: [
     {
-      id: "fragrance-expertise",
-      title: "Decades Of Fragrance Expertise",
+      id: "everyday-style",
+      title: "Everyday Style",
       description:
-        "With decades of industry experience, we blend fragrance knowledge, craftsmanship, and tradition to create distinctive products with timeless appeal.",
+        "Discover bags and accessories that make it easy to add a little more of your personality to everyday outfits.",
     },
     {
-      id: "quality-excellence",
-      title: "Quality Excellence",
+      id: "thoughtful-details",
+      title: "Thoughtful Details",
       description:
-        "At Buabed Youniqlyf, quality is at the heart of everything we do. From selecting ingredients to developing our products, we focus on delivering excellence, consistency, and attention to detail at every stage.",
+        "Explore useful details and versatile styles selected with the way you dress and carry your essentials in mind.",
     },
     {
-      id: "crafted-in-house",
-      title: "Crafted In-House",
+      id: "bags-for-every-plan",
+      title: "Bags for Every Plan",
       description:
-        "Our in-house development and manufacturing capabilities bring creativity, expertise, and precision together at every stage. We focus on consistent quality, refined craftsmanship, and innovation to create products that reflect our commitment to excellence.",
+        "From daily routines to plans worth dressing up for, find a Youniq bag that fits the moment and your look.",
     },
     {
-      id: "world-of-fragrances",
-      title: "A World Of Fragrances",
+      id: "accessorize-your-way",
+      title: "Accessorize Your Way",
       description:
-        "Inspired by the fragrance traditions of Arabia, Africa, and Europe, our collections bring together distinctive aromas, from warm woody notes to fresh floral and oriental blends, crafted to suit diverse preferences and occasions.",
+        "Make your style your own with Youniqlyf accessories that bring an outfit together, from the everyday to the occasional.",
     },
   ],
   milestones: [
     {
-      year: "1995",
-      title: "Established",
-      description: "Founded in Jebel Ali Free Zone.",
+      year: "Everyday",
+      title: "Made to Move",
+      description: "Explore bags and accessories for the rhythm of your day.",
     },
     {
-      year: "2003",
-      title: "Manufacturing Expansion",
-      description:
-        "Expanded manufacturing into personal care products in Saudi Arabia.",
+      year: "Versatile",
+      title: "Easy to Style",
+      description: "Find pieces that work with more of the looks you love.",
     },
     {
-      year: "500+",
-      title: "Specialized Workforce",
-      description:
-        "A skilled team supporting production and product development.",
+      year: "Details",
+      title: "The Finishing Touch",
+      description: "Discover accessories that bring your personal style together.",
     },
     {
-      year: "Today",
-      title: "Fragrance Varieties",
-      description:
-        "A diverse fragrance portfolio inspired by tradition and modern trends.",
+      year: "Youniq",
+      title: "Make It Your Own",
+      description: "Choose the bags and accessories that feel like you.",
     },
   ],
 } satisfies AboutUsPageSettings;

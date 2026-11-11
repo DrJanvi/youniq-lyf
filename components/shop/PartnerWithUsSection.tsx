@@ -1,5 +1,4 @@
 import { AstroidIcon } from "lucide-react";
-import Image from "next/image";
 import { Section } from "../ui/Section";
 import { PartnerRequestDialog } from "./PartnerRequestDialog";
 
@@ -7,30 +6,13 @@ export function PartnerWithUsSection() {
   const title = "Partner with Us";
   const subTitle = "Grow Together.";
   const description =
-    "Whether you're a distributor looking to expand your portfolio or an influencer ready to collaborate with a growing brand, we'd love to build something meaningful together.";
+    "Whether you're a retailer looking to bring Youniq bags and accessories to your customers or a creator who loves personal style, we'd love to hear from you.";
 
   return (
     <Section
       className="relative flex min-h-137.5 flex-col gap-8 bg-surface-main"
-      contentClassName="pb-16 md:py-0 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 px-0! flex-1"
+      contentClassName="relative grid flex-1 grid-cols-1 gap-12 px-0! pb-16 md:grid-cols-2 md:gap-8 md:py-0"
     >
-      <Image
-        src="/images/partner_with_us.webp"
-        alt="Partner with Us"
-        width={688}
-        height={483}
-        className="w-full md:hidden"
-      />
-
-      <Image
-        src="/images/partner_with_us_desktop.webp"
-        alt="Partner with Us"
-        width={1441}
-        height={550}
-        unoptimized
-        className="absolute top-0 left-0 hidden h-full min-h-0 w-full object-cover object-center md:block"
-      />
-
       <div className="z-1 mx-0 flex flex-col items-center justify-center text-center md:mx-auto md:items-start md:p-8 md:text-left">
         <h2 className="font-cormorant text-3xl font-semibold uppercase md:text-4xl">
           {title}

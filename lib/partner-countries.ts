@@ -7,13 +7,14 @@ export const partnerCountries = defaultCountries
 export type PartnerCountry = (typeof partnerCountries)[number];
 
 export function getDefaultPartnerCountry(): PartnerCountry {
-  const country = partnerCountries.find((option) => option.iso2 === "ae");
-  if (!country)
-    throw new Error("The country list must include the United Arab Emirates.");
+  const country = partnerCountries.find((option) => option.iso2 === "in");
+  if (!country) throw new Error("The country list must include India.");
   return country;
 }
 
-export function getPartnerCountryForPhone(phone: string): PartnerCountry | undefined {
+export function getPartnerCountryForPhone(
+  phone: string,
+): PartnerCountry | undefined {
   const normalizedPhone = phone.trim();
   return partnerCountries
     .filter((country) => normalizedPhone.startsWith(`+${country.dialCode}`))

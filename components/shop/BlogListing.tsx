@@ -291,7 +291,7 @@ export function BlogListing({
             Latest Stories
           </h2>
           <p className="mx-auto mt-2 max-w-xl text-xs leading-5 text-text-muted sm:text-sm">
-            Thoughtful stories on fragrance, beauty, and the art of living well.
+            Style notes, bag inspiration, and ideas for accessorizing your everyday.
           </p>
         </header>
         <div className="mb-8 flex justify-center overflow-x-auto pb-2">

@@ -106,8 +106,8 @@ export function BlogArticlesTable({
           label: "Category",
           value: category,
           options: [
-            { value: "Perfume & Fragrance", label: "Perfume & Fragrance" },
-            { value: "Beauty & Skincare", label: "Beauty & Skincare" },
+            { value: "Bags & Style", label: "Bags & Style" },
+            { value: "Accessories & Details", label: "Accessories & Details" },
             { value: "Lifestyle", label: "Lifestyle" },
             { value: "Tips & Guides", label: "Tips & Guides" },
             { value: "Brand Stories", label: "Brand Stories" },

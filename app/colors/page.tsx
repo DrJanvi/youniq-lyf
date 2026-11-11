@@ -221,7 +221,7 @@ export default function ColorsPage() {
             Sale
           </span>
           <h3 className="text-text-primary mt-3 font-medium">
-            Oud Noir Eau de Parfum
+            Youniq Comfy Crescent Crossbody Bag
           </h3>
           <p className="text-rating-gold">★★★★☆</p>
           <p className="mt-1">

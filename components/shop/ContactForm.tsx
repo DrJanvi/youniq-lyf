@@ -108,7 +108,7 @@ export function ContactForm() {
             aria-describedby={
               errors.fullName ? "contact-name-error" : undefined
             }
-            className="focus:border-brand-primary focus:ring-brand-primary/20 mt-2 h-12 w-full rounded-xl border border-surface-border bg-white px-4 text-sm font-normal outline-none placeholder:text-text-muted focus:ring-2 aria-invalid:border-red-600"
+            className="focus:border-brand-primary focus:ring-brand-primary/20 border-surface-border placeholder:text-text-muted mt-2 h-12 w-full rounded-xl border bg-white px-4 text-sm font-normal outline-none focus:ring-2 aria-invalid:border-red-600"
             placeholder="Your full name"
           />
           <div id="contact-name-error">
@@ -125,7 +125,7 @@ export function ContactForm() {
             maxLength={190}
             aria-invalid={Boolean(errors.email)}
             aria-describedby={errors.email ? "contact-email-error" : undefined}
-            className="focus:border-brand-primary focus:ring-brand-primary/20 mt-2 h-12 w-full rounded-xl border border-surface-border bg-white px-4 text-sm font-normal outline-none placeholder:text-text-muted focus:ring-2 aria-invalid:border-red-600"
+            className="focus:border-brand-primary focus:ring-brand-primary/20 border-surface-border placeholder:text-text-muted mt-2 h-12 w-full rounded-xl border bg-white px-4 text-sm font-normal outline-none focus:ring-2 aria-invalid:border-red-600"
             placeholder="you@email.com"
           />
           <div id="contact-email-error">
@@ -143,8 +143,8 @@ export function ContactForm() {
             maxLength={30}
             aria-invalid={Boolean(errors.phone)}
             aria-describedby={errors.phone ? "contact-phone-error" : undefined}
-            className="focus:border-brand-primary focus:ring-brand-primary/20 mt-2 h-12 w-full rounded-xl border border-surface-border bg-white px-4 text-sm font-normal outline-none placeholder:text-text-muted focus:ring-2 aria-invalid:border-red-600"
-            placeholder="+966 55 000 0000"
+            className="focus:border-brand-primary focus:ring-brand-primary/20 border-surface-border placeholder:text-text-muted mt-2 h-12 w-full rounded-xl border bg-white px-4 text-sm font-normal outline-none focus:ring-2 aria-invalid:border-red-600"
+            placeholder="+91 9871777077"
           />
           <div id="contact-phone-error">
             <FieldError message={errors.phone} />
@@ -160,7 +160,7 @@ export function ContactForm() {
             aria-describedby={
               errors.subject ? "contact-subject-error" : undefined
             }
-            className="focus:border-brand-primary focus:ring-brand-primary/20 mt-2 h-12 w-full rounded-xl border border-surface-border bg-white px-4 text-sm font-normal text-text-muted outline-none focus:ring-2 aria-invalid:border-red-600"
+            className="focus:border-brand-primary focus:ring-brand-primary/20 border-surface-border text-text-muted mt-2 h-12 w-full rounded-xl border bg-white px-4 text-sm font-normal outline-none focus:ring-2 aria-invalid:border-red-600"
           >
             <option value="" disabled>
               Select a subject
@@ -189,7 +189,7 @@ export function ContactForm() {
           aria-describedby={
             errors.message ? "contact-message-error" : undefined
           }
-          className="focus:border-brand-primary focus:ring-brand-primary/20 mt-2 w-full resize-y rounded-xl border border-surface-border bg-white px-4 py-3 text-sm font-normal outline-none placeholder:text-text-muted focus:ring-2 aria-invalid:border-red-600"
+          className="focus:border-brand-primary focus:ring-brand-primary/20 border-surface-border placeholder:text-text-muted mt-2 w-full resize-y rounded-xl border bg-white px-4 py-3 text-sm font-normal outline-none focus:ring-2 aria-invalid:border-red-600"
           placeholder="Tell us how we can help..."
         />
         <div id="contact-message-error">
@@ -197,7 +197,7 @@ export function ContactForm() {
         </div>
       </label>
 
-      <label className="flex items-start gap-2 text-xs leading-relaxed text-text-muted">
+      <label className="text-text-muted flex items-start gap-2 text-xs leading-relaxed">
         <input
           name="consent"
           type="checkbox"
@@ -228,7 +228,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={pending}
-        className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white flex min-h-12 w-full items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold shadow-md transition-colors disabled:cursor-wait disabled:opacity-60"
+        className="bg-brand-primary-dark hover:bg-brand-primary-hover flex min-h-12 w-full items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white shadow-md transition-colors disabled:cursor-wait disabled:opacity-60"
       >
         {pending ? "Sending…" : "Send Message"}
         {!pending ? <ArrowRight className="size-4" aria-hidden="true" /> : null}

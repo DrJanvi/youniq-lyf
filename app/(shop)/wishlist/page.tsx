@@ -64,7 +64,7 @@ export default async function WishlistPage({
     <div className="flex flex-col">
       <PageHeader
         title="My Wishlist"
-        description="A quiet collection of your most-loved fragrances, body care and home rituals."
+        description="Save the Youniq bags and accessories you love for later."
         crumbs={[
           { name: "Home", href: "/" },
           { name: "Wishlist", href: "/wishlist" },
