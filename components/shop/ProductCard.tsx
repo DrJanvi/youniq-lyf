@@ -30,7 +30,8 @@ export function ProductCard({
   const lowestVariantPrice = product.variants.reduce<
     (typeof product.variants)[number] | null
   >(
-    (lowest, variant) => !lowest || variant.finalPrice < lowest.finalPrice ? variant : lowest,
+    (lowest, variant) =>
+      !lowest || variant.finalPrice < lowest.finalPrice ? variant : lowest,
     null,
   );
   const displayPrice = lowestVariantPrice ?? product;
@@ -41,7 +42,7 @@ export function ProductCard({
       {image ? (
         <div className="relative mb-3">
           <Link href={`/products/${product.slug}`} className="block">
-            <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-[0.875rem] bg-surface-main p-[15%]">
+            <div className="bg-surface-main relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-[0.875rem]">
               <Image
                 src={image}
                 alt={product.title}
@@ -52,7 +53,7 @@ export function ProductCard({
               />
 
               {firstTag ? (
-                <span className="pointer-events-none absolute top-5 right-5 rounded-full bg-white px-3 py-1 text-[10px] font-medium tracking-wide text-text-primary uppercase">
+                <span className="text-text-primary pointer-events-none absolute top-5 right-5 rounded-full bg-white px-3 py-1 text-[10px] font-medium tracking-wide uppercase">
                   {firstTag}
                 </span>
               ) : null}
@@ -96,7 +97,9 @@ export function ProductCard({
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1">
           {lowestVariantPrice ? (
-            <span className="text-[10px] font-medium text-text-muted">From</span>
+            <span className="text-text-muted text-[10px] font-medium">
+              From
+            </span>
           ) : null}
           <PriceTag
             price={displayPrice.price}
