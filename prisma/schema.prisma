@@ -58,6 +58,21 @@ enum PaymentMethod {
   PAYU
 }
 
+enum PaymentStatus {
+  NOT_REQUIRED
+  PENDING
+  PAID
+  FAILED
+}
+
+enum RazorpayAttemptStatus {
+  CREATING
+  CREATED
+  AUTHORIZED
+  CAPTURED
+  FAILED
+}
+
 enum ContactFaqPage {
   CONTACT
   FAQ_PAGE
@@ -354,37 +369,64 @@ model SavedAddress {
 }
 
 model Order {
-  id                  String                 @id @default(uuid())
+  id                  String                   @id @default(uuid())
   userId              String
-  status              OrderStatus            @default(PENDING)
-  paymentMethod       PaymentMethod          @default(CASH_ON_DELIVERY)
-  subtotal            Decimal                @db.Decimal(10, 2)
-  discountTotal       Decimal                @default(0) @db.Decimal(10, 2)
+  status              OrderStatus              @default(PENDING)
+  paymentMethod       PaymentMethod            @default(CASH_ON_DELIVERY)
+  paymentStatus       PaymentStatus            @default(NOT_REQUIRED)
+  subtotal            Decimal                  @db.Decimal(10, 2)
+  discountTotal       Decimal                  @default(0) @db.Decimal(10, 2)
   couponId            String?
-  couponCode          String?                @db.VarChar(64)
-  couponDiscount      Decimal                @default(0) @db.Decimal(10, 2)
-  total               Decimal                @db.Decimal(10, 2)
-  currency            String                 @default("INR")
+  couponCode          String?                  @db.VarChar(64)
+  couponDiscount      Decimal                  @default(0) @db.Decimal(10, 2)
+  total               Decimal                  @db.Decimal(10, 2)
+  currency            String                   @default("INR")
   shippingName        String?
   shippingPhone       String?
-  shippingAddress     String?                @db.Text
-  adminNote           String?                @db.Text
-  deliveryPartner     String?                @db.VarChar(120)
-  deliveryReferenceId String?                @db.VarChar(120)
-  deliveryTrackingUrl String?                @db.VarChar(1000)
-  createdAt           DateTime               @default(now())
-  updatedAt           DateTime               @updatedAt
+  shippingAddress     String?                  @db.Text
+  adminNote           String?                  @db.Text
+  deliveryPartner     String?                  @db.VarChar(120)
+  deliveryReferenceId String?                  @db.VarChar(120)
+  deliveryTrackingUrl String?                  @db.VarChar(1000)
+  createdAt           DateTime                 @default(now())
+  updatedAt           DateTime                 @updatedAt
   deletedAt           DateTime?
-  user                User                   @relation(fields: [userId], references: [id])
-  coupon              Coupon?                @relation(fields: [couponId], references: [id], onDelete: SetNull)
+  user                User                     @relation(fields: [userId], references: [id])
+  coupon              Coupon?                  @relation(fields: [couponId], references: [id], onDelete: SetNull)
   items               OrderItem[]
   deliveryAttempts    OrderDeliveryAttempt[]
+  paymentAttempts     RazorpayPaymentAttempt[]
   invoice             Invoice?
 
   @@index([status, createdAt])
   @@index([userId])
   @@index([couponId])
   @@index([deletedAt])
+}
+
+model RazorpayPaymentAttempt {
+  id                 String                @id @default(uuid())
+  orderId            String
+  razorpayOrderId    String?               @unique @db.VarChar(64)
+  razorpayPaymentId  String?               @unique @db.VarChar(64)
+  amount             BigInt
+  currency           String                @db.VarChar(3)
+  status             RazorpayAttemptStatus @default(CREATING)
+  failureCode        String?               @db.VarChar(100)
+  failureDescription String?               @db.Text
+  createdAt          DateTime              @default(now())
+  updatedAt          DateTime              @updatedAt
+  order              Order                 @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId, status])
+  @@index([createdAt])
+}
+
+model RazorpayWebhookEvent {
+  id         String   @id @default(uuid())
+  eventId    String   @unique @db.VarChar(191)
+  eventType  String   @db.VarChar(100)
+  receivedAt DateTime @default(now())
 }
 
 model Invoice {

@@ -12,7 +12,7 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { formatMoney } from "@/components/ui/PriceTag";
 import { requireUserPage } from "@/lib/auth/session";
 import { formatInvoiceNumber } from "@/lib/invoice/number";
-import { paymentMethodLabels } from "@/lib/order-status";
+import { paymentMethodLabels, paymentStatusLabels } from "@/lib/order-status";
 import { buildMetadata } from "@/lib/seo";
 import { getUserOrder } from "@/services/order";
 
@@ -150,6 +150,12 @@ export default async function OrderDetailsPage({
                     <dt className="text-sm text-text-muted">Payment Method</dt>
                     <dd className="mt-1 text-sm font-medium text-text-primary">
                       {paymentMethodLabels[order.paymentMethod]}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-sm text-text-muted">Payment Status</dt>
+                    <dd className="mt-1 text-sm font-medium text-text-primary">
+                      {paymentStatusLabels[order.paymentStatus]}
                     </dd>
                   </div>
                   <div>

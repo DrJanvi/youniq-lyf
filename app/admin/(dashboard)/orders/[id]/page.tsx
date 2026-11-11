@@ -10,7 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { formatDateTime, formatMoney } from "@/lib/admin/format";
 import { requireAdminPage } from "@/lib/auth/session";
 import { formatInvoiceNumber } from "@/lib/invoice/number";
-import { paymentMethodLabels } from "@/lib/order-status";
+import { paymentMethodLabels, paymentStatusLabels } from "@/lib/order-status";
 import { getOrderAdmin } from "@/services/order";
 
 export default async function AdminOrderPage({ params }: { params: Promise<{ id: string }> }) {
@@ -29,7 +29,15 @@ export default async function AdminOrderPage({ params }: { params: Promise<{ id:
         actions={
           <>
             <StatusBadge status={order.status} />
-            {order.status === "PENDING" ? <OrderDecision orderId={order.id} /> : null}
+            {order.status === "PENDING" ? (
+              <OrderDecision
+                orderId={order.id}
+                canApprove={
+                  order.paymentMethod === "CASH_ON_DELIVERY" ||
+                  order.paymentStatus === "PAID"
+                }
+              />
+            ) : null}
             <OrderDeliveryActions orderId={order.id} status={order.status} />
             {order.status === "PENDING" || order.status === "REJECTED" ? (
               <DeleteButton url={`/api/admin/orders/${order.id}`} itemName="order" redirectTo="/admin/orders" />
@@ -116,7 +124,9 @@ export default async function AdminOrderPage({ params }: { params: Promise<{ id:
               <span className="font-medium">Payment: </span>
               {paymentMethodLabels[order.paymentMethod]}
             </p>
-            <p className="text-xs text-muted-foreground">Mock checkout; no payment was processed.</p>
+            <p className="text-xs text-muted-foreground">
+              {paymentStatusLabels[order.paymentStatus]}
+            </p>
             {order.adminNote ? (
               <p className="mt-3 rounded-md bg-muted p-2">
                 <span className="font-medium">Admin note: </span>

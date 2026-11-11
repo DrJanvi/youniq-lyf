@@ -4,7 +4,7 @@ Next.js 16 storefront + admin dashboard backed by MySQL (Prisma).
 
 ## Setup
 
-1. `cp .env.example .env` and set `DATABASE_URL`, `JWT_SECRET`, `SEED_ADMIN_PASSWORD`.
+1. `cp .env.example .env` and set `DATABASE_URL`, `JWT_SECRET`, `SEED_ADMIN_PASSWORD`; for online checkout, also set the Razorpay values described below.
 2. `npm install`
 3. `npm run db:push` (or `db:migrate`) then `npm run db:seed` (imports `sample-data/` and creates the admin user).
 4. `npm run dev`
@@ -12,7 +12,8 @@ Next.js 16 storefront + admin dashboard backed by MySQL (Prisma).
 ## Notes
 
 - Admin order management supports acceptance/rejection, manual dispatch with a delivery partner and reference ID, an optional tracking link, delivery outcomes with notes, and retry after a failed attempt. Customers can see their current delivery status and tracking details in `/orders`.
-- Each new order receives a bilingual A4 digital invoice at checkout. The PDF is emailed to the customer through the configured mail driver and can be downloaded from the order details page. Failed invoice emails do not cancel orders; admins can retry them from the order details page. Invoice totals use the existing order total without adding VAT. Apply the invoice migration with `npm run db:migrate` (or `npm run db:push`).
+- COD orders receive a bilingual A4 digital invoice when placed; Razorpay orders receive one only after payment is confirmed. The PDF is emailed to the customer through the configured mail driver and can be downloaded from the order details page. Failed invoice emails do not cancel orders; admins can retry them from the order details page. Invoice totals use the existing order total without adding VAT. Apply schema migrations with `npm run db:migrate` (or `npm run db:push`).
+- Checkout supports Cash on Delivery and Razorpay. Set `RAZORPAY_KEY` to the Razorpay Key ID and `RAZORPAY_SECRET` to its server-side secret. Configure the Razorpay webhook URL as `https://<your-domain>/api/webhooks/razorpay`, subscribe to `payment.captured` and `payment.failed`, and set the webhook signing secret as `RAZORPAY_WEBHOOK_SECRET`. Keep both secrets server-only; do not use `NEXT_PUBLIC_` variables. Razorpay payments are verified server-side, and the cart remains available after failed or cancelled checkout so the customer can retry.
 - Admins manage coupon codes at `/admin/coupons`; customers can apply one whole-order coupon at checkout. Coupons are evaluated after automatic product discounts, support optional minimum spend and percentage caps, and their code and savings are snapshotted on the order.
 - Products can optionally have named color variants with their own swatches, images, stock, and price overrides. Existing product discounts apply to override prices; active variant stock is aggregated on the product, cart/order lines retain the selected color snapshot, and order approval decrements that color's stock. Apply the color-variant migration with `npm run db:migrate` (or `npm run db:push`).
 - Admin Delete and content Remove actions soft-delete records; deleted records remain visible with a Restore action in their existing admin section. Deleting a category, brand, or product type also soft-deletes linked products, and restoring the taxonomy restores products deleted by that action. Apply the soft-delete migration with `npm run db:migrate` (or `npm run db:push`).

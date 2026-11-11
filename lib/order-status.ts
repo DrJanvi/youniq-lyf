@@ -1,4 +1,4 @@
-import type { PaymentMethod } from "@prisma/client";
+import type { PaymentMethod, PaymentStatus } from "@prisma/client";
 
 export const orderStatusLabels: Record<string, string> = {
   PENDING: "Order placed / Processing",
@@ -12,6 +12,13 @@ export const orderStatusLabels: Record<string, string> = {
 
 export const paymentMethodLabels: Record<PaymentMethod, string> = {
   CASH_ON_DELIVERY: "Cash on Delivery",
-  RAZORPAY: "Razorpay (mock)",
-  PAYU: "PayU (mock)",
+  RAZORPAY: "Razorpay",
+  PAYU: "PayU (legacy)",
+};
+
+export const paymentStatusLabels: Record<PaymentStatus, string> = {
+  NOT_REQUIRED: "Pay on delivery",
+  PENDING: "Payment confirmation pending",
+  PAID: "Paid",
+  FAILED: "Payment failed",
 };
