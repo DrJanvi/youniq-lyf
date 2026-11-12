@@ -15,6 +15,8 @@ type Options = {
   refresh?: boolean;
   /** Where to navigate after success. */
   redirectTo?: string;
+  /** Called after the request succeeds and before navigation. */
+  onSuccess?: () => void;
   /** Set server-side field errors on this form. */
   form?: UseFormReturn<any, any, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 };
@@ -30,6 +32,7 @@ export function useAdminApi() {
       try {
         const data = await apiFetch<T>(url, { method: opts.method ?? "POST", json: opts.json });
         if (opts.success) toast.success(opts.success);
+        opts.onSuccess?.();
         if (opts.redirectTo) router.push(opts.redirectTo);
         if (opts.refresh !== false) router.refresh();
         return data;
