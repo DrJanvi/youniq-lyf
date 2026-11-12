@@ -68,9 +68,9 @@ export function AddToCartButton({
       ? "Out of stock"
       : requiresVariant
         ? "Choose a color"
-      : state === "added"
-        ? "Added to cart"
-        : "Add to cart";
+        : state === "added"
+          ? "Added to cart"
+          : "Add to cart";
 
     return (
       <span className="inline-flex">
@@ -81,7 +81,7 @@ export function AddToCartButton({
           aria-label={label}
           aria-busy={state === "busy"}
           title={error ?? label}
-          className={`flex size-10 cursor-pointer items-center justify-center rounded-full border border-brand-primary bg-brand-primary-dark p-0 text-white shadow-sm transition-colors hover:bg-brand-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary disabled:cursor-not-allowed disabled:bg-neutral-400 ${className}`}
+          className={`border-brand-primary bg-brand-primary-dark hover:bg-brand-primary-hover focus-visible:outline-brand-primary flex size-10 cursor-pointer items-center justify-center rounded-full border p-0 text-white shadow-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:border-neutral-400 disabled:bg-neutral-400 ${className}`}
         >
           {state === "added" ? (
             <Check aria-hidden="true" className="size-4" />
@@ -105,15 +105,15 @@ export function AddToCartButton({
         onClick={add}
         disabled={disabled || state === "busy"}
         title={error ?? undefined}
-        className={`bg-brand-primary-dark text-white flex cursor-pointer items-center gap-2 rounded-full border border-white px-4 py-2.5 text-xs font-bold tracking-wide whitespace-nowrap uppercase opacity-0 shadow-lg transition-opacity duration-300 ease-out group-hover:opacity-100 focus-visible:opacity-100 disabled:cursor-not-allowed disabled:bg-neutral-400 ${className}`}
+        className={`bg-brand-primary-dark flex cursor-pointer items-center gap-2 rounded-full border border-white px-4 py-2.5 text-xs font-bold tracking-wide whitespace-nowrap text-white uppercase opacity-0 shadow-lg transition-opacity duration-300 ease-out group-hover:opacity-100 focus-visible:opacity-100 disabled:cursor-not-allowed disabled:bg-neutral-400 ${className}`}
       >
         {disabled
           ? "Out of stock"
           : requiresVariant
             ? "Choose color"
-          : state === "added"
-            ? "Added ✓"
-            : "Add to cart"}
+            : state === "added"
+              ? "Added ✓"
+              : "Add to cart"}
         {!disabled && !requiresVariant && state !== "added" ? (
           <ArrowRight className="size-4" />
         ) : null}
@@ -132,9 +132,9 @@ export function AddToCartButton({
           ? "Out of stock"
           : requiresVariant
             ? "Choose color"
-          : state === "added"
-            ? "Added ✓"
-            : "Add to cart"}
+            : state === "added"
+              ? "Added ✓"
+              : "Add to cart"}
       </Button>
       {error ? <span role="alert"> {error}</span> : null}
     </span>
