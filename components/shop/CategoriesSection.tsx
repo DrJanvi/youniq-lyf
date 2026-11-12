@@ -1,4 +1,5 @@
 import { Section } from "@/components/ui/Section";
+import { ArrowRightCircleIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
 import { SectionHeading } from "./SectionHeading";
@@ -31,25 +32,18 @@ export function CategoriesSection({ categories }: { categories: Category[] }) {
                 unoptimized
                 className="hover-zoom w-full"
               />
-              <div className="absolute bottom-0 flex w-full items-center justify-between bg-linear-to-b from-transparent via-black/25 to-black/65 p-4 px-4 pt-12 text-white md:p-6 md:px-9">
-                <h3 className="text-base font-bold uppercase md:text-xl">
+              <div className="absolute bottom-0 flex w-full items-center justify-between bg-linear-to-b from-transparent via-black/25 to-black/65 p-4 px-4 pt-12 text-white">
+                <h3 className="text-base font-bold uppercase md:text-lg">
                   {category.name}
                 </h3>
-                <div className="flex items-center gap-2 text-sm font-medium md:text-base">
-                  View Products
-                  <Image
-                    src="/assets/arrow.svg"
-                    alt=""
-                    width={20}
-                    height={15}
-                    aria-hidden="true"
-                  />
+                <div className="flex items-center gap-2 text-xs font-medium md:text-sm">
+                  <ArrowRightCircleIcon className="size-6" />
                 </div>
               </div>
             </Link>
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 rounded-3xl border-2 border-surface-border/50"
+              className="border-surface-border/50 pointer-events-none absolute inset-0 rounded-3xl border-2"
             />
           </li>
         ))}
