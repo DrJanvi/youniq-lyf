@@ -308,15 +308,17 @@ export default async function AboutUsPage() {
           className="grid gap-8 md:grid-cols-[0.82fr_1.18fr] md:gap-10 lg:gap-12"
         >
           <div className="flex flex-col">
-            <h2
-              id="about-why-choose-heading"
-              className="font-cormorant text-text-primary text-3xl leading-tight font-medium tracking-[0.04em] sm:text-4xl"
-            >
-              {settings.whyChooseHeading}
-            </h2>
-            <p className="text-text-muted mt-3 max-w-md text-sm leading-5">
-              {settings.whyChooseDescription}
-            </p>
+            <div className="bg-surface-card rounded-2xl p-6 sm:p-7">
+              <h2
+                id="about-why-choose-heading"
+                className="font-cormorant text-text-primary text-3xl leading-tight font-medium tracking-[0.025em] sm:text-4xl md:text-[2.5rem]"
+              >
+                {settings.whyChooseHeading}
+              </h2>
+              <p className="text-text-muted mt-2 max-w-md text-sm leading-5">
+                {settings.whyChooseDescription}
+              </p>
+            </div>
             <div className="bg-surface-card ring-surface-border relative mt-5 aspect-[1.55/1] overflow-hidden rounded-2xl ring-1">
               {settings.whyChooseImage ? (
                 <Image
@@ -339,12 +341,12 @@ export default async function AboutUsPage() {
             {settings.whyChooseCards.map((card) => (
               <li
                 key={card.id}
-                className="bg-surface-main flex min-h-52 flex-col justify-between rounded-2xl p-5 sm:p-6"
+                className="bg-surface-card flex min-h-52 flex-col gap-5 rounded-2xl p-5 sm:p-6"
               >
                 <h3 className="font-cormorant text-text-primary text-xl leading-tight font-medium sm:text-2xl">
                   {card.title}
                 </h3>
-                <p className="text-text-muted mt-6 text-sm leading-5">
+                <p className="text-text-muted text-sm leading-5">
                   {card.description}
                 </p>
               </li>

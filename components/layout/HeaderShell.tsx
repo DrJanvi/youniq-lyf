@@ -22,8 +22,8 @@ import { HeaderTransparentContext } from "./HeaderTransparentContext";
 export type NavCategory = { id: string; name: string; slug: string };
 
 const MORE_LINKS = [
-  { href: "/products", label: "About Us" },
-  { href: "/products", label: "Contact" },
+  { href: "/about-us", label: "About Us" },
+  { href: "/contact", label: "Contact" },
   { href: "/blogs", label: "Blogs" },
 ];
 

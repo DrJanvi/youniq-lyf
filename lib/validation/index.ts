@@ -340,6 +340,7 @@ export const heroBannerSchema = z.object({
 
 export const highlightedPostSchema = z.object({
   image: z.string().trim().url().max(1000),
+  mediaType: z.enum(["image", "video"]).optional(),
   link: z.string().trim().url().max(1000),
   alt: optionalText,
   sortOrder: z.coerce.number().int().min(0).default(0),

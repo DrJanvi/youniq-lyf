@@ -1,7 +1,7 @@
 "use client";
 
-import type { Control, FieldValues, Path } from "react-hook-form";
-import type { ComponentProps, ReactNode } from "react";
+import type { Control, ControllerRenderProps, FieldValues, Path } from "react-hook-form";
+import { useEffect, useRef, useState, type ComponentProps, type ReactNode } from "react";
 import { Checkbox } from "@/components/admin/ui/checkbox";
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/admin/ui/form";
 import { Input } from "@/components/admin/ui/input";
@@ -47,6 +47,47 @@ export function TextField<T extends FieldValues>({
   );
 }
 
+function NumberInput<T extends FieldValues>({
+  fieldName,
+  value,
+  onChange,
+  onBlur,
+  inputRef,
+  input,
+}: {
+  fieldName: ControllerRenderProps<T, Path<T>>["name"];
+  value: ControllerRenderProps<T, Path<T>>["value"];
+  onChange: ControllerRenderProps<T, Path<T>>["onChange"];
+  onBlur: ControllerRenderProps<T, Path<T>>["onBlur"];
+  inputRef: ControllerRenderProps<T, Path<T>>["ref"];
+  input: Omit<ComponentProps<typeof Input>, "name" | "value" | "onChange" | "onBlur" | "ref" | "type">;
+}) {
+  const [draft, setDraft] = useState(() => value == null ? "" : String(value));
+  const previousValue = useRef(value);
+
+  useEffect(() => {
+    if (Object.is(previousValue.current, value)) return;
+    previousValue.current = value;
+    setDraft(value == null ? "" : String(value));
+  }, [value]);
+
+  return (
+    <Input
+      {...input}
+      type="number"
+      name={fieldName}
+      ref={inputRef}
+      onBlur={onBlur}
+      value={draft}
+      onChange={(event) => {
+        const value = event.target.value;
+        setDraft(value);
+        onChange(value === "" ? undefined : Number(value));
+      }}
+    />
+  );
+}
+
 /** Number input; stores `undefined` when empty so validation can report "required". */
 export function NumberField<T extends FieldValues>({
   control, name, label, description, required, ...input
@@ -59,14 +100,13 @@ export function NumberField<T extends FieldValues>({
         <FormItem>
           <Label label={label} required={required} />
           <FormControl>
-            <Input
-              {...input}
-              type="number"
-              name={field.name}
-              ref={field.ref}
+            <NumberInput
+              fieldName={field.name}
+              value={field.value}
+              onChange={field.onChange}
               onBlur={field.onBlur}
-              value={field.value ?? ""}
-              onChange={(e) => field.onChange(e.target.value === "" ? undefined : Number(e.target.value))}
+              inputRef={field.ref}
+              input={input}
             />
           </FormControl>
           {description ? <FormDescription>{description}</FormDescription> : null}

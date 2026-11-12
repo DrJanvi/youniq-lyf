@@ -5,8 +5,28 @@ import { paginated } from "@/lib/pagination";
 import type { ListParams } from "@/lib/admin/list-params";
 import { ApiError } from "@/lib/http";
 import { invalidatePublicCache, PUBLIC_CACHE_TAGS } from "@/lib/public-cache";
+import { isHighlightedPostVideoUrl, type HighlightedPostMediaType } from "@/lib/highlighted-post-media";
+import { isHighlightedPostLimitReached, MAX_HIGHLIGHTED_POSTS } from "@/lib/highlighted-post-limit";
 
-export type HighlightedPostInput = { image: string; link: string; alt?: string; sortOrder: number };
+export type HighlightedPostInput = { image: string; mediaType?: HighlightedPostMediaType; link: string; alt?: string; sortOrder: number };
+
+export function countActiveHighlightedPosts() {
+  return prisma.highlightedPost.count({ where: { deletedAt: null } });
+}
+
+async function assertHighlightedPostCapacity() {
+  if (isHighlightedPostLimitReached(await countActiveHighlightedPosts())) {
+    throw new ApiError(
+      409,
+      `You can have at most ${MAX_HIGHLIGHTED_POSTS} active highlighted posts. Delete an active post before adding or restoring another.`,
+    );
+  }
+}
+
+function resolveMediaType(d: HighlightedPostInput): HighlightedPostMediaType {
+  if (isHighlightedPostVideoUrl(d.image)) return "video";
+  return d.mediaType ?? "image";
+}
 
 export async function listHighlightedPosts() {
   "use cache";
@@ -37,7 +57,8 @@ export async function listHighlightedPostsAdmin(p: ListParams) {
 export const getHighlightedPost = (id: string) => prisma.highlightedPost.findUnique({ where: { id } });
 
 export async function createHighlightedPost(d: HighlightedPostInput) {
-  const post = await prisma.highlightedPost.create({ data: d });
+  await assertHighlightedPostCapacity();
+  const post = await prisma.highlightedPost.create({ data: { ...d, mediaType: resolveMediaType(d) } });
   invalidatePublicCache(PUBLIC_CACHE_TAGS.highlightedPosts);
   return post;
 }
@@ -45,7 +66,7 @@ export async function createHighlightedPost(d: HighlightedPostInput) {
 export async function updateHighlightedPost(id: string, d: HighlightedPostInput) {
   const post = await prisma.highlightedPost.update({
     where: { id },
-    data: { ...d, alt: d.alt ?? null },
+    data: { ...d, mediaType: resolveMediaType(d), alt: d.alt ?? null },
   });
   invalidatePublicCache(PUBLIC_CACHE_TAGS.highlightedPosts);
   return post;
@@ -62,6 +83,13 @@ export async function deleteHighlightedPost(id: string) {
 }
 
 export async function restoreHighlightedPost(id: string) {
+  const deletedPost = await prisma.highlightedPost.findFirst({
+    where: { id, deletedAt: { not: null } },
+    select: { id: true },
+  });
+  if (!deletedPost) throw new ApiError(404, "Deleted highlighted post not found");
+  await assertHighlightedPostCapacity();
+
   const result = await prisma.highlightedPost.updateMany({
     where: { id, deletedAt: { not: null } },
     data: { deletedAt: null },

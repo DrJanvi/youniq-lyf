@@ -140,6 +140,7 @@ export const heroBannerFormSchema = z.object({
 
 export const highlightedPostFormSchema = z.object({
   image: requiredUrl("Image URL"),
+  mediaType: z.enum(["image", "video"]),
   link: requiredUrl("Link"),
   alt: optionalText("Alt text", 190),
   sortOrder: z.number({ error: "Sort order is required" }).int("Must be a whole number").min(0, "Cannot be negative"),

@@ -1,4 +1,6 @@
 import { listHighlightedPosts } from "@/services/highlighted-post";
+import { isHighlightedPostVideoUrl } from "@/lib/highlighted-post-media";
+import { MAX_HIGHLIGHTED_POSTS } from "@/lib/highlighted-post-limit";
 import clsx from "clsx";
 import Image from "next/image";
 import { Section } from "../ui/Section";
@@ -19,7 +21,8 @@ const mosaicPositions = [
 export async function HighlightedPostsSection() {
   const posts = await listHighlightedPosts();
   if (posts.length === 0) return null;
-  const useMosaic = posts.length >= mosaicPositions.length;
+  const visiblePosts = posts.slice(0, MAX_HIGHLIGHTED_POSTS);
+  const useMosaic = visiblePosts.length >= mosaicPositions.length;
 
   return (
     <Section className="py-12">
@@ -33,22 +36,41 @@ export async function HighlightedPostsSection() {
         </p>
       </div>
       <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
-        {posts.map((p, i) => (
-          <li key={p.id} className={clsx("aspect-square", useMosaic && mosaicPositions[i])}>
+        {visiblePosts.map((p, i) => (
+          <li
+            key={p.id}
+            className={clsx("aspect-square", useMosaic && mosaicPositions[i], i >= mosaicPositions.length && "lg:hidden")}
+          >
+            { /* Render a video URL as video even if an old record has the wrong type. */ }
             <a
               href={p.link}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative block size-full overflow-hidden rounded-2xl"
             >
-              <Image
-                src={p.image}
-                alt={`${p.alt ?? "Highlighted post"} - ${i}`}
-                width={400}
-                height={400}
-                unoptimized
-                className="size-full object-cover transition-transform group-hover:scale-105"
-              />
+              {p.mediaType === "video" || isHighlightedPostVideoUrl(p.image) ? (
+                <video
+                  src={p.image}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-hidden="true"
+                  className="size-full object-cover transition-transform group-hover:scale-105"
+                >
+                  Your browser does not support embedded videos.
+                </video>
+              ) : (
+                <Image
+                  src={p.image}
+                  alt={`${p.alt ?? "Highlighted post"} - ${i}`}
+                  width={400}
+                  height={400}
+                  unoptimized
+                  className="size-full object-cover transition-transform group-hover:scale-105"
+                />
+              )}
               <span className="pointer-events-none absolute inset-0 flex items-end justify-end p-3 text-white opacity-100 transition-opacity duration-200 md:items-center md:justify-center md:bg-black/30 md:p-0 md:opacity-0 md:group-hover:opacity-100 md:group-focus-visible:opacity-100">
                 <span className="flex items-center gap-2 rounded-full bg-black/60 px-3 py-2 text-xs font-medium md:flex-col md:gap-2 md:rounded-none md:bg-transparent md:px-0 md:py-0 md:text-base">
                   <Image
