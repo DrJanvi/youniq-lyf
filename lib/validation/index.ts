@@ -128,6 +128,22 @@ export const accountDetailsSchema = z.object({
 });
 
 export const otpCodeSchema = z.string().regex(/^\d{6}$/, "Enter the 6-digit code");
+
+export const passwordResetRequestSchema = z.object({
+  email: customerEmailSchema,
+});
+
+export const passwordResetSchema = z
+  .object({
+    email: customerEmailSchema,
+    code: otpCodeSchema,
+    newPassword: newPasswordSchema,
+    confirmPassword: z.string().min(1, "Confirm your new password").max(72),
+  })
+  .refine((value) => value.newPassword === value.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Passwords do not match",
+  });
 export const registerVerifySchema = registerSchema.extend({ code: otpCodeSchema });
 export const adminLoginSchema = z.object({
   username: z.string().trim().min(1).max(100),

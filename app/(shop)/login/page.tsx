@@ -15,6 +15,7 @@ export default async function LoginPage({
 }: {
   searchParams: Promise<{
     next?: string | string[];
+    loggedOut?: string | string[];
     deletionScheduled?: string | string[];
     recoveryDeadline?: string | string[];
   }>;
@@ -23,6 +24,7 @@ export default async function LoginPage({
   const single = (value?: string | string[]) =>
     Array.isArray(value) ? value[0] : value;
   const next = safeNext(single(params.next));
+  const loggedOut = single(params.loggedOut) === "1";
   const recoveryDeadline = single(params.recoveryDeadline);
   const deadline =
     recoveryDeadline && Number.isFinite(Date.parse(recoveryDeadline))
@@ -54,7 +56,7 @@ export default async function LoginPage({
             cannot be restored.
           </p>
         ) : null}
-        <LoginForm next={next} />
+        <LoginForm next={next} clearOnMount={loggedOut} />
       </div>
     </div>
   );

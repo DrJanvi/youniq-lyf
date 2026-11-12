@@ -19,7 +19,7 @@ export function AccountLogoutButton() {
           setError(null);
           try {
             await apiFetch("/api/auth/logout", { method: "POST" });
-            router.replace("/");
+            router.replace("/login?loggedOut=1");
             router.refresh();
           } catch (e) {
             setError(e instanceof Error ? e.message : "Unable to log out.");

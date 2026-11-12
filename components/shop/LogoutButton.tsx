@@ -6,7 +6,7 @@ import { apiFetch } from "@/lib/client-api";
 
 export function LogoutButton({
   endpoint = "/api/auth/logout",
-  redirectTo = "/",
+  redirectTo = "/login?loggedOut=1",
 }: {
   endpoint?: string;
   redirectTo?: string;
