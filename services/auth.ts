@@ -2,6 +2,7 @@ import { getAccountRecoveryDeadline } from "@/lib/auth/account-deletion";
 import { ApiError } from "@/lib/http";
 import { getMailer } from "@/lib/mail";
 import { prisma } from "@/lib/prisma";
+import type { LoginCodePurpose, Prisma } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { createHmac, randomInt, timingSafeEqual } from "node:crypto";
 import "server-only";
@@ -16,37 +17,61 @@ const hashCode = (email: string, code: string) =>
     .update(`${email}:${code}`)
     .digest("hex");
 
-async function sendCode(email: string) {
+async function sendCode(
+  email: string,
+  purpose: LoginCodePurpose,
+  {
+    deliver = true,
+    suppressRateLimit = false,
+  }: { deliver?: boolean; suppressRateLimit?: boolean } = {},
+) {
   const now = Date.now();
   const recent = await prisma.loginCode.findMany({
-    where: { email, createdAt: { gte: new Date(now - 60 * 60 * 1000) } },
+    where: {
+      email,
+      purpose,
+      createdAt: { gte: new Date(now - 60 * 60 * 1000) },
+    },
     orderBy: { createdAt: "desc" },
   });
   if (recent[0] && now - recent[0].createdAt.getTime() < RESEND_COOLDOWN_MS) {
+    if (suppressRateLimit) return;
     throw new ApiError(
       429,
       "Please wait a minute before requesting another code",
     );
   }
-  if (recent.length >= MAX_PER_HOUR)
+  if (recent.length >= MAX_PER_HOUR) {
+    if (suppressRateLimit) return;
     throw new ApiError(429, "Too many requests, try again later");
+  }
 
   const code = String(randomInt(0, 1_000_000)).padStart(6, "0");
   const loginCode = await prisma.loginCode.create({
     data: {
       email,
+      purpose,
       codeHash: hashCode(email, code),
       expiresAt: new Date(now + CODE_TTL_MS),
     },
   });
   try {
-    await getMailer().send(
-      email,
-      "Your Youniqlyf confirmation code",
-      `Your code is ${code}. It expires in 10 minutes.`,
-    );
-    if (process.env.NODE_ENV === "development") {
-      console.info(`[dev] Registration confirmation code: ${code}`);
+    if (deliver) {
+      const passwordReset = purpose === "PASSWORD_RESET";
+      await getMailer().send(
+        email,
+        passwordReset
+          ? "Your Youniqlyf password reset code"
+          : "Your Youniqlyf confirmation code",
+        passwordReset
+          ? `Use this code to reset your password: ${code}. It expires in 10 minutes.`
+          : `Your code is ${code}. It expires in 10 minutes.`,
+      );
+      if (process.env.NODE_ENV === "development") {
+        console.info(
+          `[dev] ${passwordReset ? "Password reset" : "Registration"} code: ${code}`,
+        );
+      }
     }
   } catch (error) {
     await prisma.loginCode.delete({ where: { id: loginCode.id } });
@@ -54,9 +79,14 @@ async function sendCode(email: string) {
   }
 }
 
-async function consumeCode(email: string, code: string) {
-  const row = await prisma.loginCode.findFirst({
-    where: { email, usedAt: null, expiresAt: { gt: new Date() } },
+async function consumeCode(
+  email: string,
+  code: string,
+  purpose: LoginCodePurpose,
+  db: Prisma.TransactionClient | typeof prisma = prisma,
+) {
+  const row = await db.loginCode.findFirst({
+    where: { email, purpose, usedAt: null, expiresAt: { gt: new Date() } },
     orderBy: { createdAt: "desc" },
   });
   if (!row || row.attempts >= MAX_ATTEMPTS)
@@ -65,14 +95,14 @@ async function consumeCode(email: string, code: string) {
   const a = Buffer.from(row.codeHash);
   const b = Buffer.from(hashCode(email, code));
   if (a.length !== b.length || !timingSafeEqual(a, b)) {
-    await prisma.loginCode.update({
+    await db.loginCode.update({
       where: { id: row.id },
       data: { attempts: { increment: 1 } },
     });
     throw new ApiError(400, "Invalid or expired code");
   }
   // Atomic claim guards against concurrent reuse of the same code.
-  const claimed = await prisma.loginCode.updateMany({
+  const claimed = await db.loginCode.updateMany({
     where: { id: row.id, usedAt: null },
     data: { usedAt: new Date() },
   });
@@ -85,7 +115,19 @@ const EMAIL_TAKEN =
 export async function requestRegistrationCode(email: string) {
   if (await prisma.user.findUnique({ where: { email }, select: { id: true } }))
     throw new ApiError(409, EMAIL_TAKEN);
-  await sendCode(email);
+  await sendCode(email, "REGISTRATION");
+}
+
+export async function requestCustomerPasswordResetCode(email: string) {
+  const user = await prisma.user.findFirst({
+    where: { email, role: "CUSTOMER" },
+    select: { id: true },
+  });
+  await sendCode(email, "PASSWORD_RESET", {
+    deliver: Boolean(user),
+    suppressRateLimit: true,
+  });
+  return { ok: true };
 }
 
 export async function registerCustomer(input: {
@@ -110,7 +152,7 @@ export async function registerCustomer(input: {
   } = input;
   if (await prisma.user.findUnique({ where: { email }, select: { id: true } }))
     throw new ApiError(409, EMAIL_TAKEN);
-  await consumeCode(email, code);
+  await consumeCode(email, code, "REGISTRATION");
   try {
     const user = await prisma.user.create({
       data: {
@@ -182,6 +224,49 @@ export async function verifyCustomerLogin(email: string, password: string) {
     sessionVersion,
     recovered,
   };
+}
+
+export async function resetCustomerPassword(input: {
+  email: string;
+  code: string;
+  newPassword: string;
+}) {
+  const { email, code, newPassword } = input;
+  await consumeCode(email, code, "PASSWORD_RESET");
+
+  const user = await prisma.user.findFirst({
+    where: { email, role: "CUSTOMER" },
+    select: { id: true, passwordHash: true, sessionVersion: true },
+  });
+  if (!user) throw new ApiError(400, "Invalid or expired code");
+
+  const passwordHash = await bcrypt.hash(newPassword, 10);
+  await prisma.$transaction(async (tx) => {
+    const updated = await tx.user.updateMany({
+      where: {
+        id: user.id,
+        role: "CUSTOMER",
+        passwordHash: user.passwordHash,
+        sessionVersion: user.sessionVersion,
+      },
+      data: {
+        passwordHash,
+        sessionVersion: { increment: 1 },
+      },
+    });
+    if (!updated.count) {
+      throw new ApiError(
+        409,
+        "The account changed during password reset. Please request a new code.",
+      );
+    }
+    await tx.loginCode.updateMany({
+      where: { email, purpose: "PASSWORD_RESET", usedAt: null },
+      data: { usedAt: new Date() },
+    });
+  });
+
+  return { updated: true };
 }
 
 export async function scheduleCustomerDeletion(

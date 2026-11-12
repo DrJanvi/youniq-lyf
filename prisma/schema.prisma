@@ -11,6 +11,11 @@ enum Role {
   ADMIN
 }
 
+enum LoginCodePurpose {
+  REGISTRATION
+  PASSWORD_RESET
+}
+
 enum Gender {
   MALE
   FEMALE
@@ -120,15 +125,16 @@ model User {
 }
 
 model LoginCode {
-  id        String    @id @default(uuid())
+  id        String           @id @default(uuid())
   email     String
+  purpose   LoginCodePurpose @default(REGISTRATION)
   codeHash  String
-  attempts  Int       @default(0)
+  attempts  Int              @default(0)
   expiresAt DateTime
   usedAt    DateTime?
-  createdAt DateTime  @default(now())
+  createdAt DateTime         @default(now())
 
-  @@index([email, createdAt])
+  @@index([email, purpose, createdAt])
 }
 
 model Category {
@@ -478,13 +484,13 @@ enum HighlightedPostMediaType {
 }
 
 model HighlightedPost {
-  id        String    @id @default(uuid())
-  image     String    @db.VarChar(1000)
+  id        String                   @id @default(uuid())
+  image     String                   @db.VarChar(1000)
   mediaType HighlightedPostMediaType @default(image)
-  link      String    @db.VarChar(1000)
+  link      String                   @db.VarChar(1000)
   alt       String?
-  sortOrder Int       @default(0)
-  createdAt DateTime  @default(now())
+  sortOrder Int                      @default(0)
+  createdAt DateTime                 @default(now())
   deletedAt DateTime?
 
   @@index([deletedAt])

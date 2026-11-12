@@ -185,7 +185,7 @@ export function AdminShell({
   async function logout() {
     try {
       await apiFetch("/api/admin/auth/logout", { method: "POST" });
-      router.replace("/admin/login");
+      router.replace("/admin/login?loggedOut=1");
       router.refresh();
     } catch {
       toast.error("Could not log out. Please try again.");

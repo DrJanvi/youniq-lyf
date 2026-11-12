@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { InternationalPhoneField } from "@/components/shop/InternationalPhoneField";
+import { PasswordRecoveryForm } from "@/components/shop/PasswordRecoveryForm";
 import { Button } from "@/components/shadcn/button";
 import { Input } from "@/components/shadcn/input";
 import {
@@ -88,24 +89,35 @@ const linkButton =
 
 function SignInForm({
   next,
+  clearOnMount,
   onSwitch,
 }: {
   next: string;
+  clearOnMount: boolean;
   onSwitch: () => void;
 }) {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [recovering, setRecovering] = useState(false);
   const {
     register,
     handleSubmit,
+    getValues,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<LoginValues>({
     resolver: zodResolver(customerLoginSchema),
     mode: "onTouched",
   });
 
+  useEffect(() => {
+    if (clearOnMount) reset({ email: "", password: "" });
+  }, [clearOnMount, reset]);
+
   const onSubmit = handleSubmit(async (values) => {
     setError(null);
+    setSuccess(null);
     try {
       const result = await apiFetch<{ recovered?: boolean }>(
         "/api/auth/login",
@@ -118,8 +130,26 @@ function SignInForm({
     }
   });
 
+  if (recovering) {
+    return (
+      <PasswordRecoveryForm
+        initialEmail={getValues("email")}
+        onBack={() => setRecovering(false)}
+        onComplete={() => {
+          setRecovering(false);
+          setSuccess("Password reset. Sign in with your new password.");
+        }}
+      />
+    );
+  }
+
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+    <form
+      onSubmit={onSubmit}
+      noValidate
+      autoComplete="on"
+      className="flex flex-col gap-5"
+    >
       <Field id="login-email" label="Email" error={errors.email?.message}>
         <Input
           id="login-email"
@@ -148,7 +178,20 @@ function SignInForm({
           {...register("password")}
         />
       </Field>
-      <FormMessage error={error} />
+      <p className="-mt-2 text-right text-sm">
+        <button
+          type="button"
+          onClick={() => {
+            setError(null);
+            setSuccess(null);
+            setRecovering(true);
+          }}
+          className={linkButton}
+        >
+          Forgot password?
+        </button>
+      </p>
+      <FormMessage error={error} success={success} />
       <Button type="submit" disabled={isSubmitting}>
         {isSubmitting ? "Signing in..." : "Sign In"}
       </Button>
@@ -511,7 +554,13 @@ function RegisterForm({
   );
 }
 
-export function LoginForm({ next = "/" }: { next?: string }) {
+export function LoginForm({
+  next = "/",
+  clearOnMount = false,
+}: {
+  next?: string;
+  clearOnMount?: boolean;
+}) {
   const [tab, setTab] = useState("login");
   return (
     <Tabs value={tab} onValueChange={setTab}>
@@ -520,7 +569,11 @@ export function LoginForm({ next = "/" }: { next?: string }) {
         <TabsTrigger value="register">Register</TabsTrigger>
       </TabsList>
       <TabsContent value="login">
-        <SignInForm next={next} onSwitch={() => setTab("register")} />
+        <SignInForm
+          next={next}
+          clearOnMount={clearOnMount}
+          onSwitch={() => setTab("register")}
+        />
       </TabsContent>
       <TabsContent value="register">
         <RegisterForm next={next} onSwitch={() => setTab("login")} />
