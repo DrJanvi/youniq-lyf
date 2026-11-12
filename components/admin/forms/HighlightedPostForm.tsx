@@ -1,32 +1,50 @@
 "use client";
 
+import { useWatch } from "react-hook-form";
 import { Form } from "@/components/admin/ui/form";
 import { highlightedPostFormSchema } from "@/lib/validation/admin";
-import { FormSection, NumberField, TextField } from "./Fields";
+import { FormSection, NumberField, SelectField, TextField } from "./Fields";
 import { FormActions } from "./FormActions";
-import { ImageUploadField } from "./ImageUploadField";
+import { HighlightedPostMediaUploadField } from "./HighlightedPostMediaUploadField";
 import { useEntityForm } from "./use-entity-form";
 
-type Values = { image: string; link: string; alt: string; sortOrder: number };
+type Values = { image: string; mediaType: "image" | "video"; link: string; alt: string; sortOrder: number };
 
 export function HighlightedPostForm({ id, initial }: { id?: string; initial?: Partial<Values> }) {
   const { form, onSubmit, pending } = useEntityForm<Values>({
     schema: highlightedPostFormSchema as never,
-    defaultValues: { image: "", link: "", alt: "", sortOrder: 0, ...initial },
+    defaultValues: { image: "", mediaType: "image", link: "", alt: "", sortOrder: 0, ...initial },
     url: id ? `/api/admin/highlighted-posts/${id}` : "/api/admin/highlighted-posts",
     method: id ? "PATCH" : "POST",
     redirectTo: "/admin/highlighted-posts",
     successMessage: id ? "Post updated" : "Post created",
     toPayload: (v) => ({ ...v, alt: v.alt || undefined }),
   });
+  const image = useWatch({ control: form.control, name: "image" });
+  const mediaType = useWatch({ control: form.control, name: "mediaType" });
 
   return (
     <Form {...form}>
       <form onSubmit={onSubmit} noValidate className="flex max-w-3xl flex-col gap-5">
         <FormSection title="Post">
           <div className="full">
-            <ImageUploadField control={form.control} name="image" label="Upload post image" />
-            <TextField control={form.control} name="image" label="Image URL" required type="url" />
+            <HighlightedPostMediaUploadField
+              value={image}
+              mediaType={mediaType}
+              onChange={(url, mediaType) => {
+                form.setValue("image", url, { shouldDirty: true, shouldValidate: true });
+                form.setValue("mediaType", mediaType, { shouldDirty: true, shouldValidate: true });
+              }}
+            />
+            <SelectField
+              control={form.control}
+              name="mediaType"
+              label="Media type"
+              required
+              options={[{ value: "image", label: "Image" }, { value: "video", label: "Video" }]}
+              description="Uploads set this automatically. Choose the correct type when entering a URL manually."
+            />
+            <TextField control={form.control} name="image" label="Media URL" required type="url" />
           </div>
           <div className="full">
             <TextField control={form.control} name="link" label="Link URL" required type="url" />

@@ -6,9 +6,7 @@ import { Section } from "../ui/Section";
 
 const ABOUT_LINKS = [
   ["About Us", "/about-us"],
-  ["Our Story", "/about-us"],
-  ["Testimonials", "/testimonials"],
-  ["Contact Us", "/contact"],
+   ["Contact Us", "/contact"],
   ["Blogs", "/blogs"],
   ["Career", "/careers"],
 ] as const;
