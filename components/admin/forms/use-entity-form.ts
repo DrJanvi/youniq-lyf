@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useForm, type DefaultValues, type FieldValues, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -32,11 +33,23 @@ export function useEntityForm<T extends FieldValues>({
     defaultValues,
     mode: "onTouched",
   });
+  const { reset } = form;
   const { request, pending } = useAdminApi();
+
+  useEffect(() => {
+    if (method === "POST") reset();
+  }, [method, reset]);
 
   const onSubmit = form.handleSubmit(
     async (values) => {
-      await request(url, { method, json: toPayload(values), success: successMessage, redirectTo, form });
+      await request(url, {
+        method,
+        json: toPayload(values),
+        success: successMessage,
+        redirectTo,
+        form,
+        onSuccess: method === "POST" ? () => reset() : undefined,
+      });
     },
     () => toast.error("Please fix the highlighted fields."),
   );
