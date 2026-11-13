@@ -39,6 +39,16 @@ async function main() {
     },
   });
 
+  await prisma.announcementBarItem.upsert({
+    where: { id: "00000000-0000-4000-8000-000000000001" },
+    update: {},
+    create: {
+      id: "00000000-0000-4000-8000-000000000001",
+      message: "Early Users Get 50% Off - Hurry up, Limited Time Offer!",
+      sortOrder: 0,
+    },
+  });
+
   const cats: { name: string }[] = read("get-categories.json").data;
   const categoryIds = new Map<string, string>();
   for (const c of cats) {

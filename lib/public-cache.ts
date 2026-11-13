@@ -3,6 +3,7 @@ import { revalidateTag } from "next/cache";
 
 export const PUBLIC_CACHE_TAGS = {
   aboutUs: "public:about-us",
+  announcements: "public:announcements",
   blogs: "public:blogs",
   contact: "public:contact",
   contactFaqs: "public:contact-faqs",

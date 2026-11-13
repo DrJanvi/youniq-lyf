@@ -3,6 +3,7 @@ import { getCurrentUser } from "@/lib/auth/session";
 import { getCartCount } from "@/services/cart";
 import { listTaxonomy } from "@/services/taxonomy";
 import { getWishlistCount } from "@/services/wishlist";
+import { listAnnouncements } from "@/services/announcement";
 import { AnnouncementBar } from "../ui/AnnouncementBar";
 import { AuthItems } from "./AuthItems";
 import { HeaderShell } from "./HeaderShell";
@@ -32,10 +33,17 @@ async function HeaderContent() {
   );
 }
 
-export function Header() {
+export async function Header() {
+  const announcements = await listAnnouncements();
   return (
     <>
-      <AnnouncementBar />
+      <AnnouncementBar
+        announcements={announcements.map(({ id, message, link }) => ({
+          id,
+          message,
+          link,
+        }))}
+      />
       <HeaderContent />
     </>
   );

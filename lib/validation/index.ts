@@ -354,6 +354,27 @@ export const heroBannerSchema = z.object({
   sortOrder: z.coerce.number().int().min(0).default(0),
 });
 
+const optionalAnnouncementLink = z
+  .string()
+  .trim()
+  .max(1000)
+  .refine(
+    (value) =>
+      !value ||
+      (value.startsWith("/") && !value.startsWith("//")) ||
+      (URL.canParse(value) &&
+        ["http:", "https:"].includes(new URL(value).protocol)),
+    "Enter an internal path or a valid HTTP(S) URL",
+  )
+  .optional()
+  .transform((value) => value || undefined);
+
+export const announcementSchema = z.object({
+  message: z.string().trim().min(1).max(500),
+  link: optionalAnnouncementLink,
+  sortOrder: z.coerce.number().int().min(0).default(0),
+});
+
 export const highlightedPostSchema = z.object({
   image: z.string().trim().url().max(1000),
   mediaType: z.enum(["image", "video"]).optional(),
