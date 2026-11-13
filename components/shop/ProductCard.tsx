@@ -38,9 +38,9 @@ export function ProductCard({
   const displayDiscountPercent =
     lowestVariantPrice?.discountPercent ?? product.discountPercent;
   return (
-    <article className="group border-surface-border flex flex-col gap-2 rounded-2xl border bg-white p-3">
+    <article className="group border-surface-border flex min-w-0 flex-col gap-2 rounded-xl border bg-white p-2 md:rounded-2xl md:p-3">
       {image ? (
-        <div className="relative mb-3">
+        <div className="relative mb-1 md:mb-3">
           <Link href={`/products/${product.slug}`} className="block">
             <div className="bg-surface-main relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-[0.875rem]">
               <Image
@@ -53,13 +53,13 @@ export function ProductCard({
               />
 
               {firstTag ? (
-                <span className="text-text-primary pointer-events-none absolute top-5 right-5 rounded-full bg-white px-3 py-1 text-[10px] font-medium tracking-wide uppercase">
+                <span className="text-text-primary pointer-events-none absolute top-2 right-2 rounded-full bg-white px-2 py-1 text-[9px] leading-3 font-medium tracking-wide uppercase md:top-5 md:right-5 md:px-3 md:text-[10px]">
                   {firstTag}
                 </span>
               ) : null}
 
               {displayDiscountPercent > 0 ? (
-                <span className="bg-badge-sale text-badge-sale-text pointer-events-none absolute top-5 left-5 rounded-full px-4 py-2 text-sm font-medium uppercase">
+                <span className="bg-badge-sale text-badge-sale-text pointer-events-none absolute top-2 left-2 rounded-full px-2 py-1 text-[9px] leading-3 font-medium uppercase md:top-5 md:left-5 md:px-4 md:py-2 md:text-sm">
                   {displayDiscountPercent}% OFF
                 </span>
               ) : null}
@@ -84,18 +84,18 @@ export function ProductCard({
         </div>
       ) : null}
       <Link href={`/products/${product.slug}`}>
-        <p className="text-text-muted text-xs font-medium">
+        <p className="text-text-muted text-[10px] font-medium md:text-xs">
           {product.category.name}
         </p>
-        <h3 className="font-cormorant group-hover:text-brand-primary mt-1.5 line-clamp-2 min-h-14 text-lg leading-7 font-bold transition-colors duration-300 ease-out">
+        <h3 className="font-cormorant group-hover:text-brand-primary mt-1 line-clamp-2 min-h-10 text-sm leading-5 font-bold transition-colors duration-300 ease-out md:mt-1.5 md:min-h-14 md:text-lg md:leading-7">
           {product.title}
         </h3>
       </Link>
       {showRating ? (
-        <Rating value={product.rating} count={product.reviewCount} />
+        <Rating value={product.rating} count={product.reviewCount} compact />
       ) : null}
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-1">
+      <div className="flex min-w-0 flex-wrap items-center justify-between gap-1 md:gap-2">
+        <div className="flex min-w-0 flex-wrap items-center gap-1">
           {lowestVariantPrice ? (
             <span className="text-text-muted text-[10px] font-medium">
               From
@@ -105,6 +105,7 @@ export function ProductCard({
             price={displayPrice.price}
             finalPrice={displayPrice.finalPrice}
             currency={product.currency}
+            compact
           />
         </div>
         <div className="hidden shrink-0 md:block">
@@ -117,20 +118,20 @@ export function ProductCard({
           />
         </div>
       </div>
-      <div className="mb-2 flex items-center gap-2 md:hidden">
+      <div className="mb-1 flex items-center gap-1 md:hidden">
         <AddToCartButton
           productId={product.id}
           productHref={`/products/${product.slug}`}
           requiresVariant={product.hasVariants}
           disabled={!product.inStock}
           overlay
-          className="flex-1 justify-center opacity-100!"
+          className="min-w-0 flex-1 justify-center gap-1! px-2! py-2! text-[10px]! tracking-normal! opacity-100!"
         />
         <WishlistButton
           productId={product.id}
           initial={wished}
           overlay
-          className="opacity-100! shadow-none ring-1 ring-neutral-200"
+          className="size-8! opacity-100! shadow-none ring-1 ring-neutral-200"
         />
       </div>
     </article>
