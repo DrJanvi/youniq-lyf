@@ -16,7 +16,6 @@ import { useEffect, useState, type MouseEvent, type ReactNode } from "react";
 import { Logo } from "../ui/Logo";
 import { Section } from "../ui/Section";
 import { HeaderCountBadge } from "./HeaderIconLink";
-import { useScrolledPast } from "./useScrolledPast";
 import { HeaderTransparentContext } from "./HeaderTransparentContext";
 
 export type NavCategory = { id: string; name: string; slug: string };
@@ -60,7 +59,6 @@ export function HeaderShell({
   wishlistCount,
 }: HeaderShellProps) {
   const pathname = usePathname();
-  const isHome = pathname === "/";
   const [open, setOpen] = useState(false);
   const [desktopDropdownDismissed, setDesktopDropdownDismissed] =
     useState(false);
@@ -93,31 +91,17 @@ export function HeaderShell({
     };
   }, [open]);
 
-  // On the home page the header floats over the hero (zero layout height).
-  const wrapper = isHome ? "relative z-40 h-0" : "relative z-40";
-  const scrolled = useScrolledPast(100);
-  const [hovered, setHovered] = useState(false);
-  const transparent = isHome && !scrolled && !hovered;
-  const header = clsx(
-    "md:h-25 flex items-center transition-colors duration-300",
-    isHome && "absolute inset-x-0 top-0",
-    transparent
-      ? "border-b border-b-transparent bg-origin-border bg-linear-to-b from-black/30 to-transparent text-white"
-      : "border-b border-b-black/5 bg-white text-black",
-  );
+  const header =
+    "md:h-25 flex items-center transition-colors duration-300 border-b border-b-black/5 bg-white text-black";
   const link = "flex items-center justify-center self-stretch text-sm";
 
   return (
-    <div className={clsx(wrapper, "sticky top-0")}>
+    <div className="relative z-40 sticky top-0">
       <Section
         as="header"
         className={header}
-        onPointerEnter={(e: React.PointerEvent) =>
-          e.pointerType === "mouse" && setHovered(true)
-        }
-        onPointerLeave={() => setHovered(false)}
       >
-        <HeaderTransparentContext.Provider value={transparent}>
+        <HeaderTransparentContext.Provider value={false}>
           <div className="mx-auto flex w-full items-center gap-6 py-2">
             <div className="flex-1 lg:hidden">
               <button
