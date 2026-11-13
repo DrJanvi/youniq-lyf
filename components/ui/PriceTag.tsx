@@ -14,20 +14,28 @@ export function PriceTag({
   price,
   finalPrice,
   currency = "INR",
+  compact = false,
 }: {
   price: number;
   finalPrice: number;
   currency?: string;
+  compact?: boolean;
 }) {
   const discounted = finalPrice < price;
   return (
-    <span className="inline-flex items-center gap-2">
-      <span className="text-base font-medium">
+    <span
+      className={`inline-flex items-center ${compact ? "flex-wrap gap-x-1 gap-y-0 md:gap-2" : "gap-2"}`}
+    >
+      <span
+        className={`${compact ? "text-sm md:text-base" : "text-base"} font-medium`}
+      >
         {formatMoney(finalPrice, currency)}
       </span>
       {discounted ? (
         <>
-          <del className="text-text-strike text-sm">
+          <del
+            className={`text-text-strike ${compact ? "text-xs md:text-sm" : "text-sm"}`}
+          >
             {formatMoney(price, currency)}
           </del>
         </>

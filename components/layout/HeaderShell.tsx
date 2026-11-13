@@ -216,12 +216,16 @@ export function HeaderShell({
               </div>
             </nav>
 
-            <div className="flex items-center justify-center">
+            <Link
+              href="/"
+              aria-label="Youniqlyf home"
+              className="flex items-center justify-center"
+            >
               {/* Logo for desktop view */}
               <Logo height={80} className="hidden md:block" />
               {/* Logo for mobile view */}
               <Logo height={58} className="block md:hidden" />
-            </div>
+            </Link>
 
             <div className="flex flex-1 items-center justify-end gap-4">
               <div
@@ -327,7 +331,13 @@ export function HeaderShell({
           )}
         >
           <div className="border-surface-border flex items-center justify-between border-b px-5 py-4">
-            <Logo height={48} />
+            <Link
+              href="/"
+              aria-label="Youniqlyf home"
+              onClick={() => setOpen(false)}
+            >
+              <Logo height={48} />
+            </Link>
             <button
               type="button"
               aria-label="Close menu"
@@ -433,7 +443,7 @@ export function HeaderShell({
                   Wishlist
                 </span>
               </Link>
-              <Link href="/profile" className={mobileLink("/profile")}>
+              <Link href="/account" className={mobileLink("/account")}>
                 <span className="flex items-center gap-3">
                   <UserIcon aria-hidden="true" className="size-5" />
                   Profile
