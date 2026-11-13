@@ -36,39 +36,51 @@ export function HeroSlider({
       aria-label="Featured"
       className="relative"
     >
-      <div className="relative aspect-402/512 w-full overflow-hidden md:aspect-1440/834 md:max-h-208.5">
+      <div className="relative aspect-402/512 w-full overflow-hidden md:aspect-1440/500 md:max-h-150">
         {slides.map((s, i) => (
-          <Link
+          <div
             key={`${s.href}-${i}`}
-            href={s.href}
             aria-hidden={i !== index}
-            tabIndex={i === index ? 0 : -1}
             className={`absolute inset-0 transition-opacity duration-700 ${
               i === index ? "opacity-100" : "pointer-events-none opacity-0"
             }`}
           >
-            {/* Mobile falls back to the desktop image when no mobile image is set. */}
-            <Image
-              src={s.image}
-              alt={s.alt ?? `Banner ${i + 1}`}
-              fill
-              sizes="100vw"
-              className={`object-cover ${s.mobileImage ? "hidden md:block" : ""}`}
-              priority={i === 0}
-              unoptimized
-            />
-            {s.mobileImage ? (
+            <Link
+              href={s.href}
+              tabIndex={i === index ? 0 : -1}
+              className="absolute inset-0"
+            >
+              {/* Mobile falls back to the desktop image when no mobile image is set. */}
               <Image
-                src={s.mobileImage}
+                src={s.image}
                 alt={s.alt ?? `Banner ${i + 1}`}
                 fill
                 sizes="100vw"
-                className="object-cover md:hidden"
+                className={`object-cover ${s.mobileImage ? "hidden md:block" : ""}`}
                 priority={i === 0}
                 unoptimized
               />
+              {s.mobileImage ? (
+                <Image
+                  src={s.mobileImage}
+                  alt={s.alt ?? `Banner ${i + 1}`}
+                  fill
+                  sizes="100vw"
+                  className="object-cover md:hidden"
+                  priority={i === 0}
+                  unoptimized
+                />
+              ) : null}
+            </Link>
+            {i === index ? (
+              <Link
+                href="/products"
+                className="absolute bottom-6 left-6 z-10 rounded-full bg-neutral-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Shop now
+              </Link>
             ) : null}
-          </Link>
+          </div>
         ))}
       </div>
       {count > 1 ? (
