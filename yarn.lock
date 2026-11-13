@@ -420,11 +420,6 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.12.tgz#afefe785949f16ac4cdd1e695935a321572dd56a"
   integrity sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==
 
-"@fontsource/noto-sans-arabic@^5.3.0":
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/@fontsource/noto-sans-arabic/-/noto-sans-arabic-5.3.0.tgz#00e53d6b3db0fa579bab4f4f598a2b74f34c0f16"
-  integrity sha512-i3t6GR0LOReyJVEk+YfYCnxv53wuIelg7Y9NGNvOq4Diq/EP0YszaGXkQwfQNigLjfO4POrLaPGM0sNliGYk7A==
-
 "@heroicons/react@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@heroicons/react/-/react-2.2.0.tgz#0c05124af50434a800773abec8d3af6a297d904b"

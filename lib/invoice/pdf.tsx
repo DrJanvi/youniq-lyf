@@ -9,7 +9,6 @@ import {
   renderToBuffer,
 } from "@react-pdf/renderer";
 import { readFileSync } from "node:fs";
-import { createRequire } from "node:module";
 import { join } from "node:path";
 import "server-only";
 import { formatInvoiceNumber } from "./number";
@@ -29,26 +28,6 @@ export type InvoicePdfData = {
   items: { title: string; quantity: number; unitPrice: number }[];
 };
 
-const assetRequire = createRequire(join(process.cwd(), "package.json"));
-
-Font.register({
-  family: "YouniqlyfLatin",
-  fonts: [
-    {
-      src: assetRequire.resolve(
-        "@fontsource/noto-sans-arabic/files/noto-sans-arabic-latin-400-normal.woff",
-      ),
-      fontWeight: 400,
-    },
-    {
-      src: assetRequire.resolve(
-        "@fontsource/noto-sans-arabic/files/noto-sans-arabic-latin-700-normal.woff",
-      ),
-      fontWeight: 700,
-    },
-  ],
-});
-
 Font.registerHyphenationCallback((word) => [word]);
 
 const styles = StyleSheet.create({
@@ -58,7 +37,7 @@ const styles = StyleSheet.create({
     paddingBottom: 32,
     paddingLeft: 30,
     color: "#24324b",
-    fontFamily: "YouniqlyfLatin",
+    fontFamily: "Helvetica",
     fontSize: 8,
   },
   header: {

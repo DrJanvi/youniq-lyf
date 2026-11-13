@@ -2,8 +2,6 @@ import type { NextConfig } from "next";
 
 const invoiceAssets = [
   "./public/logo-with-name.svg",
-  "./node_modules/@fontsource/noto-sans-arabic/files/noto-sans-arabic-latin-400-normal.woff",
-  "./node_modules/@fontsource/noto-sans-arabic/files/noto-sans-arabic-latin-700-normal.woff",
 ];
 
 const nextConfig: NextConfig = {
