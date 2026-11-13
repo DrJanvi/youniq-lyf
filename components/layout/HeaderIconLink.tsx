@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 import { ReactNode } from "react";
 
 export type HeaderIconLinkProps = {

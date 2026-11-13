@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 import { CalendarDays, Clock3, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";

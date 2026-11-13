@@ -1,7 +1,7 @@
 import { Logo } from "@/components/ui/Logo";
 import { listTaxonomy } from "@/services/taxonomy";
 import Image from "next/image";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 import { Section } from "../ui/Section";
 
 const ABOUT_LINKS = [

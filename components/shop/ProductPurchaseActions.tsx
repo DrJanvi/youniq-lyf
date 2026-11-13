@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { ArrowRight, Minus, Plus } from "lucide-react";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { apiFetch, ClientApiError } from "@/lib/client-api";
 
 export function ProductPurchaseActions({
@@ -17,12 +18,13 @@ export function ProductPurchaseActions({
   const router = useRouter();
   const pathname = usePathname();
   const [quantity, setQuantity] = useState(1);
-  const [busy, setBusy] = useState(false);
+  const [busyAction, setBusyAction] = useState<"cart" | "checkout" | null>(null);
   const [added, setAdded] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const busy = busyAction !== null;
 
   async function purchase(goToCheckout: boolean) {
-    setBusy(true);
+    setBusyAction(goToCheckout ? "checkout" : "cart");
     setError(null);
     setAdded(false);
     try {
@@ -67,7 +69,7 @@ export function ProductPurchaseActions({
           : "Unable to add this product to your cart.",
       );
     } finally {
-      setBusy(false);
+      setBusyAction(null);
     }
   }
 
@@ -107,18 +109,34 @@ export function ProductPurchaseActions({
         type="button"
         onClick={() => void purchase(false)}
         disabled={busy || stock < 1}
+        aria-busy={busyAction === "cart"}
         className="inline-flex min-h-14 items-center justify-center gap-3 rounded-full border border-surface-border bg-white px-6 text-sm font-semibold tracking-[0.08em] text-text-primary uppercase transition hover:bg-surface-card disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {busy ? "Adding..." : added ? "Added to cart" : "Add to cart"}
+        {busyAction === "cart" ? <LoadingSpinner /> : null}
+        {busyAction === "cart"
+          ? "Adding..."
+          : added
+            ? "Added to cart"
+            : "Add to cart"}
       </button>
       <button
         type="button"
         onClick={() => void purchase(true)}
         disabled={busy || stock < 1}
+        aria-busy={busyAction === "checkout"}
         className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white inline-flex min-h-14 items-center justify-center gap-3 rounded-full px-6 text-sm font-semibold tracking-[0.08em] uppercase transition-colors disabled:cursor-not-allowed disabled:opacity-50"
       >
-        Buy it now
-        <ArrowRight aria-hidden="true" className="size-5" />
+        {busyAction === "checkout" ? (
+          <>
+            <LoadingSpinner />
+            Preparing checkout…
+          </>
+        ) : (
+          <>
+            Buy it now
+            <ArrowRight aria-hidden="true" className="size-5" />
+          </>
+        )}
       </button>
       {error ? (
         <p role="alert" className="text-sm text-red-700">

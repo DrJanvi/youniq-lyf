@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { apiFetch, ClientApiError } from "@/lib/client-api";
 import { ArrowRight, Check, ShoppingCart } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
@@ -68,6 +69,8 @@ export function AddToCartButton({
       ? "Out of stock"
       : requiresVariant
         ? "Choose a color"
+        : state === "busy"
+          ? "Adding to cart"
         : state === "added"
           ? "Added to cart"
           : "Add to cart";
@@ -83,7 +86,9 @@ export function AddToCartButton({
           title={error ?? label}
           className={`border-brand-primary bg-brand-primary-dark hover:bg-brand-primary-hover focus-visible:outline-brand-primary flex size-10 cursor-pointer items-center justify-center rounded-full border p-0 text-white shadow-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:border-neutral-400 disabled:bg-neutral-400 ${className}`}
         >
-          {state === "added" ? (
+          {state === "busy" ? (
+            <LoadingSpinner />
+          ) : state === "added" ? (
             <Check aria-hidden="true" className="size-4" />
           ) : (
             <ShoppingCart aria-hidden="true" className="size-4" />
@@ -104,6 +109,7 @@ export function AddToCartButton({
         type="button"
         onClick={add}
         disabled={disabled || state === "busy"}
+        aria-busy={state === "busy"}
         title={error ?? undefined}
         className={`bg-brand-primary-dark flex cursor-pointer items-center gap-2 rounded-full border border-white px-4 py-2.5 text-xs font-bold tracking-wide whitespace-nowrap text-white uppercase opacity-0 shadow-lg transition-opacity duration-300 ease-out group-hover:opacity-100 focus-visible:opacity-100 disabled:cursor-not-allowed disabled:bg-neutral-400 ${className}`}
       >
@@ -111,10 +117,16 @@ export function AddToCartButton({
           ? "Out of stock"
           : requiresVariant
             ? "Choose color"
+            : state === "busy"
+              ? "Adding…"
             : state === "added"
               ? "Added ✓"
               : "Add to cart"}
-        {!disabled && !requiresVariant && state !== "added" ? (
+        {state === "busy" ? <LoadingSpinner /> : null}
+        {!disabled &&
+        !requiresVariant &&
+        state !== "busy" &&
+        state !== "added" ? (
           <ArrowRight className="size-4" />
         ) : null}
       </button>
@@ -126,15 +138,21 @@ export function AddToCartButton({
       <Button
         onClick={add}
         disabled={disabled || state === "busy"}
+        aria-busy={state === "busy"}
         className={className}
       >
-        {disabled
-          ? "Out of stock"
-          : requiresVariant
-            ? "Choose color"
-            : state === "added"
-              ? "Added ✓"
-              : "Add to cart"}
+        <span className="inline-flex items-center gap-2">
+          {state === "busy" ? <LoadingSpinner /> : null}
+          {disabled
+            ? "Out of stock"
+            : requiresVariant
+              ? "Choose color"
+              : state === "busy"
+                ? "Adding…"
+                : state === "added"
+                  ? "Added ✓"
+                  : "Add to cart"}
+        </span>
       </Button>
       {error ? <span role="alert"> {error}</span> : null}
     </span>

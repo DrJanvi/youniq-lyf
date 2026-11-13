@@ -1,12 +1,13 @@
 "use client";
 
 import { formatMoney } from "@/components/ui/PriceTag";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { apiFetch } from "@/lib/client-api";
 import type { SavedAddressDTO } from "@/services/address";
 import type { CartDTO } from "@/services/cart";
 import { ArrowRight, LockKeyhole, ShieldCheck } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
 
@@ -739,11 +740,15 @@ export function CheckoutForm({
         </div>
 
         <div className="mt-5 divide-y divide-surface-border">
-          {visibleItems.map((item) => (
-            <div
-              key={`${item.product.id}:${item.variantId ?? "base"}`}
-              className="flex items-center gap-3 py-3 first:pt-0"
-            >
+          {visibleItems.map((item) => {
+            const itemKey = `${item.product.id}:${item.variantId ?? "base"}`;
+            const itemBusy = busyCartItemKey === itemKey;
+            return (
+              <div
+                key={itemKey}
+                aria-busy={itemBusy}
+                className="flex items-center gap-3 py-3 first:pt-0"
+              >
               <div className="grid size-14 shrink-0 place-items-center overflow-hidden rounded border border-surface-border bg-white">
                 {item.variant?.images[0] ?? item.product.images[0] ? (
                   <Image
@@ -775,7 +780,7 @@ export function CheckoutForm({
                 <button
                   type="button"
                   aria-label={`Decrease quantity of ${item.product.title}`}
-                  disabled={busyCartItemKey === `${item.product.id}:${item.variantId ?? "base"}`}
+                  disabled={itemBusy}
                   onClick={() =>
                     changeQuantity(item.product.id, item.variantId, item.quantity - 1)
                   }
@@ -784,13 +789,18 @@ export function CheckoutForm({
                   −
                 </button>
                 <span className="min-w-4 text-center text-xs">
-                  {item.quantity}
+                  {itemBusy ? <LoadingSpinner /> : item.quantity}
                 </span>
+                {itemBusy ? (
+                  <span role="status" className="sr-only">
+                    Updating quantity for {item.product.title}
+                  </span>
+                ) : null}
                 <button
                   type="button"
                   aria-label={`Increase quantity of ${item.product.title}`}
                   disabled={
-                    busyCartItemKey === `${item.product.id}:${item.variantId ?? "base"}` ||
+                    itemBusy ||
                     item.quantity >= (item.variant?.stock ?? item.product.stock)
                   }
                   onClick={() =>
@@ -801,8 +811,9 @@ export function CheckoutForm({
                   +
                 </button>
               </div>
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </div>
         {cart.items.length > 3 ? (
           <button
@@ -965,6 +976,7 @@ export function CheckoutForm({
             !selectedAddress ||
             cart.items.length === 0
           }
+          aria-busy={orderBusy}
           className="font-cormorant bg-brand-primary-dark hover:bg-brand-primary-hover text-white mt-4 inline-flex h-16 w-full items-center justify-center gap-3 rounded-full px-5 text-base font-semibold tracking-[0.08em] uppercase transition-colors disabled:cursor-not-allowed disabled:opacity-50"
         >
           {orderBusy
@@ -972,7 +984,11 @@ export function CheckoutForm({
             : paymentMethod === "CASH_ON_DELIVERY"
               ? "Place order"
               : "Pay Now"}
-          <ArrowRight aria-hidden="true" className="size-5" />
+          {orderBusy ? (
+            <LoadingSpinner className="size-5" />
+          ) : (
+            <ArrowRight aria-hidden="true" className="size-5" />
+          )}
         </button>
         <p className="mt-3 text-center text-[10px] leading-4 text-text-muted">
           {paymentMethod === "CASH_ON_DELIVERY"

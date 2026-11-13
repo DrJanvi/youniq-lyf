@@ -2,7 +2,7 @@ import { CareerApplicationForm } from "@/components/shop/CareerApplicationForm";
 import { getCareerPageSettings } from "@/services/career";
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 import { connection } from "next/server";
 
 export const metadata: Metadata = {

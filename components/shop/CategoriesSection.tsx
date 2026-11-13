@@ -1,7 +1,7 @@
 import { Section } from "@/components/ui/Section";
 import { ArrowRightCircleIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 import { SectionHeading } from "./SectionHeading";
 
 type Category = {

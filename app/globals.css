@@ -327,3 +327,36 @@ select:-webkit-autofill:active {
 button:hover {
   cursor: pointer !important; 
 }
+
+.storefront-loading-logo {
+  animation: storefront-loading-logo-spin 1.8s linear infinite;
+}
+
+.storefront-navigation-overlay {
+  animation: storefront-navigation-overlay-in 120ms ease-out 120ms both;
+}
+
+@keyframes storefront-loading-logo-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes storefront-navigation-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .storefront-loading-logo {
+    animation: none;
+  }
+
+  .storefront-navigation-overlay {
+    animation: none;
+  }
+}

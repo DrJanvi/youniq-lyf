@@ -8,7 +8,7 @@ import { Rating } from "@/components/ui/Rating";
 import { getVariantGalleryImages } from "@/lib/product-images";
 import type { ProductDTO } from "@/services/product";
 import { RotateCcw, ShieldCheck, Truck } from "lucide-react";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 import { useState } from "react";
 
 export function ProductDetailsPanel({

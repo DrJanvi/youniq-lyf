@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 import { AccountShell } from "@/components/shop/AccountShell";
 import {
   formatOrderDate,

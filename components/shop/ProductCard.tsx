@@ -4,7 +4,7 @@ import { PriceTag } from "@/components/ui/PriceTag";
 import { Rating } from "@/components/ui/Rating";
 import type { ProductDTO } from "@/services/product";
 import Image from "next/image";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 
 const TAG_LABELS: Record<string, string> = {
   "best-selling": "Bestseller",

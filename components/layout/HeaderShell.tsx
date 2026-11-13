@@ -10,7 +10,7 @@ import {
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Image from "next/image";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type MouseEvent, type ReactNode } from "react";
 import { Logo } from "../ui/Logo";

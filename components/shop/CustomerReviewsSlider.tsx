@@ -4,7 +4,7 @@ import { formatMoney } from "@/components/ui/PriceTag";
 import type { LatestReviewDTO } from "@/services/review";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export function CustomerReviewsSlider({

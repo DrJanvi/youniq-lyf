@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import { formatMoney } from "@/components/ui/PriceTag";
 import { apiFetch } from "@/lib/client-api";

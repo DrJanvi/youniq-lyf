@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { getAboutUsPageSettings } from "@/services/about-us";
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 
 export const metadata: Metadata = buildMetadata({
   title: "About Us",

@@ -11,7 +11,7 @@ import {
 import { ArrowRight, CalendarDays, Clock3 } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 import { notFound } from "next/navigation";
 
 type PageProps = { params: Promise<{ slug: string }> };

@@ -12,7 +12,7 @@ import { buildMetadata } from "@/lib/seo";
 import { getCart } from "@/services/cart";
 import { listByTag } from "@/services/product";
 import type { Metadata } from "next";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 
 export const instant = false;
 

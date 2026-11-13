@@ -4,7 +4,7 @@ import { Section } from "@/components/ui/Section";
 import { sanitizeRichTextContent } from "@/lib/blog-content";
 import { buildMetadata } from "@/lib/seo";
 import { listActiveFaqs } from "@/services/contact";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 
 export const metadata = buildMetadata({
   title: "FAQs",

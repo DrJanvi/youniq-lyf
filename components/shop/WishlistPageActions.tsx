@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { ArrowRight, Search, X } from "lucide-react";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { apiFetch, ClientApiError } from "@/lib/client-api";
 
 export function WishlistToolbar({
@@ -102,9 +103,10 @@ export function WishlistRemoveButton({
         onClick={remove}
         disabled={busy}
         aria-label={`Remove ${title} from wishlist`}
+        aria-busy={busy}
         className="inline-flex size-7 items-center justify-center text-text-muted transition-colors hover:text-text-primary disabled:opacity-50"
       >
-        <X aria-hidden="true" className="size-4" />
+        {busy ? <LoadingSpinner /> : <X aria-hidden="true" className="size-4" />}
       </button>
       {error ? (
         <span role="alert" className="sr-only">
@@ -159,6 +161,7 @@ export function WishlistAddToCartButton({
         type="button"
         onClick={addToCart}
         disabled={stock < 1 || busy}
+        aria-busy={busy}
         title={error ?? undefined}
         className="bg-brand-primary-dark hover:bg-brand-primary-hover text-white inline-flex h-[38px] min-w-[126px] items-center justify-center gap-2 rounded-full px-4 text-[10px] font-medium tracking-[0.03em] uppercase shadow-sm transition-colors disabled:cursor-not-allowed disabled:bg-surface-card"
       >
@@ -166,10 +169,13 @@ export function WishlistAddToCartButton({
           ? "Out of stock"
           : requiresVariant
             ? "Choose color"
+            : busy
+              ? "Adding…"
             : added
               ? "Added to cart"
               : "Add to cart"}
-        {stock > 0 && !added && !requiresVariant ? (
+        {busy ? <LoadingSpinner /> : null}
+        {stock > 0 && !busy && !added && !requiresVariant ? (
           <ArrowRight aria-hidden="true" className="size-4" />
         ) : null}
       </button>
@@ -206,9 +212,17 @@ export function WishlistClearButton({ hasItems }: { hasItems: boolean }) {
         type="button"
         onClick={clearWishlist}
         disabled={!hasItems || busy}
+        aria-busy={busy}
         className="text-[11px] text-text-primary underline decoration-surface-border underline-offset-4 transition-colors hover:text-text-primary disabled:cursor-not-allowed disabled:opacity-50"
       >
-        Clear all
+        {busy ? (
+          <span className="inline-flex items-center gap-1">
+            <LoadingSpinner />
+            Clearing…
+          </span>
+        ) : (
+          "Clear all"
+        )}
       </button>
       {error ? (
         <p role="alert" className="mt-2 text-right text-[11px] text-red-700">

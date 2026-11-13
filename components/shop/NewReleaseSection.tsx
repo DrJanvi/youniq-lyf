@@ -1,6 +1,6 @@
 import { ProductDTO } from "@/services/product";
 import Image from "next/image";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 import { Section } from "../ui/Section";
 import { ProductGrid } from "./ProductGrid";
 import { SectionHeading } from "./SectionHeading";

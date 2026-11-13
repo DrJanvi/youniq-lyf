@@ -1,12 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { PriceTag, formatMoney } from "@/components/ui/PriceTag";
 import { apiFetch } from "@/lib/client-api";
 import { MinusIcon } from "@heroicons/react/24/outline";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -61,7 +62,10 @@ export function CartItemRow(p: Props) {
   }
 
   return (
-    <li className="grid gap-4 border-b border-surface-border py-5 sm:min-h-43.5 sm:grid-cols-[minmax(0,1fr)_116px_128px] sm:items-center sm:gap-8 sm:pt-8 sm:pb-5">
+    <li
+      aria-busy={busy}
+      className="relative grid gap-4 border-b border-surface-border py-5 sm:min-h-43.5 sm:grid-cols-[minmax(0,1fr)_116px_128px] sm:items-center sm:gap-8 sm:pt-8 sm:pb-5"
+    >
       <div className="flex min-w-0 items-center gap-4">
         <Link
           href={`/products/${p.slug}`}
@@ -168,6 +172,16 @@ export function CartItemRow(p: Props) {
         <span role="alert" className="text-sm text-red-700 sm:col-span-3">
           {error}
         </span>
+      ) : null}
+      {busy ? (
+        <div
+          role="status"
+          aria-live="polite"
+          className="absolute inset-0 z-10 flex items-center justify-center gap-2 bg-white/80 text-sm font-medium text-text-primary backdrop-blur-[1px]"
+        >
+          <LoadingSpinner className="size-5" />
+          Updating cart…
+        </div>
       ) : null}
     </li>
   );

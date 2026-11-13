@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ArrowLeft, Download } from "lucide-react";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 import { notFound } from "next/navigation";
 import {
   formatOrderDate,

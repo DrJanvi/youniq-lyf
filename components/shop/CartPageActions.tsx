@@ -1,8 +1,9 @@
 "use client";
 
 import { apiFetch } from "@/lib/client-api";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
-import Link from "next/link";
+import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -29,10 +30,18 @@ export function CartClearButton() {
       <button
         type="button"
         disabled={busy}
+        aria-busy={busy}
         onClick={clearCart}
         className="text-[12px] text-text-muted underline decoration-surface-border underline-offset-4 transition-colors hover:text-text-primary disabled:opacity-50"
       >
-        Clear all
+        {busy ? (
+          <span className="inline-flex items-center gap-1">
+            <LoadingSpinner />
+            Clearing…
+          </span>
+        ) : (
+          "Clear all"
+        )}
       </button>
       {error ? (
         <p role="alert" className="mt-1 text-right text-xs text-red-700">
@@ -86,11 +95,21 @@ export function CartFooterActions({ productIds }: { productIds: string[] }) {
         <button
           type="button"
           disabled={busy}
+          aria-busy={busy}
           onClick={moveToWishlist}
           className="inline-flex h-10.25 w-54.75 items-center justify-center gap-2 rounded-full border border-surface-border bg-transparent px-5 text-[14px] tracking-normal transition-colors hover:bg-surface-card disabled:opacity-50"
         >
-          Move all to wishlist
-          <ArrowRightIcon className="size-3" />
+          {busy ? (
+            <>
+              <LoadingSpinner />
+              Moving…
+            </>
+          ) : (
+            <>
+              Move all to wishlist
+              <ArrowRightIcon className="size-3" />
+            </>
+          )}
         </button>
       </div>
       {error ? (
