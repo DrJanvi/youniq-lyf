@@ -60,7 +60,7 @@ export function PriceRange({
             }}
           />
           <input
-            aria-label="Maximum price"
+            aria-label="Maximum - price"
             className="price-range-thumb"
             type="range"
             name="maxPrice"
