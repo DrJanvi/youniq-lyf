@@ -138,6 +138,23 @@ export const heroBannerFormSchema = z.object({
   sortOrder: z.number({ error: "Sort order is required" }).int("Must be a whole number").min(0, "Cannot be negative"),
 });
 
+export const announcementFormSchema = z.object({
+  message: z.string().trim().min(1, "Message is required").max(500, "Message must be at most 500 characters"),
+  link: z
+    .string()
+    .trim()
+    .max(1000, "Link must be at most 1000 characters")
+    .refine(
+      (value) =>
+        !value ||
+        (value.startsWith("/") && !value.startsWith("//")) ||
+        (URL.canParse(value) &&
+          ["http:", "https:"].includes(new URL(value).protocol)),
+      "Enter an internal path or a valid HTTP(S) URL",
+    ),
+  sortOrder: z.number({ error: "Sort order is required" }).int("Must be a whole number").min(0, "Cannot be negative"),
+});
+
 export const highlightedPostFormSchema = z.object({
   image: requiredUrl("Image URL"),
   mediaType: z.enum(["image", "video"]),

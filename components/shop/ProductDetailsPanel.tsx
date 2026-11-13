@@ -199,7 +199,7 @@ export function ProductDetailsPanel({
             <Truck aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
             <p className="text-[11px] leading-4 text-text-primary">
               <span className="block font-semibold">Free delivery</span>
-              <span className="text-text-muted">Orders over ₹250</span>
+              <span className="text-text-muted">Orders over ₹999</span>
             </p>
           </div>
         </div>

@@ -23,6 +23,7 @@ import {
   LayoutDashboard,
   LogOut,
   Menu,
+  Megaphone,
   MessageSquare,
   MessageSquareText,
   Package,
@@ -59,6 +60,7 @@ const nav = [
   { href: "/admin/faqs", label: "FAQs", icon: MessageSquareText },
   { href: "/admin/discounts", label: "Discounts", icon: Percent },
   { href: "/admin/coupons", label: "Coupons", icon: Tag },
+  { href: "/admin/announcements", label: "Announcements", icon: Megaphone },
   { href: "/admin/hero-banners", label: "Hero banners", icon: ImageIcon },
   {
     href: "/admin/highlighted-category",

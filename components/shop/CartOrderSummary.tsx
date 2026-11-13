@@ -86,7 +86,7 @@ export function CartOrderSummary({ cart }: { cart: CartDTO }) {
         <div className="mt-6 flex items-end justify-between gap-4 border-t border-surface-border pt-7">
           <div>
             <span className="block text-[14px] font-medium tracking-[0.12em] text-text-primary uppercase">Total</span>
-            <span className="mt-2 block text-[10px] text-brand-primary-dark">VAT included</span>
+            <span className="mt-2 block text-[10px] text-brand-primary-dark">TAX included</span>
           </div>
           <div className="text-[2rem] leading-none font-semibold text-text-primary">
             {formatMoney(appliedCoupon?.total ?? cart.total, currency)}
