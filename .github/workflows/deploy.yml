@@ -1,0 +1,258 @@
+name: CI and deploy
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate and build
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: mysql://ci:ci-password@127.0.0.1:3306/ci
+      JWT_SECRET: ci-only-not-for-production
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_DATABASE: ci
+          MYSQL_USER: ci
+          MYSQL_PASSWORD: ci-password
+          MYSQL_ROOT_PASSWORD: root-ci-password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot-ci-password --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install Yarn Classic
+        run: npm install --global yarn@1.22.22
+
+      - name: Restore Yarn package cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+
+      - name: Load public build settings
+        id: build-settings
+        shell: bash
+        run: |
+          domain="$(node -e 'const t = require("./infra/terraform/deployment-target.json"); process.stdout.write(t.domain_name)')"
+          if [[ ! "$domain" =~ ^[A-Za-z0-9]([A-Za-z0-9.-]*[A-Za-z0-9])?$ ]]; then
+            echo "The deployment target has an invalid domain name." >&2
+            exit 1
+          fi
+          if [[ "$domain" == "shop.example.com" ]]; then
+            site_url="https://example.invalid"
+          else
+            site_url="https://${domain}"
+          fi
+          echo "site_url=$site_url" >> "$GITHUB_OUTPUT"
+
+      - name: Restore Next.js build cache
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-next-${{ hashFiles('yarn.lock') }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-next-${{ hashFiles('yarn.lock') }}-
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Generate Prisma Client
+        run: yarn db:generate
+
+      - name: Prepare disposable CI database
+        run: yarn prisma migrate deploy
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Test
+        run: yarn test
+
+      - name: Build Next.js
+        env:
+          NEXT_PUBLIC_SITE_URL: ${{ steps.build-settings.outputs.site_url }}
+        run: yarn build
+
+      - name: Assemble production release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          release_dir="$RUNNER_TEMP/youniqlyf-release"
+          mkdir -p "$release_dir"
+          cp -a .next/standalone/. "$release_dir/"
+          mkdir -p "$release_dir/.next/static"
+          cp -a .next/static/. "$release_dir/.next/static/"
+          if [[ -d public ]]; then
+            mkdir -p "$release_dir/public"
+            cp -a public/. "$release_dir/public/"
+          fi
+
+          mkdir -p "$release_dir/migration-tools/prisma/migrations"
+          cp prisma.config.ts "$release_dir/migration-tools/prisma.config.ts"
+          cp prisma/schema.prisma "$release_dir/migration-tools/prisma/schema.prisma"
+          cp -a prisma/migrations/. "$release_dir/migration-tools/prisma/migrations/"
+          npm install \
+            --prefix "$release_dir/migration-tools" \
+            --no-save \
+            --package-lock=false \
+            prisma@7.10.1 \
+            dotenv@18.0.9
+
+          tar -czf "$RUNNER_TEMP/release.tar.gz" -C "$release_dir" .
+
+      - name: Upload production release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: youniqlyf-release
+          path: ${{ runner.temp }}/release.tar.gz
+          if-no-files-found: error
+          retention-days: 2
+
+  deploy:
+    name: Deploy to EC2
+    needs: validate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    concurrency:
+      group: production-deploy
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Check out deployment target
+        uses: actions/checkout@v4
+
+      - name: Read reviewed AWS target
+        id: target
+        shell: bash
+        run: |
+          node <<'NODE' >> "$GITHUB_OUTPUT"
+          const target = require("./infra/terraform/deployment-target.json");
+          if (!/^[0-9]{12}$/.test(target.aws_account_id) || target.aws_account_id === "000000000000") {
+            throw new Error("Set the production AWS account ID in infra/terraform/deployment-target.json.");
+          }
+          if (!/^[a-z0-9-]+$/.test(target.aws_region) || target.domain_name === "shop.example.com") {
+            throw new Error("Set the production region and domain in infra/terraform/deployment-target.json.");
+          }
+          console.log(`aws_account_id=${target.aws_account_id}`);
+          console.log(`aws_region=${target.aws_region}`);
+          console.log(`domain_name=${target.domain_name}`);
+          console.log(`artifact_bucket=${target.artifact_bucket_prefix}-${target.aws_account_id}-${target.aws_region}`);
+          console.log(`deploy_role_name=${target.deploy_role_name}`);
+          NODE
+
+      - name: Configure AWS credentials with OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ steps.target.outputs.aws_account_id }}:role/${{ steps.target.outputs.deploy_role_name }}
+          aws-region: ${{ steps.target.outputs.aws_region }}
+          role-session-name: github-main-${{ github.run_id }}
+
+      - name: Verify target account
+        env:
+          EXPECTED_ACCOUNT_ID: ${{ steps.target.outputs.aws_account_id }}
+        run: |
+          actual_account_id="$(aws sts get-caller-identity --query Account --output text)"
+          if [[ "$actual_account_id" != "$EXPECTED_ACCOUNT_ID" ]]; then
+            echo "Refusing deployment: assumed AWS account does not match the reviewed deployment target." >&2
+            exit 1
+          fi
+
+      - name: Download built release
+        uses: actions/download-artifact@v4
+        with:
+          name: youniqlyf-release
+          path: ${{ runner.temp }}/release
+
+      - name: Publish release artifact
+        id: publish
+        env:
+          AWS_REGION: ${{ steps.target.outputs.aws_region }}
+          ARTIFACT_BUCKET: ${{ steps.target.outputs.artifact_bucket }}
+        run: |
+          set -Eeuo pipefail
+          archive="$RUNNER_TEMP/release/release.tar.gz"
+          checksum="$(sha256sum "$archive" | cut -d ' ' -f 1)"
+          aws s3 cp "$archive" \
+            "s3://${ARTIFACT_BUCKET}/releases/${GITHUB_SHA}/release.tar.gz" \
+            --region "$AWS_REGION" \
+            --sse AES256
+          echo "sha256=$checksum" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy through Systems Manager
+        env:
+          AWS_REGION: ${{ steps.target.outputs.aws_region }}
+          EXPECTED_SHA256: ${{ steps.publish.outputs.sha256 }}
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          command_id="$(aws ssm send-command \
+            --region "$AWS_REGION" \
+            --document-name AWS-RunShellScript \
+            --targets "Key=tag:Name,Values=youniqlyf-app" \
+            --timeout-seconds 600 \
+            --parameters "commands=/usr/local/sbin/deploy-youniqlyf ${GITHUB_SHA} ${EXPECTED_SHA256},executionTimeout=600" \
+            --query 'Command.CommandId' \
+            --output text)"
+
+          status="Pending"
+          for attempt in $(seq 1 120); do
+            status="$(aws ssm list-command-invocations \
+              --region "$AWS_REGION" \
+              --command-id "$command_id" \
+              --query 'CommandInvocations[0].Status' \
+              --output text)"
+            case "$status" in
+              Success)
+                break
+                ;;
+              Failed|TimedOut|Cancelled|Cancelling|DeliveryTimedOut|ExecutionTimedOut)
+                break
+                ;;
+            esac
+            sleep 5
+          done
+
+          if [[ "$status" != "Success" ]]; then
+            echo "SSM deployment ended with status: $status. Command output follows:" >&2
+            aws ssm list-command-invocations \
+              --region "$AWS_REGION" \
+              --command-id "$command_id" \
+              --details \
+              --query 'CommandInvocations[].{Status:Status,Output:CommandPlugins[0].Output}' \
+              --output table
+            exit 1
+          fi
+
+          aws ssm list-command-invocations \
+            --region "$AWS_REGION" \
+            --command-id "$command_id" \
+            --details \
+            --query 'CommandInvocations[].CommandPlugins[0].Output' \
+            --output text
