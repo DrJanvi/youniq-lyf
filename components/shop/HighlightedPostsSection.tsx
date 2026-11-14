@@ -92,7 +92,7 @@ export async function HighlightedPostsSection() {
       </ul>
 
       <a
-        href="https://www.instagram.com/"
+        href="https://www.instagram.com/youniq_lyf?rpxt=MWd0YnppdmdqMzE0OQ=="
         target="_blank"
         rel="noopener noreferrer"
         className="bg-brand-primary-dark text-white mx-auto mt-8 flex items-center justify-center gap-2 rounded-full px-6 py-3 hover:bg-black"

@@ -67,19 +67,19 @@ function SocialLinks() {
   const socialIcons = [
     {
       icon: "/assets/facebook.svg",
-      link: "https://www.facebook.com",
+      link: "https://www.instagram.com/youniq_lyf?rpxt=MWd0YnppdmdqMzE0OQ==",
     },
     {
       icon: "/assets/instagram.svg",
-      link: "https://www.instagram.com",
+      link: "https://www.instagram.com/youniq_lyf?rpxt=MWd0YnppdmdqMzE0OQ==",
     },
     {
       icon: "/assets/x.svg",
-      link: "https://www.x.com",
+      link: "https://www.instagram.com/youniq_lyf?rpxt=MWd0YnppdmdqMzE0OQ==",
     },
     {
       icon: "/assets/youtube.svg",
-      link: "https://www.youtube.com",
+      link: "https://www.instagram.com/youniq_lyf?rpxt=MWd0YnppdmdqMzE0OQ==",
     },
   ];
 
