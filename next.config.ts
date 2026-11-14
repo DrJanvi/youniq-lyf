@@ -6,6 +6,7 @@ const invoiceAssets = [
 
 const nextConfig: NextConfig = {
   /* config options here */
+  output: "standalone",
   cacheComponents: true,
   partialPrefetching: true,
   outputFileTracingIncludes: {

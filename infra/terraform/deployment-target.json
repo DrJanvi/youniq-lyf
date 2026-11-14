@@ -1,0 +1,7 @@
+{
+  "aws_account_id": "673986602238",
+  "aws_region": "ap-south-1",
+  "domain_name": "youniqlyf.com",
+  "artifact_bucket_prefix": "youniqlyf-releases",
+  "deploy_role_name": "youniqlyf-github-deploy"
+}

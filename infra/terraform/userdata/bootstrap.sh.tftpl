@@ -1,0 +1,219 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+exec > >(tee -a /var/log/youniqlyf/bootstrap.log) 2>&1
+
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get install -y ca-certificates curl gnupg nginx certbot python3-certbot-nginx awscli python3
+
+install -d -m 0755 /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key |
+  gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+chmod 0644 /etc/apt/keyrings/nodesource.gpg
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_24.x nodistro main" \
+  >/etc/apt/sources.list.d/nodesource.list
+apt-get update
+apt-get install -y nodejs
+node --version
+
+if ! snap list amazon-ssm-agent >/dev/null 2>&1; then
+  snap install amazon-ssm-agent --classic
+fi
+systemctl enable --now snap.amazon-ssm-agent.amazon-ssm-agent.service
+
+curl -fsSLo /tmp/amazon-cloudwatch-agent.deb \
+  https://amazoncloudwatch-agent.s3.amazonaws.com/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb
+apt-get install -y /tmp/amazon-cloudwatch-agent.deb
+rm -f /tmp/amazon-cloudwatch-agent.deb
+
+useradd --system --user-group --home-dir /opt/youniqlyf --create-home --shell /usr/sbin/nologin youniqlyf
+install -d -o root -g youniqlyf -m 0750 /etc/youniqlyf
+install -d -o youniqlyf -g youniqlyf -m 0750 /opt/youniqlyf/releases
+install -d -o youniqlyf -g youniqlyf -m 0750 /var/log/youniqlyf
+install -d -o root -g root -m 0755 /var/www/certbot
+
+cat >/etc/youniqlyf/deploy.conf <<'DEPLOY_CONF'
+ARTIFACT_BUCKET='${artifact_bucket}'
+AWS_REGION='${aws_region}'
+PARAMETER_PATH='${parameter_path}'
+DEPLOY_DOMAIN_NAMES='${domain_names}'
+ACME_EMAIL='${acme_email}'
+DEPLOY_LOG_GROUP='${application_log}'
+NGINX_LOG_GROUP='${nginx_log}'
+DEPLOY_CONF
+chmod 0640 /etc/youniqlyf/deploy.conf
+chown root:youniqlyf /etc/youniqlyf/deploy.conf
+
+cat >/usr/local/sbin/deploy-youniqlyf <<'DEPLOY_SCRIPT'
+${deploy_script}
+DEPLOY_SCRIPT
+chmod 0750 /usr/local/sbin/deploy-youniqlyf
+chown root:root /usr/local/sbin/deploy-youniqlyf
+
+cat >/usr/local/sbin/start-youniqlyf <<'START_SCRIPT'
+#!/usr/bin/env python3
+import json
+import os
+
+with open("/etc/youniqlyf/app-env.json", encoding="utf-8") as file:
+    environment = os.environ | json.load(file)
+os.execvpe("/usr/bin/node", ["node", "server.js"], environment)
+START_SCRIPT
+chmod 0755 /usr/local/sbin/start-youniqlyf
+
+cat >/etc/systemd/system/youniqlyf.service <<'APP_SERVICE'
+[Unit]
+Description=Youniqlyf Next.js application
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=youniqlyf
+Group=youniqlyf
+WorkingDirectory=/opt/youniqlyf/current
+Environment=NODE_ENV=production
+Environment=PORT=4000
+Environment=HOSTNAME=127.0.0.1
+ExecStart=/usr/local/sbin/start-youniqlyf
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=90
+TimeoutStopSec=30
+KillSignal=SIGTERM
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/youniqlyf /var/log/youniqlyf
+StandardOutput=append:/var/log/youniqlyf/app.log
+StandardError=append:/var/log/youniqlyf/app-error.log
+
+[Install]
+WantedBy=multi-user.target
+APP_SERVICE
+
+cat >/etc/nginx/sites-available/youniqlyf <<'NGINX_CONFIG'
+${nginx_config}
+NGINX_CONFIG
+cat >/etc/nginx/conf.d/youniqlyf-log-format.conf <<'NGINX_LOG_FORMAT'
+log_format privacy_safe '$remote_addr - $remote_user [$time_local] "$request_method $uri $server_protocol" $status $body_bytes_sent "$http_referer" "$http_user_agent"';
+NGINX_LOG_FORMAT
+sed -i '/server_name /a\\    access_log /var/log/nginx/access.log privacy_safe;' /etc/nginx/sites-available/youniqlyf
+rm -f /etc/nginx/sites-enabled/default
+ln -sfn /etc/nginx/sites-available/youniqlyf /etc/nginx/sites-enabled/youniqlyf
+nginx -t
+systemctl enable --now nginx
+
+cat >/usr/local/sbin/youniqlyf-ensure-certificate <<'CERT_SCRIPT'
+#!/usr/bin/env bash
+set -Eeuo pipefail
+source /etc/youniqlyf/deploy.conf
+
+read -r -a domains <<<"$DEPLOY_DOMAIN_NAMES"
+certificate="/etc/letsencrypt/live/$${domains[0]}/fullchain.pem"
+if [[ -s "$certificate" ]]; then
+  exit 0
+fi
+
+arguments=()
+for domain in "$${domains[@]}"; do
+  arguments+=(-d "$domain")
+done
+certbot --nginx --non-interactive --agree-tos --no-eff-email \
+  --email "$ACME_EMAIL" --redirect "$${arguments[@]}"
+CERT_SCRIPT
+chmod 0750 /usr/local/sbin/youniqlyf-ensure-certificate
+
+cat >/etc/systemd/system/youniqlyf-certificate-bootstrap.service <<'CERT_SERVICE'
+[Unit]
+Description=Obtain the initial Let's Encrypt certificate once DNS points to this host
+After=network-online.target nginx.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/youniqlyf-ensure-certificate
+Restart=on-failure
+RestartSec=10min
+
+[Install]
+WantedBy=multi-user.target
+CERT_SERVICE
+
+install -d -m 0755 /etc/letsencrypt/renewal-hooks/deploy
+cat >/etc/letsencrypt/renewal-hooks/deploy/reload-nginx <<'RENEW_HOOK'
+#!/usr/bin/env bash
+set -Eeuo pipefail
+systemctl reload nginx
+RENEW_HOOK
+chmod 0750 /etc/letsencrypt/renewal-hooks/deploy/reload-nginx
+systemctl enable --now certbot.timer
+systemctl enable youniqlyf-certificate-bootstrap.service
+systemctl start --no-block youniqlyf-certificate-bootstrap.service
+
+cat >/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json <<'CW_CONFIG'
+{
+  "agent": {
+    "metrics_collection_interval": 60,
+    "run_as_user": "root"
+  },
+  "logs": {
+    "logs_collected": {
+      "files": {
+        "collect_list": [
+          {
+            "file_path": "/var/log/youniqlyf/app.log",
+            "log_group_name": "${application_log}",
+            "log_stream_name": "{instance_id}/app"
+          },
+          {
+            "file_path": "/var/log/youniqlyf/app-error.log",
+            "log_group_name": "${application_log}",
+            "log_stream_name": "{instance_id}/app-error"
+          },
+          {
+            "file_path": "/var/log/youniqlyf/deploy.log",
+            "log_group_name": "${application_log}",
+            "log_stream_name": "{instance_id}/deploy"
+          },
+          {
+            "file_path": "/var/log/nginx/access.log",
+            "log_group_name": "${nginx_log}",
+            "log_stream_name": "{instance_id}/access"
+          },
+          {
+            "file_path": "/var/log/nginx/error.log",
+            "log_group_name": "${nginx_log}",
+            "log_stream_name": "{instance_id}/error"
+          }
+        ]
+      }
+    }
+  },
+  "metrics": {
+    "namespace": "Youniqlyf/EC2",
+    "append_dimensions": {
+      "InstanceId": "$${aws:InstanceId}"
+    },
+    "metrics_collected": {
+      "mem": {
+        "measurement": ["mem_used_percent"],
+        "metrics_collection_interval": 60
+      },
+      "disk": {
+        "measurement": ["used_percent"],
+        "resources": ["/"],
+        "metrics_collection_interval": 60
+      }
+    }
+  }
+}
+CW_CONFIG
+
+systemctl daemon-reload
+systemctl enable youniqlyf.service
+/opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
+  -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json -s
+
+echo "Youniqlyf host bootstrap completed."
