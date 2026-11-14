@@ -1,6 +1,6 @@
 # Youniqlyf
 
-Next.js 16 storefront + admin dashboard backed by MySQL (Prisma).
+Next.js 16 storefront + admin dashboard backed by MySQL (Prisma)...
 
 ## Setup
 
