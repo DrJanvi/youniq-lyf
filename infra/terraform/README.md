@@ -48,6 +48,8 @@ The EC2 security group allows inbound HTTP/HTTPS only; there is no public SSH in
 5. Update [deployment-target.json](./deployment-target.json) with the account ID, region, and primary domain used by Terraform, then commit that change through a reviewed pull request. The workflow derives the target role ARN and release bucket from this tracked file and checks the assumed AWS account. This is intentionally a required, reviewed edit to change accounts.
 6. In GitHub repository settings, create a `production` Environment and restrict deployments to the `main` branch. Do not add a required reviewer if pushes to `main` must deploy without a per-deployment approval. Protect `main` and require the `Validate and build` check before merging.
 
+The GitHub OIDC trust policy uses the immutable owner and repository IDs as well as their names. Repositories created after July 15, 2026 use these IDs in the default OIDC `sub` claim. If you transfer or replace the GitHub repository, update `github_repository`, `github_repository_owner_id`, and `github_repository_id`, then apply Terraform again before deploying.
+
 ## Required manual setup
 
 ### DNS and HTTPS
@@ -77,6 +79,7 @@ The app's CloudWatch log groups retain application and Nginx logs for 14 days. C
 ## Account-switch guardrails and limitations
 
 - The account ID is checked by Terraform's AWS provider and checked again by the deployment workflow. The GitHub OIDC role trusts only this repository's `production` Environment.
+- GitHub Actions OIDC trust includes immutable GitHub owner and repository IDs, preventing a different repository with the same name from assuming the deployment role.
 - Account/region/domain/role target details live in a tracked file. An account switch requires a reviewed code change plus provisioning in the new account and updates to Terraform state/backend and GitHub's production Environment setup. The workflow does not discover or assume roles in another account.
 - One `t3.small` is a cost-conscious starting point for fewer than 5,000 visits per day; builds run in GitHub Actions, not on EC2. This is a single point of failure and a deployment restart can briefly interrupt traffic. Resize if memory or CPU-credit metrics indicate pressure.
 - Terraform changes are applied explicitly after reviewing `terraform plan`; pushes to `main` deploy application code only. No database or DNS changes are automatically applied.
