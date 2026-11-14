@@ -31,6 +31,28 @@ variable "github_repository" {
   }
 }
 
+variable "github_repository_owner_id" {
+  description = "Immutable GitHub owner ID used in this repository's OIDC subject."
+  type        = string
+  default     = "351821301"
+
+  validation {
+    condition     = can(regex("^[0-9]+$", var.github_repository_owner_id))
+    error_message = "github_repository_owner_id must be a numeric GitHub ID."
+  }
+}
+
+variable "github_repository_id" {
+  description = "Immutable GitHub repository ID used in this repository's OIDC subject."
+  type        = string
+  default     = "1444044988"
+
+  validation {
+    condition     = can(regex("^[0-9]+$", var.github_repository_id))
+    error_message = "github_repository_id must be a numeric GitHub ID."
+  }
+}
+
 variable "github_environment_name" {
   description = "GitHub Environment used by the production deployment job."
   type        = string

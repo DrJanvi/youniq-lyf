@@ -4,7 +4,9 @@ locals {
   artifact_bucket    = "${local.name}-releases-${var.aws_account_id}-${var.aws_region}"
   application_log    = "/youniqlyf/production/application"
   nginx_log          = "/youniqlyf/production/nginx"
-  deployment_subject = "repo:${var.github_repository}:environment:${var.github_environment_name}"
+  github_owner       = split("/", var.github_repository)[0]
+  github_repo        = split("/", var.github_repository)[1]
+  deployment_subject = "repo:${local.github_owner}@${var.github_repository_owner_id}/${local.github_repo}@${var.github_repository_id}:environment:${var.github_environment_name}"
   tags = {
     Name = local.name
   }
