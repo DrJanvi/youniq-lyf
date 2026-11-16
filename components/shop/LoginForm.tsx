@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { InternationalPhoneField } from "@/components/shop/InternationalPhoneField";
+import { PasswordInput } from "@/components/shop/PasswordInput";
 import { PasswordRecoveryForm } from "@/components/shop/PasswordRecoveryForm";
 import { Button } from "@/components/shadcn/button";
 import { Input } from "@/components/shadcn/input";
@@ -166,9 +167,8 @@ function SignInForm({
         label="Password"
         error={errors.password?.message}
       >
-        <Input
+        <PasswordInput
           id="login-password"
-          type="password"
           autoComplete="current-password"
           placeholder="Enter your password"
           aria-invalid={!!errors.password}
@@ -509,9 +509,8 @@ function RegisterForm({
         error={errors.password?.message}
         hint="Must be at least 8 characters, with a letter and a number."
       >
-        <Input
+        <PasswordInput
           id="reg-password"
-          type="password"
           autoComplete="new-password"
           placeholder="Create a password"
           aria-invalid={!!errors.password}

@@ -4,8 +4,8 @@ import { useState, type FormEvent } from "react";
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/shadcn/button";
-import { Input } from "@/components/shadcn/input";
 import { Label } from "@/components/shadcn/label";
+import { PasswordInput } from "@/components/shop/PasswordInput";
 import { apiFetch } from "@/lib/client-api";
 
 export function AccountDeletionPanel() {
@@ -82,9 +82,8 @@ export function AccountDeletionPanel() {
               <Label htmlFor="account-delete-password" className="text-xs font-medium">
                 Current password
               </Label>
-              <Input
+              <PasswordInput
                 id="account-delete-password"
-                type="password"
                 autoComplete="current-password"
                 value={currentPassword}
                 onChange={(event) => setCurrentPassword(event.currentTarget.value)}

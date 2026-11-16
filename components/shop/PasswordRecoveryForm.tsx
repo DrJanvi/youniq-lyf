@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/shadcn/button";
 import { Input } from "@/components/shadcn/input";
+import { PasswordInput } from "@/components/shop/PasswordInput";
 import {
   InputOTP,
   InputOTPGroup,
@@ -206,9 +207,8 @@ export function PasswordRecoveryForm({
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="reset-new-password">New password</Label>
-        <Input
+        <PasswordInput
           id="reset-new-password"
-          type="password"
           autoComplete="new-password"
           placeholder="Create a new password"
           aria-invalid={!!resetForm.formState.errors.newPassword}

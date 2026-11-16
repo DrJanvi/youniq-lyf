@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/shadcn/button";
 import { Input } from "@/components/shadcn/input";
+import { PasswordInput } from "@/components/shop/PasswordInput";
 import { Label } from "@/components/shadcn/label";
 import { apiFetch } from "@/lib/client-api";
 import { changePasswordSchema } from "@/lib/validation";
@@ -90,9 +91,8 @@ export function ChangePasswordForm() {
         label="Old Password"
         error={errors.currentPassword?.message}
       >
-        <Input
+        <PasswordInput
           id="change-password-current"
-          type="password"
           autoComplete="current-password"
           placeholder="Old Password"
           maxLength={72}
@@ -108,9 +108,8 @@ export function ChangePasswordForm() {
         label="New Password"
         error={errors.newPassword?.message}
       >
-        <Input
+        <PasswordInput
           id="change-password-new"
-          type="password"
           autoComplete="new-password"
           placeholder="New Password"
           maxLength={72}
