@@ -3,7 +3,23 @@ import { test } from "node:test";
 import {
   getProductCardImage,
   getProductGalleryImages,
+  reorderImageUrls,
 } from "@/lib/product-images";
+
+test("reorders image URLs without mutating the original list", () => {
+  const imageUrls = ["first", "second", "third"];
+
+  assert.deepEqual(reorderImageUrls(imageUrls, 0, 2), ["second", "third", "first"]);
+  assert.deepEqual(reorderImageUrls(imageUrls, 2, 0), ["third", "first", "second"]);
+  assert.deepEqual(imageUrls, ["first", "second", "third"]);
+});
+
+test("keeps image URL order unchanged for invalid reorder indexes", () => {
+  const imageUrls = ["first", "second"];
+
+  assert.deepEqual(reorderImageUrls(imageUrls, -1, 1), imageUrls);
+  assert.deepEqual(reorderImageUrls(imageUrls, 0, 2), imageUrls);
+});
 
 test("keeps all variant images in variant and image order with their color ownership", () => {
   assert.deepEqual(

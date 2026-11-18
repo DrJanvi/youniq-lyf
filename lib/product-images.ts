@@ -5,6 +5,29 @@ export type ProductGalleryImage = {
   variantName?: string;
 };
 
+export function reorderImageUrls(
+  imageUrls: readonly string[],
+  sourceIndex: number,
+  targetIndex: number,
+): string[] {
+  if (
+    !Number.isInteger(sourceIndex) ||
+    !Number.isInteger(targetIndex) ||
+    sourceIndex < 0 ||
+    targetIndex < 0 ||
+    sourceIndex >= imageUrls.length ||
+    targetIndex >= imageUrls.length
+  ) {
+    return [...imageUrls];
+  }
+
+  const reorderedUrls = [...imageUrls];
+  const [movedUrl] = reorderedUrls.splice(sourceIndex, 1);
+  if (movedUrl === undefined) return reorderedUrls;
+  reorderedUrls.splice(targetIndex, 0, movedUrl);
+  return reorderedUrls;
+}
+
 type GalleryVariant = {
   id: string;
   name: string;

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useId, useRef, useState, type ChangeEvent } from "react";
 import type { Control, FieldValues, Path } from "react-hook-form";
 import { toast } from "sonner";
+import { reorderImageUrls } from "@/lib/product-images";
 import {
   FormControl,
   FormDescription,
@@ -279,18 +280,54 @@ export function NumberedImageUrlsField<T extends FieldValues>({
                       <div
                         key={index}
                         className="grid grid-cols-[2rem_minmax(0,1fr)_auto] items-center gap-2"
+                        onDragOver={(event) => {
+                          if (url.trim()) {
+                            event.preventDefault();
+                            event.dataTransfer.dropEffect = "move";
+                          }
+                        }}
+                        onDrop={(event) => {
+                          event.preventDefault();
+                          if (!url.trim()) return;
+                          const sourceValue = event.dataTransfer.getData("text/plain");
+                          if (!/^\d+$/.test(sourceValue)) return;
+
+                          const imageUrls = rows.filter((entry) => entry.trim());
+                          const sourceIndex = Number(sourceValue);
+                          const targetIndex = imageNumber - 1;
+                          if (
+                            !Number.isInteger(sourceIndex) ||
+                            sourceIndex < 0 ||
+                            sourceIndex >= imageUrls.length ||
+                            sourceIndex === targetIndex
+                          ) {
+                            return;
+                          }
+
+                          const emptyRows = rows.filter((entry) => !entry.trim());
+                          field.onChange([
+                            ...reorderImageUrls(imageUrls, sourceIndex, targetIndex),
+                            ...emptyRows,
+                          ].join("\n"));
+                        }}
                       >
                         <button
                           type="button"
+                          draggable={Boolean(url.trim())}
                           disabled={!url.trim()}
+                          onDragStart={(event) => {
+                            if (!imageNumber) return;
+                            event.dataTransfer.effectAllowed = "move";
+                            event.dataTransfer.setData("text/plain", String(imageNumber - 1));
+                          }}
                           onClick={() => void copyImageUrl(url)}
                           aria-label={
                             imageNumber
-                              ? `Copy image URL ${imageNumber}`
+                              ? `Image URL ${imageNumber}: drag to reorder or click to copy`
                               : "No image URL to copy"
                           }
-                          title={imageNumber ? "Copy image URL" : undefined}
-                          className="flex size-8 cursor-copy items-center justify-center rounded-full bg-muted text-sm font-semibold text-foreground hover:bg-muted/80 disabled:cursor-not-allowed"
+                          title={imageNumber ? "Drag to reorder or click to copy image URL" : undefined}
+                          className="flex size-8 cursor-grab items-center justify-center rounded-full bg-muted text-sm font-semibold text-foreground hover:bg-muted/80 active:cursor-grabbing disabled:cursor-not-allowed"
                         >
                           {imageNumber || "+"}
                         </button>
@@ -332,7 +369,9 @@ export function NumberedImageUrlsField<T extends FieldValues>({
                 Add URL
               </button>
             </fieldset>
-            {description ? <FormDescription>{description}</FormDescription> : null}
+            <FormDescription>
+              Drag a URL number to reorder its image. {description}
+            </FormDescription>
             <FormMessage />
           </FormItem>
         );
