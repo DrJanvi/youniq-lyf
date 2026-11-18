@@ -3,27 +3,37 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Search, X } from "lucide-react";
+import type { ProductGalleryImage } from "@/lib/product-images";
 
 export function ProductImageGallery({
   images,
+  selectedImageId,
+  onSelectImage,
   title,
   bestseller,
 }: {
-  images: string[];
+  images: ProductGalleryImage[];
+  selectedImageId: string | null;
+  onSelectImage: (image: ProductGalleryImage) => void;
   title: string;
   bestseller: boolean;
 }) {
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const [zoomed, setZoomed] = useState(false);
+  const requestedIndex = images.findIndex(
+    (image) => image.id === selectedImageId,
+  );
+  const selectedIndex = requestedIndex;
   const selectedImage = images[selectedIndex];
+  const showThumbnails =
+    images.length > 1 || (images.length > 0 && !selectedImage);
 
   return (
     <div
       className={`grid gap-3 ${
-        images.length > 1 ? "md:grid-cols-[5.5rem_minmax(0,1fr)]" : ""
+        showThumbnails ? "md:grid-cols-[5.5rem_minmax(0,1fr)]" : ""
       }`}
     >
-      {images.length > 1 ? (
+      {showThumbnails ? (
         <div
           role="group"
           aria-label="Product images"
@@ -31,23 +41,24 @@ export function ProductImageGallery({
         >
           {images.map((image, index) => (
             <button
-              key={`${image}-${index}`}
+              key={image.id}
               type="button"
-              onClick={() => setSelectedIndex(index)}
-              aria-label={`View image ${index + 1} of ${images.length}`}
-              aria-pressed={selectedIndex === index}
+              onClick={() => onSelectImage(image)}
+              aria-label={`View image ${index + 1} of ${images.length}${image.variantName ? ` for ${image.variantName}` : ""}`}
+              aria-pressed={selectedImage?.id === image.id}
               className={`relative size-[4.5rem] shrink-0 overflow-hidden rounded-xl border bg-surface-main p-2 transition-colors md:size-[5.5rem] ${
-                selectedIndex === index
+                selectedImage?.id === image.id
                   ? "border-brand-primary"
                   : "border-transparent hover:border-surface-border"
               }`}
             >
               <Image
-                src={image}
+                src={image.src}
                 alt=""
                 fill
                 unoptimized
                 sizes="88px"
+                aria-hidden="true"
                 className="object-contain"
               />
             </button>
@@ -68,15 +79,19 @@ export function ProductImageGallery({
             aria-label={`Enlarge image of ${title}`}
             className="relative size-full cursor-zoom-in"
           >
-            <Image
-              src={selectedImage}
-              alt={title}
-              fill
-              unoptimized
-              priority
-              sizes="(max-width: 768px) 100vw, 55vw"
-              className="object-contain"
-            />
+          <Image
+            src={selectedImage.src}
+            alt={
+              selectedImage.variantName
+                ? `${title} - ${selectedImage.variantName}`
+                : title
+            }
+            fill
+            unoptimized
+            priority
+            sizes="(max-width: 768px) 100vw, 55vw"
+            className="object-contain"
+          />
           </button>
         ) : (
           <div className="text-sm text-text-muted">Image coming soon</div>
@@ -116,8 +131,12 @@ export function ProductImageGallery({
           </button>
           <div className="flex size-[min(90vw,90vh)] items-center justify-center rounded-[1.25rem] bg-surface-card p-8 md:p-12">
             <Image
-              src={selectedImage}
-              alt={title}
+              src={selectedImage.src}
+              alt={
+                selectedImage.variantName
+                  ? `${title} - ${selectedImage.variantName}`
+                  : title
+              }
               width={1400}
               height={1400}
               unoptimized

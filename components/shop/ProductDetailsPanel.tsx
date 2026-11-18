@@ -5,7 +5,10 @@ import { ProductPurchaseActions } from "@/components/shop/ProductPurchaseActions
 import { WishlistButton } from "@/components/shop/WishlistButton";
 import { PriceTag } from "@/components/ui/PriceTag";
 import { Rating } from "@/components/ui/Rating";
-import { getVariantGalleryImages } from "@/lib/product-images";
+import {
+  getProductGalleryImages,
+  type ProductGalleryImage,
+} from "@/lib/product-images";
 import type { ProductDTO } from "@/services/product";
 import { RotateCcw, ShieldCheck, Truck } from "lucide-react";
 import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
@@ -20,14 +23,48 @@ export function ProductDetailsPanel({
   descriptionHtml: string;
   wished: boolean;
 }) {
+  const initialVariantId =
+    product.variants.find((variant) => variant.stock > 0)?.id ??
+    product.variants[0]?.id ??
+    null;
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(
-    () =>
-      product.variants.find((variant) => variant.stock > 0)?.id ??
-      product.variants[0]?.id ??
-      null,
+    initialVariantId,
+  );
+  const [selectedGalleryImageId, setSelectedGalleryImageId] = useState<
+    string | null
+  >(() => {
+    const images = getProductGalleryImages(
+      product.images,
+      product.variants,
+      initialVariantId,
+    );
+    return (
+      (initialVariantId
+        ? images.find((image) => image.variantId === initialVariantId)?.id
+        : images[0]?.id) ?? null
+    );
+  });
+  const galleryImages = getProductGalleryImages(
+    product.images,
+    product.variants,
+    selectedVariantId,
   );
   const selectedVariant =
     product.variants.find((variant) => variant.id === selectedVariantId) ?? null;
+  const selectVariant = (variantId: string) => {
+    const images = getProductGalleryImages(
+      product.images,
+      product.variants,
+      variantId,
+    );
+    const image = images.find((entry) => entry.variantId === variantId);
+    setSelectedVariantId(variantId);
+    setSelectedGalleryImageId(image?.id ?? null);
+  };
+  const selectGalleryImage = (image: ProductGalleryImage) => {
+    setSelectedGalleryImageId(image.id);
+    if (image.variantId) setSelectedVariantId(image.variantId);
+  };
   const lowestVariant = product.variants.reduce<
     (typeof product.variants)[number] | null
   >(
@@ -36,14 +73,6 @@ export function ProductDetailsPanel({
     null,
   );
   const displayPrice = selectedVariant ?? lowestVariant ?? product;
-  const galleryVariantImages = selectedVariant
-    ? selectedVariant.images
-    : product.variants.flatMap((variant) => variant.images);
-  const galleryImages = getVariantGalleryImages(
-    product.images,
-    galleryVariantImages,
-    Boolean(selectedVariant),
-  );
   const selectedStock = product.hasVariants
     ? (selectedVariant?.stock ?? 0)
     : product.stock;
@@ -54,8 +83,9 @@ export function ProductDetailsPanel({
   return (
     <div className="grid items-start gap-8 md:grid-cols-2 md:gap-10 lg:gap-12">
       <ProductImageGallery
-        key={selectedVariantId ?? "product"}
         images={galleryImages}
+        selectedImageId={selectedGalleryImageId}
+        onSelectImage={selectGalleryImage}
         title={product.title}
         bestseller={product.tags.includes("best-selling")}
       />
@@ -104,7 +134,7 @@ export function ProductDetailsPanel({
                   type="button"
                   aria-label={`${variant.name}${variant.stock < 1 ? ", out of stock" : ""}`}
                   aria-pressed={selectedVariantId === variant.id}
-                  onClick={() => setSelectedVariantId(variant.id)}
+                  onClick={() => selectVariant(variant.id)}
                   className={`size-9 rounded-full border-2 shadow-sm transition ${
                     selectedVariantId === variant.id
                       ? "border-brand-primary ring-2 ring-brand-primary/25 ring-offset-2"

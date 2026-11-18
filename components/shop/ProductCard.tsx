@@ -2,6 +2,7 @@ import { AddToCartButton } from "@/components/shop/AddToCartButton";
 import { WishlistButton } from "@/components/shop/WishlistButton";
 import { PriceTag } from "@/components/ui/PriceTag";
 import { Rating } from "@/components/ui/Rating";
+import { getProductCardImage } from "@/lib/product-images";
 import type { ProductDTO } from "@/services/product";
 import Image from "next/image";
 import { StorefrontLink as Link } from "@/components/layout/StorefrontLink";
@@ -22,7 +23,7 @@ export function ProductCard({
   wished = false,
   showRating = true,
 }: ProductCardProps) {
-  const image = product.images[0];
+  const image = getProductCardImage(product.images, product.variants);
   const tagSlug = product.tags[0];
   const firstTag = tagSlug
     ? (TAG_LABELS[tagSlug] ?? tagSlug.replace(/-/g, " "))

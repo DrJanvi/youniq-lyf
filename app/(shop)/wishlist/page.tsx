@@ -10,6 +10,7 @@ import { Pagination } from "@/components/ui/Pagination";
 import { formatMoney } from "@/components/ui/PriceTag";
 import { Section } from "@/components/ui/Section";
 import { requireUserPage } from "@/lib/auth/session";
+import { getProductCardImage } from "@/lib/product-images";
 import { parsePagination } from "@/lib/pagination";
 import { buildMetadata } from "@/lib/seo";
 import { listWishlistEntries } from "@/services/wishlist";
@@ -140,6 +141,10 @@ export default async function WishlistPage({
                   null,
                 );
                 const displayPrice = lowestVariant ?? product;
+                const image = getProductCardImage(
+                  product.images,
+                  product.variants,
+                );
                 return (
                   <div
                     role="row"
@@ -159,9 +164,9 @@ export default async function WishlistPage({
                       aria-label={product.title}
                       className="relative grid size-18 shrink-0 place-items-center overflow-hidden rounded-[3px] bg-surface-card lg:size-22"
                     >
-                      {product.images[0] ? (
+                      {image ? (
                         <Image
-                          src={product.images[0]}
+                          src={image}
                           alt=""
                           width={88}
                           height={88}

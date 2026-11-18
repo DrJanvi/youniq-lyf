@@ -38,6 +38,22 @@ function isPreviewableImageUrl(url: string) {
   }
 }
 
+async function copyImageUrl(url: string) {
+  if (!navigator.clipboard?.writeText) {
+    toast.error("Clipboard access is unavailable in this browser.");
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(url.trim());
+    toast.success("Image URL copied to clipboard");
+  } catch (error) {
+    const detail =
+      error instanceof Error ? error.message : "Clipboard access was denied.";
+    toast.error(`Could not copy image URL: ${detail}`);
+  }
+}
+
 export function CloudinaryImageUploader({
   value,
   onChange,
@@ -167,10 +183,16 @@ export function CloudinaryImageUploader({
                   className="size-full object-cover"
                 />
                 {showImageNumbers ? (
-                  <span className="absolute left-1 top-1 flex size-6 items-center justify-center rounded-full bg-background text-xs font-semibold text-foreground shadow-sm">
+                  <button
+                    type="button"
+                    onClick={() => void copyImageUrl(url)}
+                    aria-label={`Copy image URL ${index + 1}`}
+                    title="Copy image URL"
+                    className="absolute left-1 top-1 flex size-6 cursor-copy items-center justify-center rounded-full bg-background text-xs font-semibold text-foreground shadow-sm"
+                  >
                     <span className="sr-only">Image </span>
                     {index + 1}
-                  </span>
+                  </button>
                 ) : null}
               </div>
             ) : null,
@@ -247,18 +269,31 @@ export function NumberedImageUrlsField<T extends FieldValues>({
               <FormControl>
                 <div className="flex max-h-64 flex-col gap-2 overflow-y-auto pr-2">
                   {rows.map((url, index) => {
-                    const imageNumber = rows
-                      .slice(0, index + 1)
-                      .filter((entry) => entry.trim()).length;
+                    const imageNumber = url.trim()
+                      ? rows
+                          .slice(0, index + 1)
+                          .filter((entry) => entry.trim()).length
+                      : 0;
 
                     return (
                       <div
                         key={index}
                         className="grid grid-cols-[2rem_minmax(0,1fr)_auto] items-center gap-2"
                       >
-                        <span className="flex size-8 items-center justify-center rounded-full bg-muted text-sm font-semibold text-foreground">
+                        <button
+                          type="button"
+                          disabled={!url.trim()}
+                          onClick={() => void copyImageUrl(url)}
+                          aria-label={
+                            imageNumber
+                              ? `Copy image URL ${imageNumber}`
+                              : "No image URL to copy"
+                          }
+                          title={imageNumber ? "Copy image URL" : undefined}
+                          className="flex size-8 cursor-copy items-center justify-center rounded-full bg-muted text-sm font-semibold text-foreground hover:bg-muted/80 disabled:cursor-not-allowed"
+                        >
                           {imageNumber || "+"}
-                        </span>
+                        </button>
                         <Input
                           ref={index === 0 ? field.ref : undefined}
                           type="url"
