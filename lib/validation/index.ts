@@ -212,10 +212,26 @@ export const discountInputSchema = z
     isActive: z.boolean().default(true),
     productId: z.string().nullish(),
     categoryId: z.string().nullish(),
+    variantScope: z.enum(["ALL", "SELECTED"]).default("ALL"),
+    variantIds: z.array(z.string().min(1)).default([]),
   })
   .refine((d) => d.type !== "PERCENT" || d.value <= 100, { message: "Percent must be <= 100" })
   .refine((d) => !(d.productId && d.categoryId), { message: "Target a product or a category, not both" })
-  .refine((d) => !d.startsAt || !d.endsAt || d.startsAt < d.endsAt, { message: "endsAt must be after startsAt" });
+  .refine((d) => !d.startsAt || !d.endsAt || d.startsAt < d.endsAt, { message: "endsAt must be after startsAt" })
+  .superRefine((d, ctx) => {
+    if (new Set(d.variantIds).size !== d.variantIds.length) {
+      ctx.addIssue({ code: "custom", path: ["variantIds"], message: "Select each variant only once" });
+    }
+    if (d.variantScope === "SELECTED" && !d.productId) {
+      ctx.addIssue({ code: "custom", path: ["variantScope"], message: "Selected variants require a product discount" });
+    }
+    if (d.variantScope === "SELECTED" && !d.variantIds.length) {
+      ctx.addIssue({ code: "custom", path: ["variantIds"], message: "Select at least one variant" });
+    }
+    if (d.variantScope === "ALL" && d.variantIds.length) {
+      ctx.addIssue({ code: "custom", path: ["variantIds"], message: "All-variant discounts cannot include selected variants" });
+    }
+  });
 
 const couponCodeSchema = z
   .string()

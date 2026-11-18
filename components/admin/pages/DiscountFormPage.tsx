@@ -30,6 +30,8 @@ export async function DiscountFormPage({ id }: { id?: string }) {
                 target: discount.productId ? "PRODUCT" : discount.categoryId ? "CATEGORY" : "STORE",
                 productId: discount.productId ?? "",
                 categoryId: discount.categoryId ?? "",
+                variantScope: discount.variantScope,
+                variantIds: discount.variantIds,
                 startsAt: toLocalInput(discount.startsAt),
                 endsAt: toLocalInput(discount.endsAt),
                 isActive: discount.isActive,

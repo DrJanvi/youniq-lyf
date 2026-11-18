@@ -91,6 +91,8 @@ export const discountFormSchema = z
     target: z.enum(["STORE", "PRODUCT", "CATEGORY"]),
     productId: z.string(),
     categoryId: z.string(),
+    variantScope: z.enum(["ALL", "SELECTED"]),
+    variantIds: z.array(z.string()),
     startsAt: z.string(),
     endsAt: z.string(),
     isActive: z.boolean(),
@@ -99,6 +101,12 @@ export const discountFormSchema = z
     if (d.type === "PERCENT" && d.value > 100) ctx.addIssue({ code: "custom", path: ["value"], message: "Percent cannot exceed 100" });
     if (d.target === "PRODUCT" && !d.productId) ctx.addIssue({ code: "custom", path: ["productId"], message: "Select a product" });
     if (d.target === "CATEGORY" && !d.categoryId) ctx.addIssue({ code: "custom", path: ["categoryId"], message: "Select a category" });
+    if (d.variantScope === "SELECTED" && d.target !== "PRODUCT") {
+      ctx.addIssue({ code: "custom", path: ["variantScope"], message: "Select a product before targeting variants" });
+    }
+    if (d.target === "PRODUCT" && d.variantScope === "SELECTED" && !d.variantIds.length) {
+      ctx.addIssue({ code: "custom", path: ["variantIds"], message: "Select at least one variant" });
+    }
     if (d.startsAt && d.endsAt && new Date(d.startsAt) >= new Date(d.endsAt)) {
       ctx.addIssue({ code: "custom", path: ["endsAt"], message: "End must be after start" });
     }

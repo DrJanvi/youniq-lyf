@@ -4,7 +4,13 @@ import Image from "next/image";
 import { useEffect, useId, useRef, useState, type ChangeEvent } from "react";
 import type { Control, FieldValues, Path } from "react-hook-form";
 import { toast } from "sonner";
-import { FormField } from "@/components/admin/ui/form";
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/admin/ui/form";
 import { Input } from "@/components/admin/ui/input";
 import { ACCEPTED_IMAGE_TYPES, isAllowedImageType, isValidImageSize } from "@/lib/image-upload";
 
@@ -40,6 +46,7 @@ export function CloudinaryImageUploader({
   multiple = false,
   maxFiles = 1,
   showPreview = true,
+  showImageNumbers = false,
 }: {
   value: unknown;
   onChange: (value: string) => void;
@@ -48,6 +55,7 @@ export function CloudinaryImageUploader({
   multiple?: boolean;
   maxFiles?: number;
   showPreview?: boolean;
+  showImageNumbers?: boolean;
 }) {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState("");
@@ -147,18 +155,26 @@ export function CloudinaryImageUploader({
       {error ? <p className="text-sm text-destructive" role="alert">{error}</p> : null}
       {showPreview && urls.some(isPreviewableImageUrl) ? (
         <div className="flex flex-wrap gap-3">
-          {urls.filter(isPreviewableImageUrl).map((url, index) => (
-            <div key={`${url}-${index}`} className="size-24 overflow-hidden rounded-lg border border-border">
-              <Image
-                src={url}
-                alt=""
-                width={96}
-                height={96}
-                unoptimized
-                className="size-full object-cover"
-              />
-            </div>
-          ))}
+          {urls.map((url, index) =>
+            isPreviewableImageUrl(url) ? (
+              <div key={`${url}-${index}`} className="relative size-24 overflow-hidden rounded-lg border border-border">
+                <Image
+                  src={url}
+                  alt=""
+                  width={96}
+                  height={96}
+                  unoptimized
+                  className="size-full object-cover"
+                />
+                {showImageNumbers ? (
+                  <span className="absolute left-1 top-1 flex size-6 items-center justify-center rounded-full bg-background text-xs font-semibold text-foreground shadow-sm">
+                    <span className="sr-only">Image </span>
+                    {index + 1}
+                  </span>
+                ) : null}
+              </div>
+            ) : null,
+          )}
         </div>
       ) : null}
     </div>
@@ -172,6 +188,7 @@ export function ImageUploadField<T extends FieldValues>({
   description,
   multiple,
   maxFiles,
+  showImageNumbers,
 }: {
   control: Control<T>;
   name: Path<T>;
@@ -179,6 +196,7 @@ export function ImageUploadField<T extends FieldValues>({
   description?: string;
   multiple?: boolean;
   maxFiles?: number;
+  showImageNumbers?: boolean;
 }) {
   return (
     <FormField
@@ -192,8 +210,98 @@ export function ImageUploadField<T extends FieldValues>({
           description={description}
           multiple={multiple}
           maxFiles={maxFiles}
+          showImageNumbers={showImageNumbers}
         />
       )}
+    />
+  );
+}
+
+export function NumberedImageUrlsField<T extends FieldValues>({
+  control,
+  name,
+  label,
+  description,
+  maxFiles = 20,
+}: {
+  control: Control<T>;
+  name: Path<T>;
+  label: string;
+  description?: string;
+  maxFiles?: number;
+}) {
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => {
+        const urls: string[] = typeof field.value === "string" ? field.value.split(/\r?\n/) : [""];
+        const rows: string[] = urls.length ? urls : [""];
+        const urlCount = rows.filter((url) => url.trim()).length;
+        const canAddUrl = urlCount < maxFiles && Boolean(rows[rows.length - 1]?.trim());
+
+        return (
+          <FormItem>
+            <fieldset className="grid gap-2">
+              <legend className="text-sm font-medium">{label}</legend>
+              <FormControl>
+                <div className="flex max-h-64 flex-col gap-2 overflow-y-auto pr-2">
+                  {rows.map((url, index) => {
+                    const imageNumber = rows
+                      .slice(0, index + 1)
+                      .filter((entry) => entry.trim()).length;
+
+                    return (
+                      <div
+                        key={index}
+                        className="grid grid-cols-[2rem_minmax(0,1fr)_auto] items-center gap-2"
+                      >
+                        <span className="flex size-8 items-center justify-center rounded-full bg-muted text-sm font-semibold text-foreground">
+                          {imageNumber || "+"}
+                        </span>
+                        <Input
+                          ref={index === 0 ? field.ref : undefined}
+                          type="url"
+                          value={url}
+                          placeholder="Paste an image URL"
+                          aria-label={imageNumber ? `Image URL ${imageNumber}` : "New image URL"}
+                          onBlur={field.onBlur}
+                          onChange={(event) => {
+                            const nextUrls = [...rows];
+                            nextUrls[index] = event.currentTarget.value;
+                            field.onChange(nextUrls.join("\n"));
+                          }}
+                        />
+                        <button
+                          type="button"
+                          disabled={rows.length === 1 && !url.trim()}
+                          aria-label={imageNumber ? `Remove image ${imageNumber} URL` : "Remove empty image URL"}
+                          onClick={() => {
+                            field.onChange(rows.filter((_, rowIndex) => rowIndex !== index).join("\n"));
+                          }}
+                          className="text-sm font-medium text-destructive underline underline-offset-4 disabled:opacity-50"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </FormControl>
+              <button
+                type="button"
+                disabled={!canAddUrl}
+                onClick={() => field.onChange([...rows, ""].join("\n"))}
+                className="self-start rounded-full border border-border px-4 py-2 text-sm font-medium hover:bg-muted disabled:opacity-50"
+              >
+                Add URL
+              </button>
+            </fieldset>
+            {description ? <FormDescription>{description}</FormDescription> : null}
+            <FormMessage />
+          </FormItem>
+        );
+      }}
     />
   );
 }

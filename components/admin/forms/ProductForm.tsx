@@ -5,7 +5,7 @@ import { BlogContentEditorField } from "@/components/admin/forms/BlogContentEdit
 import { productFormSchema } from "@/lib/validation/admin";
 import { CheckboxGroupField, FormSection, NumberField, SelectField, SwitchField, TextField, TextareaField } from "./Fields";
 import { FormActions } from "./FormActions";
-import { ImageUploadField } from "./ImageUploadField";
+import { ImageUploadField, NumberedImageUrlsField } from "./ImageUploadField";
 import { useEntityForm } from "./use-entity-form";
 import { useFieldArray } from "react-hook-form";
 
@@ -143,8 +143,13 @@ export function ProductForm({
             />
           </div>
           <div className="full">
-            <ImageUploadField control={c} name="images" label="Upload product images" multiple maxFiles={20} />
-            <TextareaField control={c} name="images" label="Image URLs" rows={3} description="One URL per line." />
+            <ImageUploadField control={c} name="images" label="Upload product images" multiple maxFiles={20} showImageNumbers />
+            <NumberedImageUrlsField
+              control={c}
+              name="images"
+              label="Image URLs"
+              description="Each URL number matches its preview. Use Remove to delete an image."
+            />
           </div>
           <div className="full">
             <TextareaField
@@ -232,13 +237,13 @@ export function ProductForm({
                     label="Upload color images"
                     multiple
                     maxFiles={20}
+                    showImageNumbers
                   />
-                  <TextareaField
+                  <NumberedImageUrlsField
                     control={c}
                     name={`variants.${index}.images`}
                     label="Color image URLs"
-                    rows={2}
-                    description="One URL per line. The product gallery is used if this is empty."
+                    description="Each URL number matches its preview. The product gallery is used if this is empty."
                   />
                 </div>
                 <div className="full flex justify-end">

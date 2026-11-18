@@ -18,9 +18,23 @@ const data = (i: Input) => ({
   isActive: i.isActive,
   productId: i.productId || null,
   categoryId: i.categoryId || null,
+  variantScope: i.variantScope,
 });
 
 const serialize = <T extends { value: unknown }>(d: T) => ({ ...d, value: Number(d.value) });
+
+async function assertVariantTargets(tx: Prisma.TransactionClient, input: Input) {
+  if (input.variantScope !== "SELECTED") return;
+  const productId = input.productId;
+  if (!productId) throw new ApiError(400, "Selected variants require a product discount");
+  const variants = await tx.productVariant.findMany({
+    where: { id: { in: input.variantIds }, productId },
+    select: { id: true },
+  });
+  if (variants.length !== input.variantIds.length) {
+    throw new ApiError(400, "Selected variants must belong to the selected product");
+  }
+}
 
 export async function listDiscounts(page: PageParams, p?: ListParams) {
   const f = p?.filters ?? {};
@@ -52,16 +66,43 @@ export async function listDiscounts(page: PageParams, p?: ListParams) {
 }
 
 export async function getDiscount(id: string) {
-  const row = await prisma.discount.findUnique({ where: { id } });
-  return row ? serialize(row) : null;
+  const row = await prisma.discount.findUnique({
+    where: { id },
+    include: { variantTargets: { select: { variantId: true } } },
+  });
+  return row
+    ? { ...serialize(row), variantIds: row.variantTargets.map(({ variantId }) => variantId) }
+    : null;
 }
 
 export async function createDiscount(input: Input) {
-  return serialize(await prisma.discount.create({ data: data(input) }));
+  const row = await prisma.$transaction(async (tx) => {
+    await assertVariantTargets(tx, input);
+    const discount = await tx.discount.create({ data: data(input) });
+    if (input.variantIds.length) {
+      await tx.discountVariant.createMany({
+        data: input.variantIds.map((variantId) => ({ discountId: discount.id, variantId })),
+      });
+    }
+    return discount;
+  });
+  return serialize(row);
 }
 
 export async function updateDiscount(id: string, input: Input) {
-  const row = await prisma.discount.update({ where: { id }, data: data(input) }).catch(() => null);
+  const row = await prisma.$transaction(async (tx) => {
+    await assertVariantTargets(tx, input);
+    const existing = await tx.discount.findUnique({ where: { id }, select: { id: true } });
+    if (!existing) return null;
+    const discount = await tx.discount.update({ where: { id }, data: data(input) });
+    await tx.discountVariant.deleteMany({ where: { discountId: id } });
+    if (input.variantIds.length) {
+      await tx.discountVariant.createMany({
+        data: input.variantIds.map((variantId) => ({ discountId: id, variantId })),
+      });
+    }
+    return discount;
+  });
   if (!row) throw new ApiError(404, "Discount not found");
   return serialize(row);
 }

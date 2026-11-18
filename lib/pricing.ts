@@ -5,6 +5,8 @@ export type DiscountRule = {
   value: number;
   productId: string | null;
   categoryId: string | null;
+  variantScope: "ALL" | "SELECTED";
+  variantIds: string[];
 };
 
 export type Pricing = {
@@ -24,14 +26,18 @@ export function applyRule(price: number, rule: DiscountRule): number {
 
 /** Picks the rule giving the biggest saving among those that target the product. */
 export function computePricing(
-  product: { id: string; categoryId: string; price: number },
+  product: { id: string; categoryId: string; price: number; variantId?: string },
   rules: DiscountRule[],
 ): Pricing {
   let best = 0;
   let bestName: string | null = null;
   for (const r of rules) {
+    const targetsProduct =
+      r.productId === product.id &&
+      (r.variantScope === "ALL" ||
+        (product.variantId !== undefined && r.variantIds.includes(product.variantId)));
     const matches =
-      r.productId === product.id ||
+      targetsProduct ||
       (r.productId === null && r.categoryId === product.categoryId) ||
       (r.productId === null && r.categoryId === null);
     if (!matches) continue;

@@ -135,6 +135,7 @@ export async function getActiveRules(): Promise<DiscountRule[]> {
         { OR: [{ categoryId: null }, { category: { is: { deletedAt: null } } }] },
       ],
     },
+    include: { variantTargets: { select: { variantId: true } } },
   });
   return rows.map((r) => ({
     id: r.id,
@@ -143,6 +144,8 @@ export async function getActiveRules(): Promise<DiscountRule[]> {
     value: Number(r.value),
     productId: r.productId,
     categoryId: r.categoryId,
+    variantScope: r.variantScope,
+    variantIds: r.variantTargets.map(({ variantId }) => variantId),
   }));
 }
 
@@ -231,7 +234,7 @@ export function toDTO(
           : [],
         priceOverride: variant.priceOverride,
         stock: variantStocks?.get(variant.id) ?? variant.stock,
-        ...computePricing({ id: p.id, categoryId: p.categoryId, price }, rules),
+        ...computePricing({ id: p.id, categoryId: p.categoryId, price, variantId: variant.id }, rules),
       };
     }),
     inStock: stock > 0,

@@ -3,7 +3,7 @@ import test from "node:test";
 import type { Prisma } from "@prisma/client";
 import { getVariantGalleryImages } from "@/lib/product-images";
 import { computePricing } from "@/lib/pricing";
-import { productVariantInputSchema } from "@/lib/validation";
+import { discountInputSchema, productVariantInputSchema } from "@/lib/validation";
 import { ApiError } from "@/lib/http";
 import {
   decrementApprovedOrderInventory,
@@ -75,7 +75,7 @@ test("validates a color variant and accepts no price override", () => {
 
 test("uses a variant override as the base for product discounts", () => {
   const price = computePricing(
-    { id: "product-1", categoryId: "category-1", price: 125 },
+    { id: "product-1", categoryId: "category-1", price: 125, variantId: "variant-1" },
     [
       {
         id: "discount-1",
@@ -84,11 +84,97 @@ test("uses a variant override as the base for product discounts", () => {
         value: 20,
         productId: "product-1",
         categoryId: null,
+        variantScope: "ALL",
+        variantIds: [],
       },
     ],
   );
   assert.equal(price.price, 125);
   assert.equal(price.finalPrice, 100);
+});
+
+test("applies a selected-variant discount only to its chosen variant", () => {
+  const rules = [
+    {
+      id: "discount-1",
+      name: "20 percent off",
+      type: "PERCENT" as const,
+      value: 20,
+      productId: "product-1",
+      categoryId: null,
+      variantScope: "SELECTED" as const,
+      variantIds: ["variant-1"],
+    },
+  ];
+  assert.equal(
+    computePricing(
+      { id: "product-1", categoryId: "category-1", price: 125, variantId: "variant-1" },
+      rules,
+    ).finalPrice,
+    100,
+  );
+  assert.equal(
+    computePricing(
+      { id: "product-1", categoryId: "category-1", price: 125, variantId: "variant-2" },
+      rules,
+    ).finalPrice,
+    125,
+  );
+  assert.equal(computePricing({ id: "product-1", categoryId: "category-1", price: 125 }, rules).finalPrice, 125);
+});
+
+test("preserves category discounts for variants excluded from product discounts", () => {
+  const price = computePricing(
+    { id: "product-1", categoryId: "category-1", price: 125, variantId: "variant-2" },
+    [
+      {
+        id: "product-discount",
+        name: "20 percent off selected variant",
+        type: "PERCENT",
+        value: 20,
+        productId: "product-1",
+        categoryId: null,
+        variantScope: "SELECTED",
+        variantIds: ["variant-1"],
+      },
+      {
+        id: "category-discount",
+        name: "10 percent off category",
+        type: "PERCENT",
+        value: 10,
+        productId: null,
+        categoryId: "category-1",
+        variantScope: "ALL",
+        variantIds: [],
+      },
+    ],
+  );
+  assert.equal(price.finalPrice, 112.5);
+  assert.equal(price.discountName, "10 percent off category");
+});
+
+test("validates product and variant scope for discount inputs", () => {
+  const legacy = discountInputSchema.parse({
+    name: "Product sale",
+    type: "PERCENT",
+    value: 10,
+    productId: "product-1",
+  });
+  assert.equal(legacy.variantScope, "ALL");
+  assert.deepEqual(legacy.variantIds, []);
+
+  const input = {
+    name: "Selected variant sale",
+    type: "PERCENT",
+    value: 20,
+    productId: "product-1",
+    variantScope: "SELECTED",
+    variantIds: ["variant-1"],
+  };
+  assert.deepEqual(discountInputSchema.parse(input).variantIds, ["variant-1"]);
+  assert.throws(() => discountInputSchema.parse({ ...input, productId: null }));
+  assert.throws(() => discountInputSchema.parse({ ...input, variantIds: [] }));
+  assert.throws(() => discountInputSchema.parse({ ...input, variantIds: ["variant-1", "variant-1"] }));
 });
 
 test("snapshots variant details and fallback gallery images", () => {
