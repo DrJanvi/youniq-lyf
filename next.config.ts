@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
   output: "standalone",
   cacheComponents: true,
   partialPrefetching: true,
+  experimental: {
+    agentUpgrade: "security",
+  },
   outputFileTracingIncludes: {
     "/api/orders": invoiceAssets,
     "/api/orders/*/invoice": invoiceAssets,
