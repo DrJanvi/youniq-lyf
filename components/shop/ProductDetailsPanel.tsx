@@ -81,7 +81,7 @@ export function ProductDetailsPanel({
     : product.stock > 0;
 
   return (
-    <div className="grid items-start gap-8 md:grid-cols-2 md:gap-10 lg:gap-12">
+    <div className="grid min-w-0 items-start gap-8 md:grid-cols-2 md:gap-10 lg:gap-12">
       <ProductImageGallery
         images={galleryImages}
         selectedImageId={selectedGalleryImageId}
@@ -90,7 +90,7 @@ export function ProductDetailsPanel({
         bestseller={product.tags.includes("best-selling")}
       />
 
-      <div className="flex flex-col gap-5 md:sticky md:top-24 md:self-start">
+      <div className="flex min-w-0 flex-col gap-5 md:sticky md:top-24 md:self-start">
         <div className="flex flex-col gap-3 border-b border-surface-border pb-5">
           <p className="text-xs font-medium tracking-[0.12em] text-text-muted uppercase">
             {product.category.name}

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Search, X } from "lucide-react";
 import type { ProductGalleryImage } from "@/lib/product-images";
 
@@ -19,6 +19,8 @@ export function ProductImageGallery({
   bestseller: boolean;
 }) {
   const [zoomed, setZoomed] = useState(false);
+  const thumbnailListRef = useRef<HTMLDivElement>(null);
+  const thumbnailRefs = useRef(new Map<string, HTMLButtonElement>());
   const requestedIndex = images.findIndex(
     (image) => image.id === selectedImageId,
   );
@@ -27,21 +29,51 @@ export function ProductImageGallery({
   const showThumbnails =
     images.length > 1 || (images.length > 0 && !selectedImage);
 
+  useEffect(() => {
+    if (!selectedImageId) return;
+
+    const list = thumbnailListRef.current;
+    const thumbnail = thumbnailRefs.current.get(selectedImageId);
+    if (!list || !thumbnail) return;
+
+    const listBounds = list.getBoundingClientRect();
+    const thumbnailBounds = thumbnail.getBoundingClientRect();
+    const left =
+      thumbnailBounds.left < listBounds.left
+        ? thumbnailBounds.left - listBounds.left
+        : thumbnailBounds.right > listBounds.right
+          ? thumbnailBounds.right - listBounds.right
+          : 0;
+    const top =
+      thumbnailBounds.top < listBounds.top
+        ? thumbnailBounds.top - listBounds.top
+        : thumbnailBounds.bottom > listBounds.bottom
+          ? thumbnailBounds.bottom - listBounds.bottom
+          : 0;
+
+    if (left || top) list.scrollBy({ left, top, behavior: "smooth" });
+  }, [selectedImageId]);
+
   return (
     <div
-      className={`grid gap-3 ${
-        showThumbnails ? "md:grid-cols-[5.5rem_minmax(0,1fr)]" : ""
+      className={`grid min-w-0 gap-3 ${
+        showThumbnails ? "md:grid-cols-[6.5rem_minmax(0,1fr)]" : ""
       }`}
     >
       {showThumbnails ? (
         <div
+          ref={thumbnailListRef}
           role="group"
           aria-label="Product images"
-          className="order-2 flex gap-2 overflow-x-auto md:order-1 md:max-h-[620px] md:flex-col md:overflow-y-auto"
+          className="order-2 flex w-full min-w-0 max-w-full gap-2 overflow-x-auto overflow-y-hidden md:order-1 md:max-h-[620px] md:flex-col md:overflow-x-hidden md:overflow-y-auto"
         >
           {images.map((image, index) => (
             <button
               key={image.id}
+              ref={(element) => {
+                if (element) thumbnailRefs.current.set(image.id, element);
+                else thumbnailRefs.current.delete(image.id);
+              }}
               type="button"
               onClick={() => onSelectImage(image)}
               aria-label={`View image ${index + 1} of ${images.length}${image.variantName ? ` for ${image.variantName}` : ""}`}
@@ -66,7 +98,7 @@ export function ProductImageGallery({
         </div>
       ) : null}
 
-      <div className="relative order-1 flex aspect-square items-center justify-center overflow-hidden rounded-[1.25rem] bg-surface-card p-8 md:order-2 md:p-12">
+      <div className="relative order-1 flex aspect-square min-w-0 items-center justify-center overflow-hidden rounded-[1.25rem] bg-surface-card p-8 md:order-2 md:p-12">
         {bestseller ? (
           <span className="absolute top-5 left-5 z-10 rounded-full bg-white px-3 py-2 text-[10px] font-semibold tracking-[0.12em] text-status-error uppercase">
             Bestseller
