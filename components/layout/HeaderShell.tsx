@@ -211,7 +211,7 @@ export function HeaderShell({
                   className="absolute top-0 right-0 translate-x-4 -translate-y-1.5"
                 />
                 <Link href="/products" className={clsx(link, "z-1")}>
-                  Accessories
+                  Shop All
                 </Link>
               </div>
             </nav>
