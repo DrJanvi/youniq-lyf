@@ -1,6 +1,11 @@
 import { requireAdminApi } from "@/lib/auth/session";
 import { ApiError, api } from "@/lib/http";
-import { isAllowedImageType, isValidImageSize } from "@/lib/image-upload";
+import {
+  getImageSizeLimitText,
+  isAllowedImageType,
+  isValidImageSize,
+  type ImageUploadPurpose,
+} from "@/lib/image-upload";
 import { uploadCloudinaryStorefrontAsset } from "@/lib/cloudinary-upload";
 
 const PNG_SIGNATURE = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
@@ -33,8 +38,13 @@ export const POST = api(async (request) => {
   if (!(file instanceof File)) {
     throw new ApiError(400, "Choose an image to upload.");
   }
-  if (!isValidImageSize(file.size)) {
-    throw new ApiError(400, "Image size must be less than 2 MB.");
+  const purposeValue = formData.get("purpose");
+  if (purposeValue !== null && purposeValue !== "product") {
+    throw new ApiError(400, "Image upload purpose is invalid.");
+  }
+  const purpose: ImageUploadPurpose = purposeValue === "product" ? "product" : "general";
+  if (!isValidImageSize(file.size, purpose)) {
+    throw new ApiError(400, `Image size must be ${getImageSizeLimitText(purpose)}.`);
   }
   if (!isAllowedImageType(file.type)) {
     throw new ApiError(400, "Only PNG, JPEG, and WebP images are allowed.");

@@ -143,7 +143,15 @@ export function ProductForm({
             />
           </div>
           <div className="full">
-            <ImageUploadField control={c} name="images" label="Upload product images" multiple maxFiles={20} showImageNumbers />
+            <ImageUploadField
+              control={c}
+              name="images"
+              label="Upload product images"
+              uploadPurpose="product"
+              multiple
+              maxFiles={20}
+              showImageNumbers
+            />
             <NumberedImageUrlsField
               control={c}
               name="images"
@@ -235,6 +243,7 @@ export function ProductForm({
                     control={c}
                     name={`variants.${index}.images`}
                     label="Upload color images"
+                    uploadPurpose="product"
                     multiple
                     maxFiles={20}
                     showImageNumbers

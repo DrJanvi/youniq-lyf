@@ -13,7 +13,13 @@ import {
   FormMessage,
 } from "@/components/admin/ui/form";
 import { Input } from "@/components/admin/ui/input";
-import { ACCEPTED_IMAGE_TYPES, isAllowedImageType, isValidImageSize } from "@/lib/image-upload";
+import {
+  ACCEPTED_IMAGE_TYPES,
+  getImageSizeLimitText,
+  isAllowedImageType,
+  isValidImageSize,
+  type ImageUploadPurpose,
+} from "@/lib/image-upload";
 
 function getImageUrls(value: unknown) {
   if (Array.isArray(value)) return value.filter((url): url is string => typeof url === "string" && Boolean(url));
@@ -60,6 +66,7 @@ export function CloudinaryImageUploader({
   onChange,
   label,
   description,
+  uploadPurpose = "general",
   multiple = false,
   maxFiles = 1,
   showPreview = true,
@@ -69,6 +76,7 @@ export function CloudinaryImageUploader({
   onChange: (value: string) => void;
   label: string;
   description?: string;
+  uploadPurpose?: ImageUploadPurpose;
   multiple?: boolean;
   maxFiles?: number;
   showPreview?: boolean;
@@ -97,8 +105,8 @@ export function CloudinaryImageUploader({
       input.value = "";
       return;
     }
-    if (files.some((file) => !isValidImageSize(file.size))) {
-      setError("Each image must be non-empty and less than 2 MB.");
+    if (files.some((file) => !isValidImageSize(file.size, uploadPurpose))) {
+      setError(`Each image must be non-empty and ${getImageSizeLimitText(uploadPurpose)}.`);
       input.value = "";
       return;
     }
@@ -115,6 +123,9 @@ export function CloudinaryImageUploader({
         setProgress(`Uploading ${index + 1} of ${files.length}…`);
         const formData = new FormData();
         formData.set("file", file);
+        if (uploadPurpose === "product") {
+          formData.set("purpose", uploadPurpose);
+        }
         const response = await fetch("/api/admin/image-upload", { method: "POST", body: formData });
         let result: unknown;
         try {
@@ -165,7 +176,7 @@ export function CloudinaryImageUploader({
         onChange={(event) => void uploadFiles(event)}
       />
       <p className="text-sm text-muted-foreground">
-        {description ?? "PNG, JPEG, or WebP; each file must be less than 2 MB."}
+        {description ?? `PNG, JPEG, or WebP; each file must be ${getImageSizeLimitText(uploadPurpose)}.`}
         {multiple ? ` ${remaining} of ${maxFiles} image slots available.` : ""}
       </p>
       {progress ? <p className="text-sm text-muted-foreground" role="status">{progress}</p> : null}
@@ -209,6 +220,7 @@ export function ImageUploadField<T extends FieldValues>({
   name,
   label,
   description,
+  uploadPurpose,
   multiple,
   maxFiles,
   showImageNumbers,
@@ -217,6 +229,7 @@ export function ImageUploadField<T extends FieldValues>({
   name: Path<T>;
   label: string;
   description?: string;
+  uploadPurpose?: ImageUploadPurpose;
   multiple?: boolean;
   maxFiles?: number;
   showImageNumbers?: boolean;
@@ -231,6 +244,7 @@ export function ImageUploadField<T extends FieldValues>({
           onChange={field.onChange}
           label={label}
           description={description}
+          uploadPurpose={uploadPurpose}
           multiple={multiple}
           maxFiles={maxFiles}
           showImageNumbers={showImageNumbers}
