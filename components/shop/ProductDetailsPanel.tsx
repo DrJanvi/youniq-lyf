@@ -83,6 +83,7 @@ export function ProductDetailsPanel({
   return (
     <div className="grid min-w-0 items-start gap-8 md:grid-cols-2 md:gap-10 lg:gap-12">
       <ProductImageGallery
+        key={selectedGalleryImageId ?? "no-image"}
         images={galleryImages}
         selectedImageId={selectedGalleryImageId}
         onSelectImage={selectGalleryImage}
